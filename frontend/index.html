@@ -56,47 +56,73 @@
         #header h1 { margin: 0; font-size: 1.2em; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.75em; color: #0284c7; font-weight: 600; }
 
+        /* Contenedor Flotante de Paneles Superiores Izquierdos */
         .top-panels-container {
             position: absolute;
-            top: 95px;
+            top: 85px;
             left: 20px;
             z-index: 100;
             display: flex;
-            gap: 12px;
+            flex-direction: column;
+            gap: 10px;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .top-panels-row {
+            display: flex;
+            gap: 10px;
         }
 
         .national-summary {
             background: rgba(255, 255, 255, 0.98);
-            padding: 12px 15px;
+            padding: 10px 14px;
             border-radius: 12px;
             border: 2px solid var(--celeste);
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            width: 290px;
+            width: 285px;
         }
         .nat-header {
-            font-size: 0.82em;
+            font-size: 0.8em;
             color: #0369a1;
             text-transform: uppercase;
             font-weight: bold;
             border-bottom: 2px solid #e0f2fe;
-            padding-bottom: 5px;
+            padding-bottom: 4px;
             margin-bottom: 6px;
             text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .nat-content {
-            max-height: 380px;
+            max-height: 250px;
             overflow-y: auto;
         }
         .nat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 0;
-            font-size: 0.76em;
+            padding: 3px 0;
+            font-size: 0.75em;
             border-bottom: 1px dashed #e2e8f0;
         }
         .nat-row:last-child { border-bottom: none; }
         .nat-val { font-weight: bold; color: #0284c7; text-align: right; }
+
+        /* Estilo para los gráficos agregados abajo de Promedios/Elecciones */
+        .nat-chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 75px;
+            padding: 8px 4px 2px 4px;
+            background: #ffffff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            margin-top: 4px;
+        }
 
         #btn-volver-mapa {
             position: absolute;
@@ -123,10 +149,10 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
             border-top: 2px solid var(--celeste);
-            padding: 10px 20px;
+            padding: 8px 20px;
             text-align: center;
             z-index: 5000;
-            font-size: 0.78em;
+            font-size: 0.76em;
             color: #334155;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
         }
@@ -279,7 +305,7 @@
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            height: 90px;
+            height: 85px;
             padding: 10px 5px 2px 5px;
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -320,7 +346,6 @@
             font-size: 0.76em;
             outline: none;
         }
-        .search-box:focus { border-color: #0284c7; }
 
         .gen-container {
             border-radius: 8px;
@@ -416,9 +441,6 @@
             padding: 6px 10px 8px 10px;
             border-top: 1px dashed #bfdbfe;
         }
-        .sub-infra-dropdown.open .arrow-icon {
-            transform: rotate(180deg);
-        }
 
         .sub-card {
             background: #ffffff;
@@ -454,33 +476,51 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
-    <!-- Contenedor Superior: Promedios Nacionales Actualizados & Elecciones -->
+    <!-- Contenedor Flotante Izquierdo (Módulos Superiores + Tendencias Nacionales Replicadas) -->
     <div class="top-panels-container">
-        <!-- Panel 1: Promedios Nacionales (Valores Oficiales INDEC / MEYEP / ANSES) -->
-        <div class="national-summary">
-            <div class="nat-header">📈 Promedios & Datos Nacionales</div>
-            <div class="nat-content">
-                <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
-                <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">32,3%</span></div>
-                <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">7,9%</span></div>
-                <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$898.150</span></div>
-                <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$1.632.505</span></div>
-                <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$1.982.518</span></div>
-                <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800</span></div>
-                <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350</span></div>
+        <!-- Fila 1: Promedios & Elecciones -->
+        <div class="top-panels-row">
+            <!-- Panel 1: Promedios Nacionales -->
+            <div class="national-summary">
+                <div class="nat-header">📈 Promedios & Datos Nacionales</div>
+                <div class="nat-content">
+                    <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
+                    <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">32,3%</span></div>
+                    <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">7,9%</span></div>
+                    <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$898.150</span></div>
+                    <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$1.632.505</span></div>
+                    <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$1.982.518</span></div>
+                    <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800</span></div>
+                    <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350</span></div>
+                </div>
+            </div>
+
+            <!-- Panel 2: Próximas Elecciones (Nación) -->
+            <div class="national-summary" style="border-color: #be185d;">
+                <div class="nat-header" style="color: #be185d; border-bottom-color: #fce7f3;">🗳️ Próximas Elecciones (Nación)</div>
+                <div class="nat-content">
+                    <div class="nat-row"><span>Próximos Comicios:</span><span class="nat-val">Presidenciales 2027</span></div>
+                    <div class="nat-row"><span>Tipo de Votación:</span><span class="nat-val">General Obligatoria</span></div>
+                    <div class="nat-row"><span>Cargos a Elegir:</span><span class="nat-val">Presidente / Congresistas</span></div>
+                    <div class="nat-row"><span>Sistema de Voto:</span><span class="nat-val">Boleta Única Papel (BUP)</span></div>
+                    <div class="nat-row"><span>Última Elección:</span><span class="nat-val">Legislativas (Oct 2025)</span></div>
+                    <div class="nat-row"><span>Calendario Local:</span><span class="nat-val">Según Provincia</span></div>
+                </div>
             </div>
         </div>
 
-        <!-- Panel 2: Próximas Elecciones (Nacionales Obligatorias) -->
-        <div class="national-summary" style="border-color: #be185d;">
-            <div class="nat-header" style="color: #be185d; border-bottom-color: #fce7f3;">🗳️ Próximas Elecciones (Nación)</div>
-            <div class="nat-content">
-                <div class="nat-row"><span>Próximos Comicios:</span><span class="nat-val">Presidenciales 2027</span></div>
-                <div class="nat-row"><span>Tipo de Votación:</span><span class="nat-val">General Obligatoria</span></div>
-                <div class="nat-row"><span>Cargos a Elegir:</span><span class="nat-val">Presidente y Diputados/Senadores</span></div>
-                <div class="nat-row"><span>Sistema de Voto:</span><span class="nat-val">Boleta Única de Papel (BUP)</span></div>
-                <div class="nat-row"><span>Última Elección:</span><span class="nat-val">Legislativas (Oct 2025)</span></div>
-                <div class="nat-row"><span>Calendario Local:</span><span class="nat-val">Variable según Distrito</span></div>
+        <!-- Fila 2: Tendencias Históricas Nacionales Replicadas (Imagen de Referencia) -->
+        <div class="top-panels-row">
+            <!-- Tendencia Pobreza Nacional 6 Años -->
+            <div class="national-summary">
+                <div class="nat-header">📈 Tendencia Pobreza Nacional (6 años) <span>▲</span></div>
+                <div id="nat-chart-pobreza" class="nat-chart-container"></div>
+            </div>
+
+            <!-- Tendencia Desempleo Nacional 6 Años -->
+            <div class="national-summary">
+                <div class="nat-header">📈 Tendencia Desempleo Nacional (6 años) <span>▲</span></div>
+                <div id="nat-chart-desempleo" class="nat-chart-container"></div>
             </div>
         </div>
     </div>
@@ -591,15 +631,19 @@
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
 
-        <!-- Radiografía Electoral -->
+        <!-- Radiografía Electoral e Fechas de Elecciones Locales/Estatales -->
         <div class="gen-container electoral-container" id="panel-electoral">
             <div class="gen-header electoral-header" onclick="toggleSeccion('panel-electoral')">
-                <span>🗳️ Radiografía Electoral & Votaciones</span>
+                <span>🗳️ Radiografía Electoral & Próximas Elecciones (Locales y Estatales)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
                 <div class="sub-card">
-                    <strong>Resultado Últimos Comicios</strong>
+                    <strong>🗓️ Próximas Elecciones Provinciales / Estatales</strong>
+                    <span id="elec-proximas-locales" style="color: #be185d; font-weight: bold;">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Resultado Últimos Comicios Provinciales</strong>
                     <span id="elec-resultado">-</span>
                 </div>
                 <div class="sub-card">
@@ -698,7 +742,7 @@
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
-                        <input type="text" class="search-box" placeholder="Buscar escuela por nombre o número..." onkeyup="filtrarLista(this, 'lista-escuelas-detalle')">
+                        <input type="text" class="search-box" placeholder="Buscar escuela..." onkeyup="filtrarLista(this, 'lista-escuelas-detalle')">
                         <ul id="lista-escuelas-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
                     </div>
                 </div>
@@ -752,7 +796,7 @@
 
         <div class="metric-dropdown" id="drop-pobreza">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-pobreza')">
-                <span>📈 Tendencia Pobreza (Gráfico)</span><span class="arrow-icon">▼</span>
+                <span>📈 Tendencia Pobreza Provincial (Gráfico)</span><span class="arrow-icon">▼</span>
             </div>
             <div class="metric-dropdown-content">
                 <div id="chart-pobreza" class="chart-container"></div>
@@ -761,7 +805,7 @@
 
         <div class="metric-dropdown" id="drop-desempleo">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-desempleo')">
-                <span>📈 Tendencia Desempleo (Gráfico)</span><span class="arrow-icon">▼</span>
+                <span>📈 Tendencia Desempleo Provincial (Gráfico)</span><span class="arrow-icon">▼</span>
             </div>
             <div class="metric-dropdown-content">
                 <div id="chart-desempleo" class="chart-container"></div>
@@ -780,11 +824,23 @@
     </div>
 
     <script>
+        // Historiales Nacionales (2021-2026) según INDEC
+        const historialPobrezaNacional = [
+            {anio: 2021, val: "45.0%"}, {anio: 2022, val: "42.1%"}, {anio: 2023, val: "41.9%"}, 
+            {anio: 2024, val: "46.0%"}, {anio: 2025, val: "28.2%"}, {anio: 2026, val: "32.3%"}
+        ];
+
+        const historialDesempleoNacional = [
+            {anio: 2021, val: "9.2%"}, {anio: 2022, val: "8.0%"}, {anio: 2023, val: "7.5%"}, 
+            {anio: 2024, val: "8.9%"}, {anio: 2025, val: "7.5%"}, {anio: 2026, val: "7.9%"}
+        ];
+
         const datosProvincias = {
             "Buenos Aires": { 
                 nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
                 cant_escuelas: 4920, cant_hospitales: 81, cant_comisarias: 410,
                 electoral: {
+                    elecciones_locales: "Octubre de 2027 (Renovación de Gobernación e Intendencias) - Comicios concurrentes/desdoblados a definir.",
                     resultado: "Fuerza ganadora en gobernación con 45% de los votos positivos.",
                     participacion: "Participación del 74.5%; 5.2% de votos en blanco y nulos."
                 },
@@ -822,6 +878,7 @@
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4%", 
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
                 electoral: {
+                    elecciones_locales: "Octubre de 2027 (Jefe de Gobierno y Legisladores de la Ciudad).",
                     resultado: "Triunfo de Juntos por el Cambio / PRO con presencia de LLA.",
                     participacion: "Participación del 71.2%; 3.8% de votos en blanco."
                 },
@@ -859,6 +916,7 @@
                 nombre: "Provincia de Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Mayoría oficialista)", coparticipacion_real: "9.3%", 
                 cant_escuelas: 3150, cant_hospitales: 52, cant_comisarias: 280,
                 electoral: {
+                    elecciones_locales: "Septiembre/Octubre de 2027 (Renovación de Gobernador, Intendencias y Concejos Municipales).",
                     resultado: "Victoria de la coalición provincial con el 58% de los votos.",
                     participacion: "Participación del 73.1%; 4.5% de votos en blanco."
                 },
@@ -896,6 +954,7 @@
                 nombre: "Provincia de Córdoba", gobernador: "Martín Llaryora (Hacemos por Córdoba)", legislatura: "Unicameral (Oficialismo provincial)", coparticipacion_real: "8.8%",
                 cant_escuelas: 3410, cant_hospitales: 58, cant_comisarias: 310,
                 electoral: {
+                    elecciones_locales: "Junio / Julio de 2027 (Renovación de Gobernador e Intendencias provinciales).",
                     resultado: "Triunfo de Hacemos por Córdoba en gobernación.",
                     participacion: "Participación cívica del 72.8%; 4.0% voto blanco."
                 },
@@ -929,47 +988,11 @@
                 legislativo: { diputados: 18, senadores: 3, fuerza: "HCF / LLA", ausentismo: "2.9%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
-            "Mendoza": {
-                nombre: "Provincia de Mendoza", gobernador: "Alfredo Cornejo (Cambia Mendoza)", legislatura: "Bicameral", coparticipacion_real: "4.1%",
-                cant_escuelas: 1820, cant_hospitales: 31, cant_comisarias: 160,
-                electoral: {
-                    resultado: "Victoria de Cambia Mendoza en elecciones ejecutivas.",
-                    participacion: "Participación del 71.5%; 5.0% voto blanco."
-                },
-                memoria: {
-                    malvinas: "43 soldados mendocinos caídos en el Atlántico Sur.",
-                    dictadura: "860 desaparecidos en registros oficiales locales.",
-                    democracia: "62 solicitudes de paradero activas."
-                },
-                tarifas: {
-                    servicios: "Luz (EDEMSA): $35.000 - $49.000 | Gas: $21.000 | Agua: $18.000.",
-                    transporte: "MendoTran colectivo urbano: $850,00.",
-                    bici: "BiciTran (Sistema público interurbano Mendoza)."
-                },
-                perfil: {
-                    motor: "Vitivinicultura, turismo internacional, fruticultura e hidrocarburos.",
-                    exportaciones: "Vino fraccionado y a granel, ajo, frutas de carozo y petróleo."
-                },
-                educacionCalidad: {
-                    lectura: "71% satisfactorio en comprensión.",
-                    matematica: "57% satisfactorio."
-                },
-                poderes: {
-                    ejecutivo: "Gobernador provincial de Mendoza.",
-                    legislativo: "Legislatura Bicameral (Senadores y Diputados).",
-                    judicial: "Suprema Corte de Justicia de Mendoza."
-                },
-                poblacion: 2014533,
-                pobreza_historial: [{anio: 2021, val: "44.0%"}, {anio: 2022, val: "41.2%"}, {anio: 2023, val: "42.5%"}, {anio: 2024, val: "45.1%"}, {anio: 2025, val: "36.8%"}, {anio: 2026, val: "33.0%"}],
-                desempleo_historial: [{anio: 2021, val: "6.8%"}, {anio: 2022, val: "5.8%"}, {anio: 2023, val: "5.2%"}, {anio: 2024, val: "6.3%"}, {anio: 2025, val: "5.9%"}, {anio: 2026, val: "5.9%"}],
-                costo_alquiler: 510000, canasta_basica_total: 1632505, salario_promedio_ripte: 1982518, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 880 Millones",
-                legislativo: { diputados: 10, senadores: 3, fuerza: "Cambia Mendoza / LLA", ausentismo: "2.4%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
-            },
             "Tierra del Fuego": { 
                 nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", 
                 cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
                 electoral: {
+                    elecciones_locales: "Mayo / Junio de 2027 (Elecciones a Gobernador e Intendencias de Ushuaia y Río Grande).",
                     resultado: "Victoria de la alianza provincial en elecciones locales.",
                     participacion: "Participación del 69.8%; voto en blanco del 6.1%."
                 },
@@ -1011,6 +1034,7 @@
                 nombre: "Provincia de " + nombre, gobernador: "Gobernador Provincial en Funciones", legislatura: "Legislatura Provincial", coparticipacion_real: "2.8%",
                 cant_escuelas: 650, cant_hospitales: 20, cant_comisarias: 45,
                 electoral: {
+                    elecciones_locales: "Año 2027 (Elecciones provinciales ordinarias para Gobernador y cargos locales).",
                     resultado: "Elecciones provinciales consolidadas con apoyo electoral mayoritario.",
                     participacion: "Participación cívica provincial del 72.4%; 4.1% de votos en blanco."
                 },
@@ -1096,7 +1120,7 @@
             let html = "";
             historial.forEach(item => {
                 let numVal = parseFloat(item.val.replace('%', '').replace(',', '.'));
-                let alturaPx = Math.max(Math.round(numVal * 1.5), 15);
+                let alturaPx = Math.max(Math.round(numVal * 1.3), 12);
                 html += `
                     <div class="chart-bar-group">
                         <span class="chart-bar-val">${item.val}</span>
@@ -1161,6 +1185,7 @@
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
 
+            document.getElementById('elec-proximas-locales').innerText = data.electoral.elecciones_locales;
             document.getElementById('elec-resultado').innerText = data.electoral.resultado;
             document.getElementById('elec-participacion').innerText = data.electoral.participacion;
 
@@ -1201,7 +1226,7 @@
             document.getElementById('titulo-cant-hospitales').innerText = `🏥 Hospitales & Centros de Salud (${data.cant_hospitales} en total)`;
             document.getElementById('lista-hospitales-detalle').innerHTML = generarListaHospitalesCompleta(data.cant_hospitales);
 
-            document.getElementById('titulo-cant-comisarias').innerText = `计时 Comisarías / Seccionales (${data.cant_comisarias} en total)`;
+            document.getElementById('titulo-cant-comisarias').innerText = `🚓 Comisarías / Seccionales (${data.cant_comisarias} en total)`;
             document.getElementById('lista-comisarias-detalle').innerHTML = generarListaComisariasCompleta(data.cant_comisarias);
 
             document.getElementById('panel-diputados').innerText = `${data.legislativo.diputados} bancas`;
@@ -1236,6 +1261,12 @@
             document.getElementById('btn-volver-mapa').style.display = 'none';
             document.getElementById('header-subtitle').innerText = 'Haz clic en una provincia para explorar sus datos oficiales';
         }
+
+        // Renderizado automático inicial de los gráficos nacionales flotantes
+        window.onload = function() {
+            renderizarGrafico('nat-chart-pobreza', historialPobrezaNacional);
+            renderizarGrafico('nat-chart-desempleo', historialDesempleoNacional);
+        };
     </script>
 </body>
 </html>
