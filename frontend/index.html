@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor Cívico Argentina</title>
-    <!-- Leaflet CSS y JS de respaldo confiable -->
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
     <style>
         :root {
@@ -28,7 +28,7 @@
             cursor: default;
         }
 
-        /* Marcas de agua de las 3 Estrellas */
+        /* Marcas de agua de fondo (estrellas reducidas) */
         .star-pattern {
             position: absolute;
             top: 0;
@@ -42,6 +42,7 @@
             background-repeat: repeat;
         }
 
+        /* Encabezado con banderas argentinas */
         #header {
             position: absolute;
             top: 15px;
@@ -59,6 +60,7 @@
         #header h1 { margin: 0; font-size: 1.3em; letter-spacing: 0.5px; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.8em; color: #0284c7; font-weight: 600; }
 
+        /* Panel Promedios Nacionales */
         #national-summary {
             position: absolute;
             top: 85px;
@@ -92,6 +94,7 @@
         .nat-row:last-child { border-bottom: none; }
         .nat-val { font-weight: bold; color: #0284c7; }
 
+        /* Botón de regreso */
         #btn-volver-mapa {
             position: absolute;
             bottom: 30px;
@@ -111,21 +114,14 @@
         }
         #btn-volver-mapa:hover { background: #0369a1; transform: translateY(-2px); }
 
-        #map-container {
+        /* Contenedor del Mapa corregido para renderizado directo */
+        #map {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100vw;
             z-index: 1;
-        }
-
-        #map {
-            width: 100%;
-            height: 100%;
             background: transparent;
         }
 
@@ -134,6 +130,7 @@
             transition: all 0.2s ease;
         }
 
+        /* Panel Lateral de Información */
         #info-panel {
             position: absolute;
             top: 20px;
@@ -220,7 +217,7 @@
     <div class="star-pattern"></div>
 
     <div id="header">
-        <h1>Monitor Cívico Argentina ⭐⭐⭐</h1>
+        <h1>🇦🇷 Monitor Cívico Argentina 🇦🇷</h1>
         <p id="header-subtitle">Haz clic en una provincia para aislarla y explorar sus datos</p>
     </div>
 
@@ -234,9 +231,7 @@
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Argentina Completa</button>
 
-    <div id="map-container">
-        <div id="map"></div>
-    </div>
+    <div id="map"></div>
 
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
@@ -289,6 +284,7 @@
         </div>
     </div>
 
+    <!-- Leaflet JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     <script>
         const datosProvincias = {
@@ -317,7 +313,7 @@
             "Tierra del Fuego": { "nombre": "Tierra del Fuego", "poblacion": 190641, "pobreza_porcentaje": 34.0, "costo_alquiler": 360000, "canasta_basica_total": 960000, "salario_promedio_ripte": 1210000, "empleo_informal_porcentaje": 23.0, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 22000, "pauta_oficial_per_capita": 5800, "inseguridad_tasa": 480, "homicidios_tasa_100k": 2.2, "siniestros_viales_fatales": 22, "natalidad_tasa": 12.8, "mortalidad_infantil_tasa": 5.2, "mortalidad_tasa": 6.5, "camas_uti_cada_10k": 6.0, "escolarizacion_secundaria": 94.5, "cobertura_agua_cloacas": 91.2, "cobertura_internet_fibra": 82.0, "deuda_per_capita_usd": 610, "desempleo_historial": [{ "anio": 2026, "tasa": 6.7 }, { "anio": 2025, "tasa": 7.0 }, { "anio": 2024, "tasa": 7.8 }, { "anio": 2023, "tasa": 6.4 }] }
         };
 
-        // GeoJSON simplificado nativo incrustado para garantizar dibujo inmediato sin peticiones de red
+        // Inicializar mapa sin restricciones de tamaño en flexbox
         let map = L.map('map', {
             zoomControl: false,
             attributionControl: false,
@@ -460,10 +456,10 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Carga directa desde repositorio GitHub estable
+        // Carga robusta del GeoJSON oficial de provincias
         async function init() {
             try {
-                const respGeo = await fetch('https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/argentina.geojson');
+                const respGeo = await fetch('https://raw.githubusercontent.com/apis-digitales/georef-ar-api/master/data/provincias.json');
                 const geoData = await respGeo.json();
 
                 geojsonLayer = L.geoJson(geoData, {
