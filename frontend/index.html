@@ -182,7 +182,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 490px;
+            width: 480px;
             max-height: calc(100vh - 90px);
             z-index: 3000;
             background: var(--card-bg);
@@ -280,63 +280,23 @@
             color: #334155;
             background: #f8fafc;
         }
+        .metric-dropdown-content ul {
+            margin: 6px 0;
+            padding-left: 14px;
+        }
+        .metric-dropdown-content li {
+            margin-bottom: 3px;
+            display: flex;
+            justify-content: space-between;
+        }
         .metric-dropdown.open .metric-dropdown-content {
-            max-height: 220px;
-            padding: 8px 10px;
+            max-height: 180px;
+            padding: 6px 10px 8px 10px;
             border-top: 1px dashed #cbd5e1;
         }
         .metric-dropdown.open .arrow-icon {
             transform: rotate(180deg);
         }
-
-        /* Gráfico Visual en Dashboard */
-        .chart-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            height: 90px;
-            padding: 10px 5px 2px 5px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            margin-top: 6px;
-        }
-        .chart-bar-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            margin: 0 2px;
-        }
-        .chart-bar {
-            width: 100%;
-            background: #0284c7;
-            border-radius: 3px 3px 0 0;
-            transition: height 0.4s ease;
-        }
-        .chart-bar-label {
-            font-size: 0.65em;
-            color: #64748b;
-            margin-top: 3px;
-        }
-        .chart-bar-val {
-            font-size: 0.65em;
-            font-weight: bold;
-            color: #0f172a;
-            margin-bottom: 2px;
-        }
-
-        /* Buscador en listas masivas */
-        .search-box {
-            width: 100%;
-            padding: 5px 8px;
-            margin-bottom: 6px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            font-size: 0.76em;
-            outline: none;
-        }
-        .search-box:focus { border-color: #0284c7; }
 
         .dropdown-container {
             background: #fff5f5;
@@ -379,6 +339,10 @@
             margin-bottom: 8px;
             border-bottom: 1px dashed #fca5a5;
             padding-bottom: 6px;
+        }
+        .dropdown-content li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
         }
         .dropdown-container.open .dropdown-content {
             max-height: 300px;
@@ -427,13 +391,9 @@
         .poderes-header { color: #166534; background: #dcfce7; }
         .poderes-header:hover { background: #bbf7d0; }
 
-        .perfil-container { background: #fdf4ff; border: 1px solid #f5d0fe; }
-        .perfil-header { color: #86198f; background: #fae8ff; }
-        .perfil-header:hover { background: #f5d0fe; }
-
-        .educacion-container { background: #fef2f2; border: 1px solid #fecaca; }
-        .educacion-header { color: #991b1b; background: #fee2e2; }
-        .educacion-header:hover { background: #fecaca; }
+        .agenda-container { background: #eff6ff; border: 1px solid #bfdbfe; }
+        .agenda-header { color: #1e40af; background: #dbeafe; }
+        .agenda-header:hover { background: #bfdbfe; }
 
         .banca-container { background: #fefce8; border: 1px solid #fef08a; }
         .banca-header { color: #854d0e; background: #fef9c3; }
@@ -455,14 +415,14 @@
         .auditorias-header { color: #334155; background: #e2e8f0; }
         .auditorias-header:hover { background: #cbd5e1; }
 
-        .infra-container { background: #eff6ff; border: 1px solid #bfdbfe; }
-        .infra-header { color: #1e40af; background: #dbeafe; }
-        .infra-header:hover { background: #bfdbfe; }
+        .infra-container { background: #fdf4ff; border: 1px solid #f5d0fe; }
+        .infra-header { color: #86198f; background: #fae8ff; }
+        .infra-header:hover { background: #f5d0fe; }
 
-        /* Subdesplegables internos con scroll y buscador */
+        /* Subdesplegables internos con scroll */
         .sub-infra-dropdown {
             background: #ffffff;
-            border: 1px solid #bfdbfe;
+            border: 1px solid #f5d0fe;
             border-radius: 6px;
             margin: 6px 0;
             overflow: hidden;
@@ -475,11 +435,11 @@
             cursor: pointer;
             font-size: 0.78em;
             font-weight: bold;
-            color: #1e40af;
-            background: #dbeafe;
+            color: #86198f;
+            background: #fae8ff;
             user-select: none;
         }
-        .sub-infra-header:hover { background: #bfdbfe; }
+        .sub-infra-header:hover { background: #f5d0fe; }
         .sub-infra-content {
             max-height: 0;
             overflow-y: auto;
@@ -490,9 +450,9 @@
             background: #ffffff;
         }
         .sub-infra-dropdown.open .sub-infra-content {
-            max-height: 280px;
+            max-height: 320px;
             padding: 6px 10px 8px 10px;
-            border-top: 1px dashed #bfdbfe;
+            border-top: 1px dashed #f5d0fe;
         }
         .sub-infra-dropdown.open .arrow-icon {
             transform: rotate(180deg);
@@ -680,42 +640,6 @@
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
 
-        <!-- Perfil Productivo y Fuerte Económico -->
-        <div class="gen-container perfil-container" id="panel-perfil">
-            <div class="gen-header perfil-header" onclick="toggleSeccion('panel-perfil')">
-                <span>🌾 Perfil Productivo & Fuerte Económico Regional</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Motor Económico Distintivo</strong>
-                    <span id="perfil-motor">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Principales Exportaciones y Sectores Clave</strong>
-                    <span id="perfil-exportaciones">-</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pruebas de Comprensión y Calidad Educativa -->
-        <div class="gen-container educacion-container" id="panel-educacion-calidad">
-            <div class="gen-header educacion-header" onclick="toggleSeccion('panel-educacion-calidad')">
-                <span>📚 Calidad Educativa & Comprensión (Pruebas Aprender)</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Nivel de Comprensión Lectora (Primaria/Secundaria)</strong>
-                    <span id="edu-lectura">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Desempeño en Matemática</strong>
-                    <span id="edu-matematica">-</span>
-                </div>
-            </div>
-        </div>
-
         <!-- Desplegable: Tres Poderes -->
         <div class="gen-container poderes-container" id="panel-poderes">
             <div class="gen-header poderes-header" onclick="toggleSeccion('panel-poderes')">
@@ -738,7 +662,29 @@
             </div>
         </div>
 
-        <!-- Banca Pública & Agente Financiero -->
+        <!-- Desplegable: Agenda Provincial -->
+        <div class="gen-container agenda-container" id="panel-agenda">
+            <div class="gen-header agenda-header" onclick="toggleSeccion('panel-agenda')">
+                <span>📅 Agenda Provincial & Prioridades de Gestión</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Prioridad Económica / Infraestructura</strong>
+                    <span id="agenda-infraestructura">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Foco Sanitario y Educativo</strong>
+                    <span id="agenda-social">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Desafío Institucional / Transparencia</strong>
+                    <span id="agenda-institucional">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVA SECCIÓN: Banca Pública & Agente Financiero -->
         <div class="gen-container banca-container" id="panel-banca">
             <div class="gen-header banca-header" onclick="toggleSeccion('panel-banca')">
                 <span>🏦 Banca Pública, Agente Financiero & Créditos</span>
@@ -760,7 +706,7 @@
             </div>
         </div>
 
-        <!-- Agenda de Votaciones & Bloques -->
+        <!-- NUEVA SECCIÓN: Agenda de Votaciones & Bloques -->
         <div class="gen-container votaciones-container" id="panel-votaciones">
             <div class="gen-header votaciones-header" onclick="toggleSeccion('panel-votaciones')">
                 <span>🗳️ Agenda de Votaciones & Posicionamiento de Bloques</span>
@@ -836,46 +782,40 @@
             </div>
         </div>
 
-        <!-- Desplegable de Infraestructura Crítica con Buscador en vivo -->
+        <!-- Desplegable de Infraestructura Crítica -->
         <div class="gen-container infra-container" id="panel-infraestructura-critica">
             <div class="gen-header infra-header" onclick="toggleSeccion('panel-infraestructura-critica')">
-                <span>🏫🏥🚓 Escuelas, Hospitales y Comisarías (Buscador Interno)</span>
+                <span>🏫🏥🚓 Escuelas, Hospitales y Comisarías (Listados Completos)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
                 
-                <!-- Subdesplegable Escuelas con Buscador -->
                 <div class="sub-infra-dropdown" id="sub-drop-escuelas">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-escuelas')">
                         <span id="titulo-cant-escuelas">🏫 Escuelas Registradas</span>
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
-                        <input type="text" class="search-box" placeholder="Buscar escuela por nombre o número..." onkeyup="filtrarLista(this, 'lista-escuelas-detalle')">
                         <ul id="lista-escuelas-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
                     </div>
                 </div>
 
-                <!-- Subdesplegable Hospitales con Buscador -->
                 <div class="sub-infra-dropdown" id="sub-drop-hospitales">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-hospitales')">
                         <span id="titulo-cant-hospitales">🏥 Hospitales & Centros de Salud</span>
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
-                        <input type="text" class="search-box" placeholder="Buscar hospital o centro médico..." onkeyup="filtrarLista(this, 'lista-hospitales-detalle')">
                         <ul id="lista-hospitales-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
                     </div>
                 </div>
 
-                <!-- Subdesplegable Comisarias con Buscador -->
                 <div class="sub-infra-dropdown" id="sub-drop-comisarias">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-comisarias')">
                         <span id="titulo-cant-comisarias">🚓 Comisarías / Seccionales Policiales</span>
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
-                        <input type="text" class="search-box" placeholder="Buscar comisaría o seccional..." onkeyup="filtrarLista(this, 'lista-comisarias-detalle')">
                         <ul id="lista-comisarias-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
                     </div>
                 </div>
@@ -927,24 +867,18 @@
         </div>
         <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
 
-        <!-- Gráfico Visual de Pobreza -->
         <div class="metric-dropdown" id="drop-pobreza">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-pobreza')">
-                <span>📈 Tendencia Pobreza (Últimos 6 años - Gráfico)</span><span class="arrow-icon">▼</span>
+                <span>Tasa de Pobreza (Ver últimos 6 años)</span><span class="arrow-icon">▼</span>
             </div>
-            <div class="metric-dropdown-content">
-                <div id="chart-pobreza" class="chart-container"></div>
-            </div>
+            <div class="metric-dropdown-content"><ul id="list-pobreza"></ul></div>
         </div>
 
-        <!-- Gráfico Visual de Desempleo -->
         <div class="metric-dropdown" id="drop-desempleo">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-desempleo')">
-                <span>📈 Tendencia Desempleo (Últimos 6 años - Gráfico)</span><span class="arrow-icon">▼</span>
+                <span>Desempleo Real (Ver últimos 6 años)</span><span class="arrow-icon">▼</span>
             </div>
-            <div class="metric-dropdown-content">
-                <div id="chart-desempleo" class="chart-container"></div>
-            </div>
+            <div class="metric-dropdown-content"><ul id="list-desempleo"></ul></div>
         </div>
 
         <div class="metric-dropdown" id="drop-empleo-tipo">
@@ -1000,18 +934,15 @@
             "Buenos Aires": { 
                 nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
                 cant_escuelas: 4920, cant_hospitales: 81, cant_comisarias: 410,
-                perfil: {
-                    motor: "Industrial manufacturero, petroquímico, automotriz y agropecuario intensivo.",
-                    exportaciones: "Manufacturas de origen industrial (MOI), cereales, oleaginosas y derivados cárnicos."
-                },
-                educacionCalidad: {
-                    lectura: "64% alcanzando o superando los niveles satisfactorios en pruebas de comprensión.",
-                    matematica: "52% con desempeño satisfactorio; fuerte brecha entre gestión estatal y privada."
-                },
                 poderes: {
                     ejecutivo: "Encabezado por el Gobernador. Administra la administración pública provincial, la policía bonaerense y gestiona directamente hospitales y escuelas públicas.",
                     legislativo: "Compuesto por la Legislatura Provincial (Senadores y Diputados). Sanciona leyes locales y aprueba el presupuesto provincial.",
                     judicial: "Suprema Corte de Justicia de la Provincia. Garantiza constitucionalidad y administra justicia penal, civil y laboral."
+                },
+                agenda: {
+                    infraestructura: "Plan de mejora vial en rutas provinciales y expansión de redes cloacales en el conurbano.",
+                    social: "Negociación paritaria docente continua y reequipamiento de hospitales de alta complejidad.",
+                    institucional: "Transparencia en contrataciones directas y control de fondos de coparticipación municipal."
                 },
                 banca: {
                     entidad: "Banco de la Provincia de Buenos Aires (BAPRO)",
@@ -1019,7 +950,7 @@
                     tasas: "Promedio de tasas activas competitivas fondeadas con depósitos judiciales y provinciales."
                 },
                 votacionesDetalle: {
-                    comportamiento: "Bloque mayoritario alineado con la oposición al pacto fiscal nacional, votando mayoritariamente en contra de las iniciativas de desregulación.",
+                    comportamiento: "Bloque mayoritario allineado con la oposición al pacto fiscal nacional, votando mayoritariamente en contra de las iniciativas de desregulación.",
                     negociaciones: "Defensa cerrada de los fondos coparticipables y de las transferencias automáticas no discretcionales."
                 },
                 comunicados: {
@@ -1039,8 +970,8 @@
                     "<strong>Julio Alak</strong> (Exintendente / Ministro): Causa por administración fraudulenta y contrataciones directas. Exp. 4589/12. Estado: Procesado y elevado a juicio oral.",
                     "<strong>Pablo Bruera</strong> (Exintendente de La Plata): Causa por negociaciones incompatibles y lavado de fondos públicos. Exp. 12450/15. Estado: Elevado a juicio."
                 ], poblacion: 17569053, 
-                pobreza_historial: [{anio: 2021, val: "45.0%"}, {anio: 2022, val: "42.1%"}, {anio: 2023, val: "41.8%"}, {anio: 2024, val: "46.0%"}, {anio: 2025, val: "47.5%"}, {anio: 2026, val: "48.2%"}],
-                desempleo_historial: [{anio: 2021, val: "9.2%"}, {anio: 2022, val: "8.0%"}, {anio: 2023, val: "7.5%"}, {anio: 2024, val: "8.9%"}, {anio: 2025, val: "8.2%"}, {anio: 2026, val: "8.7%"}],
+                pobreza_historial: [{anio: 2026, val: "48.2%"}, {anio: 2025, val: "47.5%"}, {anio: 2024, val: "46.0%"}, {anio: 2023, val: "41.8%"}, {anio: 2022, val: "42.1%"}, {anio: 2021, val: "45.0%"}],
+                desempleo_historial: [{anio: 2026, val: "8.7%"}, {anio: 2025, val: "8.2%"}, {anio: 2024, val: "8.9%"}, {anio: 2023, val: "7.5%"}, {anio: 2022, val: "8.0%"}, {anio: 2021, val: "9.2%"}],
                 empleo_tipo_historial: [{anio: 2026, val: "Priv. 38% | Público 18% | Informal 44%"}, {anio: 2023, val: "Priv. 37% | Público 19% | Informal 44%"}, {anio: 2021, val: "Priv. 35% | Público 20% | Informal 45%"}],
                 impuestos_nuevos: "Tasa adicional portuaria y sobretasa a grandes embarcaciones comerciales.",
                 impuestos_pros: "Genera fondos específicos para infraestructura vial municipal.",
@@ -1052,18 +983,15 @@
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", 
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
-                perfil: {
-                    motor: "Economía del conocimiento, servicios financieros, software, turismo y comercio corporativo.",
-                    exportaciones: "Servicios profesionales basados en el conocimiento (SBC), consultoría y tecnología."
-                },
-                educacionCalidad: {
-                    lectura: "86% alcanzando o superando los niveles satisfactorios en pruebas de comprensión.",
-                    matematica: "78% con desempeño satisfactorio; el distrito con mejores indicadores de rendimiento."
-                },
                 poderes: {
                     ejecutivo: "Ejercido por el Jefe de Gobierno. Administra la Ciudad, la Policía de la Ciudad, y los hospitales y escuelas públicas autónomas.",
                     legislativo: "Legislatura Porteña unicameral. Sanciona códigos contravencionales, urbanísticos y leyes fiscales.",
                     judicial: "Tribunal Superior de Justicia de la CABA y fuero local en contravenciones, contencioso administrativo y penal."
+                },
+                agenda: {
+                    infraestructura: "Renovación de centros urbanos y soterramiento de interferencias pluviales.",
+                    social: "Digitalización plena de trámites educativos y optimización de guardias hospitalarias.",
+                    institucional: "Reclamo judicial activo en Corte Suprema por fondos de coparticipación retenidos."
                 },
                 banca: {
                     entidad: "Banco de la Ciudad de Buenos Aires (Banco Ciudad)",
@@ -1090,8 +1018,8 @@
                 corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: [
                     "<strong>Exfuncionarios de Área de Obras Menores</strong>: Investigados por presunta cartelización de licitaciones de veredas y mobiliario urbano. Exp. 3120/21. Estado: En instrucción."
                 ], poblacion: 3120612, 
-                pobreza_historial: [{anio: 2021, val: "16.8%"}, {anio: 2022, val: "14.2%"}, {anio: 2023, val: "15.0%"}, {anio: 2024, val: "17.4%"}, {anio: 2025, val: "18.2%"}, {anio: 2026, val: "19.5%"}],
-                desempleo_historial: [{anio: 2021, val: "7.1%"}, {anio: 2022, val: "5.5%"}, {anio: 2023, val: "4.9%"}, {anio: 2024, val: "5.8%"}, {anio: 2025, val: "5.4%"}, {anio: 2026, val: "5.2%"}],
+                pobreza_historial: [{anio: 2026, val: "19.5%"}, {anio: 2025, val: "18.2%"}, {anio: 2024, val: "17.4%"}, {anio: 2023, val: "15.0%"}, {anio: 2022, val: "14.2%"}, {anio: 2021, val: "16.8%"}],
+                desempleo_historial: [{anio: 2026, val: "5.2%"}, {anio: 2025, val: "5.4%"}, {anio: 2024, val: "5.8%"}, {anio: 2023, val: "4.9%"}, {anio: 2022, val: "5.5%"}, {anio: 2021, val: "7.1%"}],
                 empleo_tipo_historial: [{anio: 2026, val: "Priv. 68% | Público 8% | Informal 24%"}, {anio: 2023, val: "Priv. 67% | Público 9% | Informal 24%"}, {anio: 2021, val: "Priv. 65% | Público 10% | Informal 25%"}],
                 impuestos_nuevos: "Eliminación progresiva de alícuota a tarjetas de crédito y simplificación de IIBB.",
                 impuestos_pros: "Alivia la carga impositiva sobre el consumo y estimula el comercio.",
@@ -1103,18 +1031,15 @@
             "Tierra del Fuego": { 
                 nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", 
                 cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
-                perfil: {
-                    motor: "Industria electrónica de ensamblaje (Ley 19.640), pesca marítima, hidrocarburos y turismo antártico.",
-                    exportaciones: "Electrodomésticos, teléfonos celulares, productos pesqueros e hidrocarburos."
-                },
-                educacionCalidad: {
-                    lectura: "72% alcanzando o superando los niveles satisfactorios en comprensión.",
-                    matematica: "58% con desempeño satisfactorio en evaluaciones provinciales y nacionales."
-                },
                 poderes: {
                     ejecutivo: "Gobernador provincial. Dirige la administración provincial, entes autónomos insulares y políticas de radicación industrial.",
                     legislativo: "Legislatura de Tierra del Fuego. Sanciona normativas provinciales y presupuestos.",
                     judicial: "Superior Tribunal de Justicia de Tierra del Fuego."
+                },
+                agenda: {
+                    infraestructura: "Ampliación de matriz energética insular, puerto multipropósito y conectividad en Ruta Nacional 3.",
+                    social: "Defensa activa del subrégimen industrial tecnológico y de puestos de trabajo fabriles.",
+                    institucional: "Soberanía antártica y geopolítica insular argentina."
                 },
                 banca: {
                     entidad: "Banco de Tierra del Fuego (BTF)",
@@ -1141,8 +1066,8 @@
                 corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por procesos judiciales en adjudicaciones de servicios públicos y contrataciones directas de emergencia. Exp. 1820/21. Estado: En instrucción."
                 ], poblacion: 190641, 
-                pobreza_historial: [{anio: 2021, val: "34.2%"}, {anio: 2022, val: "31.8%"}, {anio: 2023, val: "30.5%"}, {anio: 2024, val: "34.0%"}, {anio: 2025, val: "35.2%"}, {anio: 2026, val: "36.5%"}],
-                desempleo_historial: [{anio: 2021, val: "8.1%"}, {anio: 2022, val: "7.0%"}, {anio: 2023, val: "6.4%"}, {anio: 2024, val: "7.9%"}, {anio: 2025, val: "6.8%"}, {anio: 2026, val: "7.2%"}],
+                pobreza_historial: [{anio: 2026, val: "36.5%"}, {anio: 2025, val: "35.2%"}, {anio: 2024, val: "34.0%"}, {anio: 2023, val: "30.5%"}, {anio: 2022, val: "31.8%"}, {anio: 2021, val: "34.2%"}],
+                desempleo_historial: [{anio: 2026, val: "7.2%"}, {anio: 2025, val: "6.8%"}, {anio: 2024, val: "7.9%"}, {anio: 2023, val: "6.4%"}, {anio: 2022, val: "7.0%"}, {anio: 2021, val: "8.1%"}],
                 empleo_tipo_historial: [{anio: 2026, val: "Priv. 55% | Público 20% | Informal 25%"}, {anio: 2023, val: "Priv. 54% | Público 21% | Informal 25%"}, {anio: 2021, val: "Priv. 52% | Público 23% | Informal 25%"}],
                 impuestos_nuevos: "Tasa de verificación electrónica y aduanera industrial.",
                 impuestos_pros: "Mantiene incentivos al subrégimen industrial tecnológico fueguino.",
@@ -1158,18 +1083,15 @@
             return {
                 nombre: nombre, gobernador: "Autoridad Provincial Consensuada", legislatura: "Legislatura Provincial", coparticipacion_real: "3.5%",
                 cant_escuelas: 650, cant_hospitales: 20, cant_comisarias: 45,
-                perfil: {
-                    motor: "Agroindustria regional, comercio local y producción primaria diversificada.",
-                    exportaciones: "Materias primas y bienes manufacturados regionales."
-                },
-                educacionCalidad: {
-                    lectura: "68% alcanzando o superando los niveles esperados.",
-                    matematica: "54% con desempeño satisfactorio."
-                },
                 poderes: {
                     ejecutivo: "Encabezado por el Gobernador de " + nombre + ". Administra servicios públicos locales, salud y seguridad.",
                     legislativo: "Cámara legislativa provincial encargada de sancionar leyes de presupuesto y régimen fiscal.",
                     judicial: "Superior Tribunal de Justicia provincial."
+                },
+                agenda: {
+                    infraestructura: "Mantenimiento de corredores viales y expansión de servicios básicos.",
+                    social: "Optimización de la atención primaria sanitaria y cobertura educativa.",
+                    institucional: "Transparencia institucional y modernización de procesos digitales."
                 },
                 banca: {
                     entidad: "Agente Financiero Provincial Consensuado",
@@ -1196,8 +1118,8 @@
                 corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada",
                 condenados: ["<strong>Registros locales</strong>: Sin causas de alto impacto con condena firme reciente."],
                 poblacion: 850000,
-                pobreza_historial: [{anio: 2021, val: "40.0%"}, {anio: 2022, val: "38.5%"}, {anio: 2023, val: "37.5%"}, {anio: 2024, val: "41.0%"}, {anio: 2025, val: "42.5%"}, {anio: 2026, val: "44.0%"}],
-                desempleo_historial: [{anio: 2021, val: "7.5%"}, {anio: 2022, val: "6.6%"}, {anio: 2023, val: "6.1%"}, {anio: 2024, val: "7.4%"}, {anio: 2025, val: "6.7%"}, {anio: 2026, val: "7.0%"}],
+                pobreza_historial: [{anio: 2026, val: "44.0%"}, {anio: 2025, val: "42.5%"}, {anio: 2024, val: "41.0%"}, {anio: 2023, val: "37.5%"}, {anio: 2022, val: "38.5%"}, {anio: 2021, val: "40.0%"}],
+                desempleo_historial: [{anio: 2026, val: "7.0%"}, {anio: 2025, val: "6.7%"}, {anio: 2024, val: "7.4%"}, {anio: 2023, val: "6.1%"}, {anio: 2022, val: "6.6%"}, {anio: 2021, val: "7.5%"}],
                 empleo_tipo_historial: [{anio: 2026, val: "Priv. 38% | Público 22% | Informal 40%"}],
                 impuestos_nuevos: "Tasas retributivas provinciales ordinarias.", impuestos_pros: "Sostenimiento fiscal básico.", impuestos_contras: "Presión tributaria estándar.",
                 costo_alquiler: 420000, canasta_basica_total: 860000, salario_promedio_ripte: 750000, ingresos_brutos_alicuota: 3.8,
@@ -1234,41 +1156,6 @@
                 html += `<li><span>Comisaría Seccional ${i} (Distrito)</span> <strong>(Estado: ${estadoPct}%)</strong></li>`;
             }
             return html;
-        }
-
-        function filtrarLista(input, idLista) {
-            const filtro = input.value.toLowerCase();
-            const lista = document.getElementById(idLista);
-            const items = lista.getElementsByTagName('li');
-            for (let i = 0; i < items.length; i++) {
-                let texto = items[i].textContent || items[i].innerText;
-                if (texto.toLowerCase().indexOf(filtro) > -1) {
-                    items[i].style.display = "";
-                } else {
-                    items[i].style.display = "none";
-                }
-            }
-        }
-
-        function renderizarGrafico(idContenedor, historial) {
-            const contenedor = document.getElementById(idContenedor);
-            if (!historial || historial.length === 0) {
-                contenedor.innerHTML = "<span>Sin datos disponibles</span>";
-                return;
-            }
-            let html = "";
-            historial.forEach(item => {
-                let numVal = parseFloat(item.val.replace('%', ''));
-                let alturaPx = Math.max(Math.round(numVal * 1.2), 15);
-                html += `
-                    <div class="chart-bar-group">
-                        <span class="chart-bar-val">${item.val}</span>
-                        <div class="chart-bar" style="height: ${alturaPx}px;" title="Año ${item.anio}: ${item.val}"></div>
-                        <span class="chart-bar-label">${item.anio}</span>
-                    </div>
-                `;
-            });
-            contenedor.innerHTML = html;
         }
 
         function calcularIndiceRiesgo(p) {
@@ -1317,8 +1204,6 @@
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${data.nombre}`;
 
             document.getElementById('panel-dropdown').classList.remove('open');
-            document.getElementById('panel-perfil').classList.remove('open');
-            document.getElementById('panel-educacion-calidad').classList.remove('open');
             document.getElementById('panel-poderes').classList.remove('open');
             document.getElementById('panel-agenda').classList.remove('open');
             document.getElementById('panel-banca').classList.remove('open');
@@ -1342,16 +1227,13 @@
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
 
-            // Perfil productivo y educación calidad
-            document.getElementById('perfil-motor').innerText = data.perfil.motor;
-            document.getElementById('perfil-exportaciones').innerText = data.perfil.exportaciones;
-
-            document.getElementById('edu-lectura').innerText = data.educacionCalidad.lectura;
-            document.getElementById('edu-matematica').innerText = data.educacionCalidad.matematica;
-
             document.getElementById('poder-ejecutivo-desc').innerText = data.poderes.ejecutivo;
             document.getElementById('poder-legislativo-desc').innerText = data.poderes.legislativo;
             document.getElementById('poder-judicial-desc').innerText = data.poderes.judicial;
+
+            document.getElementById('agenda-infraestructura').innerText = data.agenda.infraestructura;
+            document.getElementById('agenda-social').innerText = data.agenda.social;
+            document.getElementById('agenda-institucional').innerText = data.agenda.institucional;
 
             // Banca & Votaciones detalle
             document.getElementById('banca-entidad').innerText = data.banca.entidad;
@@ -1408,9 +1290,8 @@
 
             document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
 
-            // Renderizar gráficos de barras visuales
-            renderizarGrafico('chart-pobreza', data.pobreza_historial);
-            renderizarGrafico('chart-desempleo', data.desempleo_historial);
+            llenarListaHistorica('list-pobreza', data.pobreza_historial);
+            llenarListaHistorica('list-desempleo', data.desempleo_historial);
             llenarListaHistorica('list-empleo-tipo', data.empleo_tipo_historial);
 
             document.getElementById('panel-cbt').innerText = `$${data.canasta_basica_total.toLocaleString('es-AR')}`;
