@@ -56,32 +56,50 @@
         #header h1 { margin: 0; font-size: 1.2em; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.75em; color: #0284c7; font-weight: 600; }
 
+        /* Panel Nacional Masivo con Desplegable */
         #national-summary {
             position: absolute;
             top: 80px;
             left: 20px;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             padding: 12px 15px;
             border-radius: 12px;
             border: 2px solid var(--celeste);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            width: 250px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            width: 290px;
         }
-        #national-summary h3 {
-            margin: 0 0 8px 0;
-            font-size: 0.8em;
+        .nat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.82em;
             color: #0369a1;
             text-transform: uppercase;
+            font-weight: bold;
             border-bottom: 2px solid #e0f2fe;
-            padding-bottom: 4px;
+            padding-bottom: 5px;
+            user-select: none;
+        }
+        .nat-header:hover { color: #0284c7; }
+        .nat-content {
+            max-height: 110px;
+            overflow-y: auto;
+            transition: max-height 0.3s ease-out;
+        }
+        #national-summary.open .nat-content {
+            max-height: 380px;
+        }
+        #national-summary.open .arrow-icon {
+            transform: rotate(180deg);
         }
         .nat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 0;
-            font-size: 0.8em;
+            padding: 5px 0;
+            font-size: 0.78em;
             border-bottom: 1px dashed #e2e8f0;
         }
         .nat-row:last-child { border-bottom: none; }
@@ -229,7 +247,6 @@
         .data-row span { color: var(--text-muted); }
         .data-row strong { color: var(--text); }
 
-        /* Estilo para Acordeones Desplegables de Métricas e Historiales */
         .metric-dropdown {
             background: #f8fafc;
             border: 1px solid #cbd5e1;
@@ -277,7 +294,6 @@
             transform: rotate(180deg);
         }
 
-        /* Estilo para el acordeón desplegable general de corrupción */
         .dropdown-container {
             background: #fff5f5;
             border: 1px solid #fecaca;
@@ -368,12 +384,25 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
+    <!-- Panel de Promedios Nacionales Masivo Desplegable -->
     <div id="national-summary">
-        <h3>Promedios Nacionales</h3>
-        <div class="nat-row"><span>Riesgo Integral:</span><span class="nat-val">68 / 100</span></div>
-        <div class="nat-row"><span>Pobreza Media:</span><span class="nat-val">45.2%</span></div>
-        <div class="nat-row"><span>Desempleo Real:</span><span class="nat-val">8.4%</span></div>
-        <div class="nat-row"><span>Alquiler Promedio:</span><span class="nat-val">$620.000</span></div>
+        <div class="nat-header" onclick="toggleNationalSummary()">
+            <span>📈 Promedios & Datos Nacionales</span>
+            <span class="arrow-icon">▼</span>
+        </div>
+        <div class="nat-content">
+            <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
+            <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">45.2%</span></div>
+            <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">8.4%</span></div>
+            <div class="nat-row"><span>Empleo Informal (Negro):</span><span class="nat-val">37.8%</span></div>
+            <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$620.000</span></div>
+            <div class="nat-row"><span>Canasta Básica Total (Cbt):</span><span class="nat-val">$925.000</span></div>
+            <div class="nat-row"><span>Salario Promedio Ripte:</span><span class="nat-val">$810.000</span></div>
+            <div class="nat-row"><span>Empleados Públicos (Total):</span><span class="nat-val">3.45 Millones</span></div>
+            <div class="nat-row"><span>Presión Tributaria Efectiva:</span><span class="nat-val">28.4% PBI</span></div>
+            <div class="nat-row"><span>Deuda Externa Consolidada:</span><span class="nat-val">USD 412 Mil Mill.</span></div>
+            <div class="nat-row"><span>Causas Corrupción Federales:</span><span class="nat-val">1.420 Activas</span></div>
+        </div>
     </div>
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Mapa Completo</button>
@@ -516,7 +545,6 @@
         <div class="section-heading">📊 Economía Real, Empleo & Costo de Vida (6 Años)</div>
         <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
 
-        <!-- Pobreza con Desplegable 6 Años -->
         <div class="metric-dropdown" id="drop-pobreza">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-pobreza')">
                 <span>Tasa de Pobreza (Ver últimos 6 años)</span><span class="arrow-icon">▼</span>
@@ -524,7 +552,6 @@
             <div class="metric-dropdown-content"><ul id="list-pobreza"></ul></div>
         </div>
 
-        <!-- Desempleo Real con Desplegable 6 Años -->
         <div class="metric-dropdown" id="drop-desempleo">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-desempleo')">
                 <span>Desempleo Real (Ver últimos 6 años)</span><span class="arrow-icon">▼</span>
@@ -532,7 +559,6 @@
             <div class="metric-dropdown-content"><ul id="list-desempleo"></ul></div>
         </div>
 
-        <!-- Empleo Registrado vs Informal con Desplegable -->
         <div class="metric-dropdown" id="drop-empleo-tipo">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-empleo-tipo')">
                 <span>Estructura de Empleo: Blanco vs Negro (6 Años)</span><span class="arrow-icon">▼</span>
@@ -545,7 +571,6 @@
         <div class="data-row"><span>Alquiler Promedio (2 amb):</span><strong id="panel-alquiler">-</strong></div>
         <div class="data-row"><span>Ingresos Brutos (Alícuota máx):</span><strong id="panel-iibb">-</strong></div>
 
-        <!-- Impuestos Recientes, Pros y Contras -->
         <div class="tax-box">
             <strong>🏛️ Nuevos Impuestos / Tasas Creadas:</strong>
             <span id="panel-impuestos-nuevos">-</span>
@@ -934,6 +959,11 @@
             container.classList.toggle('open');
         }
 
+        function toggleNationalSummary() {
+            const container = document.getElementById('national-summary');
+            container.classList.toggle('open');
+        }
+
         function toggleMetricDrop(dropId) {
             const container = document.getElementById(dropId);
             container.classList.toggle('open');
@@ -995,7 +1025,6 @@
 
             document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
 
-            // Llenar listas históricas de 6 años
             llenarListaHistorica('list-pobreza', data.pobreza_historial);
             llenarListaHistorica('list-desempleo', data.desempleo_historial);
             llenarListaHistorica('list-empleo-tipo', data.empleo_tipo_historial);
@@ -1019,7 +1048,7 @@
             document.getElementById('panel-vial').innerText = `${data.siniestros_viales_fatales}`;
 
             document.getElementById('panel-presupuesto-social').innerText = data.presupuesto_social;
-            document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
+            document.include = document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
             document.getElementById('panel-camas').innerText = `${data.camas_uti_cada_10k}`;
             document.getElementById('panel-escuela').innerText = `${data.escolarizacion_secundaria}%`;
             document.getElementById('panel-agua').innerText = `${data.cobertura_agua_cloacas}%`;
