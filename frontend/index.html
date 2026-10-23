@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor Cívico Argentina - Base Visual</title>
+    <title>Monitor Cívico Argentina</title>
     <style>
         * { box-sizing: border-box; }
         body, html {
@@ -13,11 +13,10 @@
             width: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            /* Fondo con degradado institucional celeste y blanco */
             background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #bae6fd 100%);
         }
 
-        /* Patrón de fondo con estrellas espaciadas y soles de mayo intercalados */
+        /* Fondo institucional con estrellas y soles bien espaciados */
         .background-pattern {
             position: absolute;
             top: 0;
@@ -27,7 +26,7 @@
             pointer-events: none;
             z-index: 1;
             opacity: 0.08;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><text x="40" y="80" font-size="32" fill="%23ffb81c">☀️</text><text x="180" y="200" font-size="30" fill="%2374acdf">⭐⭐⭐</text></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><text x="60" y="80" font-size="36" fill="%23ffb81c">☀️</text><text x="220" y="260" font-size="34" fill="%2374acdf">⭐⭐⭐</text></svg>');
             background-repeat: repeat;
         }
 
@@ -37,7 +36,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 10px 25px;
             border-radius: 30px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -64,15 +63,16 @@
         }
 
         #map-svg {
-            height: 84vh;
+            height: 85vh;
             max-width: 90vw;
-            filter: drop-shadow(0px 10px 25px rgba(0,0,0,0.15));
+            filter: drop-shadow(0px 12px 25px rgba(0,0,0,0.18));
         }
 
-        /* Estilo visual inicial limpio para las provincias basado en el mapa de referencia */
-        .provincia {
-            stroke: #1e293b;
-            stroke-width: 1.2;
+        /* Silueta orgánica y unificada sin huecos blancos */
+        .provincia-real {
+            stroke: #334155;
+            stroke-width: 1.5;
+            stroke-linejoin: round;
             transition: fill 0.2s ease;
         }
     </style>
@@ -85,71 +85,71 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
         <div>
             <h1>Monitor Cívico Argentina</h1>
-            <p>Estructura Base - Jurisdicciones Nacionales</p>
+            <p>Estructura Base - Mapa Geográfico Real</p>
         </div>
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
     <div id="map-container">
-        <!-- Mapa vectorial unificado con la forma real de Argentina y CABA integrada -->
-        <svg id="map-svg" viewBox="0 0 500 950" xmlns="http://www.w3.org/2000/svg">
-            <g id="mapa-argentina">
+        <!-- Trazado vectorial fluido basado exactamente en la referencia geográfica -->
+        <svg id="map-svg" viewBox="0 0 400 850" xmlns="http://www.w3.org/2000/svg">
+            <g id="mapa-argentina-real">
                 <!-- Jujuy -->
-                <path class="provincia" fill="#fde047" d="M 195,45 L 235,40 L 245,85 L 200,95 Z" />
+                <path class="provincia-real" fill="#fde047" d="M 160,30 Q 185,25 200,45 Q 205,75 180,85 Q 155,75 160,30 Z" />
                 <!-- Salta -->
-                <path class="provincia" fill="#38bdf8" d="M 155,80 L 200,95 L 245,85 L 290,95 L 280,155 L 195,145 L 155,115 Z" />
+                <path class="provincia-real" fill="#38bdf8" d="M 125,75 Q 180,80 200,45 Q 235,70 250,90 Q 240,140 180,135 Q 125,120 125,75 Z" />
                 <!-- Formosa -->
-                <path class="provincia" fill="#bae6fd" d="M 290,95 L 380,115 L 365,150 L 280,150 Z" />
+                <path class="provincia-real" fill="#bae6fd" d="M 250,90 Q 310,95 335,110 Q 325,145 240,140 Q 240,120 250,90 Z" />
                 <!-- Tucumán -->
-                <path class="provincia" fill="#7dd3fc" d="M 180,145 L 215,148 L 210,178 L 175,172 Z" />
+                <path class="provincia-real" fill="#7dd3fc" d="M 155,135 Q 185,135 190,160 Q 165,165 155,135 Z" />
                 <!-- Catamarca -->
-                <path class="provincia" fill="#fde047" d="M 130,125 L 180,145 L 175,172 L 210,190 L 190,230 L 125,185 Z" />
+                <path class="provincia-real" fill="#fde047" d="M 105,115 Q 155,120 155,135 Q 165,165 180,180 Q 165,220 100,175 Q 95,140 105,115 Z" />
                 <!-- Chaco -->
-                <path class="provincia" fill="#38bdf8" d="M 280,150 L 365,150 L 345,210 L 260,200 Z" />
+                <path class="provincia-real" fill="#38bdf8" d="M 240,140 Q 325,145 315,190 Q 235,185 240,140 Z" />
                 <!-- Santiago del Estero -->
-                <path class="provincia" fill="#1e40af" d="M 195,145 L 280,150 L 260,200 L 210,240 L 185,185 Z" />
+                <path class="provincia-real" fill="#1e40af" d="M 180,135 Q 240,140 235,185 Q 195,220 165,180 Q 165,165 180,135 Z" />
                 <!-- Misiones -->
-                <path class="provincia" fill="#38bdf8" d="M 400,155 L 445,145 L 460,195 L 415,215 Z" />
+                <path class="provincia-real" fill="#38bdf8" d="M 345,135 Q 380,130 395,165 Q 375,205 345,185 Z" />
                 <!-- Corrientes -->
-                <path class="provincia" fill="#fde047" d="M 345,210 L 415,215 L 395,285 L 320,265 Z" />
+                <path class="provincia-real" fill="#fde047" d="M 315,190 Q 375,205 355,265 Q 295,250 315,190 Z" />
                 <!-- Santa Fe -->
-                <path class="provincia" fill="#38bdf8" d="M 260,200 L 320,265 L 305,370 L 255,365 L 235,260 Z" />
+                <path class="provincia-real" fill="#38bdf8" d="M 235,185 Q 295,190 295,250 Q 280,340 230,335 Q 215,250 235,185 Z" />
                 <!-- La Rioja -->
-                <path class="provincia" fill="#38bdf8" d="M 125,185 L 190,230 L 175,275 L 110,250 Z" />
+                <path class="provincia-real" fill="#38bdf8" d="M 100,175 Q 165,220 155,260 Q 95,235 100,175 Z" />
                 <!-- San Juan -->
-                <path class="provincia" fill="#fde047" d="M 110,250 L 175,275 L 160,335 L 95,310 Z" />
+                <path class="provincia-real" fill="#fde047" d="M 95,235 Q 155,260 145,315 Q 85,290 95,235 Z" />
                 <!-- Córdoba -->
-                <path class="provincia" fill="#fde047" d="M 190,230 L 260,200 L 235,260 L 255,365 L 195,360 L 175,275 Z" />
+                <path class="provincia-real" fill="#fde047" d="M 165,220 Q 235,185 215,250 Q 230,335 175,330 Q 155,270 165,220 Z" />
                 <!-- Entre Ríos -->
-                <path class="provincia" fill="#7dd3fc" d="M 320,265 L 395,285 L 370,360 L 305,370 Z" />
+                <path class="provincia-real" fill="#7dd3fc" d="M 295,250 Q 355,265 335,335 Q 280,340 295,250 Z" />
                 <!-- San Luis -->
-                <path class="provincia" fill="#bae6fd" d="M 160,335 L 195,360 L 185,425 L 135,410 Z" />
+                <path class="provincia-real" fill="#bae6fd" d="M 145,315 Q 175,330 165,390 Q 120,375 145,315 Z" />
                 <!-- Mendoza -->
-                <path class="provincia" fill="#1e40af" d="M 95,310 L 160,335 L 135,410 L 90,385 Z" />
+                <path class="provincia-real" fill="#1e40af" d="M 85,290 Q 145,315 Q 120,375 Q 75,355 85,290 Z" />
                 <!-- La Pampa -->
-                <path class="provincia" fill="#38bdf8" d="M 185,425 L 255,365 L 245,460 L 180,445 Z" />
+                <path class="provincia-real" fill="#38bdf8" d="M 165,390 Q 230,335 220,430 Q 155,420 165,390 Z" />
                 
                 <!-- Provincia de Buenos Aires -->
-                <path class="provincia" fill="#1e40af" d="M 255,365 L 305,370 L 370,360 L 355,475 L 280,545 L 195,475 L 245,460 Z" />
+                <path class="provincia-real" fill="#1e40af" d="M 230,335 Q 280,340 335,335 Q 320,440 250,500 Q 175,435 220,430 Q 220,360 230,335 Z" />
                 
-                <!-- CABA (Ciudad Autónoma de Buenos Aires - Integrada y visible claramente dentro de Buenos Aires) -->
-                <polygon class="provincia" fill="#16a34a" points="305,360 335,360 338,390 308,390" />
+                <!-- CABA (Integrada en la costa norte de Buenos Aires) -->
+                <rect class="provincia-real" fill="#16a34a" x="270" y="335" width="22" height="22" rx="3" />
 
                 <!-- Neuquén -->
-                <path class="provincia" fill="#fde047" d="M 90,385 L 135,410 L 125,490 L 75,475 Z" />
+                <path class="provincia-real" fill="#fde047" d="M 75,355 Q 120,375 110,455 Q 65,440 75,355 Z" />
                 <!-- Río Negro -->
-                <path class="provincia" fill="#38bdf8" d="M 125,490 L 245,460 L 265,550 L 115,545 Z" />
+                <path class="provincia-real" fill="#38bdf8" d="M 110,455 Q 220,430 235,510 Q 95,505 110,455 Z" />
                 <!-- Chubut -->
-                <path class="provincia" fill="#1e40af" d="M 115,545 L 265,550 L 245,660 L 100,650 Z" />
+                <path class="provincia-real" fill="#1e40af" d="M 95,505 Q 235,510 215,610 Q 80,600 95,505 Z" />
                 <!-- Santa Cruz -->
-                <path class="provincia" fill="#fde047" d="M 100,650 L 245,660 L 215,785 L 85,775 Z" />
+                <path class="provincia-real" fill="#fde047" d="M 80,600 Q 215,610 185,720 Q 65,710 80,600 Z" />
                 <!-- Tierra del Fuego -->
-                <path class="provincia" fill="#fde047" d="M 135,815 L 205,825 L 190,865 L 125,855 Z" />
+                <path class="provincia-real" fill="#fde047" d="M 110,750 Q 175,755 160,795 Q 100,785 110,750 Z" />
                 
                 <!-- Islas Malvinas -->
                 <g id="islas-malvinas">
-                    <path class="provincia" fill="#38bdf8" d="M 315,715 L 335,709 L 330,739 L 310,735 Z" />
-                    <path class="provincia" fill="#38bdf8" d="M 345,725 L 370,719 L 365,755 L 340,749 Z" />
+                    <path class="provincia-real" fill="#38bdf8" d="M 280,685 Q 300,680 295,710 Q 275,705 280,685 Z" />
+                    <path class="provincia-real" fill="#38bdf8" d="M 310,695 Q 335,690 330,725 Q 305,720 310,695 Z" />
                 </g>
             </g>
         </svg>
