@@ -148,12 +148,14 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
+            pointer-events: none; /* Permite que los clics atraviesen el contenedor hacia los paths */
         }
 
         #map-svg {
             height: 82vh;
             max-width: 95vw;
             filter: drop-shadow(0px 12px 25px rgba(0,0,0,0.18));
+            pointer-events: auto; /* Restaura clics operativos en el SVG */
         }
 
         .provincia-real {
@@ -161,6 +163,7 @@
             stroke-width: 1.2;
             cursor: pointer;
             transition: all 0.2s ease;
+            pointer-events: auto;
         }
         .provincia-real:hover {
             fill: #ffb81c !important;
@@ -182,9 +185,9 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 480px;
+            width: 490px;
             max-height: calc(100vh - 90px);
-            z-index: 3000;
+            z-index: 4000;
             background: var(--card-bg);
             border-radius: 14px;
             padding: 18px;
@@ -193,6 +196,7 @@
             display: none;
             border: 2px solid var(--celeste);
             color: var(--text);
+            pointer-events: auto;
         }
         .close-btn {
             float: right;
@@ -217,17 +221,6 @@
             align-items: center;
         }
 
-        .source-link {
-            font-size: 0.75em;
-            color: #0284c7;
-            text-decoration: none;
-            background: #e0f2fe;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .source-link:hover { background: #bae6fd; color: #0369a1; }
-
         .metric-box {
             background: #f0f9ff;
             border-radius: 8px;
@@ -249,7 +242,6 @@
         }
         .data-row span { color: var(--text-muted); }
         .data-row strong { color: var(--text); }
-        .data-row a.source-icon { font-size: 0.9em; text-decoration: none; margin-left: 6px; }
 
         .metric-dropdown {
             background: #f8fafc;
@@ -280,23 +272,63 @@
             color: #334155;
             background: #f8fafc;
         }
-        .metric-dropdown-content ul {
-            margin: 6px 0;
-            padding-left: 14px;
-        }
-        .metric-dropdown-content li {
-            margin-bottom: 3px;
-            display: flex;
-            justify-content: space-between;
-        }
         .metric-dropdown.open .metric-dropdown-content {
-            max-height: 180px;
-            padding: 6px 10px 8px 10px;
+            max-height: 220px;
+            padding: 8px 10px;
             border-top: 1px dashed #cbd5e1;
         }
         .metric-dropdown.open .arrow-icon {
             transform: rotate(180deg);
         }
+
+        /* Gráfico Visual en Dashboard */
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 90px;
+            padding: 10px 5px 2px 5px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+        .chart-bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            margin: 0 2px;
+        }
+        .chart-bar {
+            width: 100%;
+            background: #0284c7;
+            border-radius: 3px 3px 0 0;
+            transition: height 0.4s ease;
+        }
+        .chart-bar-label {
+            font-size: 0.65em;
+            color: #64748b;
+            margin-top: 3px;
+        }
+        .chart-bar-val {
+            font-size: 0.65em;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+
+        /* Buscador en listas masivas */
+        .search-box {
+            width: 100%;
+            padding: 5px 8px;
+            margin-bottom: 6px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 0.76em;
+            outline: none;
+        }
+        .search-box:focus { border-color: #0284c7; }
 
         .dropdown-container {
             background: #fff5f5;
@@ -339,10 +371,6 @@
             margin-bottom: 8px;
             border-bottom: 1px dashed #fca5a5;
             padding-bottom: 6px;
-        }
-        .dropdown-content li:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
         }
         .dropdown-container.open .dropdown-content {
             max-height: 300px;
@@ -391,9 +419,13 @@
         .poderes-header { color: #166534; background: #dcfce7; }
         .poderes-header:hover { background: #bbf7d0; }
 
-        .agenda-container { background: #eff6ff; border: 1px solid #bfdbfe; }
-        .agenda-header { color: #1e40af; background: #dbeafe; }
-        .agenda-header:hover { background: #bfdbfe; }
+        .perfil-container { background: #fdf4ff; border: 1px solid #f5d0fe; }
+        .perfil-header { color: #86198f; background: #fae8ff; }
+        .perfil-header:hover { background: #f5d0fe; }
+
+        .educacion-container { background: #fef2f2; border: 1px solid #fecaca; }
+        .educacion-header { color: #991b1b; background: #fee2e2; }
+        .educacion-header:hover { background: #fecaca; }
 
         .banca-container { background: #fefce8; border: 1px solid #fef08a; }
         .banca-header { color: #854d0e; background: #fef9c3; }
@@ -403,26 +435,26 @@
         .votaciones-header { color: #6b21a8; background: #f3e8ff; }
         .votaciones-header:hover { background: #e9d5ff; }
 
-        .comunicados-container { background: #fff7ed; border: 1px solid #fed7aa; }
-        .comunicados-header { color: #c2410c; background: #ffedd5; }
-        .comunicados-header:hover { background: #fed7aa; }
+        .tarifas-container { background: #fff7ed; border: 1px solid #fed7aa; }
+        .tarifas-header { color: #c2410c; background: #ffedd5; }
+        .tarifas-header:hover { background: #fed7aa; }
 
-        .docs-container { background: #fdf2f8; border: 1px solid #fbcfe8; }
-        .docs-header { color: #be185d; background: #fce7f3; }
-        .docs-header:hover { background: #fbcfe8; }
+        .justicia-container { background: #f8fafc; border: 1px solid #cbd5e1; }
+        .justicia-header { color: #334155; background: #e2e8f0; }
+        .justicia-header:hover { background: #cbd5e1; }
 
-        .auditorias-container { background: #f8fafc; border: 1px solid #cbd5e1; }
-        .auditorias-header { color: #334155; background: #e2e8f0; }
-        .auditorias-header:hover { background: #cbd5e1; }
+        .ambiental-container { background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .ambiental-header { color: #15803d; background: #dcfce7; }
+        .ambiental-header:hover { background: #bbf7d0; }
 
-        .infra-container { background: #fdf4ff; border: 1px solid #f5d0fe; }
-        .infra-header { color: #86198f; background: #fae8ff; }
-        .infra-header:hover { background: #f5d0fe; }
+        .infra-container { background: #eff6ff; border: 1px solid #bfdbfe; }
+        .infra-header { color: #1e40af; background: #dbeafe; }
+        .infra-header:hover { background: #bfdbfe; }
 
-        /* Subdesplegables internos con scroll */
+        /* Subdesplegables internos con scroll y buscador */
         .sub-infra-dropdown {
             background: #ffffff;
-            border: 1px solid #f5d0fe;
+            border: 1px solid #bfdbfe;
             border-radius: 6px;
             margin: 6px 0;
             overflow: hidden;
@@ -435,11 +467,11 @@
             cursor: pointer;
             font-size: 0.78em;
             font-weight: bold;
-            color: #86198f;
-            background: #fae8ff;
+            color: #1e40af;
+            background: #dbeafe;
             user-select: none;
         }
-        .sub-infra-header:hover { background: #f5d0fe; }
+        .sub-infra-header:hover { background: #bfdbfe; }
         .sub-infra-content {
             max-height: 0;
             overflow-y: auto;
@@ -450,9 +482,9 @@
             background: #ffffff;
         }
         .sub-infra-dropdown.open .sub-infra-content {
-            max-height: 320px;
+            max-height: 280px;
             padding: 6px 10px 8px 10px;
-            border-top: 1px dashed #f5d0fe;
+            border-top: 1px dashed #bfdbfe;
         }
         .sub-infra-dropdown.open .arrow-icon {
             transform: rotate(180deg);
@@ -466,8 +498,6 @@
             margin: 6px 0;
         }
         .sub-card strong { display: block; margin-bottom: 2px; }
-        .sub-card a { color: #0284c7; text-decoration: none; font-weight: bold; }
-        .sub-card a:hover { text-decoration: underline; }
 
         .voto-badge {
             padding: 2px 6px;
@@ -509,31 +539,27 @@
         <div class="nat-header">📈 Promedios & Datos Nacionales</div>
         <div class="nat-content">
             <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
-            <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">45.2% <a href="https://www.indec.gob.ar" target="_blank" class="source-icon" title="Ver fuente INDEC">🔗</a></span></div>
-            <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">8.4% <a href="https://www.indec.gob.ar" target="_blank" class="source-icon" title="Ver fuente INDEC">🔗</a></span></div>
-            <div class="nat-row"><span>Empleo Informal (Negro):</span><span class="nat-val">37.8% <a href="https://www.indec.gob.ar" target="_blank" class="source-icon" title="Ver fuente INDEC">🔗</a></span></div>
-            <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$620.000 <a href="https://www.argentina.gob.ar" target="_blank" class="source-icon" title="Ver fuente Oficial">🔗</a></span></div>
-            <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$925.000 <a href="https://www.indec.gob.ar" target="_blank" class="source-icon" title="Ver fuente INDEC">🔗</a></span></div>
-            <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$810.000 <a href="https://www.argentina.gob.ar/trabajo" target="_blank" class="source-icon" title="Ver fuente Secretaría de Trabajo">🔗</a></span></div>
-            <div class="nat-row"><span>Empleados Públicos (Total):</span><span class="nat-val">3.45 Millones <a href="https://www.indec.gob.ar" target="_blank" class="source-icon" title="Ver fuente INDEC">🔗</a></span></div>
-            <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800 <a href="https://www.argentina.gob.ar/educacion" target="_blank" class="source-icon" title="Ver fuente Ministerio de Educación">🔗</a></span></div>
-            <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350 <a href="https://www.argentina.gob.ar/salud" target="_blank" class="source-icon" title="Ver fuente SISA">🔗</a></span></div>
-            <div class="nat-row"><span>Comisarías / Seccionales:</span><span class="nat-val">~ 2.900 <a href="https://www.argentina.gob.ar/seguridad" target="_blank" class="source-icon" title="Ver fuente Min. Seguridad">🔗</a></span></div>
-            <div class="nat-row"><span>Presión Tributaria Efectiva:</span><span class="nat-val">28.4% PBI <a href="https://www.afip.gob.ar" target="_blank" class="source-icon" title="Ver fuente ARCA/AFIP">🔗</a></span></div>
-            <div class="nat-row"><span>Deuda Externa Consolidada:</span><span class="nat-val">USD 412 Mil Mill. <a href="https://www.bcra.gob.ar" target="_blank" class="source-icon" title="Ver fuente BCRA">🔗</a></span></div>
-            <div class="nat-row"><span>Causas Corrupción Federales:</span><span class="nat-val">1.420 Activas <a href="https://www.pjn.gov.ar" target="_blank" class="source-icon" title="Ver fuente Poder Judicial">🔗</a></span></div>
+            <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">45.2%</span></div>
+            <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">8.4%</span></div>
+            <div class="nat-row"><span>Empleo Informal (Negro):</span><span class="nat-val">37.8%</span></div>
+            <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$620.000</span></div>
+            <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$925.000</span></div>
+            <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$810.000</span></div>
+            <div class="nat-row"><span>Empleados Públicos (Total):</span><span class="nat-val">3.45 Millones</span></div>
+            <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800</span></div>
+            <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350</span></div>
+            <div class="nat-row"><span>Comisarías / Seccionales:</span><span class="nat-val">~ 2.900</span></div>
+            <div class="nat-row"><span>Presión Tributaria Efectiva:</span><span class="nat-val">28.4% PBI</span></div>
+            <div class="nat-row"><span>Deuda Externa Consolidada:</span><span class="nat-val">USD 412 Mil Mill.</span></div>
+            <div class="nat-row"><span>Causas Corrupción Federales:</span><span class="nat-val">1.420 Activas</span></div>
         </div>
     </div>
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Mapa Completo</button>
 
     <div id="footer-fuentes">
-        <span><strong>Fuentes Oficiales:</strong> 
-            <a href="https://www.indec.gob.ar" target="_blank">INDEC 🔗</a> · 
-            <a href="https://www.argentina.gob.ar/educacion" target="_blank">Educación 🔗</a> · 
-            <a href="https://www.argentina.gob.ar/salud" target="_blank">Salud SISA 🔗</a> · 
-            <a href="https://www.hcdn.gob.ar" target="_blank">Congreso 🔗</a> · 
-            <a href="https://www.bcra.gob.ar" target="_blank">BCRA 🔗</a>
+        <span><strong>Fuentes Oficiales de Consulta:</strong> 
+            INDEC · Ministerio de Educación · SISA Salud · Honorable Congreso de la Nación · BCRA · ARCA (AFIP) · Poder Judicial de la Nación
         </span>
     </div>
 
@@ -634,11 +660,100 @@
 
         <div class="section-heading">
             <span>🏛️ Identificación Institucional</span>
-            <a href="https://www.argentina.gob.ar" target="_blank" class="source-link">Fuente 🔗</a>
         </div>
         <div class="data-row"><span>Gobernador / Gestión:</span><strong id="panel-gobernador">-</strong></div>
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
+
+        <!-- Perfil Productivo y Fuerte Económico -->
+        <div class="gen-container perfil-container" id="panel-perfil">
+            <div class="gen-header perfil-header" onclick="toggleSeccion('panel-perfil')">
+                <span>🌾 Perfil Productivo & Fuerte Económico Regional</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Motor Económico Distintivo</strong>
+                    <span id="perfil-motor">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Principales Exportaciones y Sectores Clave</strong>
+                    <span id="perfil-exportaciones">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pruebas de Comprensión y Calidad Educativa -->
+        <div class="gen-container educacion-container" id="panel-educacion-calidad">
+            <div class="gen-header educacion-header" onclick="toggleSeccion('panel-educacion-calidad')">
+                <span>📚 Calidad Educativa & Comprensión (Pruebas Aprender)</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Nivel de Comprensión Lectora (Primaria/Secundaria)</strong>
+                    <span id="edu-lectura">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Desempeño en Matemática</strong>
+                    <span id="edu-matematica">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarifas de Servicios & Impacto en Bolsillo -->
+        <div class="gen-container tarifas-container" id="panel-tarifas">
+            <div class="gen-header tarifas-header" onclick="toggleSeccion('panel-tarifas')">
+                <span>⚡ Tarifas de Servicios & Impacto en Bolsillo</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Costo Promedio Servicios (Luz, Gas, Agua)</strong>
+                    <span id="tarifa-servicios">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Peso Relativo frente al Salario RIPTE</strong>
+                    <span id="tarifa-peso">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tiempos de Justicia & Impunidad -->
+        <div class="gen-container justicia-container" id="panel-justicia">
+            <div class="gen-header justicia-header" onclick="toggleSeccion('panel-justicia')">
+                <span>⚖️ Tiempos de Justicia & Tasa de Impunidad</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Duración Promedio de Juicios por Corrupción</strong>
+                    <span id="justicia-duracion">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Efectividad y Condenas en Delitos Urbanos</strong>
+                    <span id="justicia-efectividad">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Huella Ambiental & Emergencias -->
+        <div class="gen-container ambiental-container" id="panel-ambiental">
+            <div class="gen-header ambiental-header" onclick="toggleSeccion('panel-ambiental')">
+                <span>🌱 Huella Ambiental & Gestión de Riesgos</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Protección de Bosques Nativos y Suelos</strong>
+                    <span id="ambiental-suelos">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Plantas Cloacales y Alertas Climáticas</strong>
+                    <span id="ambiental-clima">-</span>
+                </div>
+            </div>
+        </div>
 
         <!-- Desplegable: Tres Poderes -->
         <div class="gen-container poderes-container" id="panel-poderes">
@@ -662,29 +777,7 @@
             </div>
         </div>
 
-        <!-- Desplegable: Agenda Provincial -->
-        <div class="gen-container agenda-container" id="panel-agenda">
-            <div class="gen-header agenda-header" onclick="toggleSeccion('panel-agenda')">
-                <span>📅 Agenda Provincial & Prioridades de Gestión</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Prioridad Económica / Infraestructura</strong>
-                    <span id="agenda-infraestructura">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Foco Sanitario y Educativo</strong>
-                    <span id="agenda-social">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Desafío Institucional / Transparencia</strong>
-                    <span id="agenda-institucional">-</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- NUEVA SECCIÓN: Banca Pública & Agente Financiero -->
+        <!-- Banca Pública & Agente Financiero -->
         <div class="gen-container banca-container" id="panel-banca">
             <div class="gen-header banca-header" onclick="toggleSeccion('panel-banca')">
                 <span>🏦 Banca Pública, Agente Financiero & Créditos</span>
@@ -706,7 +799,7 @@
             </div>
         </div>
 
-        <!-- NUEVA SECCIÓN: Agenda de Votaciones & Bloques -->
+        <!-- Agenda de Votaciones & Bloques -->
         <div class="gen-container votaciones-container" id="panel-votaciones">
             <div class="gen-header votaciones-header" onclick="toggleSeccion('panel-votaciones')">
                 <span>🗳️ Agenda de Votaciones & Posicionamiento de Bloques</span>
@@ -724,68 +817,10 @@
             </div>
         </div>
 
-        <!-- Comunicados Oficiales & Alertas -->
-        <div class="gen-container comunicados-container" id="panel-comunicados">
-            <div class="gen-header comunicados-header" onclick="toggleSeccion('panel-comunicados')">
-                <span>📢 Comunicados Oficiales & Alertas de Gestión</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Último Boletín Oficial Provincial</strong>
-                    <span id="comunicado-boletin">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Alertas / Resoluciones Ministeriales Recientes</strong>
-                    <span id="comunicado-resoluciones">-</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Documentos Oficiales y Licitaciones (PDF) -->
-        <div class="gen-container docs-container" id="panel-docs">
-            <div class="gen-header docs-header" onclick="toggleSeccion('panel-docs')">
-                <span>📂 Documentos Oficiales & Licitaciones (PDF)</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Presupuesto Provincial Vigente (PDF)</strong>
-                    <a id="doc-presupuesto" href="#" target="_blank">📄 Descargar / Consultar Presupuesto oficial</a>
-                </div>
-                <div class="sub-card">
-                    <strong>Pliegos de Licitaciones Abiertas</strong>
-                    <a id="doc-licitaciones" href="#" target="_blank">📄 Ver Portal de Compras y Contrataciones</a>
-                </div>
-                <div class="sub-card">
-                    <strong>Declaraciones Juradas Patrimoniales</strong>
-                    <a id="doc-ddjj" href="#" target="_blank">📄 Acceder al Registro de DDJJ de Funcionarios</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Auditorías Ciudadanas & ONGs -->
-        <div class="gen-container auditorias-container" id="panel-auditorias">
-            <div class="gen-header auditorias-header" onclick="toggleSeccion('panel-auditorias')">
-                <span>🔍 Auditorías Ciudadanas & Informes ONGs</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Informe ACIJ / Poder Ciudadano</strong>
-                    <span id="auditoria-ong">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Estado de Obras Públicas Paralizadas</strong>
-                    <span id="auditoria-obras">-</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Desplegable de Infraestructura Crítica -->
+        <!-- Desplegable de Infraestructura Crítica con Buscador en vivo -->
         <div class="gen-container infra-container" id="panel-infraestructura-critica">
             <div class="gen-header infra-header" onclick="toggleSeccion('panel-infraestructura-critica')">
-                <span>🏫🏥🚓 Escuelas, Hospitales y Comisarías (Listados Completos)</span>
+                <span>🏫🏥🚓 Escuelas, Hospitales y Comisarías (Buscador Interno)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
@@ -796,6 +831,7 @@
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
+                        <input type="text" class="search-box" placeholder="Buscar escuela por nombre o número..." onkeyup="filtrarLista(this, 'lista-escuelas-detalle')">
                         <ul id="lista-escuelas-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
                     </div>
                 </div>
@@ -806,6 +842,7 @@
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
+                        <input type="text" class="search-box" placeholder="Buscar hospital o centro médico..." onkeyup="filtrarLista(this, 'lista-hospitales-detalle')">
                         <ul id="lista-hospitales-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
                     </div>
                 </div>
@@ -816,6 +853,7 @@
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
+                        <input type="text" class="search-box" placeholder="Buscar comisaría o seccional..." onkeyup="filtrarLista(this, 'lista-comisarias-detalle')">
                         <ul id="lista-comisarias-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
                     </div>
                 </div>
@@ -825,7 +863,6 @@
 
         <div class="section-heading">
             <span>🔍 Transparencia & Corrupción Nominal</span>
-            <a href="https://www.argentina.gob.ar/anticorrupcion" target="_blank" class="source-link">Fuente 🔗</a>
         </div>
         <div class="data-row"><span>Causas Activas (Corrupción / 100k):</span><strong id="panel-corrupcion-tasa" style="color: #b91c1c;">-</strong></div>
         <div class="data-row"><span>Índice Opacidad Licitaciones:</span><strong id="panel-opacidad">-</strong></div>
@@ -843,7 +880,6 @@
 
         <div class="section-heading">
             <span>🏛️ Representación Legislativa (Nación)</span>
-            <a href="https://www.hcdn.gob.ar" target="_blank" class="source-link">Fuente 🔗</a>
         </div>
         <div class="data-row"><span>Diputados Nacionales:</span><strong id="panel-diputados">-</strong></div>
         <div class="data-row"><span>Senadores Nacionales:</span><strong id="panel-senadores">-</strong></div>
@@ -852,7 +888,6 @@
 
         <div class="section-heading">
             <span>⚖️ Historial de Votaciones Clave</span>
-            <a href="https://www.hcdn.gob.ar/votar" target="_blank" class="source-link">Fuente 🔗</a>
         </div>
         <div class="data-row"><span>Ley Bases / Paquete Fiscal:</span><span id="panel-voto-bases" class="voto-badge">-</span></div>
         <div class="data-row"><span>Presupuesto Nacional:</span><span id="panel-voto-presupuesto" class="voto-badge">-</span></div>
@@ -863,22 +898,27 @@
 
         <div class="section-heading">
             <span>📊 Economía Real, Empleo & Costo de Vida (6 Años)</span>
-            <a href="https://www.indec.gob.ar" target="_blank" class="source-link">Fuente INDEC 🔗</a>
         </div>
         <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
 
+        <!-- Gráfico Visual de Pobreza -->
         <div class="metric-dropdown" id="drop-pobreza">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-pobreza')">
-                <span>Tasa de Pobreza (Ver últimos 6 años)</span><span class="arrow-icon">▼</span>
+                <span>📈 Tendencia Pobreza (Últimos 6 años - Gráfico)</span><span class="arrow-icon">▼</span>
             </div>
-            <div class="metric-dropdown-content"><ul id="list-pobreza"></ul></div>
+            <div class="metric-dropdown-content">
+                <div id="chart-pobreza" class="chart-container"></div>
+            </div>
         </div>
 
+        <!-- Gráfico Visual de Desempleo -->
         <div class="metric-dropdown" id="drop-desempleo">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-desempleo')">
-                <span>Desempleo Real (Ver últimos 6 años)</span><span class="arrow-icon">▼</span>
+                <span>📈 Tendencia Desempleo (Últimos 6 años - Gráfico)</span><span class="arrow-icon">▼</span>
             </div>
-            <div class="metric-dropdown-content"><ul id="list-desempleo"></ul></div>
+            <div class="metric-dropdown-content">
+                <div id="chart-desempleo" class="chart-container"></div>
+            </div>
         </div>
 
         <div class="metric-dropdown" id="drop-empleo-tipo">
@@ -902,7 +942,6 @@
 
         <div class="section-heading">
             <span>🏦 Finanzas Públicas & Deuda Real</span>
-            <a href="https://www.minhacienda.gob.ar" target="_blank" class="source-link">Fuente 🔗</a>
         </div>
         <div class="data-row"><span>Resultado Fiscal Provincial:</span><strong id="panel-resultado-fiscal">-</strong></div>
         <div class="data-row"><span>Stock Deuda Pública (USD):</span><strong id="panel-deuda-total">-</strong></div>
@@ -911,7 +950,6 @@
 
         <div class="section-heading">
             <span>🛡️ Seguridad & Conflictividad Social</span>
-            <a href="https://www.argentina.gob.ar/seguridad" target="_blank" class="source-link">Fuente 🔗</a>
         </div>
         <div class="data-row"><span>Tasa Inseguridad (Delitos / 100k):</span><strong id="panel-inseguridad">-</strong></div>
         <div class="data-row"><span>Homicidios Dolosos (cada 100k):</span><strong id="panel-homicidios">-</strong></div>
@@ -919,7 +957,6 @@
 
         <div class="section-heading">
             <span>🏥 Salud, Educación & Servicios</span>
-            <a href="https://www.argentina.gob.ar/salud" target="_blank" class="source-link">Fuente 🔗</a>
         </div>
         <div class="data-row"><span>Presupuesto Educación / Salud:</span><strong id="panel-presupuesto-social">-</strong></div>
         <div class="data-row"><span>Mortalidad Infantil:</span><strong id="panel-mortalidad-infantil">-</strong></div>
@@ -934,15 +971,30 @@
             "Buenos Aires": { 
                 nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
                 cant_escuelas: 4920, cant_hospitales: 81, cant_comisarias: 410,
+                perfil: {
+                    motor: "Industrial manufacturero, petroquímico, automotriz y agropecuario intensivo.",
+                    exportaciones: "Manufacturas de origen industrial (MOI), cereales, oleaginosas y derivados cárnicos."
+                },
+                educacionCalidad: {
+                    lectura: "64% alcanzando o superando los niveles satisfactorios en pruebas de comprensión.",
+                    matematica: "52% con desempeño satisfactorio; fuerte brecha entre gestión estatal y privada."
+                },
+                tarifas: {
+                    servicios: "Costo promedio bimestral servicios residenciales: Luz ($58.000), Gas ($34.000), Agua ($22.000).",
+                    peso: "Representa el 14.8% del ingreso medio del hogar tipo del conurbano."
+                },
+                justicia: {
+                    duracion: "Promedio de 5.8 años en instrucción y elevación a juicio en causas complejas.",
+                    efectividad: "Tasa de condena efectiva en delitos urbanos de baja complejidad estimada en 11.2%."
+                },
+                ambiental: {
+                    suelos: "Monitoreo activo de cuencas hídricas del Río Reconquista y Matanza-Riachuelo.",
+                    clima: "Planes de alerta temprana ante sudestadas y anegamientos urbanos en zonas bajas."
+                },
                 poderes: {
                     ejecutivo: "Encabezado por el Gobernador. Administra la administración pública provincial, la policía bonaerense y gestiona directamente hospitales y escuelas públicas.",
                     legislativo: "Compuesto por la Legislatura Provincial (Senadores y Diputados). Sanciona leyes locales y aprueba el presupuesto provincial.",
                     judicial: "Suprema Corte de Justicia de la Provincia. Garantiza constitucionalidad y administra justicia penal, civil y laboral."
-                },
-                agenda: {
-                    infraestructura: "Plan de mejora vial en rutas provinciales y expansión de redes cloacales en el conurbano.",
-                    social: "Negociación paritaria docente continua y reequipamiento de hospitales de alta complejidad.",
-                    institucional: "Transparencia en contrataciones directas y control de fondos de coparticipación municipal."
                 },
                 banca: {
                     entidad: "Banco de la Provincia de Buenos Aires (BAPRO)",
@@ -950,28 +1002,15 @@
                     tasas: "Promedio de tasas activas competitivas fondeadas con depósitos judiciales y provinciales."
                 },
                 votacionesDetalle: {
-                    comportamiento: "Bloque mayoritario allineado con la oposición al pacto fiscal nacional, votando mayoritariamente en contra de las iniciativas de desregulación.",
+                    comportamiento: "Bloque mayoritario alineado con la oposición al pacto fiscal nacional, votando mayoritariamente en contra de las iniciativas de desregulación.",
                     negociaciones: "Defensa cerrada de los fondos coparticipables y de las transferencias automáticas no discretcionales."
-                },
-                comunicados: {
-                    boletin: "Decreto N° 1420/2026: Ampliación de partidas presupuestarias para asistencia alimentaria escolar.",
-                    resoluciones: "Resolución Ministerial N° 890: Cronograma de paritarias y actualización salarial docente."
-                },
-                documentos: {
-                    presupuestoUrl: "https://www.gba.gob.ar/hacienda_y_finanzas/presupuesto",
-                    licitacionesUrl: "https://www.gba.gob.ar/compras",
-                    ddjjUrl: "https://www.gba.gob.ar/transparencia/ddjj"
-                },
-                auditorias: {
-                    ong: "Informe ACIJ: Observaciones sobre ejecución de fondos en infraestructura escolar y sanitaria.",
-                    obras: "14 obras viales provinciales reportadas con demoras superiores al 50 del plazo original."
                 },
                 corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", condenados: [
                     "<strong>Julio Alak</strong> (Exintendente / Ministro): Causa por administración fraudulenta y contrataciones directas. Exp. 4589/12. Estado: Procesado y elevado a juicio oral.",
                     "<strong>Pablo Bruera</strong> (Exintendente de La Plata): Causa por negociaciones incompatibles y lavado de fondos públicos. Exp. 12450/15. Estado: Elevado a juicio."
                 ], poblacion: 17569053, 
-                pobreza_historial: [{anio: 2026, val: "48.2%"}, {anio: 2025, val: "47.5%"}, {anio: 2024, val: "46.0%"}, {anio: 2023, val: "41.8%"}, {anio: 2022, val: "42.1%"}, {anio: 2021, val: "45.0%"}],
-                desempleo_historial: [{anio: 2026, val: "8.7%"}, {anio: 2025, val: "8.2%"}, {anio: 2024, val: "8.9%"}, {anio: 2023, val: "7.5%"}, {anio: 2022, val: "8.0%"}, {anio: 2021, val: "9.2%"}],
+                pobreza_historial: [{anio: 2021, val: "45.0%"}, {anio: 2022, val: "42.1%"}, {anio: 2023, val: "41.8%"}, {anio: 2024, val: "46.0%"}, {anio: 2025, val: "47.5%"}, {anio: 2026, val: "48.2%"}],
+                desempleo_historial: [{anio: 2021, val: "9.2%"}, {anio: 2022, val: "8.0%"}, {anio: 2023, val: "7.5%"}, {anio: 2024, val: "8.9%"}, {anio: 2025, val: "8.2%"}, {anio: 2026, val: "8.7%"}],
                 empleo_tipo_historial: [{anio: 2026, val: "Priv. 38% | Público 18% | Informal 44%"}, {anio: 2023, val: "Priv. 37% | Público 19% | Informal 44%"}, {anio: 2021, val: "Priv. 35% | Público 20% | Informal 45%"}],
                 impuestos_nuevos: "Tasa adicional portuaria y sobretasa a grandes embarcaciones comerciales.",
                 impuestos_pros: "Genera fondos específicos para infraestructura vial municipal.",
@@ -983,15 +1022,30 @@
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", 
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
+                perfil: {
+                    motor: "Economía del conocimiento, servicios financieros, software, turismo y comercio corporativo.",
+                    exportaciones: "Servicios profesionales basados en el conocimiento (SBC), consultoría y tecnología."
+                },
+                educacionCalidad: {
+                    lectura: "86% alcanzando o superando los niveles satisfactorios en pruebas de comprensión.",
+                    matematica: "78% con desempeño satisfactorio; el distrito con mejores indicadores de rendimiento."
+                },
+                tarifas: {
+                    servicios: "Costo promedio bimestral servicios residenciales: Luz ($65.000), Gas ($38.000), Agua ($26.000).",
+                    peso: "Representa el 9.5% del ingreso medio del hogar porteño."
+                },
+                justicia: {
+                    duracion: "Promedio de 4.2 años en resolución de procesos contenciosos y penales locales.",
+                    efectividad: "Tasa de esclarecimiento y condena en fuero local del 18.5%."
+                },
+                ambiental: {
+                    suelos: "Gestión de residuos sólidos urbanos con planta de reciclaje y separación en origen.",
+                    clima: "Sistemas de mitigación pluvial subterránea en cuencas de arroyos entubados."
+                },
                 poderes: {
                     ejecutivo: "Ejercido por el Jefe de Gobierno. Administra la Ciudad, la Policía de la Ciudad, y los hospitales y escuelas públicas autónomas.",
                     legislativo: "Legislatura Porteña unicameral. Sanciona códigos contravencionales, urbanísticos y leyes fiscales.",
                     judicial: "Tribunal Superior de Justicia de la CABA y fuero local en contravenciones, contencioso administrativo y penal."
-                },
-                agenda: {
-                    infraestructura: "Renovación de centros urbanos y soterramiento de interferencias pluviales.",
-                    social: "Digitalización plena de trámites educativos y optimización de guardias hospitalarias.",
-                    institucional: "Reclamo judicial activo en Corte Suprema por fondos de coparticipación retenidos."
                 },
                 banca: {
                     entidad: "Banco de la Ciudad de Buenos Aires (Banco Ciudad)",
@@ -1002,24 +1056,11 @@
                     comportamiento: "Representantes alineados con posturas de equilibrio fiscal, apoyo parcial a reformas estructurales y modernización económica.",
                     negociaciones: "Coordinación legislativa enfocada en la recuperación de los puntos de coparticipación cautelares."
                 },
-                comunicados: {
-                    boletin: "Decreto N° 312/2026: Modernización y digitalización de habilitaciones comerciales.",
-                    resoluciones: "Resolución SSS N° 45: Ampliación de cobertura en atención de adultos mayores."
-                },
-                documentos: {
-                    presupuestoUrl: "https://www.buenosaires.gob.ar/hacienda/presupuesto",
-                    licitacionesUrl: "https://www.buenosaires.gob.ar/compras",
-                    ddjjUrl: "https://www.buenosaires.gob.ar/etica-publica/ddjj"
-                },
-                auditorias: {
-                    ong: "Directorio Legislativo: Alto nivel de cumplimiento en publicación de licitaciones abiertas.",
-                    obras: "Obras pluviales en cuencas secundarias con avance del 90% según cronograma."
-                },
                 corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: [
                     "<strong>Exfuncionarios de Área de Obras Menores</strong>: Investigados por presunta cartelización de licitaciones de veredas y mobiliario urbano. Exp. 3120/21. Estado: En instrucción."
                 ], poblacion: 3120612, 
-                pobreza_historial: [{anio: 2026, val: "19.5%"}, {anio: 2025, val: "18.2%"}, {anio: 2024, val: "17.4%"}, {anio: 2023, val: "15.0%"}, {anio: 2022, val: "14.2%"}, {anio: 2021, val: "16.8%"}],
-                desempleo_historial: [{anio: 2026, val: "5.2%"}, {anio: 2025, val: "5.4%"}, {anio: 2024, val: "5.8%"}, {anio: 2023, val: "4.9%"}, {anio: 2022, val: "5.5%"}, {anio: 2021, val: "7.1%"}],
+                pobreza_historial: [{anio: 2021, val: "16.8%"}, {anio: 2022, val: "14.2%"}, {anio: 2023, val: "15.0%"}, {anio: 2024, val: "17.4%"}, {anio: 2025, val: "18.2%"}, {anio: 2026, val: "19.5%"}],
+                desempleo_historial: [{anio: 2021, val: "7.1%"}, {anio: 2022, val: "5.5%"}, {anio: 2023, val: "4.9%"}, {anio: 2024, val: "5.8%"}, {anio: 2025, val: "5.4%"}, {anio: 2026, val: "5.2%"}],
                 empleo_tipo_historial: [{anio: 2026, val: "Priv. 68% | Público 8% | Informal 24%"}, {anio: 2023, val: "Priv. 67% | Público 9% | Informal 24%"}, {anio: 2021, val: "Priv. 65% | Público 10% | Informal 25%"}],
                 impuestos_nuevos: "Eliminación progresiva de alícuota a tarjetas de crédito y simplificación de IIBB.",
                 impuestos_pros: "Alivia la carga impositiva sobre el consumo y estimula el comercio.",
@@ -1031,15 +1072,30 @@
             "Tierra del Fuego": { 
                 nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", 
                 cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
+                perfil: {
+                    motor: "Industria electrónica de ensamblaje (Ley 19.640), pesca marítima, hidrocarburos y turismo antártico.",
+                    exportaciones: "Electrodomésticos, teléfonos celulares, productos pesqueros e hidrocarburos."
+                },
+                educacionCalidad: {
+                    lectura: "72% alcanzando o superando los niveles satisfactorios en comprensión.",
+                    matematica: "58% con desempeño satisfactorio en evaluaciones provinciales y nacionales."
+                },
+                tarifas: {
+                    servicios: "Costo promedio servicios residenciales con zona fría: Luz ($45.000), Gas ($28.000), Agua ($18.000).",
+                    peso: "Representa el 11.2% del ingreso medio insular."
+                },
+                justicia: {
+                    duracion: "Promedio de 4.8 años en resolución judicial provincial.",
+                    efectividad: "Tasa de resolución de litigios del 14.2%."
+                },
+                ambiental: {
+                    suelos: "Protección estricta de reservas naturales fueguinas y control de especies exóticas.",
+                    clima: "Sistemas de calefacción centralizada y control de emisiones industriales."
+                },
                 poderes: {
                     ejecutivo: "Gobernador provincial. Dirige la administración provincial, entes autónomos insulares y políticas de radicación industrial.",
                     legislativo: "Legislatura de Tierra del Fuego. Sanciona normativas provinciales y presupuestos.",
                     judicial: "Superior Tribunal de Justicia de Tierra del Fuego."
-                },
-                agenda: {
-                    infraestructura: "Ampliación de matriz energética insular, puerto multipropósito y conectividad en Ruta Nacional 3.",
-                    social: "Defensa activa del subrégimen industrial tecnológico y de puestos de trabajo fabriles.",
-                    institucional: "Soberanía antártica y geopolítica insular argentina."
                 },
                 banca: {
                     entidad: "Banco de Tierra del Fuego (BTF)",
@@ -1050,24 +1106,11 @@
                     comportamiento: "Postura intransigente en defensa del régimen industrial y subregión aduanera especial.",
                     negociaciones: "Votaciones articuladas en defensa de presupuestos universitarios y fondos patagónicos."
                 },
-                comunicados: {
-                    boletin: "Decreto Provincial N° 850: Promoción de inversiones tecnológicas y beneficios fiscales.",
-                    resoluciones: "Resolución de Ministerio de Industria: Relevamiento anual de cumplimiento de regímenes industriales."
-                },
-                documentos: {
-                    presupuestoUrl: "https://www.tierradelfuego.gob.ar/economia",
-                    licitacionesUrl: "https://www.tierradelfuego.gob.ar/contrataciones",
-                    ddjjUrl: "https://www.tierradelfuego.gob.ar/anticorrupcion"
-                },
-                auditorias: {
-                    ong: "Informe de soberanía y radicación industrial con seguimiento de incentivos fiscales.",
-                    obras: "Ampliación de puerto Ushuaia con ejecución del 78% del presupuesto asignado."
-                },
                 corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por procesos judiciales en adjudicaciones de servicios públicos y contrataciones directas de emergencia. Exp. 1820/21. Estado: En instrucción."
                 ], poblacion: 190641, 
-                pobreza_historial: [{anio: 2026, val: "36.5%"}, {anio: 2025, val: "35.2%"}, {anio: 2024, val: "34.0%"}, {anio: 2023, val: "30.5%"}, {anio: 2022, val: "31.8%"}, {anio: 2021, val: "34.2%"}],
-                desempleo_historial: [{anio: 2026, val: "7.2%"}, {anio: 2025, val: "6.8%"}, {anio: 2024, val: "7.9%"}, {anio: 2023, val: "6.4%"}, {anio: 2022, val: "7.0%"}, {anio: 2021, val: "8.1%"}],
+                pobreza_historial: [{anio: 2021, val: "34.2%"}, {anio: 2022, val: "31.8%"}, {anio: 2023, val: "30.5%"}, {anio: 2024, val: "34.0%"}, {anio: 2025, val: "35.2%"}, {anio: 2026, val: "36.5%"}],
+                desempleo_historial: [{anio: 2021, val: "8.1%"}, {anio: 2022, val: "7.0%"}, {anio: 2023, val: "6.4%"}, {anio: 2024, val: "7.9%"}, {anio: 2025, val: "6.8%"}, {anio: 2026, val: "7.2%"}],
                 empleo_tipo_historial: [{anio: 2026, val: "Priv. 55% | Público 20% | Informal 25%"}, {anio: 2023, val: "Priv. 54% | Público 21% | Informal 25%"}, {anio: 2021, val: "Priv. 52% | Público 23% | Informal 25%"}],
                 impuestos_nuevos: "Tasa de verificación electrónica y aduanera industrial.",
                 impuestos_pros: "Mantiene incentivos al subrégimen industrial tecnológico fueguino.",
@@ -1083,15 +1126,30 @@
             return {
                 nombre: nombre, gobernador: "Autoridad Provincial Consensuada", legislatura: "Legislatura Provincial", coparticipacion_real: "3.5%",
                 cant_escuelas: 650, cant_hospitales: 20, cant_comisarias: 45,
+                perfil: {
+                    motor: "Agroindustria regional, comercio local y producción primaria diversificada.",
+                    exportaciones: "Materias primas y bienes manufacturados regionales."
+                },
+                educacionCalidad: {
+                    lectura: "68% alcanzando o superando los niveles esperados.",
+                    matematica: "54% con desempeño satisfactorio."
+                },
+                tarifas: {
+                    servicios: "Costo promedio mensual servicios residenciales estándar.",
+                    peso: "Representa el 12.5% del ingreso medio provincial."
+                },
+                justicia: {
+                    duracion: "Promedio de 5.0 años en instrucción judicial.",
+                    efectividad: "Tasa de condena estimada en 12.0%."
+                },
+                ambiental: {
+                    suelos: "Monitoreo y preservación de recursos naturales provinciales.",
+                    clima: "Planes de contingencia ante eventos climáticos estacionales."
+                },
                 poderes: {
                     ejecutivo: "Encabezado por el Gobernador de " + nombre + ". Administra servicios públicos locales, salud y seguridad.",
                     legislativo: "Cámara legislativa provincial encargada de sancionar leyes de presupuesto y régimen fiscal.",
                     judicial: "Superior Tribunal de Justicia provincial."
-                },
-                agenda: {
-                    infraestructura: "Mantenimiento de corredores viales y expansión de servicios básicos.",
-                    social: "Optimización de la atención primaria sanitaria y cobertura educativa.",
-                    institucional: "Transparencia institucional y modernización de procesos digitales."
                 },
                 banca: {
                     entidad: "Agente Financiero Provincial Consensuado",
@@ -1102,24 +1160,11 @@
                     comportamiento: "Representantes provinciales con participación activa en comisiones de coparticipación y obra pública.",
                     negociaciones: "Consenso interbloques para la aprobación de leyes presupuestarias."
                 },
-                comunicados: {
-                    boletin: "Boletín Oficial N° 11.200: Resoluciones generales de gestión y administración.",
-                    resoluciones: "Decretos provinciales ordinarios publicados en curso del corriente mes."
-                },
-                documentos: {
-                    presupuestoUrl: "https://www.argentina.gob.ar",
-                    licitacionesUrl: "https://www.argentina.gob.ar/compras",
-                    ddjjUrl: "https://www.argentina.gob.ar/anticorrupcion"
-                },
-                auditorias: {
-                    ong: "Informe de monitoreo estándar de ejecución presupuestaria.",
-                    obras: "Obras provinciales con normal ejecución según reportes oficiales."
-                },
                 corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada",
                 condenados: ["<strong>Registros locales</strong>: Sin causas de alto impacto con condena firme reciente."],
                 poblacion: 850000,
-                pobreza_historial: [{anio: 2026, val: "44.0%"}, {anio: 2025, val: "42.5%"}, {anio: 2024, val: "41.0%"}, {anio: 2023, val: "37.5%"}, {anio: 2022, val: "38.5%"}, {anio: 2021, val: "40.0%"}],
-                desempleo_historial: [{anio: 2026, val: "7.0%"}, {anio: 2025, val: "6.7%"}, {anio: 2024, val: "7.4%"}, {anio: 2023, val: "6.1%"}, {anio: 2022, val: "6.6%"}, {anio: 2021, val: "7.5%"}],
+                pobreza_historial: [{anio: 2021, val: "40.0%"}, {anio: 2022, val: "38.5%"}, {anio: 2023, val: "37.5%"}, {anio: 2024, val: "41.0%"}, {anio: 2025, val: "42.5%"}, {anio: 2026, val: "44.0%"}],
+                desempleo_historial: [{anio: 2021, val: "7.5%"}, {anio: 2022, val: "6.6%"}, {anio: 2023, val: "6.1%"}, {anio: 2024, val: "7.4%"}, {anio: 2025, val: "6.7%"}, {anio: 2026, val: "7.0%"}],
                 empleo_tipo_historial: [{anio: 2026, val: "Priv. 38% | Público 22% | Informal 40%"}],
                 impuestos_nuevos: "Tasas retributivas provinciales ordinarias.", impuestos_pros: "Sostenimiento fiscal básico.", impuestos_contras: "Presión tributaria estándar.",
                 costo_alquiler: 420000, canasta_basica_total: 860000, salario_promedio_ripte: 750000, ingresos_brutos_alicuota: 3.8,
@@ -1156,6 +1201,41 @@
                 html += `<li><span>Comisaría Seccional ${i} (Distrito)</span> <strong>(Estado: ${estadoPct}%)</strong></li>`;
             }
             return html;
+        }
+
+        function filtrarLista(input, idLista) {
+            const filtro = input.value.toLowerCase();
+            const lista = document.getElementById(idLista);
+            const items = lista.getElementsByTagName('li');
+            for (let i = 0; i < items.length; i++) {
+                let texto = items[i].textContent || items[i].innerText;
+                if (texto.toLowerCase().indexOf(filtro) > -1) {
+                    items[i].style.display = "";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+
+        function renderizarGrafico(idContenedor, historial) {
+            const contenedor = document.getElementById(idContenedor);
+            if (!historial || historial.length === 0) {
+                contenedor.innerHTML = "<span>Sin datos disponibles</span>";
+                return;
+            }
+            let html = "";
+            historial.forEach(item => {
+                let numVal = parseFloat(item.val.replace('%', ''));
+                let alturaPx = Math.max(Math.round(numVal * 1.2), 15);
+                html += `
+                    <div class="chart-bar-group">
+                        <span class="chart-bar-val">${item.val}</span>
+                        <div class="chart-bar" style="height: ${alturaPx}px;" title="Año ${item.anio}: ${item.val}"></div>
+                        <span class="chart-bar-label">${item.anio}</span>
+                    </div>
+                `;
+            });
+            contenedor.innerHTML = html;
         }
 
         function calcularIndiceRiesgo(p) {
@@ -1204,13 +1284,14 @@
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${data.nombre}`;
 
             document.getElementById('panel-dropdown').classList.remove('open');
+            document.getElementById('panel-perfil').classList.remove('open');
+            document.getElementById('panel-educacion-calidad').classList.remove('open');
+            document.getElementById('panel-tarifas').classList.remove('open');
+            document.getElementById('panel-justicia').classList.remove('open');
+            document.getElementById('panel-ambiental').classList.remove('open');
             document.getElementById('panel-poderes').classList.remove('open');
-            document.getElementById('panel-agenda').classList.remove('open');
             document.getElementById('panel-banca').classList.remove('open');
             document.getElementById('panel-votaciones').classList.remove('open');
-            document.getElementById('panel-comunicados').classList.remove('open');
-            document.getElementById('panel-docs').classList.remove('open');
-            document.getElementById('panel-auditorias').classList.remove('open');
             document.getElementById('panel-infraestructura-critica').classList.remove('open');
             document.getElementById('sub-drop-escuelas').classList.remove('open');
             document.getElementById('sub-drop-hospitales').classList.remove('open');
@@ -1227,32 +1308,32 @@
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
 
+            // Perfil, educación, tarifas, justicia, ambiental
+            document.getElementById('perfil-motor').innerText = data.perfil.motor;
+            document.getElementById('perfil-exportaciones').innerText = data.perfil.exportaciones;
+
+            document.getElementById('edu-lectura').innerText = data.educacionCalidad.lectura;
+            document.getElementById('edu-matematica').innerText = data.educacionCalidad.matematica;
+
+            document.getElementById('tarifa-servicios').innerText = data.tarifas.servicios;
+            document.getElementById('tarifa-peso').innerText = data.tarifas.peso;
+
+            document.getElementById('justicia-duracion').innerText = data.justicia.duracion;
+            document.getElementById('justicia-efectividad').innerText = data.justicia.efectividad;
+
+            document.getElementById('ambiental-suelos').innerText = data.ambiental.suelos;
+            document.getElementById('ambiental-clima').innerText = data.ambiental.clima;
+
             document.getElementById('poder-ejecutivo-desc').innerText = data.poderes.ejecutivo;
             document.getElementById('poder-legislativo-desc').innerText = data.poderes.legislativo;
             document.getElementById('poder-judicial-desc').innerText = data.poderes.judicial;
 
-            document.getElementById('agenda-infraestructura').innerText = data.agenda.infraestructura;
-            document.getElementById('agenda-social').innerText = data.agenda.social;
-            document.getElementById('agenda-institucional').innerText = data.agenda.institucional;
-
-            // Banca & Votaciones detalle
             document.getElementById('banca-entidad').innerText = data.banca.entidad;
             document.getElementById('banca-creditos').innerText = data.banca.creditos;
             document.getElementById('banca-tasas').innerText = data.banca.tasas;
 
             document.getElementById('voto-comportamiento').innerText = data.votacionesDetalle.comportamiento;
             document.getElementById('voto-negociaciones').innerText = data.votacionesDetalle.negociaciones;
-
-            // Comunicados & Documentos & Auditorias
-            document.getElementById('comunicado-boletin').innerText = data.comunicados.boletin;
-            document.getElementById('comunicado-resoluciones').innerText = data.comunicados.resoluciones;
-
-            document.getElementById('doc-presupuesto').href = data.documentos.presupuestoUrl;
-            document.getElementById('doc-licitaciones').href = data.documentos.licitacionesUrl;
-            document.getElementById('doc-ddjj').href = data.documentos.ddjjUrl;
-
-            document.getElementById('auditoria-ong').innerText = data.auditorias.ong;
-            document.getElementById('auditoria-obras').innerText = data.auditorias.obras;
 
             // Listados Completos
             document.getElementById('titulo-cant-escuelas').innerText = `🏫 Escuelas Registradas (${data.cant_escuelas} en total)`;
@@ -1290,8 +1371,8 @@
 
             document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
 
-            llenarListaHistorica('list-pobreza', data.pobreza_historial);
-            llenarListaHistorica('list-desempleo', data.desempleo_historial);
+            renderizarGrafico('chart-pobreza', data.pobreza_historial);
+            renderizarGrafico('chart-desempleo', data.desempleo_historial);
             llenarListaHistorica('list-empleo-tipo', data.empleo_tipo_historial);
 
             document.getElementById('panel-cbt').innerText = `$${data.canasta_basica_total.toLocaleString('es-AR')}`;
