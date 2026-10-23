@@ -52,28 +52,62 @@
             align-items: center;
             gap: 10px;
             pointer-events: auto;
-            width: 90%;
-            max-width: 450px;
+            width: 92%;
+            max-width: 420px;
         }
         .flag-icon { width: 20px; height: 20px; }
-        #header h1 { margin: 0; font-size: 1em; color: #0f172a; }
-        #header p { margin: 2px 0 0 0; font-size: 0.68em; color: #0284c7; font-weight: 600; }
+        #header h1 { margin: 0; font-size: 0.95em; color: #0f172a; }
+        #header p { margin: 2px 0 0 0; font-size: 0.65em; color: #0284c7; font-weight: 600; }
 
-        /* Contenedor Flotante Izquierdo adaptable Mobile First */
+        /* Botones superiores desplegables para mobile */
+        #mobile-toggle-bar {
+            position: absolute;
+            top: 72px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 350;
+            display: flex;
+            gap: 8px;
+            width: 92%;
+            max-width: 420px;
+            pointer-events: auto;
+        }
+        .mob-btn {
+            flex: 1;
+            background: #ffffff;
+            border: 2px solid var(--celeste);
+            color: #0369a1;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 0.72em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .mob-btn:hover { background: #e0f2fe; }
+
+        /* Contenedor Flotante Izquierdo */
         .top-panels-container {
             position: absolute;
-            top: 68px;
+            top: 112px;
             left: 10px;
             z-index: 300;
-            display: flex;
+            display: none; /* Oculto por defecto en mobile hasta que se despliegue */
             flex-direction: column;
             gap: 6px;
-            max-height: calc(100vh - 120px);
+            max-height: calc(100vh - 130px);
             overflow-y: auto;
             padding-right: 4px;
             pointer-events: auto;
-            width: 280px;
+            width: 310px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 10px;
+            border-radius: 12px;
+            border: 2px solid var(--celeste);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
+        .top-panels-container.active { display: flex; }
 
         .top-panels-row {
             display: flex;
@@ -82,12 +116,12 @@
         }
 
         .national-summary {
-            background: rgba(255, 255, 255, 0.98);
+            background: #ffffff;
             padding: 8px 10px;
-            border-radius: 10px;
-            border: 2px solid var(--celeste);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            border: 1px solid #bae6fd;
             width: 100%;
+            margin-bottom: 6px;
         }
         .nat-header {
             font-size: 0.72em;
@@ -154,16 +188,16 @@
 
         #btn-volver-mapa {
             position: absolute;
-            bottom: 40px;
-            left: 10px;
+            bottom: 45px;
+            left: 15px;
             z-index: 400;
             background: #0284c7;
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 15px;
+            padding: 8px 14px;
+            border-radius: 20px;
             font-weight: bold;
-            font-size: 0.75em;
+            font-size: 0.78em;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
             display: none;
@@ -204,9 +238,9 @@
         }
 
         #map-svg {
-            height: 75vh;
-            max-width: 95vw;
-            margin-top: 30px;
+            height: 72vh;
+            max-width: 90vw;
+            margin-top: 50px;
             filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.15));
             pointer-events: auto;
         }
@@ -234,7 +268,7 @@
             text-shadow: 0px 1px 3px rgba(255,255,255,0.9);
         }
 
-        /* Panel Lateral adaptable Mobile First */
+        /* Panel Lateral */
         #info-panel {
             position: absolute;
             top: 10px;
@@ -496,10 +530,24 @@
         }
         .pdf-link:hover { background: #0369a1; }
 
-        /* Media Query para Escritorio (Desktop expansion) */
+        /* Media Query para Escritorio (PC grande y ajustado) */
         @media (min-width: 768px) {
-            .top-panels-container { width: 300px; }
-            .top-panels-row { flex-direction: row; }
+            #mobile-toggle-bar { display: none; }
+            .top-panels-container {
+                display: flex !important;
+                position: absolute;
+                top: 75px;
+                left: 15px;
+                width: 310px;
+                max-height: calc(100vh - 90px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            }
+            .top-panels-row { flex-direction: column; }
+            #map-svg {
+                height: 85vh;
+                max-width: 75vw;
+                margin-top: 20px;
+            }
             #info-panel { width: 510px; right: 20px; top: 15px; max-height: calc(100vh - 75px); }
             #header { width: auto; max-width: none; }
         }
@@ -518,8 +566,13 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
-    <!-- Contenedor Flotante Adaptativo -->
-    <div class="top-panels-container">
+    <!-- Botones superiores para mobile -->
+    <div id="mobile-toggle-bar">
+        <button class="mob-btn" onclick="toggleMobilePanel()">📊 Estadísticas & Elecciones</button>
+    </div>
+
+    <!-- Contenedor Flotante Izquierdo -->
+    <div id="side-panels-box" class="top-panels-container">
         <div class="top-panels-row">
             <div class="national-summary">
                 <div class="nat-header">📈 Datos Nacionales</div>
@@ -1389,6 +1442,11 @@
             el.className = "voto-badge " + (voto === "Afirmativo" ? "voto-afirmativo" : voto === "Negativo" ? "voto-negativo" : "voto-abstencion");
         }
 
+        function toggleMobilePanel() {
+            const box = document.getElementById('side-panels-box');
+            box.classList.toggle('active');
+        }
+
         function toggleSeccion(idContenedor) {
             document.getElementById(idContenedor).classList.toggle('open');
         }
@@ -1405,6 +1463,7 @@
             const data = obtenerDatosProvincia(nombreProv);
             if (!data) return;
 
+            document.getElementById('side-panels-box').classList.remove('active');
             document.getElementById('btn-volver-mapa').style.display = 'block';
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${data.nombre}`;
 
