@@ -6,312 +6,336 @@
       "nombre": "Buenos Aires",
       "poblacion": 17569053,
       "pobreza_porcentaje": 45.1,
+      "costo_alquiler": 320000,
+      "inseguridad_tasa": 850,
+      "mortalidad_tasa": 7.8,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 7.5 },
         { "anio": 2025, "tasa": 7.8 },
         { "anio": 2024, "tasa": 8.3 },
-        { "anio": 2023, "tasa": 7.0 },
-        { "anio": 2022, "tasa": 7.3 },
-        { "anio": 2021, "tasa": 9.1 }
+        { "anio": 2023, "tasa": 7.0 }
       ]
     },
     {
       "nombre": "Ciudad Autónoma de Buenos Aires (CABA)",
       "poblacion": 3120612,
       "pobreza_porcentaje": 18.2,
+      "costo_alquiler": 450000,
+      "inseguridad_tasa": 920,
+      "mortalidad_tasa": 9.1,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 4.8 },
         { "anio": 2025, "tasa": 5.1 },
         { "anio": 2024, "tasa": 5.4 },
-        { "anio": 2023, "tasa": 4.5 },
-        { "anio": 2022, "tasa": 4.7 },
-        { "anio": 2021, "tasa": 6.2 }
+        { "anio": 2023, "tasa": 4.5 }
       ]
     },
     {
       "nombre": "Catamarca",
       "poblacion": 429556,
       "pobreza_porcentaje": 41.5,
+      "costo_alquiler": 210000,
+      "inseguridad_tasa": 340,
+      "mortalidad_tasa": 6.5,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.2 },
         { "anio": 2025, "tasa": 6.5 },
         { "anio": 2024, "tasa": 7.0 },
-        { "anio": 2023, "tasa": 5.9 },
-        { "anio": 2022, "tasa": 6.1 },
-        { "anio": 2021, "tasa": 7.8 }
+        { "anio": 2023, "tasa": 5.9 }
       ]
     },
     {
       "nombre": "Chaco",
       "poblacion": 1142963,
       "pobreza_porcentaje": 54.0,
+      "costo_alquiler": 190000,
+      "inseguridad_tasa": 610,
+      "mortalidad_tasa": 8.2,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 8.1 },
         { "anio": 2025, "tasa": 8.4 },
         { "anio": 2024, "tasa": 9.2 },
-        { "anio": 2023, "tasa": 7.8 },
-        { "anio": 2022, "tasa": 8.0 },
-        { "anio": 2021, "tasa": 9.9 }
+        { "anio": 2023, "tasa": 7.8 }
       ]
     },
     {
       "nombre": "Chubut",
       "poblacion": 603120,
       "pobreza_porcentaje": 37.8,
+      "costo_alquiler": 280000,
+      "inseguridad_tasa": 520,
+      "mortalidad_tasa": 7.1,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 5.9 },
         { "anio": 2025, "tasa": 6.2 },
         { "anio": 2024, "tasa": 6.8 },
-        { "anio": 2023, "tasa": 5.5 },
-        { "anio": 2022, "tasa": 5.8 },
-        { "anio": 2021, "tasa": 7.1 }
+        { "anio": 2023, "tasa": 5.5 }
       ]
     },
     {
       "nombre": "Córdoba",
       "poblacion": 3978984,
       "pobreza_porcentaje": 40.5,
+      "costo_alquiler": 290000,
+      "inseguridad_tasa": 740,
+      "mortalidad_tasa": 7.4,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.4 },
         { "anio": 2025, "tasa": 6.8 },
         { "anio": 2024, "tasa": 7.2 },
-        { "anio": 2023, "tasa": 6.1 },
-        { "anio": 2022, "tasa": 6.3 },
-        { "anio": 2021, "tasa": 8.0 }
+        { "anio": 2023, "tasa": 6.1 }
       ]
     },
     {
       "nombre": "Corrientes",
       "poblacion": 1197553,
       "pobreza_porcentaje": 46.2,
+      "costo_alquiler": 220000,
+      "inseguridad_tasa": 480,
+      "mortalidad_tasa": 7.6,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 7.1 },
         { "anio": 2025, "tasa": 7.5 },
         { "anio": 2024, "tasa": 8.0 },
-        { "anio": 2023, "tasa": 6.9 },
-        { "anio": 2022, "tasa": 7.2 },
-        { "anio": 2021, "tasa": 8.8 }
+        { "anio": 2023, "tasa": 6.9 }
       ]
     },
     {
       "nombre": "Entre Ríos",
       "poblacion": 1426426,
       "pobreza_porcentaje": 42.1,
+      "costo_alquiler": 230000,
+      "inseguridad_tasa": 450,
+      "mortalidad_tasa": 7.9,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.5 },
         { "anio": 2025, "tasa": 6.9 },
         { "anio": 2024, "tasa": 7.4 },
-        { "anio": 2023, "tasa": 6.2 },
-        { "anio": 2022, "tasa": 6.6 },
-        { "anio": 2021, "tasa": 8.3 }
+        { "anio": 2023, "tasa": 6.2 }
       ]
     },
     {
       "nombre": "Formosa",
       "poblacion": 606041,
       "pobreza_porcentaje": 49.8,
+      "costo_alquiler": 170000,
+      "inseguridad_tasa": 310,
+      "mortalidad_tasa": 8.0,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.9 },
         { "anio": 2025, "tasa": 7.2 },
         { "anio": 2024, "tasa": 7.8 },
-        { "anio": 2023, "tasa": 6.6 },
-        { "anio": 2022, "tasa": 6.9 },
-        { "anio": 2021, "tasa": 8.5 }
+        { "anio": 2023, "tasa": 6.6 }
       ]
     },
     {
       "nombre": "Jujuy",
       "poblacion": 797955,
       "pobreza_porcentaje": 43.8,
+      "costo_alquiler": 200000,
+      "inseguridad_tasa": 420,
+      "mortalidad_tasa": 7.3,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.7 },
         { "anio": 2025, "tasa": 7.0 },
         { "anio": 2024, "tasa": 7.6 },
-        { "anio": 2023, "tasa": 6.3 },
-        { "anio": 2022, "tasa": 6.5 },
-        { "anio": 2021, "tasa": 8.1 }
+        { "anio": 2023, "tasa": 6.3 }
       ]
     },
     {
       "nombre": "La Pampa",
       "poblacion": 366022,
       "pobreza_porcentaje": 35.2,
+      "costo_alquiler": 240000,
+      "inseguridad_tasa": 380,
+      "mortalidad_tasa": 7.0,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 5.4 },
         { "anio": 2025, "tasa": 5.7 },
         { "anio": 2024, "tasa": 6.2 },
-        { "anio": 2023, "tasa": 5.0 },
-        { "anio": 2022, "tasa": 5.3 },
-        { "anio": 2021, "tasa": 6.9 }
+        { "anio": 2023, "tasa": 5.0 }
       ]
     },
     {
       "nombre": "La Rioja",
       "poblacion": 384607,
       "pobreza_porcentaje": 44.1,
+      "costo_alquiler": 210000,
+      "inseguridad_tasa": 390,
+      "mortalidad_tasa": 7.2,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.3 },
         { "anio": 2025, "tasa": 6.6 },
         { "anio": 2024, "tasa": 7.1 },
-        { "anio": 2023, "tasa": 5.8 },
-        { "anio": 2022, "tasa": 6.0 },
-        { "anio": 2021, "tasa": 7.6 }
+        { "anio": 2023, "tasa": 5.8 }
       ]
     },
     {
       "nombre": "Mendoza",
       "poblacion": 2014533,
       "pobreza_porcentaje": 41.9,
+      "costo_alquiler": 270000,
+      "inseguridad_tasa": 680,
+      "mortalidad_tasa": 7.5,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.1 },
         { "anio": 2025, "tasa": 6.5 },
         { "anio": 2024, "tasa": 7.0 },
-        { "anio": 2023, "tasa": 5.9 },
-        { "anio": 2022, "tasa": 6.2 },
-        { "anio": 2021, "tasa": 7.9 }
+        { "anio": 2023, "tasa": 5.9 }
       ]
     },
     {
       "nombre": "Misiones",
       "poblacion": 1280960,
       "pobreza_porcentaje": 45.9,
+      "costo_alquiler": 210000,
+      "inseguridad_tasa": 410,
+      "mortalidad_tasa": 7.4,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 5.8 },
         { "anio": 2025, "tasa": 6.1 },
         { "anio": 2024, "tasa": 6.7 },
-        { "anio": 2023, "tasa": 5.5 },
-        { "anio": 2022, "tasa": 5.7 },
-        { "anio": 2021, "tasa": 7.2 }
+        { "anio": 2023, "tasa": 5.5 }
       ]
     },
     {
       "nombre": "Neuquén",
       "poblacion": 726590,
       "pobreza_porcentaje": 36.4,
+      "costo_alquiler": 340000,
+      "inseguridad_tasa": 550,
+      "mortalidad_tasa": 6.8,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 5.2 },
         { "anio": 2025, "tasa": 5.5 },
         { "anio": 2024, "tasa": 6.0 },
-        { "anio": 2023, "tasa": 4.9 },
-        { "anio": 2022, "tasa": 5.1 },
-        { "anio": 2021, "tasa": 6.8 }
+        { "anio": 2023, "tasa": 4.9 }
       ]
     },
     {
       "nombre": "Río Negro",
       "poblacion": 762067,
       "pobreza_porcentaje": 38.9,
+      "costo_alquiler": 280000,
+      "inseguridad_tasa": 490,
+      "mortalidad_tasa": 7.1,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.0 },
         { "anio": 2025, "tasa": 6.3 },
         { "anio": 2024, "tasa": 6.9 },
-        { "anio": 2023, "tasa": 5.7 },
-        { "anio": 2022, "tasa": 5.9 },
-        { "anio": 2021, "tasa": 7.4 }
+        { "anio": 2023, "tasa": 5.7 }
       ]
     },
     {
       "nombre": "Salta",
       "poblacion": 1440672,
       "pobreza_porcentaje": 47.3,
+      "costo_alquiler": 230000,
+      "inseguridad_tasa": 580,
+      "mortalidad_tasa": 7.8,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 7.4 },
         { "anio": 2025, "tasa": 7.8 },
         { "anio": 2024, "tasa": 8.3 },
-        { "anio": 2023, "tasa": 7.1 },
-        { "anio": 2022, "tasa": 7.4 },
-        { "anio": 2021, "tasa": 9.0 }
+        { "anio": 2023, "tasa": 7.1 }
       ]
     },
     {
       "nombre": "San Juan",
       "poblacion": 818234,
       "pobreza_porcentaje": 39.7,
+      "costo_alquiler": 220000,
+      "inseguridad_tasa": 430,
+      "mortalidad_tasa": 7.2,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 5.5 },
         { "anio": 2025, "tasa": 5.8 },
         { "anio": 2024, "tasa": 6.3 },
-        { "anio": 2023, "tasa": 5.1 },
-        { "anio": 2022, "tasa": 5.4 },
-        { "anio": 2021, "tasa": 7.0 }
+        { "anio": 2023, "tasa": 5.1 }
       ]
     },
     {
       "nombre": "San Luis",
       "poblacion": 540905,
       "pobreza_porcentaje": 38.1,
+      "costo_alquiler": 240000,
+      "inseguridad_tasa": 390,
+      "mortalidad_tasa": 7.0,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 5.1 },
         { "anio": 2025, "tasa": 5.4 },
         { "anio": 2024, "tasa": 5.9 },
-        { "anio": 2023, "tasa": 4.8 },
-        { "anio": 2022, "tasa": 5.0 },
-        { "anio": 2021, "tasa": 6.5 }
+        { "anio": 2023, "tasa": 4.8 }
       ]
     },
     {
       "nombre": "Santa Cruz",
       "poblacion": 333473,
       "pobreza_porcentaje": 33.5,
+      "costo_alquiler": 310000,
+      "inseguridad_tasa": 460,
+      "mortalidad_tasa": 6.9,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 4.9 },
         { "anio": 2025, "tasa": 5.2 },
         { "anio": 2024, "tasa": 5.7 },
-        { "anio": 2023, "tasa": 4.6 },
-        { "anio": 2022, "tasa": 4.8 },
-        { "anio": 2021, "tasa": 6.3 }
+        { "anio": 2023, "tasa": 4.6 }
       ]
     },
     {
       "nombre": "Santa Fe",
       "poblacion": 3556522,
       "pobreza_porcentaje": 43.2,
+      "costo_alquiler": 280000,
+      "inseguridad_tasa": 890,
+      "mortalidad_tasa": 8.0,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.8 },
         { "anio": 2025, "tasa": 7.1 },
         { "anio": 2024, "tasa": 7.6 },
-        { "anio": 2023, "tasa": 6.3 },
-        { "anio": 2022, "tasa": 6.5 },
-        { "anio": 2021, "tasa": 8.2 }
+        { "anio": 2023, "tasa": 6.3 }
       ]
     },
     {
       "nombre": "Santiago del Estero",
       "poblacion": 1054028,
       "pobreza_porcentaje": 48.0,
+      "costo_alquiler": 180000,
+      "inseguridad_tasa": 350,
+      "mortalidad_tasa": 7.7,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.6 },
         { "anio": 2025, "tasa": 6.9 },
         { "anio": 2024, "tasa": 7.5 },
-        { "anio": 2023, "tasa": 6.2 },
-        { "anio": 2022, "tasa": 6.4 },
-        { "anio": 2021, "tasa": 8.1 }
+        { "anio": 2023, "tasa": 6.2 }
       ]
     },
     {
       "nombre": "Tierra del Fuego",
       "poblacion": 190641,
       "pobreza_porcentaje": 34.0,
+      "costo_alquiler": 360000,
+      "inseguridad_tasa": 480,
+      "mortalidad_tasa": 6.5,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 6.7 },
         { "anio": 2025, "tasa": 7.0 },
         { "anio": 2024, "tasa": 7.8 },
-        { "anio": 2023, "tasa": 6.4 },
-        { "anio": 2022, "tasa": 6.8 },
-        { "anio": 2021, "tasa": 8.5 }
+        { "anio": 2023, "tasa": 6.4 }
       ]
     },
     {
       "nombre": "Tucumán",
       "poblacion": 1703186,
       "pobreza_porcentaje": 46.5,
+      "costo_alquiler": 240000,
+      "inseguridad_tasa": 790,
+      "mortalidad_tasa": 8.1,
       "desempleo_historial": [
         { "anio": 2026, "tasa": 7.8 },
         { "anio": 2025, "tasa": 8.2 },
         { "anio": 2024, "tasa": 8.9 },
-        { "anio": 2023, "tasa": 7.5 },
-        { "anio": 2022, "tasa": 7.9 },
-        { "anio": 2021, "tasa": 9.6 }
+        { "anio": 2023, "tasa": 7.5 }
       ]
     }
   ]
