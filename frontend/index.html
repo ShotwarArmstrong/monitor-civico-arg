@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor Cívico Argentina</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
     <style>
         :root {
             --celeste: #74acdf;
@@ -14,7 +12,6 @@
             --card-bg: rgba(255, 255, 255, 0.96);
             --text: #0f172a;
             --text-muted: #64748b;
-            --border: #cbd5e1;
         }
         * { box-sizing: border-box; }
         body, html {
@@ -25,10 +22,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             background: radial-gradient(circle at 50% 50%, #ffffff 0%, #e0f2fe 50%, #bae6fd 100%);
-            cursor: default;
         }
 
-        /* Marcas de agua de fondo (estrellas reducidas) */
         .star-pattern {
             position: absolute;
             top: 0;
@@ -37,12 +32,12 @@
             height: 100%;
             pointer-events: none;
             z-index: 2;
-            opacity: 0.12;
+            opacity: 0.10;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 200 200"><text x="20" y="50" font-size="28" fill="%23ffb81c">⭐⭐⭐</text></svg>');
             background-repeat: repeat;
         }
 
-        /* Encabezado con banderas argentinas */
+        /* Encabezado con imagen de Banderas */
         #header {
             position: absolute;
             top: 15px;
@@ -50,17 +45,30 @@
             transform: translateX(-50%);
             z-index: 1000;
             background: rgba(255, 255, 255, 0.94);
-            padding: 12px 30px;
+            padding: 10px 25px;
             border-radius: 30px;
             backdrop-filter: blur(8px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             text-align: center;
             border: 2px solid var(--celeste);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        #header h1 { margin: 0; font-size: 1.3em; letter-spacing: 0.5px; color: #0f172a; }
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .flag-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+        #header h1 { margin: 0; font-size: 1.3em; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.8em; color: #0284c7; font-weight: 600; }
 
-        /* Panel Promedios Nacionales */
+        /* Resumen Nacional */
         #national-summary {
             position: absolute;
             top: 85px;
@@ -79,7 +87,6 @@
             font-size: 0.85em;
             color: #0369a1;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             border-bottom: 2px solid #e0f2fe;
             padding-bottom: 5px;
         }
@@ -94,7 +101,6 @@
         .nat-row:last-child { border-bottom: none; }
         .nat-val { font-weight: bold; color: #0284c7; }
 
-        /* Botón de regreso */
         #btn-volver-mapa {
             position: absolute;
             bottom: 30px;
@@ -114,20 +120,40 @@
         }
         #btn-volver-mapa:hover { background: #0369a1; transform: translateY(-2px); }
 
-        /* Contenedor del Mapa corregido para renderizado directo */
-        #map {
+        /* Contenedor del Mapa interactivo */
+        #map-container {
             position: absolute;
             top: 0;
             left: 0;
-            height: 100vh;
             width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             z-index: 1;
-            background: transparent;
+            padding-top: 40px;
         }
 
-        .leaflet-interactive {
-            cursor: pointer !important;
+        #map-svg {
+            height: 85vh;
+            max-width: 90vw;
+            filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.15));
+        }
+
+        /* Estilo de la provincia interactiva al pasar el cursor */
+        .provincia-shape {
+            stroke: #ffffff;
+            stroke-width: 1.5;
+            cursor: pointer;
             transition: all 0.2s ease;
+        }
+        .provincia-shape:hover {
+            fill: #ffb81c !important;
+            stroke: #0f172a !important;
+            stroke-width: 3 !important;
+            filter: brightness(1.1);
+            transform: scale(1.01);
+            transform-origin: center;
         }
 
         /* Panel Lateral de Información */
@@ -217,21 +243,79 @@
     <div class="star-pattern"></div>
 
     <div id="header">
-        <h1>🇦🇷 Monitor Cívico Argentina 🇦🇷</h1>
+        <div class="header-title-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Argentina">
+            <h1>Monitor Cívico Argentina</h1>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Argentina">
+        </div>
         <p id="header-subtitle">Haz clic en una provincia para aislarla y explorar sus datos</p>
     </div>
 
     <div id="national-summary">
         <h3>Promedios Nacionales</h3>
-        <div class="nat-row"><span>Riesgo Integral:</span><span class="nat-val" id="nat-riesgo">52 / 100</span></div>
-        <div class="nat-row"><span>Pobreza Media:</span><span class="nat-val" id="nat-pobreza">42.3%</span></div>
-        <div class="nat-row"><span>Desempleo Actual:</span><span class="nat-val" id="nat-desempleo">6.6%</span></div>
-        <div class="nat-row"><span>Alquiler Promedio:</span><span class="nat-val" id="nat-alquiler">$262.500</span></div>
+        <div class="nat-row"><span>Riesgo Integral:</span><span class="nat-val">52 / 100</span></div>
+        <div class="nat-row"><span>Pobreza Media:</span><span class="nat-val">42.3%</span></div>
+        <div class="nat-row"><span>Desempleo Actual:</span><span class="nat-val">6.6%</span></div>
+        <div class="nat-row"><span>Alquiler Promedio:</span><span class="nat-val">$262.500</span></div>
     </div>
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Argentina Completa</button>
 
-    <div id="map"></div>
+    <div id="map-container">
+        <!-- SVG Vectorial Nativo de Argentina -->
+        <svg id="map-svg" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+            <g id="provincias-group">
+                <!-- Jujuy -->
+                <path class="provincia-shape" data-nombre="Jujuy" fill="#f97316" d="M 110,40 L 135,35 L 145,65 L 120,80 L 100,60 Z" />
+                <!-- Salta -->
+                <path class="provincia-shape" data-nombre="Salta" fill="#f97316" d="M 90,65 L 120,80 L 145,65 L 175,70 L 165,110 L 110,105 L 85,85 Z" />
+                <!-- Formosa -->
+                <path class="provincia-shape" data-nombre="Formosa" fill="#ef4444" d="M 175,70 L 245,95 L 230,120 L 165,110 Z" />
+                <!-- Tucumán -->
+                <path class="provincia-shape" data-nombre="Tucumán" fill="#f97316" d="M 110,105 L 128,105 L 125,128 L 108,125 Z" />
+                <!-- Catamarca -->
+                <path class="provincia-shape" data-nombre="Catamarca" fill="#f97316" d="M 70,100 L 110,105 L 108,125 L 130,135 L 115,160 L 65,130 Z" />
+                <!-- Chaco -->
+                <path class="provincia-shape" data-nombre="Chaco" fill="#b91c1c" d="M 165,110 L 230,120 L 220,160 L 160,145 Z" />
+                <!-- Santiago del Estero -->
+                <path class="provincia-shape" data-nombre="Santiago del Estero" fill="#ef4444" d="M 128,105 L 165,110 L 160,145 L 135,170 L 120,135 Z" />
+                <!-- Misiones -->
+                <path class="provincia-shape" data-nombre="Misiones" fill="#f97316" d="M 270,120 L 295,105 L 305,130 L 280,145 Z" />
+                <!-- Corrientes -->
+                <path class="provincia-shape" data-nombre="Corrientes" fill="#f97316" d="M 220,160 L 280,145 L 265,195 L 210,185 Z" />
+                <!-- Santa Fe -->
+                <path class="provincia-shape" data-nombre="Santa Fe" fill="#f97316" d="M 160,145 L 210,185 L 195,255 L 165,250 L 150,180 Z" />
+                <!-- La Rioja -->
+                <path class="provincia-shape" data-nombre="La Rioja" fill="#f97316" d="M 65,130 L 115,160 L 105,195 L 55,175 Z" />
+                <!-- San Juan -->
+                <path class="provincia-shape" data-nombre="San Juan" fill="#eab308" d="M 55,175 L 105,195 L 95,235 L 45,215 Z" />
+                <!-- Córdoba -->
+                <path class="provincia-shape" data-nombre="Córdoba" fill="#f97316" d="M 115,160 L 160,145 L 165,250 L 110,250 L 105,195 Z" />
+                <!-- Entre Ríos -->
+                <path class="provincia-shape" data-nombre="Entre Ríos" fill="#f97316" d="M 210,185 L 265,195 L 240,245 L 195,255 Z" />
+                <!-- San Luis -->
+                <path class="provincia-shape" data-nombre="San Luis" fill="#eab308" d="M 95,235 L 110,250 L 105,295 L 75,285 Z" />
+                <!-- Mendoza -->
+                <path class="provincia-shape" data-nombre="Mendoza" fill="#f97316" d="M 45,215 L 95,235 L 75,285 L 35,270 Z" />
+                <!-- La Pampa -->
+                <path class="provincia-shape" data-nombre="La Pampa" fill="#eab308" d="M 75,285 L 140,295 L 135,340 L 70,330 Z" />
+                <!-- Buenos Aires -->
+                <path class="provincia-shape" data-nombre="Buenos Aires" fill="#f97316" d="M 165,250 L 240,245 L 225,330 L 180,380 L 135,340 L 140,295 Z" />
+                <!-- CABA -->
+                <circle class="provincia-shape" data-nombre="Ciudad Autónoma de Buenos Aires (CABA)" fill="#16a34a" cx="215" cy="262" r="6" />
+                <!-- Neuquén -->
+                <path class="provincia-shape" data-nombre="Neuquén" fill="#eab308" d="M 35,270 L 75,285 L 70,330 L 30,340 Z" />
+                <!-- Río Negro -->
+                <path class="provincia-shape" data-nombre="Río Negro" fill="#f97316" d="M 70,330 L 135,340 L 155,395 L 55,390 Z" />
+                <!-- Chubut -->
+                <path class="provincia-shape" data-nombre="Chubut" fill="#eab308" d="M 55,390 L 155,395 L 145,465 L 45,460 Z" />
+                <!-- Santa Cruz -->
+                <path class="provincia-shape" data-nombre="Santa Cruz" fill="#eab308" d="M 45,460 L 145,465 L 130,550 L 35,540 Z" />
+                <!-- Tierra del Fuego -->
+                <path class="provincia-shape" data-nombre="Tierra del Fuego" fill="#eab308" d="M 115,570 L 150,575 L 140,610 L 105,600 Z" />
+            </g>
+        </svg>
+    </div>
 
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
@@ -284,48 +368,33 @@
         </div>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     <script>
         const datosProvincias = {
-            "Buenos Aires": { "nombre": "Buenos Aires", "poblacion": 17569053, "pobreza_porcentaje": 45.1, "costo_alquiler": 320000, "canasta_basica_total": 890000, "salario_promedio_ripte": 780000, "empleo_informal_porcentaje": 41.2, "ingresos_brutos_alicuota": 4.8, "transferencias_discrecionales_per_capita": 18500, "pauta_oficial_per_capita": 4200, "inseguridad_tasa": 850, "homicidios_tasa_100k": 5.4, "siniestros_viales_fatales": 1150, "natalidad_tasa": 12.8, "mortalidad_infantil_tasa": 8.4, "mortalidad_tasa": 7.8, "camas_uti_cada_10k": 4.2, "escolarizacion_secundaria": 88.5, "cobertura_agua_cloacas": 76.2, "cobertura_internet_fibra": 68.4, "deuda_per_capita_usd": 420, "desempleo_historial": [{ "anio": 2026, "tasa": 7.5 }, { "anio": 2025, "tasa": 7.8 }, { "anio": 2024, "tasa": 8.3 }, { "anio": 2023, "tasa": 7.0 }] },
-            "Ciudad Autónoma de Buenos Aires (CABA)": { "nombre": "Ciudad Autónoma de Buenos Aires (CABA)", "poblacion": 3120612, "pobreza_porcentaje": 18.2, "costo_alquiler": 450000, "canasta_basica_total": 950000, "salario_promedio_ripte": 1250000, "empleo_informal_porcentaje": 22.1, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 9500, "pauta_oficial_per_capita": 12500, "inseguridad_tasa": 920, "homicidios_tasa_100k": 2.8, "siniestros_viales_fatales": 95, "natalidad_tasa": 10.1, "mortalidad_infantil_tasa": 4.9, "mortalidad_tasa": 9.1, "camas_uti_cada_10k": 9.8, "escolarizacion_secundaria": 96.8, "cobertura_agua_cloacas": 99.1, "cobertura_internet_fibra": 94.2, "deuda_per_capita_usd": 680, "desempleo_historial": [{ "anio": 2026, "tasa": 4.8 }, { "anio": 2025, "tasa": 5.1 }, { "anio": 2024, "tasa": 5.4 }, { "anio": 2023, "tasa": 4.5 }] },
-            "Catamarca": { "nombre": "Catamarca", "poblacion": 429556, "pobreza_porcentaje": 41.5, "costo_alquiler": 210000, "canasta_basica_total": 800000, "salario_promedio_ripte": 710000, "empleo_informal_porcentaje": 39.1, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 31000, "pauta_oficial_per_capita": 5100, "inseguridad_tasa": 340, "homicidios_tasa_100k": 2.1, "siniestros_viales_fatales": 55, "natalidad_tasa": 13.2, "mortalidad_infantil_tasa": 8.1, "mortalidad_tasa": 6.5, "camas_uti_cada_10k": 4.1, "escolarizacion_secundaria": 87.2, "cobertura_agua_cloacas": 78.0, "cobertura_internet_fibra": 58.4, "deuda_per_capita_usd": 150, "desempleo_historial": [{ "anio": 2026, "tasa": 6.2 }, { "anio": 2025, "tasa": 6.5 }, { "anio": 2024, "tasa": 7.0 }, { "anio": 2023, "tasa": 5.9 }] },
-            "Chaco": { "nombre": "Chaco", "poblacion": 1142963, "pobreza_porcentaje": 54.0, "costo_alquiler": 190000, "canasta_basica_total": 780000, "salario_promedio_ripte": 640000, "empleo_informal_porcentaje": 48.5, "ingresos_brutos_alicuota": 4.1, "transferencias_discrecionales_per_capita": 24500, "pauta_oficial_per_capita": 3500, "inseguridad_tasa": 610, "homicidios_tasa_100k": 4.8, "siniestros_viales_fatales": 180, "natalidad_tasa": 15.5, "mortalidad_infantil_tasa": 10.8, "mortalidad_tasa": 8.2, "camas_uti_cada_10k": 3.5, "escolarizacion_secundaria": 82.1, "cobertura_agua_cloacas": 64.5, "cobertura_internet_fibra": 52.1, "deuda_per_capita_usd": 230, "desempleo_historial": [{ "anio": 2026, "tasa": 8.1 }, { "anio": 2025, "tasa": 8.4 }, { "anio": 2024, "tasa": 9.2 }, { "anio": 2023, "tasa": 7.8 }] },
-            "Chubut": { "nombre": "Chubut", "poblacion": 603120, "pobreza_porcentaje": 37.8, "costo_alquiler": 280000, "canasta_basica_total": 910000, "salario_promedio_ripte": 1100000, "empleo_informal_porcentaje": 28.4, "ingresos_brutos_alicuota": 3.8, "transferencias_discrecionales_per_capita": 14000, "pauta_oficial_per_capita": 4100, "inseguridad_tasa": 520, "homicidios_tasa_100k": 4.2, "siniestros_viales_fatales": 72, "natalidad_tasa": 11.2, "mortalidad_infantil_tasa": 6.2, "mortalidad_tasa": 7.1, "camas_uti_cada_10k": 5.1, "escolarizacion_secundaria": 89.0, "cobertura_agua_cloacas": 86.1, "cobertura_internet_fibra": 65.0, "deuda_per_capita_usd": 890, "desempleo_historial": [{ "anio": 2026, "tasa": 5.9 }, { "anio": 2025, "tasa": 6.2 }, { "anio": 2024, "tasa": 6.8 }, { "anio": 2023, "tasa": 5.5 }] },
-            "Córdoba": { "nombre": "Córdoba", "poblacion": 3978984, "pobreza_porcentaje": 40.5, "costo_alquiler": 290000, "canasta_basica_total": 850000, "salario_promedio_ripte": 810000, "empleo_informal_porcentaje": 37.0, "ingresos_brutos_alicuota": 4.0, "transferencias_discrecionales_per_capita": 15100, "pauta_oficial_per_capita": 4500, "inseguridad_tasa": 740, "homicidios_tasa_100k": 3.1, "siniestros_viales_fatales": 380, "natalidad_tasa": 12.0, "mortalidad_infantil_tasa": 7.2, "mortalidad_tasa": 7.4, "camas_uti_cada_10k": 6.1, "escolarizacion_secundaria": 92.5, "cobertura_agua_cloacas": 81.5, "cobertura_internet_fibra": 78.0, "deuda_per_capita_usd": 380, "desempleo_historial": [{ "anio": 2026, "tasa": 6.4 }, { "anio": 2025, "tasa": 6.8 }, { "anio": 2024, "tasa": 7.2 }, { "anio": 2023, "tasa": 6.1 }] },
-            "Corrientes": { "nombre": "Corrientes", "poblacion": 1197553, "pobreza_porcentaje": 46.2, "costo_alquiler": 220000, "canasta_basica_total": 800000, "salario_promedio_ripte": 670000, "empleo_informal_porcentaje": 43.1, "ingresos_brutos_alicuota": 3.9, "transferencias_discrecionales_per_capita": 19200, "pauta_oficial_per_capita": 3100, "inseguridad_tasa": 480, "homicidios_tasa_100k": 3.5, "siniestros_viales_fatales": 195, "natalidad_tasa": 14.8, "mortalidad_infantil_tasa": 9.5, "mortalidad_tasa": 7.6, "camas_uti_cada_10k": 4.0, "escolarizacion_secundaria": 84.3, "cobertura_agua_cloacas": 71.0, "cobertura_internet_fibra": 56.8, "deuda_per_capita_usd": 120, "desempleo_historial": [{ "anio": 2026, "tasa": 7.1 }, { "anio": 2025, "tasa": 7.5 }, { "anio": 2024, "tasa": 8.0 }, { "anio": 2023, "tasa": 6.9 }] },
-            "Entre Ríos": { "nombre": "Entre Ríos", "poblacion": 1426426, "pobreza_porcentaje": 42.1, "costo_alquiler": 230000, "canasta_basica_total": 820000, "salario_promedio_ripte": 740000, "empleo_informal_porcentaje": 38.0, "ingresos_brutos_alicuota": 4.0, "transferencias_discrecionales_per_capita": 13500, "pauta_oficial_per_capita": 3400, "inseguridad_tasa": 450, "homicidios_tasa_100k": 2.9, "siniestros_viales_fatales": 140, "natalidad_tasa": 12.3, "mortalidad_infantil_tasa": 7.1, "mortalidad_tasa": 7.9, "camas_uti_cada_10k": 4.5, "escolarizacion_secundaria": 89.4, "cobertura_agua_cloacas": 80.5, "cobertura_internet_fibra": 67.2, "deuda_per_capita_usd": 260, "desempleo_historial": [{ "anio": 2026, "tasa": 6.5 }, { "anio": 2025, "tasa": 6.9 }, { "anio": 2024, "tasa": 7.4 }, { "anio": 2023, "tasa": 6.2 }] },
-            "Formosa": { "nombre": "Formosa", "poblacion": 606041, "pobreza_porcentaje": 49.8, "costo_alquiler": 170000, "canasta_basica_total": 770000, "salario_promedio_ripte": 620000, "empleo_informal_porcentaje": 46.0, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 38000, "pauta_oficial_per_capita": 2800, "inseguridad_tasa": 310, "homicidios_tasa_100k": 3.8, "siniestros_viales_fatales": 88, "natalidad_tasa": 15.1, "mortalidad_infantil_tasa": 10.1, "mortalidad_tasa": 8.0, "camas_uti_cada_10k": 3.8, "escolarizacion_secundaria": 85.0, "cobertura_agua_cloacas": 68.2, "cobertura_internet_fibra": 51.0, "deuda_per_capita_usd": 110, "desempleo_historial": [{ "anio": 2026, "tasa": 6.9 }, { "anio": 2025, "tasa": 7.2 }, { "anio": 2024, "tasa": 7.8 }, { "anio": 2023, "tasa": 6.6 }] },
-            "Jujuy": { "nombre": "Jujuy", "poblacion": 797955, "pobreza_porcentaje": 43.8, "costo_alquiler": 200000, "canasta_basica_total": 790000, "salario_promedio_ripte": 720000, "empleo_informal_porcentaje": 42.0, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 21000, "pauta_oficial_per_capita": 3600, "inseguridad_tasa": 420, "homicidios_tasa_100k": 3.2, "siniestros_viales_fatales": 110, "natalidad_tasa": 13.5, "mortalidad_infantil_tasa": 8.5, "mortalidad_tasa": 7.3, "camas_uti_cada_10k": 4.2, "escolarizacion_secundaria": 88.0, "cobertura_agua_cloacas": 77.4, "cobertura_internet_fibra": 59.5, "deuda_per_capita_usd": 510, "desempleo_historial": [{ "anio": 2026, "tasa": 6.7 }, { "anio": 2025, "tasa": 7.0 }, { "anio": 2024, "tasa": 7.6 }, { "anio": 2023, "tasa": 6.3 }] },
-            "La Pampa": { "nombre": "La Pampa", "poblacion": 366022, "pobreza_porcentaje": 35.2, "costo_alquiler": 240000, "canasta_basica_total": 840000, "salario_promedio_ripte": 830000, "empleo_informal_porcentaje": 29.5, "ingresos_brutos_alicuota": 3.2, "transferencias_discrecionales_per_capita": 16000, "pauta_oficial_per_capita": 4800, "inseguridad_tasa": 380, "homicidios_tasa_100k": 1.9, "siniestros_viales_fatales": 48, "natalidad_tasa": 11.5, "mortalidad_infantil_tasa": 5.8, "mortalidad_tasa": 7.0, "camas_uti_cada_10k": 5.8, "escolarizacion_secundaria": 93.1, "cobertura_agua_cloacas": 89.0, "cobertura_internet_fibra": 72.4, "deuda_per_capita_usd": 90, "desempleo_historial": [{ "anio": 2026, "tasa": 5.4 }, { "anio": 2025, "tasa": 5.7 }, { "anio": 2024, "tasa": 6.2 }, { "anio": 2023, "tasa": 5.0 }] },
-            "La Rioja": { "nombre": "La Rioja", "poblacion": 384607, "pobreza_porcentaje": 44.1, "costo_alquiler": 210000, "canasta_basica_total": 790000, "salario_promedio_ripte": 680000, "empleo_informal_porcentaje": 41.0, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 35000, "pauta_oficial_per_capita": 4500, "inseguridad_tasa": 390, "homicidios_tasa_100k": 2.4, "siniestros_viales_fatales": 62, "natalidad_tasa": 13.0, "mortalidad_infantil_tasa": 8.0, "mortalidad_tasa": 7.2, "camas_uti_cada_10k": 4.4, "escolarizacion_secundaria": 87.5, "cobertura_agua_cloacas": 81.2, "cobertura_internet_fibra": 60.1, "deuda_per_capita_usd": 340, "desempleo_historial": [{ "anio": 2026, "tasa": 6.3 }, { "anio": 2025, "tasa": 6.6 }, { "anio": 2024, "tasa": 7.1 }, { "anio": 2023, "tasa": 5.8 }] },
-            "Mendoza": { "nombre": "Mendoza", "poblacion": 2014533, "pobreza_porcentaje": 41.9, "costo_alquiler": 270000, "canasta_basica_total": 840000, "salario_promedio_ripte": 760000, "empleo_informal_porcentaje": 38.2, "ingresos_brutos_alicuota": 4.0, "transferencias_discrecionales_per_capita": 13000, "pauta_oficial_per_capita": 3200, "inseguridad_tasa": 680, "homicidios_tasa_100k": 3.9, "siniestros_viales_fatales": 160, "natalidad_tasa": 11.8, "mortalidad_infantil_tasa": 6.9, "mortalidad_tasa": 7.5, "camas_uti_cada_10k": 5.0, "escolarizacion_secundaria": 90.1, "cobertura_agua_cloacas": 84.2, "cobertura_internet_fibra": 71.3, "deuda_per_capita_usd": 290, "desempleo_historial": [{ "anio": 2026, "tasa": 6.1 }, { "anio": 2025, "tasa": 6.5 }, { "anio": 2024, "tasa": 7.0 }, { "anio": 2023, "tasa": 5.9 }] },
-            "Misiones": { "nombre": "Misiones", "poblacion": 1280960, "pobreza_porcentaje": 45.9, "costo_alquiler": 210000, "canasta_basica_total": 810000, "salario_promedio_ripte": 710000, "empleo_informal_porcentaje": 42.5, "ingresos_brutos_alicuota": 4.5, "transferencias_discrecionales_per_capita": 15000, "pauta_oficial_per_capita": 3300, "inseguridad_tasa": 410, "homicidios_tasa_100k": 4.5, "siniestros_viales_fatales": 210, "natalidad_tasa": 15.2, "mortalidad_infantil_tasa": 8.9, "mortalidad_tasa": 7.4, "camas_uti_cada_10k": 4.3, "escolarizacion_secundaria": 85.2, "cobertura_agua_cloacas": 70.4, "cobertura_internet_fibra": 58.0, "deuda_per_capita_usd": 160, "desempleo_historial": [{ "anio": 2026, "tasa": 5.8 }, { "anio": 2025, "tasa": 6.1 }, { "anio": 2024, "tasa": 6.7 }, { "anio": 2023, "tasa": 5.5 }] },
-            "Neuquén": { "nombre": "Neuquén", "poblacion": 726590, "pobreza_porcentaje": 36.4, "costo_alquiler": 340000, "canasta_basica_total": 930000, "salario_promedio_ripte": 1350000, "empleo_informal_porcentaje": 26.0, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 12000, "pauta_oficial_per_capita": 5200, "inseguridad_tasa": 550, "homicidios_tasa_100k": 4.1, "siniestros_viales_fatales": 85, "natalidad_tasa": 12.1, "mortalidad_infantil_tasa": 5.9, "mortalidad_tasa": 6.8, "camas_uti_cada_10k": 5.5, "escolarizacion_secundaria": 91.0, "cobertura_agua_cloacas": 85.0, "cobertura_internet_fibra": 76.5, "deuda_per_capita_usd": 940, "desempleo_historial": [{ "anio": 2026, "tasa": 5.2 }, { "anio": 2025, "tasa": 5.5 }, { "anio": 2024, "tasa": 6.0 }, { "anio": 2023, "tasa": 4.9 }] },
-            "Río Negro": { "nombre": "Río Negro", "poblacion": 762067, "pobreza_porcentaje": 38.9, "costo_alquiler": 280000, "canasta_basica_total": 890000, "salario_promedio_ripte": 980000, "empleo_informal_porcentaje": 31.0, "ingresos_brutos_alicuota": 3.7, "transferencias_discrecionales_per_capita": 14500, "pauta_oficial_per_capita": 4300, "inseguridad_tasa": 490, "homicidios_tasa_100k": 3.6, "siniestros_viales_fatales": 98, "natalidad_tasa": 11.9, "mortalidad_infantil_tasa": 6.5, "mortalidad_tasa": 7.1, "camas_uti_cada_10k": 4.9, "escolarizacion_secundaria": 89.8, "cobertura_agua_cloacas": 83.1, "cobertura_internet_fibra": 69.8, "deuda_per_capita_usd": 520, "desempleo_historial": [{ "anio": 2026, "tasa": 6.0 }, { "anio": 2025, "tasa": 6.3 }, { "anio": 2024, "tasa": 6.9 }, { "anio": 2023, "tasa": 5.7 }] },
-            "Salta": { "nombre": "Salta", "poblacion": 1440672, "pobreza_porcentaje": 47.3, "costo_alquiler": 230000, "canasta_basica_total": 810000, "salario_promedio_ripte": 710000, "empleo_informal_porcentaje": 45.2, "ingresos_brutos_alicuota": 3.6, "transferencias_discrecionales_per_capita": 17500, "pauta_oficial_per_capita": 3700, "inseguridad_tasa": 580, "homicidios_tasa_100k": 4.9, "siniestros_viales_fatales": 155, "natalidad_tasa": 14.5, "mortalidad_infantil_tasa": 9.1, "mortalidad_tasa": 7.8, "camas_uti_cada_10k": 4.1, "escolarizacion_secundaria": 86.0, "cobertura_agua_cloacas": 75.2, "cobertura_internet_fibra": 61.2, "deuda_per_capita_usd": 280, "desempleo_historial": [{ "anio": 2026, "tasa": 7.4 }, { "anio": 2025, "tasa": 7.8 }, { "anio": 2024, "tasa": 8.3 }, { "anio": 2023, "tasa": 7.1 }] },
-            "San Juan": { "nombre": "San Juan", "poblacion": 818234, "pobreza_porcentaje": 39.7, "costo_alquiler": 220000, "canasta_basica_total": 820000, "salario_promedio_ripte": 780000, "empleo_informal_porcentaje": 36.0, "ingresos_brutos_alicuota": 3.3, "transferencias_discrecionales_per_capita": 19000, "pauta_oficial_per_capita": 3900, "inseguridad_tasa": 430, "homicidios_tasa_100k": 2.3, "siniestros_viales_fatales": 90, "natalidad_tasa": 13.1, "mortalidad_infantil_tasa": 7.0, "mortalidad_tasa": 7.2, "camas_uti_cada_10k": 4.7, "escolarizacion_secundaria": 89.2, "cobertura_agua_cloacas": 82.5, "cobertura_internet_fibra": 64.0, "deuda_per_capita_usd": 190, "desempleo_historial": [{ "anio": 2026, "tasa": 5.5 }, { "anio": 2025, "tasa": 5.8 }, { "anio": 2024, "tasa": 6.3 }, { "anio": 2023, "tasa": 5.1 }] },
-            "San Luis": { "nombre": "San Luis", "poblacion": 540905, "pobreza_porcentaje": 38.1, "costo_alquiler": 240000, "canasta_basica_total": 830000, "salario_promedio_ripte": 790000, "empleo_informal_porcentaje": 33.5, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 15500, "pauta_oficial_per_capita": 4200, "inseguridad_tasa": 390, "homicidios_tasa_100k": 2.5, "siniestros_viales_fatales": 68, "natalidad_tasa": 12.5, "mortalidad_infantil_tasa": 6.8, "mortalidad_tasa": 7.0, "camas_uti_cada_10k": 5.2, "escolarizacion_secundaria": 90.5, "cobertura_agua_cloacas": 86.0, "cobertura_internet_fibra": 79.1, "deuda_per_capita_usd": 140, "desempleo_historial": [{ "anio": 2026, "tasa": 5.1 }, { "anio": 2025, "tasa": 5.4 }, { "anio": 2024, "tasa": 5.9 }, { "anio": 2023, "tasa": 4.8 }] },
-            "Santa Cruz": { "nombre": "Santa Cruz", "poblacion": 333473, "pobreza_porcentaje": 33.5, "costo_alquiler": 310000, "canasta_basica_total": 940000, "salario_promedio_ripte": 1280000, "empleo_informal_porcentaje": 24.5, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 28000, "pauta_oficial_per_capita": 6100, "inseguridad_tasa": 460, "homicidios_tasa_100k": 3.0, "siniestros_viales_fatales": 42, "natalidad_tasa": 11.4, "mortalidad_infantil_tasa": 5.6, "mortalidad_tasa": 6.9, "camas_uti_cada_10k": 5.7, "escolarizacion_secundaria": 92.0, "cobertura_agua_cloacas": 88.4, "cobertura_internet_fibra": 67.5, "deuda_per_capita_usd": 480, "desempleo_historial": [{ "anio": 2026, "tasa": 4.9 }, { "anio": 2025, "tasa": 5.2 }, { "anio": 2024, "tasa": 5.7 }, { "anio": 2023, "tasa": 4.6 }] },
-            "Santa Fe": { "nombre": "Santa Fe", "poblacion": 3556522, "pobreza_porcentaje": 43.2, "costo_alquiler": 280000, "canasta_basica_total": 860000, "salario_promedio_ripte": 820000, "empleo_informal_porcentaje": 36.5, "ingresos_brutos_alicuota": 4.5, "transferencias_discrecionales_per_capita": 14200, "pauta_oficial_per_capita": 3800, "inseguridad_tasa": 890, "homicidios_tasa_100k": 11.2, "siniestros_viales_fatales": 340, "natalidad_tasa": 12.4, "mortalidad_infantil_tasa": 7.8, "mortalidad_tasa": 8.0, "camas_uti_cada_10k": 5.6, "escolarizacion_secundaria": 91.2, "cobertura_agua_cloacas": 82.0, "cobertura_internet_fibra": 74.5, "deuda_per_capita_usd": 210, "desempleo_historial": [{ "anio": 2026, "tasa": 6.8 }, { "anio": 2025, "tasa": 7.1 }, { "anio": 2024, "tasa": 7.6 }, { "anio": 2023, "tasa": 6.3 }] },
-            "Santiago del Estero": { "nombre": "Santiago del Estero", "poblacion": 1054028, "pobreza_porcentaje": 48.0, "costo_alquiler": 180000, "canasta_basica_total": 770000, "salario_promedio_ripte": 630000, "empleo_informal_porcentaje": 47.2, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 29500, "pauta_oficial_per_capita": 3000, "inseguridad_tasa": 350, "homicidios_tasa_100k": 2.8, "siniestros_viales_fatales": 165, "natalidad_tasa": 14.9, "mortalidad_infantil_tasa": 9.8, "mortalidad_tasa": 7.7, "camas_uti_cada_10k": 3.9, "escolarizacion_secundaria": 83.5, "cobertura_agua_cloacas": 66.0, "cobertura_internet_fibra": 53.2, "deuda_per_capita_usd": 80, "desempleo_historial": [{ "anio": 2026, "tasa": 6.6 }, { "anio": 2025, "tasa": 6.9 }, { "anio": 2024, "tasa": 7.5 }, { "anio": 2023, "tasa": 6.2 }] },
-            "Tierra del Fuego": { "nombre": "Tierra del Fuego", "poblacion": 190641, "pobreza_porcentaje": 34.0, "costo_alquiler": 360000, "canasta_basica_total": 960000, "salario_promedio_ripte": 1210000, "empleo_informal_porcentaje": 23.0, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 22000, "pauta_oficial_per_capita": 5800, "inseguridad_tasa": 480, "homicidios_tasa_100k": 2.2, "siniestros_viales_fatales": 22, "natalidad_tasa": 12.8, "mortalidad_infantil_tasa": 5.2, "mortalidad_tasa": 6.5, "camas_uti_cada_10k": 6.0, "escolarizacion_secundaria": 94.5, "cobertura_agua_cloacas": 91.2, "cobertura_internet_fibra": 82.0, "deuda_per_capita_usd": 610, "desempleo_historial": [{ "anio": 2026, "tasa": 6.7 }, { "anio": 2025, "tasa": 7.0 }, { "anio": 2024, "tasa": 7.8 }, { "anio": 2023, "tasa": 6.4 }] }
+            "Buenos Aires": { "nombre": "Buenos Aires", "poblacion": 17569053, "pobreza_porcentaje": 45.1, "costo_alquiler": 320000, "canasta_basica_total": 890000, "salario_promedio_ripte": 780000, "empleo_informal_porcentaje": 41.2, "ingresos_brutos_alicuota": 4.8, "transferencias_discrecionales_per_capita": 18500, "pauta_oficial_per_capita": 4200, "inseguridad_tasa": 850, "homicidios_tasa_100k": 5.4, "siniestros_viales_fatales": 1150, "natalidad_tasa": 12.8, "mortalidad_infantil_tasa": 8.4, "mortalidad_tasa": 7.8, "camas_uti_cada_10k": 4.2, "escolarizacion_secundaria": 88.5, "cobertura_agua_cloacas": 76.2, "cobertura_internet_fibra": 68.4, "deuda_per_capita_usd": 420, "desempleo_historial": [{ "anio": 2026, "tasa": 7.5 }, { "anio": 2025, "tasa": 7.8 }, { "anio": 2024, "tasa": 8.3 }] },
+            "Ciudad Autónoma de Buenos Aires (CABA)": { "nombre": "Ciudad Autónoma de Buenos Aires (CABA)", "poblacion": 3120612, "pobreza_porcentaje": 18.2, "costo_alquiler": 450000, "canasta_basica_total": 950000, "salario_promedio_ripte": 1250000, "empleo_informal_porcentaje": 22.1, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 9500, "pauta_oficial_per_capita": 12500, "inseguridad_tasa": 920, "homicidios_tasa_100k": 2.8, "siniestros_viales_fatales": 95, "natalidad_tasa": 10.1, "mortalidad_infantil_tasa": 4.9, "mortalidad_tasa": 9.1, "camas_uti_cada_10k": 9.8, "escolarizacion_secundaria": 96.8, "cobertura_agua_cloacas": 99.1, "cobertura_internet_fibra": 94.2, "deuda_per_capita_usd": 680, "desempleo_historial": [{ "anio": 2026, "tasa": 4.8 }, { "anio": 2025, "tasa": 5.1 }, { "anio": 2024, "tasa": 5.4 }] },
+            "Catamarca": { "nombre": "Catamarca", "poblacion": 429556, "pobreza_porcentaje": 41.5, "costo_alquiler": 210000, "canasta_basica_total": 800000, "salario_promedio_ripte": 710000, "empleo_informal_porcentaje": 39.1, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 31000, "pauta_oficial_per_capita": 5100, "inseguridad_tasa": 340, "homicidios_tasa_100k": 2.1, "siniestros_viales_fatales": 55, "natalidad_tasa": 13.2, "mortalidad_infantil_tasa": 8.1, "mortalidad_tasa": 6.5, "camas_uti_cada_10k": 4.1, "escolarizacion_secundaria": 87.2, "cobertura_agua_cloacas": 78.0, "cobertura_internet_fibra": 58.4, "deuda_per_capita_usd": 150, "desempleo_historial": [{ "anio": 2026, "tasa": 6.2 }, { "anio": 2025, "tasa": 6.5 }] },
+            "Chaco": { "nombre": "Chaco", "poblacion": 1142963, "pobreza_porcentaje": 54.0, "costo_alquiler": 190000, "canasta_basica_total": 780000, "salario_promedio_ripte": 640000, "empleo_informal_porcentaje": 48.5, "ingresos_brutos_alicuota": 4.1, "transferencias_discrecionales_per_capita": 24500, "pauta_oficial_per_capita": 3500, "inseguridad_tasa": 610, "homicidios_tasa_100k": 4.8, "siniestros_viales_fatales": 180, "natalidad_tasa": 15.5, "mortalidad_infantil_tasa": 10.8, "mortalidad_tasa": 8.2, "camas_uti_cada_10k": 3.5, "escolarizacion_secundaria": 82.1, "cobertura_agua_cloacas": 64.5, "cobertura_internet_fibra": 52.1, "deuda_per_capita_usd": 230, "desempleo_historial": [{ "anio": 2026, "tasa": 8.1 }, { "anio": 2025, "tasa": 8.4 }] },
+            "Chubut": { "nombre": "Chubut", "poblacion": 603120, "pobreza_porcentaje": 37.8, "costo_alquiler": 280000, "canasta_basica_total": 910000, "salario_promedio_ripte": 1100000, "empleo_informal_porcentaje": 28.4, "ingresos_brutos_alicuota": 3.8, "transferencias_discrecionales_per_capita": 14000, "pauta_oficial_per_capita": 4100, "inseguridad_tasa": 520, "homicidios_tasa_100k": 4.2, "siniestros_viales_fatales": 72, "natalidad_tasa": 11.2, "mortalidad_infantil_tasa": 6.2, "mortalidad_tasa": 7.1, "camas_uti_cada_10k": 5.1, "escolarizacion_secundaria": 89.0, "cobertura_agua_cloacas": 86.1, "cobertura_internet_fibra": 65.0, "deuda_per_capita_usd": 890, "desempleo_historial": [{ "anio": 2026, "tasa": 5.9 }] },
+            "Córdoba": { "nombre": "Córdoba", "poblacion": 3978984, "pobreza_porcentaje": 40.5, "costo_alquiler": 290000, "canasta_basica_total": 850000, "salario_promedio_ripte": 810000, "empleo_informal_porcentaje": 37.0, "ingresos_brutos_alicuota": 4.0, "transferencias_discrecionales_per_capita": 15100, "pauta_oficial_per_capita": 4500, "inseguridad_tasa": 740, "homicidios_tasa_100k": 3.1, "siniestros_viales_fatales": 380, "natalidad_tasa": 12.0, "mortalidad_infantil_tasa": 7.2, "mortalidad_tasa": 7.4, "camas_uti_cada_10k": 6.1, "escolarizacion_secundaria": 92.5, "cobertura_agua_cloacas": 81.5, "cobertura_internet_fibra": 78.0, "deuda_per_capita_usd": 380, "desempleo_historial": [{ "anio": 2026, "tasa": 6.4 }] },
+            "Corrientes": { "nombre": "Corrientes", "poblacion": 1197553, "pobreza_porcentaje": 46.2, "costo_alquiler": 220000, "canasta_basica_total": 800000, "salario_promedio_ripte": 670000, "empleo_informal_porcentaje": 43.1, "ingresos_brutos_alicuota": 3.9, "transferencias_discrecionales_per_capita": 19200, "pauta_oficial_per_capita": 3100, "inseguridad_tasa": 480, "homicidios_tasa_100k": 3.5, "siniestros_viales_fatales": 195, "natalidad_tasa": 14.8, "mortalidad_infantil_tasa": 9.5, "mortalidad_tasa": 7.6, "camas_uti_cada_10k": 4.0, "escolarizacion_secundaria": 84.3, "cobertura_agua_cloacas": 71.0, "cobertura_internet_fibra": 56.8, "deuda_per_capita_usd": 120, "desempleo_historial": [{ "anio": 2026, "tasa": 7.1 }] },
+            "Entre Ríos": { "nombre": "Entre Ríos", "poblacion": 1426426, "pobreza_porcentaje": 42.1, "costo_alquiler": 230000, "canasta_basica_total": 820000, "salario_promedio_ripte": 740000, "empleo_informal_porcentaje": 38.0, "ingresos_brutos_alicuota": 4.0, "transferencias_discrecionales_per_capita": 13500, "pauta_oficial_per_capita": 3400, "inseguridad_tasa": 450, "homicidios_tasa_100k": 2.9, "siniestros_viales_fatales": 140, "natalidad_tasa": 12.3, "mortalidad_infantil_tasa": 7.1, "mortalidad_tasa": 7.9, "camas_uti_cada_10k": 4.5, "escolarizacion_secundaria": 89.4, "cobertura_agua_cloacas": 80.5, "cobertura_internet_fibra": 67.2, "deuda_per_capita_usd": 260, "desempleo_historial": [{ "anio": 2026, "tasa": 6.5 }] },
+            "Formosa": { "nombre": "Formosa", "poblacion": 606041, "pobreza_porcentaje": 49.8, "costo_alquiler": 170000, "canasta_basica_total": 770000, "salario_promedio_ripte": 620000, "empleo_informal_porcentaje": 46.0, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 38000, "pauta_oficial_per_capita": 2800, "inseguridad_tasa": 310, "homicidios_tasa_100k": 3.8, "siniestros_viales_fatales": 88, "natalidad_tasa": 15.1, "mortalidad_infantil_tasa": 10.1, "mortalidad_tasa": 8.0, "camas_uti_cada_10k": 3.8, "escolarizacion_secundaria": 85.0, "cobertura_agua_cloacas": 68.2, "cobertura_internet_fibra": 51.0, "deuda_per_capita_usd": 110, "desempleo_historial": [{ "anio": 2026, "tasa": 6.9 }] },
+            "Jujuy": { "nombre": "Jujuy", "poblacion": 797955, "pobreza_porcentaje": 43.8, "costo_alquiler": 200000, "canasta_basica_total": 790000, "salario_promedio_ripte": 720000, "empleo_informal_porcentaje": 42.0, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 21000, "pauta_oficial_per_capita": 3600, "inseguridad_tasa": 420, "homicidios_tasa_100k": 3.2, "siniestros_viales_fatales": 110, "natalidad_tasa": 13.5, "mortalidad_infantil_tasa": 8.5, "mortalidad_tasa": 7.3, "camas_uti_cada_10k": 4.2, "escolarizacion_secundaria": 88.0, "cobertura_agua_cloacas": 77.4, "cobertura_internet_fibra": 59.5, "deuda_per_capita_usd": 510, "desempleo_historial": [{ "anio": 2026, "tasa": 6.7 }] },
+            "La Pampa": { "nombre": "La Pampa", "poblacion": 366022, "pobreza_porcentaje": 35.2, "costo_alquiler": 240000, "canasta_basica_total": 840000, "salario_promedio_ripte": 830000, "empleo_informal_porcentaje": 29.5, "ingresos_brutos_alicuota": 3.2, "transferencias_discrecionales_per_capita": 16000, "pauta_oficial_per_capita": 4800, "inseguridad_tasa": 380, "homicidios_tasa_100k": 1.9, "siniestros_viales_fatales": 48, "natalidad_tasa": 11.5, "mortalidad_infantil_tasa": 5.8, "mortalidad_tasa": 7.0, "camas_uti_cada_10k": 5.8, "escolarizacion_secundaria": 93.1, "cobertura_agua_cloacas": 89.0, "cobertura_internet_fibra": 72.4, "deuda_per_capita_usd": 90, "desempleo_historial": [{ "anio": 2026, "tasa": 5.4 }] },
+            "La Rioja": { "nombre": "La Rioja", "poblacion": 384607, "pobreza_porcentaje": 44.1, "costo_alquiler": 210000, "canasta_basica_total": 790000, "salario_promedio_ripte": 680000, "empleo_informal_porcentaje": 41.0, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 35000, "pauta_oficial_per_capita": 4500, "inseguridad_tasa": 390, "homicidios_tasa_100k": 2.4, "siniestros_viales_fatales": 62, "natalidad_tasa": 13.0, "mortalidad_infantil_tasa": 8.0, "mortalidad_tasa": 7.2, "camas_uti_cada_10k": 4.4, "escolarizacion_secundaria": 87.5, "cobertura_agua_cloacas": 81.2, "cobertura_internet_fibra": 60.1, "deuda_per_capita_usd": 340, "desempleo_historial": [{ "anio": 2026, "tasa": 6.3 }] },
+            "Mendoza": { "nombre": "Mendoza", "poblacion": 2014533, "pobreza_porcentaje": 41.9, "costo_alquiler": 270000, "canasta_basica_total": 840000, "salario_promedio_ripte": 760000, "empleo_informal_porcentaje": 38.2, "ingresos_brutos_alicuota": 4.0, "transferencias_discrecionales_per_capita": 13000, "pauta_oficial_per_capita": 3200, "inseguridad_tasa": 680, "homicidios_tasa_100k": 3.9, "siniestros_viales_fatales": 160, "natalidad_tasa": 11.8, "mortalidad_infantil_tasa": 6.9, "mortalidad_tasa": 7.5, "camas_uti_cada_10k": 5.0, "escolarizacion_secundaria": 90.1, "cobertura_agua_cloacas": 84.2, "cobertura_internet_fibra": 71.3, "deuda_per_capita_usd": 290, "desempleo_historial": [{ "anio": 2026, "tasa": 6.1 }] },
+            "Misiones": { "nombre": "Misiones", "poblacion": 1280960, "pobreza_porcentaje": 45.9, "costo_alquiler": 210000, "canasta_basica_total": 810000, "salario_promedio_ripte": 710000, "empleo_informal_porcentaje": 42.5, "ingresos_brutos_alicuota": 4.5, "transferencias_discrecionales_per_capita": 15000, "pauta_oficial_per_capita": 3300, "inseguridad_tasa": 410, "homicidios_tasa_100k": 4.5, "siniestros_viales_fatales": 210, "natalidad_tasa": 15.2, "mortalidad_infantil_tasa": 8.9, "mortalidad_tasa": 7.4, "camas_uti_cada_10k": 4.3, "escolarizacion_secundaria": 85.2, "cobertura_agua_cloacas": 70.4, "cobertura_internet_fibra": 58.0, "deuda_per_capita_usd": 160, "desempleo_historial": [{ "anio": 2026, "tasa": 5.8 }] },
+            "Neuquén": { "nombre": "Neuquén", "poblacion": 726590, "pobreza_porcentaje": 36.4, "costo_alquiler": 340000, "canasta_basica_total": 930000, "salario_promedio_ripte": 1350000, "empleo_informal_porcentaje": 26.0, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 12000, "pauta_oficial_per_capita": 5200, "inseguridad_tasa": 550, "homicidios_tasa_100k": 4.1, "siniestros_viales_fatales": 85, "natalidad_tasa": 12.1, "mortalidad_infantil_tasa": 5.9, "mortalidad_tasa": 6.8, "camas_uti_cada_10k": 5.5, "escolarizacion_secundaria": 91.0, "cobertura_agua_cloacas": 85.0, "cobertura_internet_fibra": 76.5, "deuda_per_capita_usd": 940, "desempleo_historial": [{ "anio": 2026, "tasa": 5.2 }] },
+            "Río Negro": { "nombre": "Río Negro", "poblacion": 762067, "pobreza_porcentaje": 38.9, "costo_alquiler": 280000, "canasta_basica_total": 890000, "salario_promedio_ripte": 980000, "empleo_informal_porcentaje": 31.0, "ingresos_brutos_alicuota": 3.7, "transferencias_discrecionales_per_capita": 14500, "pauta_oficial_per_capita": 4300, "inseguridad_tasa": 490, "homicidios_tasa_100k": 3.6, "siniestros_viales_fatales": 98, "natalidad_tasa": 11.9, "mortalidad_infantil_tasa": 6.5, "mortalidad_tasa": 7.1, "camas_uti_cada_10k": 4.9, "escolarizacion_secundaria": 89.8, "cobertura_agua_cloacas": 83.1, "cobertura_internet_fibra": 69.8, "deuda_per_capita_usd": 520, "desempleo_historial": [{ "anio": 2026, "tasa": 6.0 }] },
+            "Salta": { "nombre": "Salta", "poblacion": 1440672, "pobreza_porcentaje": 47.3, "costo_alquiler": 230000, "canasta_basica_total": 810000, "salario_promedio_ripte": 710000, "empleo_informal_porcentaje": 45.2, "ingresos_brutos_alicuota": 3.6, "transferencias_discrecionales_per_capita": 17500, "pauta_oficial_per_capita": 3700, "inseguridad_tasa": 580, "homicidios_tasa_100k": 4.9, "siniestros_viales_fatales": 155, "natalidad_tasa": 14.5, "mortalidad_infantil_tasa": 9.1, "mortalidad_tasa": 7.8, "camas_uti_cada_10k": 4.1, "escolarizacion_secundaria": 86.0, "cobertura_agua_cloacas": 75.2, "cobertura_internet_fibra": 61.2, "deuda_per_capita_usd": 280, "desempleo_historial": [{ "anio": 2026, "tasa": 7.4 }] },
+            "San Juan": { "nombre": "San Juan", "poblacion": 818234, "pobreza_porcentaje": 39.7, "costo_alquiler": 220000, "canasta_basica_total": 820000, "salario_promedio_ripte": 780000, "empleo_informal_porcentaje": 36.0, "ingresos_brutos_alicuota": 3.3, "transferencias_discrecionales_per_capita": 19000, "pauta_oficial_per_capita": 3900, "inseguridad_tasa": 430, "homicidios_tasa_100k": 2.3, "siniestros_viales_fatales": 90, "natalidad_tasa": 13.1, "mortalidad_infantil_tasa": 7.0, "mortalidad_tasa": 7.2, "camas_uti_cada_10k": 4.7, "escolarizacion_secundaria": 89.2, "cobertura_agua_cloacas": 82.5, "cobertura_internet_fibra": 64.0, "deuda_per_capita_usd": 190, "desempleo_historial": [{ "anio": 2026, "tasa": 5.5 }] },
+            "San Luis": { "nombre": "San Luis", "poblacion": 540905, "pobreza_porcentaje": 38.1, "costo_alquiler": 240000, "canasta_basica_total": 830000, "salario_promedio_ripte": 790000, "empleo_informal_porcentaje": 33.5, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 15500, "pauta_oficial_per_capita": 4200, "inseguridad_tasa": 390, "homicidios_tasa_100k": 2.5, "siniestros_viales_fatales": 68, "natalidad_tasa": 12.5, "mortalidad_infantil_tasa": 6.8, "mortalidad_tasa": 7.0, "camas_uti_cada_10k": 5.2, "escolarizacion_secundaria": 90.5, "cobertura_agua_cloacas": 86.0, "cobertura_internet_fibra": 79.1, "deuda_per_capita_usd": 140, "desempleo_historial": [{ "anio": 2026, "tasa": 5.1 }] },
+            "Santa Cruz": { "nombre": "Santa Cruz", "poblacion": 333473, "pobreza_porcentaje": 33.5, "costo_alquiler": 310000, "canasta_basica_total": 940000, "salario_promedio_ripte": 1280000, "empleo_informal_porcentaje": 24.5, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 28000, "pauta_oficial_per_capita": 6100, "inseguridad_tasa": 460, "homicidios_tasa_100k": 3.0, "siniestros_viales_fatales": 42, "natalidad_tasa": 11.4, "mortalidad_infantil_tasa": 5.6, "mortalidad_tasa": 6.9, "camas_uti_cada_10k": 5.7, "escolarizacion_secundaria": 92.0, "cobertura_agua_cloacas": 88.4, "cobertura_internet_fibra": 67.5, "deuda_per_capita_usd": 480, "desempleo_historial": [{ "anio": 2026, "tasa": 4.9 }] },
+            "Santa Fe": { "nombre": "Santa Fe", "poblacion": 3556522, "pobreza_porcentaje": 43.2, "costo_alquiler": 280000, "canasta_basica_total": 860000, "salario_promedio_ripte": 820000, "empleo_informal_porcentaje": 36.5, "ingresos_brutos_alicuota": 4.5, "transferencias_discrecionales_per_capita": 14200, "pauta_oficial_per_capita": 3800, "inseguridad_tasa": 890, "homicidios_tasa_100k": 11.2, "siniestros_viales_fatales": 340, "natalidad_tasa": 12.4, "mortalidad_infantil_tasa": 7.8, "mortalidad_tasa": 8.0, "camas_uti_cada_10k": 5.6, "escolarizacion_secundaria": 91.2, "cobertura_agua_cloacas": 82.0, "cobertura_internet_fibra": 74.5, "deuda_per_capita_usd": 210, "desempleo_historial": [{ "anio": 2026, "tasa": 6.8 }] },
+            "Tucumán": { "nombre": "Tucumán", "poblacion": 1731820, "pobreza_porcentaje": 44.5, "costo_alquiler": 210000, "canasta_basica_total": 800000, "salario_promedio_ripte": 690000, "empleo_informal_porcentaje": 43.0, "ingresos_brutos_alicuota": 4.0, "transferencias_discrecionales_per_capita": 22000, "pauta_oficial_per_capita": 3500, "inseguridad_tasa": 620, "homicidios_tasa_100k": 4.1, "siniestros_viales_fatales": 170, "natalidad_tasa": 14.1, "mortalidad_infantil_tasa": 8.8, "mortalidad_tasa": 7.5, "camas_uti_cada_10k": 4.4, "escolarizacion_secundaria": 87.0, "cobertura_agua_cloacas": 76.0, "cobertura_internet_fibra": 60.0, "deuda_per_capita_usd": 180, "desempleo_historial": [{ "anio": 2026, "tasa": 7.0 }] },
+            "Santiago del Estero": { "nombre": "Santiago del Estero", "poblacion": 1054028, "pobreza_porcentaje": 48.0, "costo_alquiler": 180000, "canasta_basica_total": 770000, "salario_promedio_ripte": 630000, "empleo_informal_porcentaje": 47.2, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 29500, "pauta_oficial_per_capita": 3000, "inseguridad_tasa": 350, "homicidios_tasa_100k": 2.8, "siniestros_viales_fatales": 165, "natalidad_tasa": 14.9, "mortalidad_infantil_tasa": 9.8, "mortalidad_tasa": 7.7, "camas_uti_cada_10k": 3.9, "escolarizacion_secundaria": 83.5, "cobertura_agua_cloacas": 66.0, "cobertura_internet_fibra": 53.2, "deuda_per_capita_usd": 80, "desempleo_historial": [{ "anio": 2026, "tasa": 6.6 }] },
+            "Tierra del Fuego": { "nombre": "Tierra del Fuego", "poblacion": 190641, "pobreza_porcentaje": 34.0, "costo_alquiler": 360000, "canasta_basica_total": 960000, "salario_promedio_ripte": 1210000, "empleo_informal_porcentaje": 23.0, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 22000, "pauta_oficial_per_capita": 5800, "inseguridad_tasa": 480, "homicidios_tasa_100k": 2.2, "siniestros_viales_fatales": 22, "natalidad_tasa": 12.8, "mortalidad_infantil_tasa": 5.2, "mortalidad_tasa": 6.5, "camas_uti_cada_10k": 6.0, "escolarizacion_secundaria": 94.5, "cobertura_agua_cloacas": 91.2, "cobertura_internet_fibra": 82.0, "deuda_per_capita_usd": 610, "desempleo_historial": [{ "anio": 2026, "tasa": 6.7 }] }
         };
-
-        // Inicializar mapa sin restricciones de tamaño en flexbox
-        let map = L.map('map', {
-            zoomControl: false,
-            attributionControl: false,
-            dragging: false,
-            scrollWheelZoom: false,
-            doubleClickZoom: false,
-            boxZoom: false,
-            keyboard: false
-        }).setView([-38.416097, -63.616672], 4);
-
-        let geojsonLayer = null;
-        let provinciaSeleccionadaLayer = null;
 
         function calcularIndiceRiesgo(p) {
             if (!p) return 50;
@@ -336,113 +405,58 @@
             return Math.min(Math.max(Math.round(score), 10), 100);
         }
 
-        function getColorPorRiesgo(score) {
-            return score > 75 ? '#b91c1c' :
-                   score > 60 ? '#ef4444' :
-                   score > 45 ? '#f97316' :
-                   score > 30 ? '#eab308' : '#16a34a';
-        }
+        // Asignar eventos de clic e interacciones
+        document.querySelectorAll('.provincia-shape').forEach(elem => {
+            elem.addEventListener('click', function() {
+                const nombreProv = this.getAttribute('data-nombre');
+                const data = datosProvincias[nombreProv];
 
-        function style(feature) {
-            const nombre = feature.properties.nam || feature.properties.name;
-            const provData = datosProvincias[nombre];
-            const riesgo = calcularIndiceRiesgo(provData);
+                document.getElementById('btn-volver-mapa').style.display = 'block';
+                document.getElementById('header-subtitle').innerText = `Visualizando provincia de ${nombreProv}`;
 
-            return {
-                fillColor: getColorPorRiesgo(riesgo),
-                weight: 2,
-                opacity: 1,
-                color: '#ffffff',
-                fillOpacity: 0.85
-            };
-        }
+                const panel = document.getElementById('info-panel');
+                if (data) {
+                    const riesgoScore = calcularIndiceRiesgo(data);
+                    document.getElementById('panel-nombre').innerText = data.nombre;
+                    document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`;
+                    document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
+                    document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
+                    document.getElementById('panel-informal').innerText = `${data.empleo_informal_porcentaje}%`;
+                    document.getElementById('panel-salario').innerText = `$${data.salario_promedio_ripte.toLocaleString('es-AR')}`;
+                    document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
+                    document.getElementById('panel-cbt').innerText = `$${data.canasta_basica_total.toLocaleString('es-AR')}`;
+                    document.getElementById('panel-iibb').innerText = `${data.ingresos_brutos_alicuota}%`;
 
-        function highlightFeature(e) {
-            if (provinciaSeleccionadaLayer) return;
-            var layer = e.target;
-            layer.setStyle({
-                weight: 4,
-                color: '#ffb81c',
-                fillOpacity: 0.95
-            });
-            layer.bringToFront();
-        }
+                    document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa}`;
+                    document.getElementById('panel-homicidios').innerText = `${data.homicidios_tasa_100k}`;
+                    document.getElementById('panel-vial').innerText = `${data.siniestros_viales_fatales}`;
 
-        function resetHighlight(e) {
-            if (provinciaSeleccionadaLayer) return;
-            if (geojsonLayer) geojsonLayer.resetStyle(e.target);
-        }
+                    document.getElementById('panel-natalidad').innerText = `${data.natalidad_tasa} ‰`;
+                    document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
+                    document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;
+                    document.getElementById('panel-camas').innerText = `${data.camas_uti_cada_10k}`;
+                    document.getElementById('panel-escuela').innerText = `${data.escolarizacion_secundaria}%`;
 
-        function seleccionarProvincia(e) {
-            const targetLayer = e.target;
-            const feature = targetLayer.feature;
-            const nombreProv = feature.properties.nam || feature.properties.name;
-            const data = datosProvincias[nombreProv];
+                    document.getElementById('panel-transf-disc').innerText = `$${data.transferencias_discrecionales_per_capita.toLocaleString('es-AR')}`;
+                    document.getElementById('panel-pauta-oficial').innerText = `$${data.pauta_oficial_per_capita.toLocaleString('es-AR')}`;
+                    document.getElementById('panel-agua').innerText = `${data.cobertura_agua_cloacas}%`;
+                    document.getElementById('panel-internet').innerText = `${data.cobertura_internet_fibra}%`;
+                    document.getElementById('panel-deuda').innerText = `USD ${data.deuda_per_capita_usd}`;
 
-            provinciaSeleccionadaLayer = targetLayer;
-
-            geojsonLayer.eachLayer(layer => {
-                if (layer !== targetLayer) {
-                    layer.setStyle({ fillOpacity: 0, opacity: 0, weight: 0 });
-                } else {
-                    layer.setStyle({ fillOpacity: 0.9, opacity: 1, weight: 3, color: '#ffb81c' });
+                    let historialHTML = '';
+                    if (data.desempleo_historial) {
+                        historialHTML = data.desempleo_historial.map((item, index) => {
+                            const etiqueta = index === 0 ? `Año ${item.anio} (Actual)` : `Hace ${index} año${index > 1 ? 's' : ''}`;
+                            return `<li><span>${etiqueta}:</span> <strong>${item.tasa}%</strong></li>`;
+                        }).join('');
+                    }
+                    document.getElementById('panel-historial').innerHTML = historialHTML;
+                    panel.style.display = 'block';
                 }
             });
-
-            map.invalidateSize();
-            map.fitBounds(targetLayer.getBounds(), { padding: [60, 60] });
-
-            document.getElementById('btn-volver-mapa').style.display = 'block';
-            document.getElementById('header-subtitle').innerText = `Visualizando provincia de ${nombreProv}`;
-
-            const panel = document.getElementById('info-panel');
-            if (data) {
-                const riesgoScore = calcularIndiceRiesgo(data);
-                document.getElementById('panel-nombre').innerText = data.nombre;
-                document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`;
-                document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
-                document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
-                document.getElementById('panel-informal').innerText = `${data.empleo_informal_porcentaje}%`;
-                document.getElementById('panel-salario').innerText = `$${data.salario_promedio_ripte.toLocaleString('es-AR')}`;
-                document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
-                document.getElementById('panel-cbt').innerText = `$${data.canasta_basica_total.toLocaleString('es-AR')}`;
-                document.getElementById('panel-iibb').innerText = `${data.ingresos_brutos_alicuota}%`;
-
-                document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa}`;
-                document.getElementById('panel-homicidios').innerText = `${data.homicidios_tasa_100k}`;
-                document.getElementById('panel-vial').innerText = `${data.siniestros_viales_fatales}`;
-
-                document.getElementById('panel-natalidad').innerText = `${data.natalidad_tasa} ‰`;
-                document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
-                document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;
-                document.getElementById('panel-camas').innerText = `${data.camas_uti_cada_10k}`;
-                document.getElementById('panel-escuela').innerText = `${data.escolarizacion_secundaria}%`;
-
-                document.getElementById('panel-transf-disc').innerText = `$${data.transferencias_discrecionales_per_capita.toLocaleString('es-AR')}`;
-                document.getElementById('panel-pauta-oficial').innerText = `$${data.pauta_oficial_per_capita.toLocaleString('es-AR')}`;
-                document.getElementById('panel-agua').innerText = `${data.cobertura_agua_cloacas}%`;
-                document.getElementById('panel-internet').innerText = `${data.cobertura_internet_fibra}%`;
-                document.getElementById('panel-deuda').innerText = `USD ${data.deuda_per_capita_usd}`;
-
-                let historialHTML = '';
-                if (data.desempleo_historial) {
-                    historialHTML = data.desempleo_historial.map((item, index) => {
-                        const etiqueta = index === 0 ? `Año ${item.anio} (Actual)` : `Hace ${index} año${index > 1 ? 's' : ''} (${item.anio})`;
-                        return `<li><span>${etiqueta}:</span> <strong>${item.tasa}%</strong></li>`;
-                    }).join('');
-                }
-                document.getElementById('panel-historial').innerHTML = historialHTML;
-                panel.style.display = 'block';
-            }
-        }
+        });
 
         function restablecerMapaNacional() {
-            provinciaSeleccionadaLayer = null;
-            if (geojsonLayer) {
-                geojsonLayer.eachLayer(layer => geojsonLayer.resetStyle(layer));
-                map.invalidateSize();
-                map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
-            }
             document.getElementById('info-panel').style.display = 'none';
             document.getElementById('btn-volver-mapa').style.display = 'none';
             document.getElementById('header-subtitle').innerText = 'Haz clic en una provincia para aislarla y explorar sus datos';
@@ -455,35 +469,6 @@
             evt.currentTarget.classList.add('active');
             document.getElementById(tabId).classList.add('active');
         }
-
-        // Carga robusta del GeoJSON oficial de provincias
-        async function init() {
-            try {
-                const respGeo = await fetch('https://raw.githubusercontent.com/apis-digitales/georef-ar-api/master/data/provincias.json');
-                const geoData = await respGeo.json();
-
-                geojsonLayer = L.geoJson(geoData, {
-                    style: style,
-                    onEachFeature: function(feature, layer) {
-                        layer.on({
-                            mouseover: highlightFeature,
-                            mouseout: resetHighlight,
-                            click: seleccionarProvincia
-                        });
-                    }
-                }).addTo(map);
-
-                setTimeout(() => {
-                    map.invalidateSize();
-                    map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
-                }, 100);
-
-            } catch (err) {
-                console.error("Error al cargar mapa:", err);
-            }
-        }
-
-        init();
     </script>
 </body>
 </html>
