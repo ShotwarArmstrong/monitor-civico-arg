@@ -114,6 +114,9 @@
             width: 100vw;
             z-index: 1;
             background: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         #info-panel {
@@ -346,6 +349,7 @@
                 }
             });
 
+            map.invalidateSize();
             map.fitBounds(targetLayer.getBounds(), { padding: [50, 50] });
 
             document.getElementById('btn-volver-mapa').style.display = 'block';
@@ -396,6 +400,7 @@
             provinciaSeleccionadaLayer = null;
             if (geojsonLayer) {
                 geojsonLayer.eachLayer(layer => geojsonLayer.resetStyle(layer));
+                map.invalidateSize();
                 map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
             }
             document.getElementById('info-panel').style.display = 'none';
@@ -413,6 +418,7 @@
 
         async function init() {
             try {
+                // Ruta relativa compatible con GitHub Pages subcarpetas
                 const respIndicadores = await fetch('../data/indicadores.json');
                 const dataIndicadores = await respIndicadores.json();
 
@@ -434,7 +440,11 @@
                     }
                 }).addTo(map);
 
-                map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+                // Forzar renderizado y ajuste de tamaño inmediato
+                setTimeout(() => {
+                    map.invalidateSize();
+                    map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+                }, 100);
 
             } catch (err) {
                 console.error("Error al inicializar el mapa:", err);
