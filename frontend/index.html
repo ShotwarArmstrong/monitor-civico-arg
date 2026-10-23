@@ -37,7 +37,6 @@
             background-repeat: repeat;
         }
 
-        /* Encabezado con imagen de Banderas */
         #header {
             position: absolute;
             top: 15px;
@@ -68,7 +67,6 @@
         #header h1 { margin: 0; font-size: 1.3em; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.8em; color: #0284c7; font-weight: 600; }
 
-        /* Resumen Nacional */
         #national-summary {
             position: absolute;
             top: 85px;
@@ -120,7 +118,6 @@
         }
         #btn-volver-mapa:hover { background: #0369a1; transform: translateY(-2px); }
 
-        /* Contenedor del Mapa interactivo */
         #map-container {
             position: absolute;
             top: 0;
@@ -131,37 +128,34 @@
             justify-content: center;
             align-items: center;
             z-index: 1;
-            padding-top: 40px;
+            padding-top: 50px;
         }
 
         #map-svg {
             height: 85vh;
             max-width: 90vw;
-            filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.15));
+            filter: drop-shadow(0px 8px 20px rgba(0,0,0,0.12));
         }
 
-        /* Estilo de la provincia interactiva al pasar el cursor */
         .provincia-shape {
             stroke: #ffffff;
-            stroke-width: 1.5;
+            stroke-width: 1.2;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .provincia-shape:hover {
             fill: #ffb81c !important;
             stroke: #0f172a !important;
-            stroke-width: 3 !important;
-            filter: brightness(1.1);
-            transform: scale(1.01);
-            transform-origin: center;
+            stroke-width: 2.5 !important;
+            filter: brightness(1.08);
         }
 
-        /* Panel Lateral de Información */
+        /* Panel Lateral de Información con Scroll Vertical Continuo */
         #info-panel {
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 410px;
+            width: 420px;
             max-height: calc(100vh - 40px);
             z-index: 1000;
             background: var(--card-bg);
@@ -186,39 +180,23 @@
             color: #64748b;
         }
         .close-btn:hover { color: #000; }
-        .province-title { margin: 0 0 15px 0; color: #0284c7; font-size: 1.4em; }
+        .province-title { margin: 0 0 12px 0; color: #0284c7; font-size: 1.4em; }
 
-        .tabs {
-            display: flex;
-            gap: 4px;
-            border-bottom: 2px solid #e2e8f0;
-            margin-bottom: 15px;
-            overflow-x: auto;
+        .section-heading {
+            font-size: 0.95em;
+            color: #0369a1;
+            text-transform: uppercase;
+            border-bottom: 2px solid #bae6fd;
+            padding-bottom: 4px;
+            margin: 18px 0 8px 0;
+            letter-spacing: 0.5px;
         }
-        .tab-btn {
-            background: none;
-            border: none;
-            color: #64748b;
-            padding: 8px 10px;
-            cursor: pointer;
-            font-size: 0.8em;
-            font-weight: 600;
-            border-bottom: 2px solid transparent;
-            white-space: nowrap;
-        }
-        .tab-btn.active {
-            color: #0284c7;
-            border-bottom-color: #0284c7;
-            font-weight: bold;
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
 
         .metric-box {
             background: #f0f9ff;
             border-radius: 10px;
             padding: 12px;
-            margin: 10px 0;
+            margin: 8px 0 15px 0;
             text-align: center;
             border: 1px solid #bae6fd;
         }
@@ -228,13 +206,13 @@
         .data-row {
             display: flex;
             justify-content: space-between;
-            padding: 7px 0;
+            padding: 6px 0;
             border-bottom: 1px dashed #e2e8f0;
             font-size: 0.85em;
         }
         .data-row span { color: var(--text-muted); }
         .data-row strong { color: var(--text); }
-        .history-list { list-style: none; padding: 0; margin: 10px 0 0 0; font-size: 0.85em; }
+        .history-list { list-style: none; padding: 0; margin: 5px 0 0 0; font-size: 0.85em; }
         .history-list li { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #e2e8f0; }
     </style>
 </head>
@@ -262,110 +240,106 @@
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Argentina Completa</button>
 
     <div id="map-container">
-        <!-- SVG Vectorial Nativo de Argentina -->
-        <svg id="map-svg" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+        <!-- Silueta realista y contorneada de la República Argentina con Islas Malvinas -->
+        <svg id="map-svg" viewBox="0 0 500 900" xmlns="http://www.w3.org/2000/svg">
             <g id="provincias-group">
                 <!-- Jujuy -->
-                <path class="provincia-shape" data-nombre="Jujuy" fill="#f97316" d="M 110,40 L 135,35 L 145,65 L 120,80 L 100,60 Z" />
+                <path class="provincia-shape" data-nombre="Jujuy" fill="#f97316" d="M 215,60 L 255,55 L 265,90 L 230,110 L 205,85 Z" />
                 <!-- Salta -->
-                <path class="provincia-shape" data-nombre="Salta" fill="#f97316" d="M 90,65 L 120,80 L 145,65 L 175,70 L 165,110 L 110,105 L 85,85 Z" />
+                <path class="provincia-shape" data-nombre="Salta" fill="#f97316" d="M 190,85 L 230,110 L 265,90 L 310,100 L 295,150 L 230,140 L 180,110 Z" />
                 <!-- Formosa -->
-                <path class="provincia-shape" data-nombre="Formosa" fill="#ef4444" d="M 175,70 L 245,95 L 230,120 L 165,110 Z" />
+                <path class="provincia-shape" data-nombre="Formosa" fill="#ef4444" d="M 310,100 L 395,125 L 375,155 L 295,150 Z" />
                 <!-- Tucumán -->
-                <path class="provincia-shape" data-nombre="Tucumán" fill="#f97316" d="M 110,105 L 128,105 L 125,128 L 108,125 Z" />
+                <path class="provincia-shape" data-nombre="Tucumán" fill="#f97316" d="M 205,138 L 232,140 L 225,170 L 200,165 Z" />
                 <!-- Catamarca -->
-                <path class="provincia-shape" data-nombre="Catamarca" fill="#f97316" d="M 70,100 L 110,105 L 108,125 L 130,135 L 115,160 L 65,130 Z" />
+                <path class="provincia-shape" data-nombre="Catamarca" fill="#f97316" d="M 155,130 L 205,138 L 200,165 L 230,180 L 210,215 L 150,175 Z" />
                 <!-- Chaco -->
-                <path class="provincia-shape" data-nombre="Chaco" fill="#b91c1c" d="M 165,110 L 230,120 L 220,160 L 160,145 Z" />
+                <path class="provincia-shape" data-nombre="Chaco" fill="#b91c1c" d="M 295,150 L 375,155 L 355,205 L 275,190 Z" />
                 <!-- Santiago del Estero -->
-                <path class="provincia-shape" data-nombre="Santiago del Estero" fill="#ef4444" d="M 128,105 L 165,110 L 160,145 L 135,170 L 120,135 Z" />
+                <path class="provincia-shape" data-nombre="Santiago del Estero" fill="#ef4444" d="M 230,140 L 295,150 L 275,190 L 235,225 L 215,180 Z" />
                 <!-- Misiones -->
-                <path class="provincia-shape" data-nombre="Misiones" fill="#f97316" d="M 270,120 L 295,105 L 305,130 L 280,145 Z" />
+                <path class="provincia-shape" data-nombre="Misiones" fill="#f97316" d="M 425,155 L 460,140 L 475,185 L 435,205 Z" />
                 <!-- Corrientes -->
-                <path class="provincia-shape" data-nombre="Corrientes" fill="#f97316" d="M 220,160 L 280,145 L 265,195 L 210,185 Z" />
+                <path class="provincia-shape" data-nombre="Corrientes" fill="#f97316" d="M 355,205 L 435,205 L 415,270 L 340,250 Z" />
                 <!-- Santa Fe -->
-                <path class="provincia-shape" data-nombre="Santa Fe" fill="#f97316" d="M 160,145 L 210,185 L 195,255 L 165,250 L 150,180 Z" />
+                <path class="provincia-shape" data-nombre="Santa Fe" fill="#f97316" d="M 275,190 L 340,250 L 320,345 L 275,340 L 255,245 Z" />
                 <!-- La Rioja -->
-                <path class="provincia-shape" data-nombre="La Rioja" fill="#f97316" d="M 65,130 L 115,160 L 105,195 L 55,175 Z" />
+                <path class="provincia-shape" data-nombre="La Rioja" fill="#f97316" d="M 150,175 L 210,215 L 195,260 L 135,235 Z" />
                 <!-- San Juan -->
-                <path class="provincia-shape" data-nombre="San Juan" fill="#eab308" d="M 55,175 L 105,195 L 95,235 L 45,215 Z" />
+                <path class="provincia-shape" data-nombre="San Juan" fill="#eab308" d="M 135,235 L 195,260 L 180,310 L 115,285 Z" />
                 <!-- Córdoba -->
-                <path class="provincia-shape" data-nombre="Córdoba" fill="#f97316" d="M 115,160 L 160,145 L 165,250 L 110,250 L 105,195 Z" />
+                <path class="provincia-shape" data-nombre="Córdoba" fill="#f97316" d="M 210,215 L 275,190 L 255,245 L 275,340 L 215,335 L 195,260 Z" />
                 <!-- Entre Ríos -->
-                <path class="provincia-shape" data-nombre="Entre Ríos" fill="#f97316" d="M 210,185 L 265,195 L 240,245 L 195,255 Z" />
+                <path class="provincia-shape" data-nombre="Entre Ríos" fill="#f97316" d="M 340,250 L 415,270 L 390,335 L 320,345 Z" />
                 <!-- San Luis -->
-                <path class="provincia-shape" data-nombre="San Luis" fill="#eab308" d="M 95,235 L 110,250 L 105,295 L 75,285 Z" />
+                <path class="provincia-shape" data-nombre="San Luis" fill="#eab308" d="M 180,310 L 215,335 L 205,395 L 160,380 Z" />
                 <!-- Mendoza -->
-                <path class="provincia-shape" data-nombre="Mendoza" fill="#f97316" d="M 45,215 L 95,235 L 75,285 L 35,270 Z" />
+                <path class="provincia-shape" data-nombre="Mendoza" fill="#f97316" d="M 115,285 L 180,310 L 160,380 L 100,355 Z" />
                 <!-- La Pampa -->
-                <path class="provincia-shape" data-nombre="La Pampa" fill="#eab308" d="M 75,285 L 140,295 L 135,340 L 70,330 Z" />
+                <path class="provincia-shape" data-nombre="La Pampa" fill="#eab308" d="M 205,395 L 275,340 L 265,425 L 190,410 Z" />
                 <!-- Buenos Aires -->
-                <path class="provincia-shape" data-nombre="Buenos Aires" fill="#f97316" d="M 165,250 L 240,245 L 225,330 L 180,380 L 135,340 L 140,295 Z" />
+                <path class="provincia-shape" data-nombre="Buenos Aires" fill="#f97316" d="M 275,340 L 320,345 L 390,335 L 370,440 L 300,500 L 225,445 L 265,425 Z" />
                 <!-- CABA -->
-                <circle class="provincia-shape" data-nombre="Ciudad Autónoma de Buenos Aires (CABA)" fill="#16a34a" cx="215" cy="262" r="6" />
+                <circle class="provincia-shape" data-nombre="Ciudad Autónoma de Buenos Aires (CABA)" fill="#16a34a" cx="342" cy="355" r="7" />
                 <!-- Neuquén -->
-                <path class="provincia-shape" data-nombre="Neuquén" fill="#eab308" d="M 35,270 L 75,285 L 70,330 L 30,340 Z" />
+                <path class="provincia-shape" data-nombre="Neuquén" fill="#eab308" d="M 100,355 L 160,380 L 150,455 L 90,440 Z" />
                 <!-- Río Negro -->
-                <path class="provincia-shape" data-nombre="Río Negro" fill="#f97316" d="M 70,330 L 135,340 L 155,395 L 55,390 Z" />
+                <path class="provincia-shape" data-nombre="Río Negro" fill="#f97316" d="M 150,455 L 265,425 L 285,510 L 135,505 Z" />
                 <!-- Chubut -->
-                <path class="provincia-shape" data-nombre="Chubut" fill="#eab308" d="M 55,390 L 155,395 L 145,465 L 45,460 Z" />
+                <path class="provincia-shape" data-nombre="Chubut" fill="#eab308" d="M 135,505 L 285,510 L 265,610 L 115,600 Z" />
                 <!-- Santa Cruz -->
-                <path class="provincia-shape" data-nombre="Santa Cruz" fill="#eab308" d="M 45,460 L 145,465 L 130,550 L 35,540 Z" />
+                <path class="provincia-shape" data-nombre="Santa Cruz" fill="#eab308" d="M 115,600 L 265,610 L 240,730 L 95,720 Z" />
                 <!-- Tierra del Fuego -->
-                <path class="provincia-shape" data-nombre="Tierra del Fuego" fill="#eab308" d="M 115,570 L 150,575 L 140,610 L 105,600 Z" />
+                <path class="provincia-shape" data-nombre="Tierra del Fuego" fill="#eab308" d="M 155,760 L 225,770 L 210,810 L 140,800 Z" />
+                
+                <!-- Islas Malvinas (Sovereignty representation) -->
+                <g id="islas-malvinas">
+                    <path class="provincia-shape" data-nombre="Tierra del Fuego" fill="#eab308" d="M 345,710 L 365,705 L 360,735 L 340,730 Z" />
+                    <path class="provincia-shape" data-nombre="Tierra del Fuego" fill="#eab308" d="M 375,720 L 400,715 L 395,750 L 370,745 Z" />
+                </g>
             </g>
         </svg>
     </div>
 
+    <!-- Panel Lateral con scroll vertical continuo -->
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
         <h2 id="panel-nombre" class="province-title">-</h2>
         
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('tab-economia', event)">📊 Economía</button>
-            <button class="tab-btn" onclick="switchTab('tab-seguridad', event)">🛡️ Seguridad</button>
-            <button class="tab-btn" onclick="switchTab('tab-salud', event)">🏥 Salud & Edu</button>
-            <button class="tab-btn" onclick="switchTab('tab-infra', event)">🏛️ Gestión</button>
+        <div class="metric-box">
+            <div id="panel-riesgo" class="metric-val">- / 100</div>
+            <div class="metric-sub">Índice de Riesgo Integral</div>
         </div>
 
-        <div id="tab-economia" class="tab-content active">
-            <div class="metric-box">
-                <div id="panel-riesgo" class="metric-val">- / 100</div>
-                <div class="metric-sub">Índice de Riesgo Integral</div>
-            </div>
-            <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
-            <div class="data-row"><span>Tasa de Pobreza:</span><strong id="panel-pobreza">-</strong></div>
-            <div class="data-row"><span>Empleo Informal:</span><strong id="panel-informal">-</strong></div>
-            <div class="data-row"><span>Salario Promedio (RIPTE):</span><strong id="panel-salario">-</strong></div>
-            <div class="data-row"><span>Alquiler Promedio (2 amb):</span><strong id="panel-alquiler">-</strong></div>
-            <div class="data-row"><span>Canasta Básica Total:</span><strong id="panel-cbt">-</strong></div>
-            <div class="data-row"><span>Ingresos Brutos (Alícuota):</span><strong id="panel-iibb">-</strong></div>
-            
-            <div style="font-weight: bold; margin: 15px 0 8px 0; font-size: 0.88em; color: #0284c7;">Histórico de Desempleo (6 años):</div>
-            <ul id="panel-historial" class="history-list"></ul>
-        </div>
+        <div class="section-heading">📊 Economía</div>
+        <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
+        <div class="data-row"><span>Tasa de Pobreza:</span><strong id="panel-pobreza">-</strong></div>
+        <div class="data-row"><span>Empleo Informal:</span><strong id="panel-informal">-</strong></div>
+        <div class="data-row"><span>Salario Promedio (RIPTE):</span><strong id="panel-salario">-</strong></div>
+        <div class="data-row"><span>Alquiler Promedio (2 amb):</span><strong id="panel-alquiler">-</strong></div>
+        <div class="data-row"><span>Canasta Básica Total:</span><strong id="panel-cbt">-</strong></div>
+        <div class="data-row"><span>Ingresos Brutos (Alícuota):</span><strong id="panel-iibb">-</strong></div>
+        <div style="font-weight: bold; margin: 10px 0 4px 0; font-size: 0.85em; color: #0284c7;">Histórico de Desempleo (6 años):</div>
+        <ul id="panel-historial" class="history-list"></ul>
 
-        <div id="tab-seguridad" class="tab-content">
-            <div class="data-row"><span>Tasa Inseguridad (Delitos / 100k):</span><strong id="panel-inseguridad">-</strong></div>
-            <div class="data-row"><span>Homicidios Dolosos (cada 100k):</span><strong id="panel-homicidios">-</strong></div>
-            <div class="data-row"><span>Siniestros Viales Fatales (Anual):</span><strong id="panel-vial">-</strong></div>
-        </div>
+        <div class="section-heading">🛡️ Seguridad</div>
+        <div class="data-row"><span>Tasa Inseguridad (Delitos / 100k):</span><strong id="panel-inseguridad">-</strong></div>
+        <div class="data-row"><span>Homicidios Dolosos (cada 100k):</span><strong id="panel-homicidios">-</strong></div>
+        <div class="data-row"><span>Siniestros Viales Fatales (Anual):</span><strong id="panel-vial">-</strong></div>
 
-        <div id="tab-salud" class="tab-content">
-            <div class="data-row"><span>Tasa de Natalidad (por mil):</span><strong id="panel-natalidad">-</strong></div>
-            <div class="data-row"><span>Tasa de Mortalidad Infantil:</span><strong id="panel-mortalidad-infantil">-</strong></div>
-            <div class="data-row"><span>Mortalidad General (por mil):</span><strong id="panel-mortalidad">-</strong></div>
-            <div class="data-row"><span>Camas UTI (cada 10k hab):</span><strong id="panel-camas">-</strong></div>
-            <div class="data-row"><span>Escolarización Secundaria:</span><strong id="panel-escuela">-</strong></div>
-        </div>
+        <div class="section-heading">🏥 Salud & Educación</div>
+        <div class="data-row"><span>Tasa de Natalidad (por mil):</span><strong id="panel-natalidad">-</strong></div>
+        <div class="data-row"><span>Tasa de Mortalidad Infantil:</span><strong id="panel-mortalidad-infantil">-</strong></div>
+        <div class="data-row"><span>Mortalidad General (por mil):</span><strong id="panel-mortalidad">-</strong></div>
+        <div class="data-row"><span>Camas UTI (cada 10k hab):</span><strong id="panel-camas">-</strong></div>
+        <div class="data-row"><span>Escolarización Secundaria:</span><strong id="panel-escuela">-</strong></div>
 
-        <div id="tab-infra" class="tab-content">
-            <div class="data-row"><span>Transferencias Discrecionales (p/cápita):</span><strong id="panel-transf-disc">-</strong></div>
-            <div class="data-row"><span>Pauta Oficial Provincial (p/cápita):</span><strong id="panel-pauta-oficial">-</strong></div>
-            <div class="data-row"><span>Cobertura Agua y Cloacas:</span><strong id="panel-agua">-</strong></div>
-            <div class="data-row"><span>Conexión Internet Fibra Óptica:</span><strong id="panel-internet">-</strong></div>
-            <div class="data-row"><span>Deuda Provincial Per Cápita:</span><strong id="panel-deuda">-</strong></div>
-        </div>
+        <div class="section-heading">🏛️ Gestión & Infraestructura</div>
+        <div class="data-row"><span>Transferencias Discrecionales (p/cápita):</span><strong id="panel-transf-disc">-</strong></div>
+        <div class="data-row"><span>Pauta Oficial Provincial (p/cápita):</span><strong id="panel-pauta-oficial">-</strong></div>
+        <div class="data-row"><span>Cobertura Agua y Cloacas:</span><strong id="panel-agua">-</strong></div>
+        <div class="data-row"><span>Conexión Internet Fibra Óptica:</span><strong id="panel-internet">-</strong></div>
+        <div class="data-row"><span>Deuda Provincial Per Cápita:</span><strong id="panel-deuda">-</strong></div>
     </div>
 
     <script>
@@ -405,7 +379,6 @@
             return Math.min(Math.max(Math.round(score), 10), 100);
         }
 
-        // Asignar eventos de clic e interacciones
         document.querySelectorAll('.provincia-shape').forEach(elem => {
             elem.addEventListener('click', function() {
                 const nombreProv = this.getAttribute('data-nombre');
@@ -460,14 +433,6 @@
             document.getElementById('info-panel').style.display = 'none';
             document.getElementById('btn-volver-mapa').style.display = 'none';
             document.getElementById('header-subtitle').innerText = 'Haz clic en una provincia para aislarla y explorar sus datos';
-        }
-
-        function switchTab(tabId, evt) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            evt.currentTarget.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
         }
     </script>
 </body>
