@@ -64,7 +64,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: calc(100vh - 110px);
+            max-height: calc(100vh - 125px);
             overflow-y: auto;
             padding-right: 6px;
         }
@@ -96,7 +96,7 @@
             align-items: center;
         }
         .nat-content {
-            max-height: 230px;
+            max-height: 190px;
             overflow-y: auto;
         }
         .nat-row {
@@ -110,13 +110,13 @@
         .nat-row:last-child { border-bottom: none; }
         .nat-val { font-weight: bold; color: #0284c7; text-align: right; }
 
-        /* Ajuste de Encuadre para Gráficos Superiores sin desbordes */
+        /* Estilo restaurado para gráficos nacionales superiores */
         .nat-chart-container {
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            height: 90px;
-            padding: 12px 4px 2px 4px;
+            height: 75px;
+            padding: 4px 2px 2px 2px;
             background: #ffffff;
             border: 1px solid #bae6fd;
             border-radius: 8px;
@@ -135,12 +135,12 @@
             border-radius: 3px 3px 0 0;
         }
         .nat-chart-bar-label {
-            font-size: 0.6em;
+            font-size: 0.58em;
             color: #64748b;
             margin-top: 2px;
         }
         .nat-chart-bar-val {
-            font-size: 0.6em;
+            font-size: 0.58em;
             font-weight: bold;
             color: #0f172a;
             margin-bottom: 2px;
@@ -171,15 +171,17 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
             border-top: 2px solid var(--celeste);
-            padding: 5px 20px;
+            padding: 6px 20px;
             text-align: center;
             z-index: 5000;
             font-size: 0.72em;
             color: #334155;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
         }
-        #footer-fuentes strong { color: #0284c7; }
+        #footer-fuentes a { color: #0284c7; text-decoration: none; font-weight: bold; margin: 0 4px; }
+        #footer-fuentes a:hover { text-decoration: underline; color: #0369a1; }
 
+        /* Contenedor del mapa con pointer-events corregido para permitir clics */
         #map-container {
             position: absolute;
             top: 65px;
@@ -227,7 +229,7 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            width: 500px;
+            width: 510px;
             max-height: calc(100vh - 75px);
             z-index: 4000;
             background: var(--card-bg);
@@ -411,6 +413,8 @@
         .educacion-header { color: #991b1b; background: #fee2e2; }
         .infra-container { background: #eff6ff; border: 1px solid #bfdbfe; }
         .infra-header { color: #1e40af; background: #dbeafe; }
+        .congreso-container { background: #fdf8f6; border: 1px solid #f3dcd4; }
+        .congreso-header { color: #9a3412; background: #ffedd5; }
 
         .sub-infra-dropdown {
             background: #ffffff;
@@ -465,6 +469,19 @@
         .voto-afirmativo { background: #16a34a; }
         .voto-negativo { background: #dc2626; }
         .voto-abstencion { background: #ca8a04; }
+
+        .pdf-link {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 3px 8px;
+            background: #0284c7;
+            color: #fff;
+            font-size: 0.7em;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .pdf-link:hover { background: #0369a1; }
     </style>
 </head>
 <body>
@@ -526,7 +543,14 @@
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Mapa Completo</button>
 
     <div id="footer-fuentes">
-        <span><strong>Fuentes Oficiales de Consulta Manual:</strong> INDEC · Ministerio de Economía · SISA Salud · Honorable Congreso de la Nación · BCRA · ARCA</span>
+        <span><strong>Fuentes Oficiales:</strong> 
+            <a href="https://www.indec.gob.ar" target="_blank">INDEC</a> · 
+            <a href="https://www.argentina.gob.ar/economia" target="_blank">Ministerio de Economía</a> · 
+            <a href="https://sisa.msal.gov.ar" target="_blank">SISA Salud</a> · 
+            <a href="https://www.congreso.gob.ar" target="_blank">Honorable Congreso de la Nación</a> · 
+            <a href="https://www.bcra.gob.ar" target="_blank">BCRA</a> · 
+            <a href="https://www.argentina.gob.ar/arca" target="_blank">ARCA</a>
+        </span>
     </div>
 
     <div id="map-container">
@@ -629,7 +653,6 @@
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
 
-        <!-- Historial de Gobernadores -->
         <div class="gen-container mandatos-container" id="panel-mandatos">
             <div class="gen-header mandatos-header" onclick="toggleSeccion('panel-mandatos')">
                 <span>📜 Histórico de Gobernadores (Últimos Mandatos)</span>
@@ -638,7 +661,6 @@
             <div class="gen-content" id="mandatos-content-box"></div>
         </div>
 
-        <!-- Radiografía Electoral -->
         <div class="gen-container electoral-container" id="panel-electoral">
             <div class="gen-header electoral-header" onclick="toggleSeccion('panel-electoral')">
                 <span>🗳️ Radiografía Electoral & Próximas Elecciones</span>
@@ -792,8 +814,25 @@
         <div class="data-row"><span>Fuerza Mayoritaria:</span><strong id="panel-fuerza-mayoritaria">-</strong></div>
         <div class="data-row"><span>Ausentismo Promedio Bloque:</span><strong id="panel-ausentismo">-</strong></div>
 
+        <div class="gen-container congreso-container" id="panel-congreso-detalle">
+            <div class="gen-header congreso-header" onclick="toggleSeccion('panel-congreso-detalle')">
+                <span>👥 Listado de Representantes y Bloques</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Diputados Nacionales Principales</strong>
+                    <span id="det-diputados-lista">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Senadores Nacionales</strong>
+                    <span id="det-senadores-lista">-</span>
+                </div>
+            </div>
+        </div>
+
         <div class="section-heading">
-            <span>⚖️ Votaciones Clave Congreso</span>
+            <span>⚖️ Votaciones Clave Congreso & Documentos PDF</span>
         </div>
         <div class="data-row"><span>Ley Bases / Paquete Fiscal:</span><span id="panel-voto-bases" class="voto-badge">-</span></div>
         <div class="data-row"><span>Presupuesto Nacional:</span><span id="panel-voto-presupuesto" class="voto-badge">-</span></div>
@@ -801,6 +840,14 @@
         <div class="data-row"><span>Financiamiento Universitario:</span><span id="panel-voto-universidades" class="voto-badge">-</span></div>
         <div class="data-row"><span>Boleta Única de Papel (BUP):</span><span id="panel-voto-bup" class="voto-badge">-</span></div>
         <div class="data-row"><span>RIGI (Inversiones):</span><span id="panel-voto-rigi" class="voto-badge">-</span></div>
+
+        <div class="sub-card" style="margin-top: 8px; background: #fffbeb; border-color: #fde68a;">
+            <strong>📄 Expedientes & Proyectos Oficiales (PDF)</strong>
+            <span style="font-size: 0.75em; color: #78350f;">Descarga y lectura de dictámenes de comisiones y leyes promulgadas.</span>
+            <br>
+            <a href="https://www.diputados.gov.ar" target="_blank" class="pdf-link">📥 Descargar Dictamen Ley Bases (PDF)</a>
+            <a href="https://www.senado.gob.ar" target="_blank" class="pdf-link" style="background: #0369a1;">📥 Ver Presupuesto Vigente (PDF)</a>
+        </div>
 
         <div class="section-heading">
             <span>📊 Economía Real & Costo de Vida</span>
@@ -860,6 +907,10 @@
                     "2011 - 2015: Daniel Scioli (FPV)",
                     "2007 - 2011: Daniel Scioli (FPV)"
                 ],
+                representantes: {
+                    diputados_lista: "Máximo Kirchner (UxP), Cristian Ritondo (PRO), Victoria Tolosa Paz (UxP), José Luis Espert (LLA).",
+                    senadores_lista: "Eduardo de Pedro (UxP), Juliana Di Tullio (UxP), Maximiliano Abad (UCR)."
+                },
                 electoral: {
                     elecciones_locales: "Octubre de 2027 (Renovación de Gobernador e Intendencias).",
                     resultado: "Fuerza ganadora en gobernación con 45% de los votos.",
@@ -889,6 +940,10 @@
                     "2011 - 2015: Mauricio Macri (PRO)",
                     "2007 - 2011: Mauricio Macri (PRO)"
                 ],
+                representantes: {
+                    diputados_lista: "María Eugenia Vidal (PRO), Leandro Santoro (UxP), Ricardo López Murphy (HCF), Paula Oliveto (CC).",
+                    senadores_lista: "Martín Lousteau (UCR), Guadalupe Tagliaferri (PRO), Eduardo Valdés (UxP)."
+                },
                 electoral: {
                     elecciones_locales: "Octubre de 2027 (Jefe de Gobierno y Legisladores).",
                     resultado: "Triunfo del PRO / JxC.", participacion: "71.2%; 3.8% votos en blanco."
@@ -917,6 +972,10 @@
                     "2011 - 2015: Antonio Bonfatti (FPCyS / PS)",
                     "2007 - 2011: Hermes Binner (FPCyS / PS)"
                 ],
+                representantes: {
+                    diputados_lista: "Mario Negri (UCR), Germán Martínez (UxP), Luciano Laspina (PRO), Mónica Fein (PS).",
+                    senadores_lista: "Carolina Losada (UCR), Dionisio Scarpin (UCR), Marcelo Lewandowski (UxP)."
+                },
                 electoral: {
                     elecciones_locales: "Septiembre/Octubre de 2027 (Gobernador, Intendencias y Concejos).",
                     resultado: "Victoria de Unidos para Cambiar Santa Fe con 58%.",
@@ -946,6 +1005,10 @@
                     "2011 - 2015: José Manuel de la Sota (Unión por Córdoba)",
                     "2007 - 2011: Juan Schiaretti (Unión por Córdoba)"
                 ],
+                representantes: {
+                    diputados_lista: "Rodrigo de Loredo (UCR), Natalia de la Sota (HCF), Oscar Agost Carreño (PRO).",
+                    senadores_lista: "Luis Juez (PRO), Alejandra Vigo (HCF), Carmen Álvarez Rivero (PRO)."
+                },
                 electoral: {
                     elecciones_locales: "Junio/Julio de 2027 (Renovación Ejecutiva Provincial).",
                     resultado: "Triunfo de Hacemos por Córdoba.", participacion: "72.8%; 4.0% voto blanco."
@@ -974,6 +1037,10 @@
                     "2011 - 2015: Francisco Pérez (FPV / PJ)",
                     "2007 - 2011: Celso Jaque (FPV / PJ)"
                 ],
+                representantes: {
+                    diputados_lista: "Pamela Verasay (UCR), Julio Cobos (UCR), Adolfo Bermejo (UxP).",
+                    senadores_lista: "Alfredo Cornejo (UCR), Mariana Juri (UCR), Anabel Fernández Sagasti (UxP)."
+                },
                 electoral: {
                     elecciones_locales: "Junio de 2027 (Renovación Ejecutiva Provincial).",
                     resultado: "Victoria de Cambia Mendoza.", participacion: "71.5%; 5.0% voto blanco."
@@ -1002,6 +1069,10 @@
                     "2009 - 2013: Gerardo Zamora (Frente Cívico)",
                     "2005 - 2009: Gerardo Zamora (Frente Cívico)"
                 ],
+                representantes: {
+                    diputados_lista: "Estela Neder (UxP), Bernardo Herrera (UxP), Ricardo Daives (UxP).",
+                    senadores_lista: "Claudia Ledesma Abdala (Frente Cívico), José Emilio Neder (UxP), Gerardo Montenegro (UxP)."
+                },
                 electoral: {
                     elecciones_locales: "Octubre de 2025 / 2029 (Elecciones provinciales desfasadas).",
                     resultado: "Triunfo del Frente Cívico con 70% de los votos.", participacion: "72.4%; 3.5% voto blanco."
@@ -1030,6 +1101,10 @@
                     "2009 - 2013: Ricardo Colombi (Encuentro por Corrientes)",
                     "2005 - 2009: Arturo Colombi (Frente de Todos Local)"
                 ],
+                representantes: {
+                    diputados_lista: "Manuel Aguirre (UCR), Sofía Brambilla (PRO), Christian Zulli (UxP).",
+                    senadores_lista: "Eduardo Vischi (UCR), Carlos "Camau" Espínola (UxP), Gabriela Valenzuela (UCR)."
+                },
                 electoral: {
                     elecciones_locales: "Octubre de 2025 / 2029 (Elección ejecutiva provincial desfasada).",
                     resultado: "Triunfo de Encuentro por Corrientes (ECO).", participacion: "73.0%; 4.2% voto blanco."
@@ -1058,6 +1133,10 @@
                     "2011 - 2015: Fabiana Ríos (PSP / Partido Social Patagónico)",
                     "2007 - 2011: Fabiana Ríos (ARI)"
                 ],
+                representantes: {
+                    diputados_lista: "Andrea Freites (UxP), Santiago Pauli (LLA), Jorge Araujo Hernández (UxP).",
+                    senadores_lista: "Cristina López (UxP), María Eugenia Duré (UxP), Pablo Blanco (UCR)."
+                },
                 electoral: {
                     elecciones_locales: "Mayo / Junio de 2027 (Elecciones a Gobernador e Intendencias).",
                     resultado: "Victoria de FORJA en elecciones provinciales.",
@@ -1081,25 +1160,25 @@
             if (datosProvincias[nombre]) return datosProvincias[nombre];
             
             const dictProvinciasExtra = {
-                "Jujuy": { gov: "Carlos Sadir (UCR / Cambia Jujuy)", mandatos: ["2023 - Pres.: Carlos Sadir", "2019 - 2023: Gerardo Morales", "2015 - 2019: Gerardo Morales", "2011 - 2015: Eduardo Fellner", "2007 - 2011: Walter Barrionuevo"] },
-                "Salta": { gov: "Gustavo Sáenz (Identidad Salteña)", mandatos: ["2023 - Pres.: Gustavo Sáenz", "2019 - 2023: Gustavo Sáenz", "2015 - 2019: Juan Manuel Urtubey", "2011 - 2015: Juan Manuel Urtubey", "2007 - 2011: Juan Manuel Urtubey"] },
-                "Tucumán": { gov: "Osvaldo Jaldo (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Osvaldo Jaldo", "2019 - 2023: Juan Manzur", "2015 - 2019: Juan Manzur", "2011 - 2015: José Alperovich", "2007 - 2011: José Alperovich"] },
-                "Catamarca": { gov: "Raúl Jalil (Unión por la Patria)", mandatos: ["2023 - Pres.: Raúl Jalil", "2019 - 2023: Raúl Jalil", "2015 - 2019: Lucía Corpacci", "2011 - 2015: Lucía Corpacci", "2007 - 2011: Eduardo Brizuela del Moral"] },
-                "La Rioja": { gov: "Ricardo Quintela (Unión por la Patria)", mandatos: ["2023 - Pres.: Ricardo Quintela", "2019 - 2023: Ricardo Quintela", "2015 - 2019: Sergio Casas", "2011 - 2015: Beder Herrera", "2007 - 2011: Beder Herrera"] },
-                "San Juan": { gov: "Marcelo Orrego (Cambia San Juan)", mandatos: ["2023 - Pres.: Marcelo Orrego", "2019 - 2023: Sergio Uñac", "2015 - 2019: Sergio Uñac", "2011 - 2015: José Luis Gioja", "2007 - 2011: José Luis Gioja"] },
-                "San Luis": { gov: "Claudio Poggi (Cambia San Luis)", mandatos: ["2023 - Pres.: Claudio Poggi", "2019 - 2023: Alberto Rodríguez Saá", "2015 - 2019: Alberto Rodríguez Saá", "2011 - 2015: Claudio Poggi", "2007 - 2011: Alberto Rodríguez Saá"] },
-                "Entre Ríos": { gov: "Rogelio Frigerio (Juntos por Entre Ríos)", mandatos: ["2023 - Pres.: Rogelio Frigerio", "2019 - 2023: Gustavo Bordet", "2015 - 2019: Gustavo Bordet", "2011 - 2015: Sergio Urribarri", "2007 - 2011: Sergio Urribarri"] },
-                "Chaco": { gov: "Leandro Zdero (Juntos por el Cambio)", mandatos: ["2023 - Pres.: Leandro Zdero", "2019 - 2023: Jorge Capitanich", "2015 - 2019: Domingo Peppo", "2011 - 2015: Jorge Capitanich", "2007 - 2011: Jorge Capitanich"] },
-                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"] },
-                "Misiones": { gov: "Hugo Passalacqua (Frente Renovador de la Concordia)", mandatos: ["2023 - Pres.: Hugo Passalacqua", "2019 - 2023: Oscar Herrera Ahuad", "2015 - 2019: Hugo Passalacqua", "2011 - 2015: Maurice Closs", "2007 - 2011: Maurice Closs"] },
-                "La Pampa": { gov: "Sergio Ziliotto (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Sergio Ziliotto", "2019 - 2023: Sergio Ziliotto", "2015 - 2019: Carlos Verna", "2011 - 2015: Oscar Jorge", "2007 - 2011: Oscar Jorge"] },
-                "Neuquén": { gov: "Rolando Figueroa (Comunidad)", mandatos: ["2023 - Pres.: Rolando Figueroa", "2019 - 2023: Omar Gutiérrez (MPN)", "2015 - 2019: Omar Gutiérrez (MPN)", "2011 - 2015: Jorge Sapag (MPN)", "2007 - 2011: Jorge Sapag (MPN)"] },
-                "Río Negro": { gov: "Alberto Weretilneck (Juntos Somos Río Negro)", mandatos: ["2023 - Pres.: Alberto Weretilneck", "2019 - 2023: Arabela Carreras", "2015 - 2019: Alberto Weretilneck", "2011 - 2015: Alberto Weretilneck / Carlos Soria", "2007 - 2011: Miguel Saiz"] },
-                "Chubut": { gov: "Ignacio Torres (Despierta Chubut / JxC)", mandatos: ["2023 - Pres.: Ignacio Torres", "2019 - 2023: Mariano Arcioni", "2015 - 2019: Mario Das Neves / Mariano Arcioni", "2011 - 2015: Martín Buzzi", "2007 - 2011: Mario Das Neves"] },
-                "Santa Cruz": { gov: "Claudio Vidal (Por Santa Cruz)", mandatos: ["2023 - Pres.: Claudio Vidal", "2019 - 2023: Alicia Kirchner", "2015 - 2019: Alicia Kirchner", "2011 - 2015: Daniel Peralta", "2007 - 2011: Daniel Peralta"] }
+                "Jujuy": { gov: "Carlos Sadir (UCR / Cambia Jujuy)", mandatos: ["2023 - Pres.: Carlos Sadir", "2019 - 2023: Gerardo Morales", "2015 - 2019: Gerardo Morales", "2011 - 2015: Eduardo Fellner", "2007 - 2011: Walter Barrionuevo"], rep: { dip: "Guillermo Snopek (UxP), Jorge Rizzotti (UCR)", sen: "Mario Fiad (UCR), Ezequiel Atauche (LLA)" } },
+                "Salta": { gov: "Gustavo Sáenz (Identidad Salteña)", mandatos: ["2023 - Pres.: Gustavo Sáenz", "2019 - 2023: Gustavo Sáenz", "2015 - 2019: Juan Manuel Urtubey", "2011 - 2015: Juan Manuel Urtubey", "2007 - 2011: Juan Manuel Urtubey"], rep: { dip: "Emiliano Estrada (UxP), Pamela Calletti (HCF)", sen: "Sergio Leavy (UxP), Nora Giménez (UxP)" } },
+                "Tucumán": { gov: "Osvaldo Jaldo (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Osvaldo Jaldo", "2019 - 2023: Juan Manzur", "2015 - 2019: Juan Manzur", "2011 - 2015: José Alperovich", "2007 - 2011: José Alperovich"], rep: { dip: "Pablo Yedlin (UxP), Roberto Sánchez (UCR)", sen: "Juan Manzur (UxP), Sandra Mendoza (UxP)" } },
+                "Catamarca": { gov: "Raúl Jalil (Unión por la Patria)", mandatos: ["2023 - Pres.: Raúl Jalil", "2019 - 2023: Raúl Jalil", "2015 - 2019: Lucía Corpacci", "2011 - 2015: Lucía Corpacci", "2007 - 2011: Eduardo Brizuela del Moral"], rep: { dip: "Dante López Rodríguez (UxP), Francisco Monti (UCR)", sen: "Lucía Corpacci (UxP), Flavio Fama (UCR)" } },
+                "La Rioja": { gov: "Ricardo Quintela (Unión por la Patria)", mandatos: ["2023 - Pres.: Ricardo Quintela", "2019 - 2023: Ricardo Quintela", "2015 - 2019: Sergio Casas", "2011 - 2015: Beder Herrera", "2007 - 2011: Beder Herrera"], rep: { dip: "Gabriela Pedrali (UxP), Sergio Casas (UxP)", sen: "Fernando Rejal (UxP), Florencia López (UxP)" } },
+                "San Juan": { gov: "Marcelo Orrego (Cambia San Juan)", mandatos: ["2023 - Pres.: Marcelo Orrego", "2019 - 2023: Sergio Uñac", "2015 - 2019: Sergio Uñac", "2011 - 2015: José Luis Gioja", "2007 - 2011: José Luis Gioja"], rep: { dip: "José Luis Gioja (UxP), Nancy Picón (Producción y Trabajo)", sen: "Sergio Uñac (UxP), Bruno Olivera (LLA)" } },
+                "San Luis": { gov: "Claudio Poggi (Cambia San Luis)", mandatos: ["2023 - Pres.: Claudio Poggi", "2019 - 2023: Alberto Rodríguez Saá", "2015 - 2019: Alberto Rodríguez Saá", "2011 - 2015: Claudio Poggi", "2007 - 2011: Alberto Rodríguez Saá"], rep: { dip: "Alejandro Cacace (UCR), Ernesto Ali (UxP)", sen: "Bartolomé Abdala (LLA), Ivana Arrascaeta (LLA)" } },
+                "Entre Ríos": { gov: "Rogelio Frigerio (Juntos por Entre Ríos)", mandatos: ["2023 - Pres.: Rogelio Frigerio", "2019 - 2023: Gustavo Bordet", "2015 - 2019: Gustavo Bordet", "2011 - 2015: Sergio Urribarri", "2007 - 2011: Sergio Urribarri"], rep: { dip: "Atilio Benedit (UCR), Blanca Osuna (UxP)", sen: "Alfredo De Angeli (PRO), Stefanía Cora (UxP)" } },
+                "Chaco": { gov: "Leandro Zdero (Juntos por el Cambio)", mandatos: ["2023 - Pres.: Leandro Zdero", "2019 - 2023: Jorge Capitanich", "2015 - 2019: Domingo Peppo", "2011 - 2015: Jorge Capitanich", "2007 - 2011: Jorge Capitanich"], rep: { dip: "Juan Manuel Pedrini (UxP), Marilú Quiroz (PRO)", sen: "Víctor Zimmerman (UCR), Alicia Terada (CC)" } },
+                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"], rep: { dip: "Ramiro Fernández Patri (UxP), Fernando Carbajal (UCR)", sen: "José Mayans (UxP), María Teresa González (UxP)" } },
+                "Misiones": { gov: "Hugo Passalacqua (Frente Renovador de la Concordia)", mandatos: ["2023 - Pres.: Hugo Passalacqua", "2019 - 2023: Oscar Herrera Ahuad", "2015 - 2019: Hugo Passalacqua", "2011 - 2015: Maurice Closs", "2007 - 2011: Maurice Closs"], rep: { dip: "Carlos Fernández (FRconcordia), Florencia Klipauka (LLA)", sen: "Carlos Arce (FRconcordia), Sonia Rojas Decut (FRconcordia)" } },
+                "La Pampa": { gov: "Sergio Ziliotto (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Sergio Ziliotto", "2019 - 2023: Sergio Ziliotto", "2015 - 2019: Carlos Verna", "2011 - 2015: Oscar Jorge", "2007 - 2011: Oscar Jorge"], rep: { dip: "Hernán Pérez Araujo (UxP), Martin Maquieyra (PRO)", sen: "Daniel Bensusán (UxP), Victoria Huala (PRO)" } },
+                "Neuquén": { gov: "Rolando Figueroa (Comunidad)", mandatos: ["2023 - Pres.: Rolando Figueroa", "2019 - 2023: Omar Gutiérrez (MPN)", "2015 - 2019: Omar Gutiérrez (MPN)", "2011 - 2015: Jorge Sapag (MPN)", "2007 - 2011: Jorge Sapag (MPN)"], rep: { dip: "Osvaldo Llancafilo (MPN), Tanya Bertoldi (UxP)", sen: "Lucila Crexell (MPN), Parrilli (UxP)" } },
+                "Río Negro": { gov: "Alberto Weretilneck (Juntos Somos Río Negro)", mandatos: ["2023 - Pres.: Alberto Weretilneck", "2019 - 2023: Arabela Carreras", "2015 - 2019: Alberto Weretilneck", "2011 - 2015: Alberto Weretilneck / Carlos Soria", "2007 - 2011: Miguel Saiz"], rep: { dip: "Agustis Domingo (JSRN), Aníbal Tortoriello (PRO)", sen: "Martín Doñate (UxP), Mónica Silva (JSRN)" } },
+                "Chubut": { gov: "Ignacio Torres (Despierta Chubut / JxC)", mandatos: ["2023 - Pres.: Ignacio Torres", "2019 - 2023: Mariano Arcioni", "2015 - 2019: Mario Das Neves / Mariano Arcioni", "2011 - 2015: Martín Buzzi", "2007 - 2001: Mario Das Neves"], rep: { dip: "Jorge Ávila (HCF), Ana Clara Romero (PRO)", sen: "Carlos Linares (UxP), Edith Terenzi (JxC)" } },
+                "Santa Cruz": { gov: "Claudio Vidal (Por Santa Cruz)", mandatos: ["2023 - Pres.: Claudio Vidal", "2019 - 2023: Alicia Kirchner", "2015 - 2019: Alicia Kirchner", "2011 - 2015: Daniel Peralta", "2007 - 2011: Daniel Peralta"], rep: { dip: "Sergio Acevedo (Por Santa Cruz), Gustavo González (UxP)", sen: "José María Carambia (Por Santa Cruz), Natalia Gadano (Por Santa Cruz)" } }
             };
 
-            const extra = dictProvinciasExtra[nombre] || { gov: "Gobernador Provincial en Funciones", mandatos: ["2023 - Pres.: Gestión Actual"] };
+            const extra = dictProvinciasExtra[nombre] || { gov: "Gobernador Provincial en Funciones", mandatos: ["2023 - Pres.: Gestión Actual"], rep: { dip: "Representantes Parlamentarios", sen: "Senadores Provinciales" } };
 
             return {
                 nombre: "Provincia de " + nombre, gobernador: extra.gov, legislatura: "Legislatura Provincial", coparticipacion_real: "2.8%",
@@ -1107,6 +1186,7 @@
                 balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "45% Estatal / 55% Privado",
                 seguridad_tasa: "4.2 homicidios / 100k hab.", padron_local: "650 mil electores", matricula_pub: "78% Pública / 22% Privada",
                 mandatos: extra.mandatos,
+                representantes: { diputados_lista: extra.rep.dip, senadores_lista: extra.rep.sen },
                 electoral: {
                     elecciones_locales: "Año 2027 (Elecciones provinciales ordinarias a Gobernador).",
                     resultado: "Elecciones provinciales consolidadas con apoyo mayoritario.",
@@ -1188,14 +1268,13 @@
             contenedor.innerHTML = html;
         }
 
-        // Renderizado optimizado para los paneles superiores nacionales
         function renderizarGraficoNacional(idContenedor, historial) {
             const contenedor = document.getElementById(idContenedor);
             if (!historial || historial.length === 0) return;
             let html = "";
             historial.forEach(item => {
                 let numVal = parseFloat(item.val.replace('%', '').replace(',', '.'));
-                let alturaPx = Math.max(Math.round(numVal * 1.0), 10);
+                let alturaPx = Math.max(Math.round(numVal * 0.9), 8);
                 html += `
                     <div class="nat-chart-bar-group">
                         <span class="nat-chart-bar-val">${item.val}</span>
@@ -1207,7 +1286,6 @@
             contenedor.innerHTML = html;
         }
 
-        // Cálculo dinámico del Índice de Riesgo específico por provincia
         function calcularIndiceRiesgo(data) {
             if (!data) return 50;
             let ultimoPobreza = parseFloat(data.pobreza_historial[data.pobreza_historial.length - 1].val.replace('%', '').replace(',', '.'));
@@ -1251,6 +1329,7 @@
             document.getElementById('panel-educacion-calidad').classList.remove('open');
             document.getElementById('panel-poderes').classList.remove('open');
             document.getElementById('panel-infraestructura-critica').classList.remove('open');
+            document.getElementById('panel-congreso-detalle').classList.remove('open');
             document.getElementById('sub-drop-escuelas').classList.remove('open');
             document.getElementById('sub-drop-hospitales').classList.remove('open');
             document.getElementById('sub-drop-comisarias').classList.remove('open');
@@ -1331,6 +1410,9 @@
             document.getElementById('panel-senadores').innerText = `${data.legislativo.senadores} bancas`;
             document.getElementById('panel-fuerza-mayoritaria').innerText = data.legislativo.fuerza;
             document.getElementById('panel-ausentismo').innerText = data.legislativo.ausentismo;
+
+            document.getElementById('det-diputados-lista').innerText = data.representantes.diputados_lista;
+            document.getElementById('det-senadores-lista').innerText = data.representantes.senadores_lista;
 
             asignarBadgeVoto('panel-voto-bases', data.votaciones.bases);
             asignarBadgeVoto('panel-voto-presupuesto', data.votaciones.presupuesto);
