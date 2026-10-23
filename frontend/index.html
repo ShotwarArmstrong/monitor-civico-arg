@@ -43,62 +43,67 @@
             transform: translateX(-50%);
             z-index: 300;
             background: rgba(255, 255, 255, 0.95);
-            padding: 6px 20px;
+            padding: 6px 15px;
             border-radius: 30px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             text-align: center;
             border: 2px solid var(--celeste);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             pointer-events: auto;
+            width: 90%;
+            max-width: 450px;
         }
-        .flag-icon { width: 22px; height: 22px; }
-        #header h1 { margin: 0; font-size: 1.15em; color: #0f172a; }
-        #header p { margin: 2px 0 0 0; font-size: 0.73em; color: #0284c7; font-weight: 600; }
+        .flag-icon { width: 20px; height: 20px; }
+        #header h1 { margin: 0; font-size: 1em; color: #0f172a; }
+        #header p { margin: 2px 0 0 0; font-size: 0.68em; color: #0284c7; font-weight: 600; }
 
+        /* Contenedor Flotante Izquierdo adaptable Mobile First */
         .top-panels-container {
             position: absolute;
-            top: 72px;
-            left: 20px;
+            top: 68px;
+            left: 10px;
             z-index: 300;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: calc(100vh - 125px);
+            gap: 6px;
+            max-height: calc(100vh - 120px);
             overflow-y: auto;
-            padding-right: 6px;
+            padding-right: 4px;
             pointer-events: auto;
+            width: 280px;
         }
 
         .top-panels-row {
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .national-summary {
             background: rgba(255, 255, 255, 0.98);
-            padding: 8px 12px;
-            border-radius: 12px;
+            padding: 8px 10px;
+            border-radius: 10px;
             border: 2px solid var(--celeste);
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            width: 295px;
+            width: 100%;
         }
         .nat-header {
-            font-size: 0.75em;
+            font-size: 0.72em;
             color: #0369a1;
             text-transform: uppercase;
             font-weight: bold;
             border-bottom: 2px solid #e0f2fe;
-            padding-bottom: 3px;
-            margin-bottom: 4px;
+            padding-bottom: 2px;
+            margin-bottom: 3px;
             text-align: center;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .nat-content {
-            max-height: 180px;
+            max-height: 140px;
             overflow-y: auto;
         }
         .nat-row {
@@ -106,7 +111,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 2px 0;
-            font-size: 0.73em;
+            font-size: 0.7em;
             border-bottom: 1px dashed #e2e8f0;
         }
         .nat-row:last-child { border-bottom: none; }
@@ -116,11 +121,11 @@
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            height: 70px;
+            height: 60px;
             padding: 4px 2px 2px 2px;
             background: #ffffff;
             border: 1px solid #bae6fd;
-            border-radius: 8px;
+            border-radius: 6px;
             margin-top: 4px;
         }
         .nat-chart-bar-group {
@@ -136,12 +141,12 @@
             border-radius: 3px 3px 0 0;
         }
         .nat-chart-bar-label {
-            font-size: 0.58em;
+            font-size: 0.52em;
             color: #64748b;
             margin-top: 2px;
         }
         .nat-chart-bar-val {
-            font-size: 0.58em;
+            font-size: 0.52em;
             font-weight: bold;
             color: #0f172a;
             margin-bottom: 2px;
@@ -149,16 +154,16 @@
 
         #btn-volver-mapa {
             position: absolute;
-            bottom: 45px;
-            left: 20px;
+            bottom: 40px;
+            left: 10px;
             z-index: 400;
             background: #0284c7;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 6px 12px;
+            border-radius: 15px;
             font-weight: bold;
-            font-size: 0.8em;
+            font-size: 0.75em;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
             display: none;
@@ -173,16 +178,17 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
             border-top: 2px solid var(--celeste);
-            padding: 6px 20px;
+            padding: 4px 10px;
             text-align: center;
             z-index: 5000;
-            font-size: 0.72em;
+            font-size: 0.65em;
             color: #334155;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
             pointer-events: auto;
+            white-space: nowrap;
+            overflow-x: auto;
         }
-        #footer-fuentes a { color: #0284c7; text-decoration: none; font-weight: bold; margin: 0 4px; }
-        #footer-fuentes a:hover { text-decoration: underline; color: #0369a1; }
+        #footer-fuentes a { color: #0284c7; text-decoration: none; font-weight: bold; margin: 0 3px; }
 
         #map-container {
             position: absolute;
@@ -198,10 +204,10 @@
         }
 
         #map-svg {
-            height: 80vh;
-            max-width: 90vw;
-            margin-top: 40px;
-            filter: drop-shadow(0px 12px 25px rgba(0,0,0,0.18));
+            height: 75vh;
+            max-width: 95vw;
+            margin-top: 30px;
+            filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.15));
             pointer-events: auto;
         }
 
@@ -228,17 +234,19 @@
             text-shadow: 0px 1px 3px rgba(255,255,255,0.9);
         }
 
+        /* Panel Lateral adaptable Mobile First */
         #info-panel {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            width: 510px;
-            max-height: calc(100vh - 75px);
+            top: 10px;
+            right: 10px;
+            width: calc(100vw - 20px);
+            max-width: 480px;
+            max-height: calc(100vh - 65px);
             z-index: 4000;
             background: var(--card-bg);
-            border-radius: 14px;
-            padding: 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             overflow-y: auto;
             display: none;
             border: 2px solid var(--celeste);
@@ -254,15 +262,15 @@
             line-height: 1;
         }
         .close-btn:hover { color: #000; }
-        .province-title { margin: 0 0 10px 0; color: #0284c7; font-size: 1.3em; }
+        .province-title { margin: 0 0 8px 0; color: #0284c7; font-size: 1.2em; }
 
         .section-heading {
-            font-size: 0.88em;
+            font-size: 0.85em;
             color: #0369a1;
             text-transform: uppercase;
             border-bottom: 2px solid #bae6fd;
             padding-bottom: 3px;
-            margin: 14px 0 6px 0;
+            margin: 12px 0 6px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -271,24 +279,24 @@
         .metric-box {
             background: #f0f9ff;
             border-radius: 8px;
-            padding: 10px;
-            margin: 6px 0 12px 0;
+            padding: 8px;
+            margin: 6px 0 10px 0;
             text-align: center;
             border: 1px solid #bae6fd;
         }
-        .metric-val { font-size: 1.6em; font-weight: bold; color: #b91c1c; }
-        .metric-sub { font-size: 0.7em; color: #0369a1; text-transform: uppercase; font-weight: bold; }
+        .metric-val { font-size: 1.5em; font-weight: bold; color: #b91c1c; }
+        .metric-sub { font-size: 0.68em; color: #0369a1; text-transform: uppercase; font-weight: bold; }
         
         .data-row {
             display: flex;
             justify-content: space-between;
-            padding: 5px 0;
+            padding: 4px 0;
             border-bottom: 1px dashed #e2e8f0;
-            font-size: 0.82em;
+            font-size: 0.8em;
             align-items: center;
         }
         .data-row span { color: var(--text-muted); }
-        .data-row strong { color: var(--text); }
+        .data-row strong { color: var(--text); text-align: right; }
 
         .metric-dropdown {
             background: #f8fafc;
@@ -303,7 +311,7 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            font-size: 0.8em;
+            font-size: 0.78em;
             font-weight: bold;
             color: #0369a1;
             background: #e0f2fe;
@@ -315,12 +323,12 @@
             overflow-y: auto;
             transition: max-height 0.3s ease-out;
             padding: 0 10px;
-            font-size: 0.76em;
+            font-size: 0.74em;
             color: #334155;
             background: #f8fafc;
         }
         .metric-dropdown.open .metric-dropdown-content {
-            max-height: 220px;
+            max-height: 200px;
             padding: 8px 10px;
             border-top: 1px dashed #cbd5e1;
         }
@@ -329,8 +337,8 @@
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            height: 85px;
-            padding: 10px 5px 2px 5px;
+            height: 75px;
+            padding: 8px 4px 2px 4px;
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
@@ -350,12 +358,12 @@
             transition: height 0.4s ease;
         }
         .chart-bar-label {
-            font-size: 0.65em;
+            font-size: 0.6em;
             color: #64748b;
             margin-top: 3px;
         }
         .chart-bar-val {
-            font-size: 0.65em;
+            font-size: 0.6em;
             font-weight: bold;
             color: #0f172a;
             margin-bottom: 2px;
@@ -367,22 +375,22 @@
             margin-bottom: 6px;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
-            font-size: 0.76em;
+            font-size: 0.75em;
             outline: none;
         }
 
         .gen-container {
             border-radius: 8px;
-            margin: 8px 0;
+            margin: 6px 0;
             overflow: hidden;
         }
         .gen-header {
-            padding: 8px 12px;
+            padding: 7px 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            font-size: 0.82em;
+            font-size: 0.8em;
             font-weight: bold;
             user-select: none;
         }
@@ -390,13 +398,13 @@
             max-height: 0;
             overflow-y: auto;
             transition: max-height 0.3s ease-out;
-            padding: 0 12px;
-            font-size: 0.78em;
+            padding: 0 10px;
+            font-size: 0.75em;
             color: #1e293b;
         }
         .gen-container.open .gen-content {
-            max-height: 480px;
-            padding: 8px 12px 12px 12px;
+            max-height: 420px;
+            padding: 8px 10px 10px 10px;
             border-top: 1px dashed inherit;
         }
 
@@ -429,12 +437,12 @@
             overflow: hidden;
         }
         .sub-infra-header {
-            padding: 6px 10px;
+            padding: 6px 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            font-size: 0.78em;
+            font-size: 0.75em;
             font-weight: bold;
             color: #1e40af;
             background: #dbeafe;
@@ -444,14 +452,14 @@
             max-height: 0;
             overflow-y: auto;
             transition: max-height 0.3s ease-out;
-            padding: 0 10px;
-            font-size: 0.75em;
+            padding: 0 8px;
+            font-size: 0.72em;
             color: #334155;
             background: #ffffff;
         }
         .sub-infra-dropdown.open .sub-infra-content {
-            max-height: 280px;
-            padding: 6px 10px 8px 10px;
+            max-height: 250px;
+            padding: 6px 8px;
             border-top: 1px dashed #bfdbfe;
         }
 
@@ -459,15 +467,15 @@
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
-            padding: 8px 10px;
-            margin: 6px 0;
+            padding: 6px 8px;
+            margin: 5px 0;
         }
-        .sub-card strong { display: block; margin-bottom: 3px; color: #0f172a; }
+        .sub-card strong { display: block; margin-bottom: 2px; color: #0f172a; }
 
         .voto-badge {
             padding: 2px 6px;
             border-radius: 4px;
-            font-size: 0.75em;
+            font-size: 0.7em;
             font-weight: bold;
             color: white;
         }
@@ -481,12 +489,20 @@
             padding: 3px 8px;
             background: #0284c7;
             color: #fff;
-            font-size: 0.7em;
+            font-size: 0.68em;
             border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
         }
         .pdf-link:hover { background: #0369a1; }
+
+        /* Media Query para Escritorio (Desktop expansion) */
+        @media (min-width: 768px) {
+            .top-panels-container { width: 300px; }
+            .top-panels-row { flex-direction: row; }
+            #info-panel { width: 510px; right: 20px; top: 15px; max-height: calc(100vh - 75px); }
+            #header { width: auto; max-width: none; }
+        }
     </style>
 </head>
 <body>
@@ -497,64 +513,61 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
         <div>
             <h1>Monitor Cívico Argentina</h1>
-            <p id="header-subtitle">Haz clic en una provincia para explorar sus datos oficiales</p>
+            <p id="header-subtitle">Toca una provincia para ver su auditoría</p>
         </div>
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
-    <!-- Contenedor Flotante Izquierdo -->
+    <!-- Contenedor Flotante Adaptativo -->
     <div class="top-panels-container">
         <div class="top-panels-row">
             <div class="national-summary">
-                <div class="nat-header">📈 Promedios & Datos Nacionales</div>
+                <div class="nat-header">📈 Datos Nacionales</div>
                 <div class="nat-content">
-                    <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
-                    <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">32,3%</span></div>
-                    <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">7,9%</span></div>
+                    <div class="nat-row"><span>Riesgo Integral:</span><span class="nat-val">68 / 100</span></div>
+                    <div class="nat-row"><span>Pobreza Media:</span><span class="nat-val">32,3%</span></div>
+                    <div class="nat-row"><span>Desempleo País:</span><span class="nat-val">7,9%</span></div>
                     <div class="nat-row"><span>Inflación Interanual:</span><span class="nat-val">23,6%</span></div>
-                    <div class="nat-row"><span>Reservas Netas BCRA:</span><span class="nat-val">USD 7.420M</span></div>
-                    <div class="nat-row"><span>Riesgo País (EMBI):</span><span class="nat-val">620 pts</span></div>
-                    <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$898.150</span></div>
-                    <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$1.632.505</span></div>
-                    <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$1.982.518</span></div>
+                    <div class="nat-row"><span>Reservas BCRA:</span><span class="nat-val">USD 7.420M</span></div>
+                    <div class="nat-row"><span>Riesgo País:</span><span class="nat-val">620 pts</span></div>
+                    <div class="nat-row"><span>Alquiler 2 Amb:</span><span class="nat-val">$898.150</span></div>
+                    <div class="nat-row"><span>Canasta Básica (CBT):</span><span class="nat-val">$1.632.505</span></div>
+                    <div class="nat-row"><span>Salario RIPTE:</span><span class="nat-val">$1.982.518</span></div>
                 </div>
             </div>
 
             <div class="national-summary" style="border-color: #be185d;">
-                <div class="nat-header" style="color: #be185d; border-bottom-color: #fce7f3;">🗳️ Próximas Elecciones (Nación)</div>
+                <div class="nat-header" style="color: #be185d; border-bottom-color: #fce7f3;">🗳️ Elecciones Nación</div>
                 <div class="nat-content">
-                    <div class="nat-row"><span>Próximos Comicios:</span><span class="nat-val">Presidenciales 2027</span></div>
-                    <div class="nat-row"><span>Tipo de Votación:</span><span class="nat-val">General Obligatoria</span></div>
-                    <div class="nat-row"><span>Cargos a Elegir:</span><span class="nat-val">Presidente / Congresistas</span></div>
-                    <div class="nat-row"><span>Sistema de Voto:</span><span class="nat-val">Boleta Única Papel (BUP)</span></div>
-                    <div class="nat-row"><span>Padrón Electoral País:</span><span class="nat-val">35.8 Millones</span></div>
-                    <div class="nat-row"><span>Última Elección:</span><span class="nat-val">Legislativas (Oct 2025)</span></div>
+                    <div class="nat-row"><span>Comicios:</span><span class="nat-val">Presidenciales 2027</span></div>
+                    <div class="nat-row"><span>Sistema:</span><span class="nat-val">Boleta Única Papel</span></div>
+                    <div class="nat-row"><span>Padrón País:</span><span class="nat-val">35.8 Millones</span></div>
+                    <div class="nat-row"><span>Última Elección:</span><span class="nat-val">Oct 2025</span></div>
                 </div>
             </div>
         </div>
 
         <div class="top-panels-row">
             <div class="national-summary">
-                <div class="nat-header">📈 Tendencia Pobreza Nacional (6 años) <span>▲</span></div>
+                <div class="nat-header">📈 Tendencia Pobreza (6a)</div>
                 <div id="nat-chart-pobreza" class="nat-chart-container"></div>
             </div>
             <div class="national-summary">
-                <div class="nat-header">📈 Tendencia Desempleo Nacional (6 años) <span>▲</span></div>
+                <div class="nat-header">📈 Tendencia Desempleo (6a)</div>
                 <div id="nat-chart-desempleo" class="nat-chart-container"></div>
             </div>
         </div>
     </div>
 
-    <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Mapa Completo</button>
+    <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Mapa</button>
 
     <div id="footer-fuentes">
-        <span><strong>Fuentes Oficiales:</strong> 
+        <span><strong>Fuentes:</strong> 
             <a href="https://www.indec.gob.ar" target="_blank">INDEC</a> · 
-            <a href="https://www.argentina.gob.ar/economia" target="_blank">Ministerio de Economía</a> · 
-            <a href="https://sisa.msal.gov.ar" target="_blank">SISA Salud</a> · 
-            <a href="https://www.congreso.gob.ar" target="_blank">Honorable Congreso de la Nación</a> · 
-            <a href="https://www.bcra.gob.ar" target="_blank">BCRA</a> · 
-            <a href="https://www.argentina.gob.ar/arca" target="_blank">ARCA</a>
+            <a href="https://www.argentina.gob.ar/economia" target="_blank">Min. Economía</a> · 
+            <a href="https://sisa.msal.gov.ar" target="_blank">SISA</a> · 
+            <a href="https://www.congreso.gob.ar" target="_blank">Congreso</a> · 
+            <a href="https://www.bcra.gob.ar" target="_blank">BCRA</a>
         </span>
     </div>
 
@@ -641,7 +654,7 @@
         </svg>
     </div>
 
-    <!-- Panel Lateral de Auditoría de Provincia -->
+    <!-- Panel Lateral de Auditoría Provincial -->
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
         <h2 id="panel-nombre" class="province-title">-</h2>
@@ -660,7 +673,7 @@
 
         <div class="gen-container mandatos-container" id="panel-mandatos">
             <div class="gen-header mandatos-header" onclick="toggleSeccion('panel-mandatos')">
-                <span>📜 Histórico de Gobernadores (Últimos Mandatos)</span>
+                <span>📜 Histórico de Gobernadores</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content" id="mandatos-content-box"></div>
@@ -668,20 +681,20 @@
 
         <div class="gen-container electoral-container" id="panel-electoral">
             <div class="gen-header electoral-header" onclick="toggleSeccion('panel-electoral')">
-                <span>🗳️ Radiografía Electoral & Próximas Elecciones</span>
+                <span>🗳️ Radiografía Electoral</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
                 <div class="sub-card">
-                    <strong>🗓️ Próximas Elecciones Provinciales / Estatales</strong>
+                    <strong>🗓️ Próximas Elecciones</strong>
                     <span id="elec-proximas-locales" style="color: #be185d; font-weight: bold;">-</span>
                 </div>
                 <div class="sub-card">
-                    <strong>Resultado Últimos Comicios Provinciales</strong>
+                    <strong>Resultado Últimos Comicios</strong>
                     <span id="elec-resultado">-</span>
                 </div>
                 <div class="sub-card">
-                    <strong>Participación Cívica y Voto Blanco/Nulo</strong>
+                    <strong>Participación Cívica y Blancos</strong>
                     <span id="elec-participacion">-</span>
                 </div>
             </div>
@@ -690,27 +703,27 @@
         <div class="section-heading">
             <span>⚖️ Aporte Fiscal, Empleo & Seguridad</span>
         </div>
-        <div class="data-row"><span>Balance Fiscal (Aporte vs Copart):</span><strong id="panel-balance-fiscal">-</strong></div>
+        <div class="data-row"><span>Balance Fiscal:</span><strong id="panel-balance-fiscal">-</strong></div>
         <div class="data-row"><span>Empleo Estatal vs Privado:</span><strong id="panel-empleo-relacion">-</strong></div>
-        <div class="data-row"><span>Tasa Homicidios / Seguridad:</span><strong id="panel-tasa-seguridad">-</strong></div>
-        <div class="data-row"><span>Padrón Electoral Provincial:</span><strong id="panel-padron-local">-</strong></div>
+        <div class="data-row"><span>Tasa Homicidios:</span><strong id="panel-tasa-seguridad">-</strong></div>
+        <div class="data-row"><span>Padrón Local:</span><strong id="panel-padron-local">-</strong></div>
 
-        <!-- SECCIÓN DE CORRUPCIÓN NOMINAL Y CAUSAS ACTIVAS -->
+        <!-- SECCIÓN CORRUPCIÓN NOMINAL Y CAUSAS ACTIVAS -->
         <div class="section-heading">
             <span>🔍 Transparencia & Corrupción Nominal</span>
         </div>
-        <div class="data-row"><span>Causas Activas (Corrupción / 100k):</span><strong id="panel-causas-tasa">-</strong></div>
-        <div class="data-row"><span>Índice Opacidad Licitaciones:</span><strong id="panel-opacidad">-</strong></div>
-        <div class="data-row"><span>Discrecionalidad Pauta Oficial:</span><strong id="panel-pauta">-</strong></div>
+        <div class="data-row"><span>Causas Activas / 100k:</span><strong id="panel-causas-tasa">-</strong></div>
+        <div class="data-row"><span>Opacidad Licitaciones:</span><strong id="panel-opacidad">-</strong></div>
+        <div class="data-row"><span>Discrecionalidad Pauta:</span><strong id="panel-pauta">-</strong></div>
 
         <div class="gen-container corrupcion-container" id="panel-corrupcion-detalle">
             <div class="gen-header corrupcion-header" onclick="toggleSeccion('panel-corrupcion-detalle')">
-                <span>📂 Funcionarios con Causa Activa y Expedientes</span>
+                <span>📂 Funcionarios y Causas Activas (Detalle)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content" id="corrupcion-content-box"></div>
         </div>
-        <!-- FIN SECCIÓN CORRUPCIÓN -->
+        <!-- FIN CORRUPCIÓN -->
 
         <div class="gen-container memoria-container" id="panel-memoria">
             <div class="gen-header memoria-header" onclick="toggleSeccion('panel-memoria')">
@@ -730,16 +743,16 @@
 
         <div class="gen-container perfil-container" id="panel-perfil">
             <div class="gen-header perfil-header" onclick="toggleSeccion('panel-perfil')">
-                <span>🌾 Perfil Productivo & Fuerte Económico</span>
+                <span>🌾 Perfil Productivo & Exportaciones</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
                 <div class="sub-card">
-                    <strong>Motor Económico Distintivo</strong>
+                    <strong>Motor Económico</strong>
                     <span id="perfil-motor">-</span>
                 </div>
                 <div class="sub-card">
-                    <strong>Principales Exportaciones y Sectores Clave</strong>
+                    <strong>Principales Sectores Clave</strong>
                     <span id="perfil-exportaciones">-</span>
                 </div>
             </div>
@@ -747,20 +760,20 @@
 
         <div class="gen-container educacion-container" id="panel-educacion-calidad">
             <div class="gen-header educacion-header" onclick="toggleSeccion('panel-educacion-calidad')">
-                <span>📚 Calidad Educativa & Comprensión (Aprender)</span>
+                <span>📚 Calidad Educativa (Aprender)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
                 <div class="sub-card">
-                    <strong>Nivel de Comprensión Lectora</strong>
+                    <strong>Comprensión Lectora</strong>
                     <span id="edu-lectura">-</span>
                 </div>
                 <div class="sub-card">
-                    <strong>Desempeño en Matemática</strong>
+                    <strong>Matemática</strong>
                     <span id="edu-matematica">-</span>
                 </div>
                 <div class="sub-card">
-                    <strong>Matrícula Escolar Pública vs Privada</strong>
+                    <strong>Matrícula Pública vs Privada</strong>
                     <span id="edu-matricula">-</span>
                 </div>
             </div>
@@ -768,20 +781,20 @@
 
         <div class="gen-container poderes-container" id="panel-poderes">
             <div class="gen-header poderes-header" onclick="toggleSeccion('panel-poderes')">
-                <span>⚖️ Los Tres Poderes del Estado & Competencias</span>
+                <span>⚖️ Los Tres Poderes del Estado</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
                 <div class="sub-card">
-                    <strong>1. Poder Ejecutivo Provincial</strong>
+                    <strong>1. Ejecutivo Provincial</strong>
                     <span id="poder-ejecutivo-desc">-</span>
                 </div>
                 <div class="sub-card">
-                    <strong>2. Poder Legislativo Provincial</strong>
+                    <strong>2. Legislativo Provincial</strong>
                     <span id="poder-legislativo-desc">-</span>
                 </div>
                 <div class="sub-card">
-                    <strong>3. Poder Judicial Provincial</strong>
+                    <strong>3. Judicial Provincial</strong>
                     <span id="poder-judicial-desc">-</span>
                 </div>
             </div>
@@ -800,50 +813,50 @@
                     </div>
                     <div class="sub-infra-content">
                         <input type="text" class="search-box" placeholder="Buscar escuela..." onkeyup="filtrarLista(this, 'lista-escuelas-detalle')">
-                        <ul id="lista-escuelas-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
+                        <ul id="lista-escuelas-detalle" style="margin: 4px 0; padding-left: 12px;"></ul>
                     </div>
                 </div>
 
                 <div class="sub-infra-dropdown" id="sub-drop-hospitales">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-hospitales')">
-                        <span id="titulo-cant-hospitales">🏥 Hospitales & Centros de Salud</span>
+                        <span id="titulo-cant-hospitales">🏥 Hospitales & Salud</span>
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
                         <input type="text" class="search-box" placeholder="Buscar hospital..." onkeyup="filtrarLista(this, 'lista-hospitales-detalle')">
-                        <ul id="lista-hospitales-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
+                        <ul id="lista-hospitales-detalle" style="margin: 4px 0; padding-left: 12px;"></ul>
                     </div>
                 </div>
 
                 <div class="sub-infra-dropdown" id="sub-drop-comisarias">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-comisarias')">
-                        <span id="titulo-cant-comisarias">🚓 Comisarías / Seccionales</span>
+                        <span id="titulo-cant-comisarias">🚓 Comisarías</span>
                         <span class="arrow-icon">▼</span>
                     </div>
                     <div class="sub-infra-content">
                         <input type="text" class="search-box" placeholder="Buscar comisaría..." onkeyup="filtrarLista(this, 'lista-comisarias-detalle')">
-                        <ul id="lista-comisarias-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
+                        <ul id="lista-comisarias-detalle" style="margin: 4px 0; padding-left: 12px;"></ul>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="section-heading">
-            <span>🏛️ Representación Legislativa (Nación)</span>
+            <span>🏛️ Representación Congreso (Nación)</span>
         </div>
         <div class="data-row"><span>Diputados Nacionales:</span><strong id="panel-diputados">-</strong></div>
         <div class="data-row"><span>Senadores Nacionales:</span><strong id="panel-senadores">-</strong></div>
         <div class="data-row"><span>Fuerza Mayoritaria:</span><strong id="panel-fuerza-mayoritaria">-</strong></div>
-        <div class="data-row"><span>Ausentismo Promedio Bloque:</span><strong id="panel-ausentismo">-</strong></div>
+        <div class="data-row"><span>Ausentismo Bloque:</span><strong id="panel-ausentismo">-</strong></div>
 
         <div class="gen-container congreso-container" id="panel-congreso-detalle">
             <div class="gen-header congreso-header" onclick="toggleSeccion('panel-congreso-detalle')">
-                <span>👥 Listado de Representantes y Bloques</span>
+                <span>👥 Listado de Representantes</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
                 <div class="sub-card">
-                    <strong>Diputados Nacionales Principales</strong>
+                    <strong>Diputados Nacionales</strong>
                     <span id="det-diputados-lista">-</span>
                 </div>
                 <div class="sub-card">
@@ -854,21 +867,20 @@
         </div>
 
         <div class="section-heading">
-            <span>⚖️ Votaciones Clave Congreso & Documentos PDF</span>
+            <span>⚖️ Votaciones Clave & Documentos PDF</span>
         </div>
         <div class="data-row"><span>Ley Bases / Paquete Fiscal:</span><span id="panel-voto-bases" class="voto-badge">-</span></div>
         <div class="data-row"><span>Presupuesto Nacional:</span><span id="panel-voto-presupuesto" class="voto-badge">-</span></div>
         <div class="data-row"><span>Fórmula Jubilatoria:</span><span id="panel-voto-jubilados" class="voto-badge">-</span></div>
         <div class="data-row"><span>Financiamiento Universitario:</span><span id="panel-voto-universidades" class="voto-badge">-</span></div>
-        <div class="data-row"><span>Boleta Única de Papel (BUP):</span><span id="panel-voto-bup" class="voto-badge">-</span></div>
+        <div class="data-row"><span>Boleta Única (BUP):</span><span id="panel-voto-bup" class="voto-badge">-</span></div>
         <div class="data-row"><span>RIGI (Inversiones):</span><span id="panel-voto-rigi" class="voto-badge">-</span></div>
 
         <div class="sub-card" style="margin-top: 8px; background: #fffbeb; border-color: #fde68a;">
-            <strong>📄 Expedientes & Proyectos Oficiales (PDF)</strong>
-            <span style="font-size: 0.75em; color: #78350f;">Descarga y lectura de dictámenes de comisiones y leyes promulgadas.</span>
+            <strong>📄 Expedientes & Proyectos (PDF)</strong>
             <br>
-            <a href="https://www.diputados.gov.ar" target="_blank" class="pdf-link">📥 Descargar Dictamen Ley Bases (PDF)</a>
-            <a href="https://www.senado.gob.ar" target="_blank" class="pdf-link" style="background: #0369a1;">📥 Ver Presupuesto Vigente (PDF)</a>
+            <a href="https://www.diputados.gov.ar" target="_blank" class="pdf-link">📥 Descargar Ley Bases (PDF)</a>
+            <a href="https://www.senado.gob.ar" target="_blank" class="pdf-link" style="background: #0369a1;">📥 Ver Presupuesto (PDF)</a>
         </div>
 
         <div class="section-heading">
@@ -878,7 +890,7 @@
 
         <div class="metric-dropdown" id="drop-pobreza">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-pobreza')">
-                <span>📈 Tendencia Pobreza Provincial (Gráfico)</span><span class="arrow-icon">▼</span>
+                <span>📈 Tendencia Pobreza Provincial</span><span class="arrow-icon">▼</span>
             </div>
             <div class="metric-dropdown-content">
                 <div id="chart-pobreza" class="chart-container"></div>
@@ -887,22 +899,22 @@
 
         <div class="metric-dropdown" id="drop-desempleo">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-desempleo')">
-                <span>📈 Tendencia Desempleo Provincial (Gráfico)</span><span class="arrow-icon">▼</span>
+                <span>📈 Tendencia Desempleo Provincial</span><span class="arrow-icon">▼</span>
             </div>
             <div class="metric-dropdown-content">
                 <div id="chart-desempleo" class="chart-container"></div>
             </div>
         </div>
 
-        <div class="data-row"><span>Canasta Básica Total (CBT):</span><strong id="panel-cbt">-</strong></div>
-        <div class="data-row"><span>Salario Promedio Real (RIPTE):</span><strong id="panel-salario">-</strong></div>
+        <div class="data-row"><span>Canasta Básica (CBT):</span><strong id="panel-cbt">-</strong></div>
+        <div class="data-row"><span>Salario Real (RIPTE):</span><strong id="panel-salario">-</strong></div>
         <div class="data-row"><span>Alquiler Promedio (2 amb):</span><strong id="panel-alquiler">-</strong></div>
 
         <div class="section-heading">
-            <span>🏦 Finanzas Públicas & Deuda Real</span>
+            <span>🏦 Finanzas Públicas & Deuda</span>
         </div>
-        <div class="data-row"><span>Resultado Fiscal Provincial:</span><strong id="panel-resultado-fiscal">-</strong></div>
-        <div class="data-row"><span>Stock Deuda Pública (USD):</span><strong id="panel-deuda-total">-</strong></div>
+        <div class="data-row"><span>Resultado Fiscal:</span><strong id="panel-resultado-fiscal">-</strong></div>
+        <div class="data-row"><span>Stock Deuda Pública:</span><strong id="panel-deuda-total">-</strong></div>
     </div>
 
     <script>
@@ -1236,20 +1248,20 @@
             const dictProvinciasExtra = {
                 "Jujuy": { gov: "Carlos Sadir (UCR / Cambia Jujuy)", mandatos: ["2023 - Pres.: Carlos Sadir", "2019 - 2023: Gerardo Morales", "2015 - 2019: Gerardo Morales", "2011 - 2015: Eduardo Fellner", "2007 - 2011: Walter Barrionuevo"], rep: { dip: "Guillermo Snopek (UxP), Jorge Rizzotti (UCR)", sen: "Mario Fiad (UCR), Ezequiel Atauche (LLA)" }, corr: { tasa: "3.5 causas / 100k", opacidad: "Media (50%)", pauta: "Moderada", funcs: ["• Gerardo Morales (Ex-Gobernador): Expediente JJ-401/2023 - Denuncias por adjudicación de obra pública y cooperativas."] } },
                 "Salta": { gov: "Gustavo Sáenz (Identidad Salteña)", mandatos: ["2023 - Pres.: Gustavo Sáenz", "2019 - 2023: Gustavo Sáenz", "2015 - 2019: Juan Manuel Urtubey", "2011 - 2015: Juan Manuel Urtubey", "2007 - 2011: Juan Manuel Urtubey"], rep: { dip: "Emiliano Estrada (UxP), Pamela Calletti (HCF)", sen: "Sergio Leavy (UxP), Nora Giménez (UxP)" }, corr: { tasa: "3.7 causas / 100k", opacidad: "Media (52%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de intendencias municipales: Expediente SAL-92/2024 - Auditoría de manejo de fondos coparticipables."] } },
-                "Tucumán": { gov: "Osvaldo Jaldo (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Osvaldo Jaldo", "2019 - 2023: Juan Manzur", "2015 - 2019: Juan Manzur", "2011 - 2015: José Alperovich", "2007 - 2011: José Alperovich"], rep: { dip: "Pablo Yedlin (UxP), Roberto Sánchez (UCR)", sen: "Juan Manzur (UxP), Sandra Mendoza (UxP)" }, corr: { tasa: "4.2 causas / 100k", opacidad: "Alta (58%)", pauta: "Alta", funcs: ["• Ex-legisladores provinciales: Expediente TUC-510/2022 - Causa por contratos de personal legislativo (Explotación de boletantes)."] } },
+                "Tucumán": { gov: "Osvaldo Jaldo (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Osvaldo Jaldo", "2019 - 2023: Juan Manzur", "2015 - 2019: Juan Manzur", "2011 - 2015: José Alperovich", "2007 - 2011: José Alperovich"], rep: { dip: "Pablo Yedlin (UxP), Roberto Sánchez (UCR)", sen: "Juan Manzur (UxP), Sandra Mendoza (UxP)" }, corr: { tasa: "4.2 causas / 100k", opacidad: "Alta (58%)", pauta: "Alta", funcs: ["• Ex-legisladores provinciales: Expediente TUC-510/2022 - Causa por contratos de personal legislativo."] } },
                 "Catamarca": { gov: "Raúl Jalil (Unión por la Patria)", mandatos: ["2023 - Pres.: Raúl Jalil", "2019 - 2023: Raúl Jalil", "2015 - 2019: Lucía Corpacci", "2011 - 2015: Lucía Corpacci", "2007 - 2011: Eduardo Brizuela del Moral"], rep: { dip: "Dante López Rodríguez (UxP), Francisco Monti (UCR)", sen: "Lucía Corpacci (UxP), Flavio Fama (UCR)" }, corr: { tasa: "3.0 causas / 100k", opacidad: "Media (45%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de área minera: Expediente CAT-12/2023 - Control y fiscalización de regalías."] } },
-                "La Rioja": { gov: "Ricardo Quintela (Unión por la Patria)", mandatos: ["2023 - Pres.: Ricardo Quintela", "2019 - 2023: Ricardo Quintela", "2015 - 2019: Sergio Casas", "2011 - 2015: Beder Herrera", "2007 - 2011: Beder Herrera"], rep: { dip: "Gabriela Pedrali (UxP), Sergio Casas (UxP)", sen: "Fernando Rejal (UxP), Florencia López (UxP)" }, corr: { tasa: "3.4 causas / 100k", opacidad: "Media (49%)", pauta: "Alta", funcs: ["• Administración Central: Expediente LR-88/2023 - Investigaciones sobre emisión y pago de cuasimonedas (Bono Chacho)."] } },
-                "San Juan": { gov: "Marcelo Orrego (Cambia San Juan)", mandatos: ["2023 - Pres.: Marcelo Orrego", "2019 - 2023: Sergio Uñac", "2015 - 2019: Sergio Uñac", "2011 - 2015: José Luis Gioja", "2007 - 2011: José Luis Gioja"], rep: { dip: "José Luis Gioja (UxP), Nancy Picón (Producción y Trabajo)", sen: "Sergio Uñac (UxP), Bruno Olivera (LLA)" }, corr: { tasa: "2.6 causas / 100k", opacidad: "Baja (38%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de Obra Pública: Expediente SJ-301/2022 - Seguimiento de licitaciones de grandes proyectos."] } },
-                "San Luis": { gov: "Claudio Poggi (Cambia San Luis)", mandatos: ["2023 - Pres.: Claudio Poggi", "2019 - 2023: Alberto Rodríguez Saá", "2015 - 2019: Alberto Rodríguez Saá", "2011 - 2015: Claudio Poggi", "2007 - 2011: Alberto Rodríguez Saá"], rep: { dip: "Alejandro Cacace (UCR), Ernesto Ali (UxP)", sen: "Bartolomé Abdala (LLA), Ivana Arrascaeta (LLA)" }, corr: { tasa: "3.1 causas / 100k", opacidad: "Media (44%)", pauta: "Moderada", funcs: ["• Ex-integrantes de Tribunal de Cuentas: Expediente SL-77/2023 - Transición y auditoría de decretos de fin de gestión."] } },
-                "Entre Ríos": { gov: "Rogelio Frigerio (Juntos por Entre Ríos)", mandatos: ["2023 - Pres.: Rogelio Frigerio", "2019 - 2023: Gustavo Bordet", "2015 - 2019: Gustavo Bordet", "2011 - 2015: Sergio Urribarri", "2007 - 2011: Sergio Urribarri"], rep: { dip: "Atilio Benedit (UCR), Blanca Osuna (UxP)", sen: "Alfredo De Angeli (PRO), Stefanía Cora (UxP)" }, corr: { tasa: "3.8 causas / 100k", opacidad: "Media (47%)", pauta: "Moderada", funcs: ["• Sergio Urribarri (Ex-Gobernador): Expediente STJ-ER 1234/2021 - Condena en primera instancia por peculado y negociaciones incompatibles."] } },
-                "Chaco": { gov: "Leandro Zdero (Juntos por el Cambio)", mandatos: ["2023 - Pres.: Leandro Zdero", "2019 - 2023: Jorge Capitanich", "2015 - 2019: Domingo Peppo", "2011 - 2015: Jorge Capitanich", "2007 - 2011: Jorge Capitanich"], rep: { dip: "Juan Manuel Pedrini (UxP), Marilú Quiroz (PRO)", sen: "Víctor Zimmerman (UCR), Alicia Terada (CC)" }, corr: { tasa: "5.4 causas / 100k", opacidad: "Alta (65%)", pauta: "Alta", funcs: ["• Emerenciano Sena / Ex-funcionarios de fundaciones: Expediente N° 8.132/2023 - Investigaciones por administración fraudulenta de fondos públicos y desvío de subsidios estatales."] } },
-                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"], rep: { dip: "Ramiro Fernández Patri (UxP), Fernando Carbajal (UCR)", sen: "José Mayans (UxP), María Teresa González (UxP)" }, corr: { tasa: "4.9 causas / 100k", opacidad: "Alta (72%)", pauta: "Alta", funcs: ["• Ex-funcionarios de Tesorería Provincial: Expediente FOR-901/2020 - Observaciones de la Auditoría General de la Nación sobre opacidad presupuestaria."] } },
+                "La Rioja": { gov: "Ricardo Quintela (Unión por la Patria)", mandatos: ["2023 - Pres.: Ricardo Quintela", "2019 - 2023: Ricardo Quintela", "2015 - 2019: Sergio Casas", "2011 - 2015: Beder Herrera", "2007 - 2011: Beder Herrera"], rep: { dip: "Gabriela Pedrali (UxP), Sergio Casas (UxP)", sen: "Fernando Rejal (UxP), Florencia López (UxP)" }, corr: { tasa: "3.4 causas / 100k", opacidad: "Media (49%)", pauta: "Alta", funcs: ["• Administración Central: Expediente LR-88/2023 - Investigaciones sobre emisión y pago de cuasimonedas."] } },
+                "San Juan": { gov: "Marcelo Orrego (Cambia San Juan)", mandatos: ["2023 - Pres.: Marcelo Orrego", "2019 - 2023: Sergio Uñac", "2015 - 2019: Sergio Uñac", "2011 - 2015: José Luis Gioja", "2007 - 2011: José Luis Gioja"], rep: { dip: "José Luis Gioja (UxP), Nancy Picón (Producción y Trabajo)", sen: "Sergio Uñac (UxP), Bruno Olivera (LLA)" }, corr: { tasa: "2.6 causas / 100k", opacidad: "Baja (38%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de Obra Pública: Expediente SJ-301/2022 - Seguimiento de licitaciones."] } },
+                "San Luis": { gov: "Claudio Poggi (Cambia San Luis)", mandatos: ["2023 - Pres.: Claudio Poggi", "2019 - 2023: Alberto Rodríguez Saá", "2015 - 2019: Alberto Rodríguez Saá", "2011 - 2015: Claudio Poggi", "2007 - 2011: Alberto Rodríguez Saá"], rep: { dip: "Alejandro Cacace (UCR), Ernesto Ali (UxP)", sen: "Bartolomé Abdala (LLA), Ivana Arrascaeta (LLA)" }, corr: { tasa: "3.1 causas / 100k", opacidad: "Media (44%)", pauta: "Moderada", funcs: ["• Ex-integrantes de Tribunal de Cuentas: Expediente SL-77/2023 - Transición y auditoría de decretos."] } },
+                "Entre Ríos": { gov: "Rogelio Frigerio (Juntos por Entre Ríos)", mandatos: ["2023 - Pres.: Rogelio Frigerio", "2019 - 2023: Gustavo Bordet", "2015 - 2019: Gustavo Bordet", "2011 - 2015: Sergio Urribarri", "2007 - 2011: Sergio Urribarri"], rep: { dip: "Atilio Benedit (UCR), Blanca Osuna (UxP)", sen: "Alfredo De Angeli (PRO), Stefanía Cora (UxP)" }, corr: { tasa: "3.8 causas / 100k", opacidad: "Media (47%)", pauta: "Moderada", funcs: ["• Sergio Urribarri (Ex-Gobernador): Expediente STJ-ER 1234/2021 - Condena en primera instancia por peculado."] } },
+                "Chaco": { gov: "Leandro Zdero (Juntos por el Cambio)", mandatos: ["2023 - Pres.: Leandro Zdero", "2019 - 2023: Jorge Capitanich", "2015 - 2019: Domingo Peppo", "2011 - 2015: Jorge Capitanich", "2007 - 2011: Jorge Capitanich"], rep: { dip: "Juan Manuel Pedrini (UxP), Marilú Quiroz (PRO)", sen: "Víctor Zimmerman (UCR), Alicia Terada (CC)" }, corr: { tasa: "5.4 causas / 100k", opacidad: "Alta (65%)", pauta: "Alta", funcs: ["• Emerenciano Sena / Ex-funcionarios: Expediente N° 8.132/2023 - Investigaciones por administración fraudulenta de fondos."] } },
+                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"], rep: { dip: "Ramiro Fernández Patri (UxP), Fernando Carbajal (UCR)", sen: "José Mayans (UxP), María Teresa González (UxP)" }, corr: { tasa: "4.9 causas / 100k", opacidad: "Alta (72%)", pauta: "Alta", funcs: ["• Ex-funcionarios de Tesorería: Expediente FOR-901/2020 - Observaciones sobre opacidad presupuestaria."] } },
                 "Misiones": { gov: "Hugo Passalacqua (Frente Renovador de la Concordia)", mandatos: ["2023 - Pres.: Hugo Passalacqua", "2019 - 2023: Oscar Herrera Ahuad", "2015 - 2019: Hugo Passalacqua", "2011 - 2015: Maurice Closs", "2007 - 2011: Maurice Closs"], rep: { dip: "Carlos Fernández (FRconcordia), Florencia Klipauka (LLA)", sen: "Carlos Arce (FRconcordia), Sonia Rojas Decut (FRconcordia)" }, corr: { tasa: "2.9 causas / 100k", opacidad: "Baja (37%)", pauta: "Moderada", funcs: ["• Ex-intendentes y operadores: Expediente MIS-104/2023 - Control de partidas de desarrollo social."] } },
                 "La Pampa": { gov: "Sergio Ziliotto (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Sergio Ziliotto", "2019 - 2023: Sergio Ziliotto", "2015 - 2019: Carlos Verna", "2011 - 2015: Oscar Jorge", "2007 - 2011: Oscar Jorge"], rep: { dip: "Hernán Pérez Araujo (UxP), Martin Maquieyra (PRO)", sen: "Daniel Bensusán (UxP), Victoria Huala (PRO)" }, corr: { tasa: "2.4 causas / 100k", opacidad: "Baja (33%)", pauta: "Baja", funcs: ["• Tribunal de Cuentas Provincial: Expediente LP-45/2023 - Informes de legalidad sin observaciones penales graves."] } },
-                "Neuquén": { gov: "Rolando Figueroa (Comunidad)", mandatos: ["2023 - Pres.: Rolando Figueroa", "2019 - 2023: Omar Gutiérrez (MPN)", "2015 - 2019: Omar Gutiérrez (MPN)", "2011 - 2015: Jorge Sapag (MPN)", "2007 - 2011: Jorge Sapag (MPN)"], rep: { dip: "Osvaldo Llancafilo (MPN), Tanya Bertoldi (UxP)", sen: "Lucila Crexell (MPN), Parrilli (UxP)" }, corr: { tasa: "3.0 causas / 100k", opacidad: "Media (40%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de Legislatura Neuquina: Expediente NQ-882/2022 - Causa por manejos de contratos y tarjetas de débito legislativas."] } },
-                "Río Negro": { gov: "Alberto Weretilneck (Juntos Somos Río Negro)", mandatos: ["2023 - Pres.: Alberto Weretilneck", "2019 - 2023: Arabela Carreras", "2015 - 2019: Alberto Weretilneck", "2011 - 2015: Alberto Weretilneck / Carlos Soria", "2007 - 2011: Miguel Saiz"], rep: { dip: "Agustis Domingo (JSRN), Aníbal Tortoriello (PRO)", sen: "Martín Doñate (UxP), Mónica Silva (JSRN)" }, corr: { tasa: "3.3 causas / 100k", opacidad: "Media (43%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de áreas viales: Expediente RN-505/2023 - Auditoría de mantenimiento de rutas secundarias."] } },
-                "Chubut": { gov: "Ignacio Torres (Despierta Chubut / JxC)", mandatos: ["2023 - Pres.: Ignacio Torres", "2019 - 2023: Mariano Arcioni", "2015 - 2019: Mario Das Neves / Mariano Arcioni", "2011 - 2015: Martín Buzzi", "2007 - 2001: Mario Das Neves"], rep: { dip: "Jorge Ávila (HCF), Ana Clara Romero (PRO)", sen: "Carlos Linares (UxP), Edith Terenzi (JxC)" }, corr: { tasa: "4.0 causas / 100k", opacidad: "Media (51%)", pauta: "Moderada", funcs: ["• Mariano Arcioni (Ex-Gobernador) / Ex-ministros: Expediente CHU-777/2021 - Investigaciones acumuladas por presunto enriquecimiento ilícito y desvío de fondos provinciales."] } },
-                "Santa Cruz": { gov: "Claudio Vidal (Por Santa Cruz)", mandatos: ["2023 - Pres.: Claudio Vidal", "2019 - 2023: Alicia Kirchner", "2015 - 2019: Alicia Kirchner", "2011 - 2015: Daniel Peralta", "2007 - 2011: Daniel Peralta"], rep: { dip: "Sergio Acevedo (Por Santa Cruz), Gustavo González (UxP)", sen: "José María Carambia (Por Santa Cruz), Natalia Gadano (Por Santa Cruz)" }, corr: { tasa: "4.5 causas / 100k", opacidad: "Alta (59%)", pauta: "Alta", funcs: ["• Ex-funcionarios de administraciones provinciales previas: Expediente SC-332/2022 - Causas por retrasos injustificados en entrega de obra pública escolar y vial."] } }
+                "Neuquén": { gov: "Rolando Figueroa (Comunidad)", mandatos: ["2023 - Pres.: Rolando Figueroa", "2019 - 2023: Omar Gutiérrez (MPN)", "2015 - 2019: Omar Gutiérrez (MPN)", "2011 - 2015: Jorge Sapag (MPN)", "2007 - 2011: Jorge Sapag (MPN)"], rep: { dip: "Osvaldo Llancafilo (MPN), Tanya Bertoldi (UxP)", sen: "Lucila Crexell (MPN), Parrilli (UxP)" }, corr: { tasa: "3.0 causas / 100k", opacidad: "Media (40%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de Legislatura: Expediente NQ-882/2022 - Causa por manejos de contratos y tarjetas."] } },
+                "Río Negro": { gov: "Alberto Weretilneck (Juntos Somos Río Negro)", mandatos: ["2023 - Pres.: Alberto Weretilneck", "2019 - 2023: Arabela Carreras", "2015 - 2019: Alberto Weretilneck", "2011 - 2015: Alberto Weretilneck / Carlos Soria", "2007 - 2011: Miguel Saiz"], rep: { dip: "Agustis Domingo (JSRN), Aníbal Tortoriello (PRO)", sen: "Martín Doñate (UxP), Mónica Silva (JSRN)" }, corr: { tasa: "3.3 causas / 100k", opacidad: "Media (43%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de áreas viales: Expediente RN-505/2023 - Auditoría de rutas secundarias."] } },
+                "Chubut": { gov: "Ignacio Torres (Despierta Chubut / JxC)", mandatos: ["2023 - Pres.: Ignacio Torres", "2019 - 2023: Mariano Arcioni", "2015 - 2019: Mario Das Neves / Mariano Arcioni", "2011 - 2015: Martín Buzzi", "2007 - 2001: Mario Das Neves"], rep: { dip: "Jorge Ávila (HCF), Ana Clara Romero (PRO)", sen: "Carlos Linares (UxP), Edith Terenzi (JxC)" }, corr: { tasa: "4.0 causas / 100k", opacidad: "Media (51%)", pauta: "Moderada", funcs: ["• Mariano Arcioni (Ex-Gobernador) / Ex-ministros: Expediente CHU-777/2021 - Investigaciones por presunto enriquecimiento ilícito."] } },
+                "Santa Cruz": { gov: "Claudio Vidal (Por Santa Cruz)", mandatos: ["2023 - Pres.: Claudio Vidal", "2019 - 2023: Alicia Kirchner", "2015 - 2019: Alicia Kirchner", "2011 - 2015: Daniel Peralta", "2007 - 2011: Daniel Peralta"], rep: { dip: "Sergio Acevedo (Por Santa Cruz), Gustavo González (UxP)", sen: "José María Carambia (Por Santa Cruz), Natalia Gadano (Por Santa Cruz)" }, corr: { tasa: "4.5 causas / 100k", opacidad: "Alta (59%)", pauta: "Alta", funcs: ["• Ex-funcionarios provinciales: Expediente SC-332/2022 - Causas por retrasos en entrega de obra pública escolar."] } }
             };
 
             const extra = dictProvinciasExtra[nombre] || { gov: "Gobernador Provincial en Funciones", mandatos: ["2023 - Pres.: Gestión Actual"], rep: { dip: "Representantes Parlamentarios", sen: "Senadores Provinciales" }, corr: { tasa: "3.5 causas / 100k", opacidad: "Media (45%)", pauta: "Moderada", funcs: ["• Funcionarios en funciones: Expediente estándar de fiscalización cívica institucional."] } };
@@ -1331,7 +1343,7 @@
             let html = "";
             historial.forEach(item => {
                 let numVal = parseFloat(item.val.replace('%', '').replace(',', '.'));
-                let alturaPx = Math.max(Math.round(numVal * 1.1), 10);
+                let alturaPx = Math.max(Math.round(numVal * 1.1), 8);
                 html += `
                     <div class="chart-bar-group">
                         <span class="chart-bar-val">${item.val}</span>
@@ -1349,7 +1361,7 @@
             let html = "";
             historial.forEach(item => {
                 let numVal = parseFloat(item.val.replace('%', '').replace(',', '.'));
-                let alturaPx = Math.max(Math.round(numVal * 0.9), 8);
+                let alturaPx = Math.max(Math.round(numVal * 0.8), 6);
                 html += `
                     <div class="nat-chart-bar-group">
                         <span class="nat-chart-bar-val">${item.val}</span>
@@ -1428,7 +1440,7 @@
                     mandatosHtml += `<div class="sub-card"><span>${m}</span></div>`;
                 });
             } else {
-                mandatosHtml = "<div class='sub-card'><span>Sin registros de mandatos recientes.</span></div>";
+                mandatosHtml = "<div class='sub-card'><span>Sin registros recientes.</span></div>";
             }
             mandatosBox.innerHTML = mandatosHtml;
 
@@ -1437,7 +1449,6 @@
             document.getElementById('panel-tasa-seguridad').innerText = data.seguridad_tasa;
             document.getElementById('panel-padron-local').innerText = data.padron_local;
 
-            // Datos detallados de corrupción y nombres/expedientes
             document.getElementById('panel-causas-tasa').innerText = data.corrupcion.tasa;
             document.getElementById('panel-opacidad').innerText = data.corrupcion.opacidad;
             document.getElementById('panel-pauta').innerText = data.corrupcion.pauta;
@@ -1449,7 +1460,7 @@
                     corrupcionHtml += `<div class="sub-card"><span>${f}</span></div>`;
                 });
             } else {
-                corrupcionHtml = "<div class='sub-card'><span>Sin funcionarios con causas activas graves registradas en este distrito.</span></div>";
+                corrupcionHtml = "<div class='sub-card'><span>Sin funcionarios con causas activas graves registradas.</span></div>";
             }
             corrupcionBox.innerHTML = corrupcionHtml;
 
@@ -1461,9 +1472,9 @@
             let memoriaHtml = "";
             if (data.memoria) {
                 document.getElementById('panel-memoria').style.display = 'block';
-                if (data.memoria.malvinas) memoriaHtml += `<div class="sub-card"><strong>Héroes Caídos en Malvinas</strong><span>${data.memoria.malvinas}</span></div>`;
-                if (data.memoria.dictadura) memoriaHtml += `<div class="sub-card"><strong>Víctimas del Terrorismo de Estado</strong><span>${data.memoria.dictadura}</span></div>`;
-                if (data.memoria.democracia) memoriaHtml += `<div class="sub-card"><strong>Registros Activos de Búsqueda de Personas</strong><span>${data.memoria.democracia}</span></div>`;
+                if (data.memoria.malvinas) memoriaHtml += `<div class="sub-card"><strong>Héroes Caídos</strong><span>${data.memoria.malvinas}</span></div>`;
+                if (data.memoria.dictadura) memoriaHtml += `<div class="sub-card"><strong>Víctimas DD.HH.</strong><span>${data.memoria.dictadura}</span></div>`;
+                if (data.memoria.democracia) memoriaHtml += `<div class="sub-card"><strong>Búsqueda de Personas</strong><span>${data.memoria.democracia}</span></div>`;
                 memoriaBox.innerHTML = memoriaHtml;
             } else {
                 document.getElementById('panel-memoria').style.display = 'none';
@@ -1472,9 +1483,9 @@
             const tarifasBox = document.getElementById('tarifas-content-box');
             let tarifasHtml = "";
             if (data.tarifas) {
-                if (data.tarifas.servicios) tarifasHtml += `<div class="sub-card"><strong>Servicios Esenciales (Luz, Gas, Agua)</strong><span>${data.tarifas.servicios}</span></div>`;
-                if (data.tarifas.transporte) tarifasHtml += `<div class="sub-card"><strong>Transporte Público (Colectivo / Tren / Subte)</strong><span>${data.tarifas.transporte}</span></div>`;
-                if (data.tarifas.bici) tarifasHtml += `<div class="sub-card"><strong>Bicicletas Públicas / Movilidad</strong><span>${data.tarifas.bici}</span></div>`;
+                if (data.tarifas.servicios) tarifasHtml += `<div class="sub-card"><strong>Servicios</strong><span>${data.tarifas.servicios}</span></div>`;
+                if (data.tarifas.transporte) tarifasHtml += `<div class="sub-card"><strong>Transporte</strong><span>${data.tarifas.transporte}</span></div>`;
+                if (data.tarifas.bici) tarifasHtml += `<div class="sub-card"><strong>Movilidad / Bici</strong><span>${data.tarifas.bici}</span></div>`;
                 tarifasBox.innerHTML = tarifasHtml;
             }
 
@@ -1489,13 +1500,13 @@
             document.getElementById('poder-legislativo-desc').innerText = data.poderes.legislativo;
             document.getElementById('poder-judicial-desc').innerText = data.poderes.judicial;
 
-            document.getElementById('titulo-cant-escuelas').innerText = `🏫 Escuelas Registradas (${data.cant_escuelas} en total)`;
+            document.getElementById('titulo-cant-escuelas').innerText = `🏫 Escuelas (${data.cant_escuelas})`;
             document.getElementById('lista-escuelas-detalle').innerHTML = generarListaCompleta(data.cant_escuelas, data.nombre);
 
-            document.getElementById('titulo-cant-hospitales').innerText = `🏥 Hospitales & Centros de Salud (${data.cant_hospitales} en total)`;
+            document.getElementById('titulo-cant-hospitales').innerText = `🏥 Hospitales (${data.cant_hospitales})`;
             document.getElementById('lista-hospitales-detalle').innerHTML = generarListaHospitalesCompleta(data.cant_hospitales);
 
-            document.getElementById('titulo-cant-comisarias').innerText = `🚓 Comisarías / Seccionales (${data.cant_comisarias} en total)`;
+            document.getElementById('titulo-cant-comisarias').innerText = `🚓 Comisarías (${data.cant_comisarias})`;
             document.getElementById('lista-comisarias-detalle').innerHTML = generarListaComisariasCompleta(data.cant_comisarias);
 
             document.getElementById('panel-diputados').innerText = `${data.legislativo.diputados} bancas`;
@@ -1531,7 +1542,7 @@
         function restablecerMapaNacional() {
             document.getElementById('info-panel').style.display = 'none';
             document.getElementById('btn-volver-mapa').style.display = 'none';
-            document.getElementById('header-subtitle').innerText = 'Haz clic en una provincia para explorar sus datos oficiales';
+            document.getElementById('header-subtitle').innerText = 'Toca una provincia para ver su auditoría';
         }
 
         window.onload = function() {
