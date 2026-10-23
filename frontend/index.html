@@ -11,8 +11,9 @@
             --celeste: #74acdf;
             --blanco: #ffffff;
             --amarillo-sol: #ffb81c;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --text: #0f172a;
+            --text-muted: #64748b;
             --border: #cbd5e1;
         }
         * { box-sizing: border-box; }
@@ -26,7 +27,6 @@
             background: radial-gradient(circle at 50% 50%, #ffffff 0%, #e0f2fe 50%, #bae6fd 100%);
         }
 
-        /* Marcas de agua decorativas: Estrellas con densidad reducida */
         .star-pattern {
             position: absolute;
             top: 0;
@@ -40,14 +40,13 @@
             background-repeat: repeat;
         }
 
-        /* Encabezado */
         #header {
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             padding: 12px 30px;
             border-radius: 30px;
             backdrop-filter: blur(8px);
@@ -58,13 +57,12 @@
         #header h1 { margin: 0; font-size: 1.3em; letter-spacing: 0.5px; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.8em; color: #0284c7; font-weight: 600; }
 
-        /* Panel Promedios Nacionales */
         #national-summary {
             position: absolute;
             top: 85px;
             left: 20px;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             padding: 15px 18px;
             border-radius: 14px;
             backdrop-filter: blur(8px);
@@ -92,7 +90,6 @@
         .nat-row:last-child { border-bottom: none; }
         .nat-val { font-weight: bold; color: #0284c7; }
 
-        /* Botón de regreso */
         #btn-volver-mapa {
             position: absolute;
             bottom: 30px;
@@ -119,12 +116,11 @@
             background: transparent;
         }
 
-        /* Panel Lateral */
         #info-panel {
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 380px;
+            width: 410px;
             max-height: calc(100vh - 40px);
             z-index: 1000;
             background: var(--card-bg);
@@ -153,19 +149,21 @@
 
         .tabs {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             border-bottom: 2px solid #e2e8f0;
             margin-bottom: 15px;
+            overflow-x: auto;
         }
         .tab-btn {
             background: none;
             border: none;
             color: #64748b;
-            padding: 8px 12px;
+            padding: 8px 10px;
             cursor: pointer;
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: 600;
             border-bottom: 2px solid transparent;
+            white-space: nowrap;
         }
         .tab-btn.active {
             color: #0284c7;
@@ -191,10 +189,12 @@
             justify-content: space-between;
             padding: 7px 0;
             border-bottom: 1px dashed #e2e8f0;
-            font-size: 0.88em;
+            font-size: 0.85em;
         }
+        .data-row span { color: var(--text-muted); }
+        .data-row strong { color: var(--text); }
         .history-list { list-style: none; padding: 0; margin: 10px 0 0 0; font-size: 0.85em; }
-        .history-list li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #e2e8f0; }
+        .history-list li { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #e2e8f0; }
     </style>
 </head>
 <body>
@@ -209,9 +209,9 @@
     <div id="national-summary">
         <h3>Promedios Nacionales</h3>
         <div class="nat-row"><span>Riesgo Integral:</span><span class="nat-val" id="nat-riesgo">52 / 100</span></div>
-        <div class="nat-row"><span>Pobreza Media:</span><span class="nat-val" id="nat-pobreza">41.8%</span></div>
-        <div class="nat-row"><span>Desempleo Actual:</span><span class="nat-val" id="nat-desempleo">6.5%</span></div>
-        <div class="nat-row"><span>Alquiler Promedio:</span><span class="nat-val" id="nat-alquiler">$265.000</span></div>
+        <div class="nat-row"><span>Pobreza Media:</span><span class="nat-val" id="nat-pobreza">42.3%</span></div>
+        <div class="nat-row"><span>Desempleo Actual:</span><span class="nat-val" id="nat-desempleo">6.6%</span></div>
+        <div class="nat-row"><span>Alquiler Promedio:</span><span class="nat-val" id="nat-alquiler">$262.500</span></div>
     </div>
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Argentina Completa</button>
@@ -223,36 +223,55 @@
         <h2 id="panel-nombre" class="province-title">-</h2>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('tab-general')">General</button>
-            <button class="tab-btn" onclick="switchTab('tab-empleo')">Economía</button>
-            <button class="tab-btn" onclick="switchTab('tab-seguridad')">Seguridad & Salud</button>
+            <button class="tab-btn active" onclick="switchTab('tab-economia', event)">📊 Economía</button>
+            <button class="tab-btn" onclick="switchTab('tab-seguridad', event)">🛡️ Seguridad</button>
+            <button class="tab-btn" onclick="switchTab('tab-salud', event)">🏥 Salud & Edu</button>
+            <button class="tab-btn" onclick="switchTab('tab-infra', event)">🏛️ Gestión</button>
         </div>
 
-        <div id="tab-general" class="tab-content active">
+        <div id="tab-economia" class="tab-content active">
             <div class="metric-box">
                 <div id="panel-riesgo" class="metric-val">- / 100</div>
                 <div class="metric-sub">Índice de Riesgo Integral</div>
             </div>
             <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
             <div class="data-row"><span>Tasa de Pobreza:</span><strong id="panel-pobreza">-</strong></div>
-        </div>
-
-        <div id="tab-empleo" class="tab-content">
-            <div class="data-row"><span>Costo Promedio Alquiler:</span><strong id="panel-alquiler">-</strong></div>
-            <div style="font-weight: bold; margin: 15px 0 8px 0; font-size: 0.9em; color: #0284c7;">Evolución del Desempleo:</div>
+            <div class="data-row"><span>Empleo Informal:</span><strong id="panel-informal">-</strong></div>
+            <div class="data-row"><span>Salario Promedio (RIPTE):</span><strong id="panel-salario">-</strong></div>
+            <div class="data-row"><span>Alquiler Promedio (2 amb):</span><strong id="panel-alquiler">-</strong></div>
+            <div class="data-row"><span>Canasta Básica Total:</span><strong id="panel-cbt">-</strong></div>
+            <div class="data-row"><span>Ingresos Brutos (Alícuota):</span><strong id="panel-iibb">-</strong></div>
+            
+            <div style="font-weight: bold; margin: 15px 0 8px 0; font-size: 0.88em; color: #0284c7;">Histórico de Desempleo (6 años):</div>
             <ul id="panel-historial" class="history-list"></ul>
         </div>
 
         <div id="tab-seguridad" class="tab-content">
-            <div class="data-row"><span>Inseguridad (delitos / 100k hab):</span><strong id="panel-inseguridad">-</strong></div>
-            <div class="data-row"><span>Tasa de Mortalidad:</span><strong id="panel-mortalidad">-</strong></div>
+            <div class="data-row"><span>Tasa Inseguridad (Delitos / 100k):</span><strong id="panel-inseguridad">-</strong></div>
+            <div class="data-row"><span>Homicidios Dolosos (cada 100k):</span><strong id="panel-homicidios">-</strong></div>
+            <div class="data-row"><span>Siniestros Viales Fatales (Anual):</span><strong id="panel-vial">-</strong></div>
+        </div>
+
+        <div id="tab-salud" class="tab-content">
+            <div class="data-row"><span>Tasa de Natalidad (por mil):</span><strong id="panel-natalidad">-</strong></div>
+            <div class="data-row"><span>Tasa de Mortalidad Infantil:</span><strong id="panel-mortalidad-infantil">-</strong></div>
+            <div class="data-row"><span>Mortalidad General (por mil):</span><strong id="panel-mortalidad">-</strong></div>
+            <div class="data-row"><span>Camas UTI (cada 10k hab):</span><strong id="panel-camas">-</strong></div>
+            <div class="data-row"><span>Escolarización Secundaria:</span><strong id="panel-escuela">-</strong></div>
+        </div>
+
+        <div id="tab-infra" class="tab-content">
+            <div class="data-row"><span>Transferencias Discrecionales (p/cápita):</span><strong id="panel-transf-disc">-</strong></div>
+            <div class="data-row"><span>Pauta Oficial Provincial (p/cápita):</span><strong id="panel-pauta-oficial">-</strong></div>
+            <div class="data-row"><span>Cobertura Agua y Cloacas:</span><strong id="panel-agua">-</strong></div>
+            <div class="data-row"><span>Conexión Internet Fibra Óptica:</span><strong id="panel-internet">-</strong></div>
+            <div class="data-row"><span>Deuda Provincial Per Cápita:</span><strong id="panel-deuda">-</strong></div>
         </div>
     </div>
 
-    <!-- Leaflet JS sin controles de zoom -->
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Inicializar mapa sin botones + y -
         let map = L.map('map', {
             zoomControl: false,
             attributionControl: false,
@@ -339,9 +358,27 @@
                 document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`;
                 document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
                 document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
+                document.getElementById('panel-informal').innerText = `${data.empleo_informal_porcentaje}%`;
+                document.getElementById('panel-salario').innerText = `$${data.salario_promedio_ripte.toLocaleString('es-AR')}`;
                 document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
-                document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa} delitos`;
+                document.getElementById('panel-cbt').innerText = `$${data.canasta_basica_total.toLocaleString('es-AR')}`;
+                document.getElementById('panel-iibb').innerText = `${data.ingresos_brutos_alicuota}%`;
+
+                document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa}`;
+                document.getElementById('panel-homicidios').innerText = `${data.homicidios_tasa_100k}`;
+                document.getElementById('panel-vial').innerText = `${data.siniestros_viales_fatales}`;
+
+                document.getElementById('panel-natalidad').innerText = `${data.natalidad_tasa} ‰`;
+                document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
                 document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;
+                document.getElementById('panel-camas').innerText = `${data.camas_uti_cada_10k}`;
+                document.getElementById('panel-escuela').innerText = `${data.escolarizacion_secundaria}%`;
+
+                document.getElementById('panel-transf-disc').innerText = `$${data.transferencias_discrecionales_per_capita.toLocaleString('es-AR')}`;
+                document.getElementById('panel-pauta-oficial').innerText = `$${data.pauta_oficial_per_capita.toLocaleString('es-AR')}`;
+                document.getElementById('panel-agua').innerText = `${data.cobertura_agua_cloacas}%`;
+                document.getElementById('panel-internet').innerText = `${data.cobertura_internet_fibra}%`;
+                document.getElementById('panel-deuda').innerText = `USD ${data.deuda_per_capita_usd}`;
 
                 let historialHTML = '';
                 if (data.desempleo_historial) {
@@ -366,6 +403,45 @@
             document.getElementById('header-subtitle').innerText = 'Haz clic en una provincia para aislarla y explorar sus datos';
         }
 
-        function switchTab(tabId) {
+        function switchTab(tabId, evt) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            evt.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        async function init() {
+            try {
+                const respIndicadores = await fetch('../data/indicadores.json');
+                const dataIndicadores = await respIndicadores.json();
+
+                dataIndicadores.provincias.forEach(p => {
+                    datosProvincias[p.nombre] = p;
+                });
+
+                const respGeo = await fetch('https://raw.githubusercontent.com/apis-digitales/georef-ar-api/master/data/provincias.json');
+                const geoData = await respGeo.json();
+
+                geojsonLayer = L.geoJson(geoData, {
+                    style: style,
+                    onEachFeature: function(feature, layer) {
+                        layer.on({
+                            mouseover: highlightFeature,
+                            mouseout: resetHighlight,
+                            click: seleccionarProvincia
+                        });
+                    }
+                }).addTo(map);
+
+                map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+
+            } catch (err) {
+                console.error("Error al inicializar el mapa:", err);
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
