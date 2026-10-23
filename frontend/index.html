@@ -127,16 +127,6 @@
             box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
         }
         #footer-fuentes strong { color: #0284c7; }
-        #footer-fuentes a {
-            color: #0284c7;
-            text-decoration: none;
-            font-weight: 600;
-            margin: 0 3px;
-        }
-        #footer-fuentes a:hover {
-            text-decoration: underline;
-            color: #0369a1;
-        }
 
         #map-container {
             position: absolute;
@@ -148,14 +138,14 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
-            pointer-events: none; /* Permite que los clics atraviesen el contenedor hacia los paths */
+            pointer-events: none;
         }
 
         #map-svg {
             height: 82vh;
             max-width: 95vw;
             filter: drop-shadow(0px 12px 25px rgba(0,0,0,0.18));
-            pointer-events: auto; /* Restaura clics operativos en el SVG */
+            pointer-events: auto;
         }
 
         .provincia-real {
@@ -318,7 +308,6 @@
             margin-bottom: 2px;
         }
 
-        /* Buscador en listas masivas */
         .search-box {
             width: 100%;
             padding: 5px 8px;
@@ -381,7 +370,7 @@
             transform: rotate(180deg);
         }
 
-        /* Contenedores Genéricos Desplegables en Panel */
+        /* Contenedores Genéricos Desplegables */
         .gen-container {
             border-radius: 8px;
             margin: 8px 0;
@@ -415,6 +404,14 @@
         }
 
         /* Tematización de contenedores */
+        .electoral-container { background: #fdf2f8; border: 1px solid #fbcfe8; }
+        .electoral-header { color: #be185d; background: #fce7f3; }
+        .electoral-header:hover { background: #fbcfe8; }
+
+        .tarifas-container { background: #fff7ed; border: 1px solid #fed7aa; }
+        .tarifas-header { color: #c2410c; background: #ffedd5; }
+        .tarifas-header:hover { background: #fed7aa; }
+
         .poderes-container { background: #f0fdf4; border: 1px solid #bbf7d0; }
         .poderes-header { color: #166534; background: #dcfce7; }
         .poderes-header:hover { background: #bbf7d0; }
@@ -427,31 +424,10 @@
         .educacion-header { color: #991b1b; background: #fee2e2; }
         .educacion-header:hover { background: #fecaca; }
 
-        .banca-container { background: #fefce8; border: 1px solid #fef08a; }
-        .banca-header { color: #854d0e; background: #fef9c3; }
-        .banca-header:hover { background: #fef08a; }
-
-        .votaciones-container { background: #faf5ff; border: 1px solid #e9d5ff; }
-        .votaciones-header { color: #6b21a8; background: #f3e8ff; }
-        .votaciones-header:hover { background: #e9d5ff; }
-
-        .tarifas-container { background: #fff7ed; border: 1px solid #fed7aa; }
-        .tarifas-header { color: #c2410c; background: #ffedd5; }
-        .tarifas-header:hover { background: #fed7aa; }
-
-        .justicia-container { background: #f8fafc; border: 1px solid #cbd5e1; }
-        .justicia-header { color: #334155; background: #e2e8f0; }
-        .justicia-header:hover { background: #cbd5e1; }
-
-        .ambiental-container { background: #f0fdf4; border: 1px solid #bbf7d0; }
-        .ambiental-header { color: #15803d; background: #dcfce7; }
-        .ambiental-header:hover { background: #bbf7d0; }
-
         .infra-container { background: #eff6ff; border: 1px solid #bfdbfe; }
         .infra-header { color: #1e40af; background: #dbeafe; }
         .infra-header:hover { background: #bfdbfe; }
 
-        /* Subdesplegables internos con scroll y buscador */
         .sub-infra-dropdown {
             background: #ffffff;
             border: 1px solid #bfdbfe;
@@ -541,26 +517,18 @@
             <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
             <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">45.2%</span></div>
             <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">8.4%</span></div>
-            <div class="nat-row"><span>Empleo Informal (Negro):</span><span class="nat-val">37.8%</span></div>
             <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$620.000</span></div>
             <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$925.000</span></div>
             <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$810.000</span></div>
-            <div class="nat-row"><span>Empleados Públicos (Total):</span><span class="nat-val">3.45 Millones</span></div>
             <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800</span></div>
             <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350</span></div>
-            <div class="nat-row"><span>Comisarías / Seccionales:</span><span class="nat-val">~ 2.900</span></div>
-            <div class="nat-row"><span>Presión Tributaria Efectiva:</span><span class="nat-val">28.4% PBI</span></div>
-            <div class="nat-row"><span>Deuda Externa Consolidada:</span><span class="nat-val">USD 412 Mil Mill.</span></div>
-            <div class="nat-row"><span>Causas Corrupción Federales:</span><span class="nat-val">1.420 Activas</span></div>
         </div>
     </div>
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Mapa Completo</button>
 
     <div id="footer-fuentes">
-        <span><strong>Fuentes Oficiales de Consulta:</strong> 
-            INDEC · Ministerio de Educación · SISA Salud · Honorable Congreso de la Nación · BCRA · ARCA (AFIP) · Poder Judicial de la Nación
-        </span>
+        <span><strong>Fuentes Oficiales de Consulta Manual:</strong> INDEC · Ministerio de Educación · SISA Salud · Honorable Congreso de la Nación · BCRA · ARCA</span>
     </div>
 
     <div id="map-container">
@@ -569,7 +537,6 @@
                 <path class="provincia-real" data-nombre="Santa Cruz" fill="#f97316" onclick="mostrarDatos('Santa Cruz')" d="M 75,565 Q 215,575 185,685 Q 60,675 75,565 Z" />
                 <text x="135" y="625" class="provincia-label">Santa Cruz</text>
 
-                <!-- Tierra del Fuego -->
                 <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 85,700 Q 145,695 140,735 Q 80,740 85,700 Z" />
                 <text x="112" y="722" class="provincia-label" font-size="6.5px" fill="#ffffff">Tierra del Fuego</text>
 
@@ -639,7 +606,6 @@
                 <path class="provincia-real" data-nombre="Santa Fe" fill="#ef4444" onclick="mostrarDatos('Santa Fe')" d="M 215,155 Q 295,155 295,215 Q 280,305 225,300 Q 210,215 215,155 Z" />
                 <text x="255" y="230" class="provincia-label">Santa Fe</text>
 
-                <!-- Islas Malvinas unificado -->
                 <g id="islas-malvinas-grupo" class="provincia-real" onclick="mostrarDatos('Tierra del Fuego')">
                     <ellipse cx="330" cy="520" rx="14" ry="9" fill="#38bdf8" stroke="#1e293b" stroke-width="1.2" />
                     <text x="330" y="538" class="provincia-label" font-size="7.5px">Islas Malvinas</text>
@@ -664,6 +630,46 @@
         <div class="data-row"><span>Gobernador / Gestión:</span><strong id="panel-gobernador">-</strong></div>
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
+
+        <!-- Radiografía Electoral e Historial de Votación Presidencial / Legislativa -->
+        <div class="gen-container electoral-container" id="panel-electoral">
+            <div class="gen-header electoral-header" onclick="toggleSeccion('panel-electoral')">
+                <span>🗳️ Radiografía Electoral & Votaciones (Presidenciales / Diputados / Senadores)</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Resultado Últimos Comicios (Gobernación / Presidenciales)</strong>
+                    <span id="elec-resultado">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Participación Cívica y Voto en Blanco / Nulo</strong>
+                    <span id="elec-participacion">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarifas de Servicios y Transporte Integral (Colectivo, Tren, Subte, Bici) -->
+        <div class="gen-container tarifas-container" id="panel-tarifas">
+            <div class="gen-header tarifas-header" onclick="toggleSeccion('panel-tarifas')">
+                <span>⚡ Tarifas, Servicios & Transporte (Colectivo, Tren, Subte, Bici)</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Servicios Esenciales (Luz, Gas, Agua)</strong>
+                    <span id="tarifa-servicios">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Transporte Público (Colectivo, Tren / Subte si aplica)</strong>
+                    <span id="tarifa-transporte">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Movilidad Sustentable / Bicicletas Públicas</strong>
+                    <span id="tarifa-bici">-</span>
+                </div>
+            </div>
+        </div>
 
         <!-- Perfil Productivo y Fuerte Económico -->
         <div class="gen-container perfil-container" id="panel-perfil">
@@ -701,60 +707,6 @@
             </div>
         </div>
 
-        <!-- Tarifas de Servicios & Impacto en Bolsillo -->
-        <div class="gen-container tarifas-container" id="panel-tarifas">
-            <div class="gen-header tarifas-header" onclick="toggleSeccion('panel-tarifas')">
-                <span>⚡ Tarifas de Servicios & Impacto en Bolsillo</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Costo Promedio Servicios (Luz, Gas, Agua)</strong>
-                    <span id="tarifa-servicios">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Peso Relativo frente al Salario RIPTE</strong>
-                    <span id="tarifa-peso">-</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tiempos de Justicia & Impunidad -->
-        <div class="gen-container justicia-container" id="panel-justicia">
-            <div class="gen-header justicia-header" onclick="toggleSeccion('panel-justicia')">
-                <span>⚖️ Tiempos de Justicia & Tasa de Impunidad</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Duración Promedio de Juicios por Corrupción</strong>
-                    <span id="justicia-duracion">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Efectividad y Condenas en Delitos Urbanos</strong>
-                    <span id="justicia-efectividad">-</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Huella Ambiental & Emergencias -->
-        <div class="gen-container ambiental-container" id="panel-ambiental">
-            <div class="gen-header ambiental-header" onclick="toggleSeccion('panel-ambiental')">
-                <span>🌱 Huella Ambiental & Gestión de Riesgos</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Protección de Bosques Nativos y Suelos</strong>
-                    <span id="ambiental-suelos">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Plantas Cloacales y Alertas Climáticas</strong>
-                    <span id="ambiental-clima">-</span>
-                </div>
-            </div>
-        </div>
-
         <!-- Desplegable: Tres Poderes -->
         <div class="gen-container poderes-container" id="panel-poderes">
             <div class="gen-header poderes-header" onclick="toggleSeccion('panel-poderes')">
@@ -777,54 +729,13 @@
             </div>
         </div>
 
-        <!-- Banca Pública & Agente Financiero -->
-        <div class="gen-container banca-container" id="panel-banca">
-            <div class="gen-header banca-header" onclick="toggleSeccion('panel-banca')">
-                <span>🏦 Banca Pública, Agente Financiero & Créditos</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Institución Bancaria de Referencia</strong>
-                    <span id="banca-entidad">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Colocación de Créditos Productivos Pymes</strong>
-                    <span id="banca-creditos">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Exposición y Tasas de Descuento de Cheques</strong>
-                    <span id="banca-tasas">-</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Agenda de Votaciones & Bloques -->
-        <div class="gen-container votaciones-container" id="panel-votaciones">
-            <div class="gen-header votaciones-header" onclick="toggleSeccion('panel-votaciones')">
-                <span>🗳️ Agenda de Votaciones & Posicionamiento de Bloques</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Comportamiento del Bloque Provincial en el Congreso</strong>
-                    <span id="voto-comportamiento">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Leyes Clave y Negociaciones con el Ejecutivo Nacional</strong>
-                    <span id="voto-negociaciones">-</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Desplegable de Infraestructura Crítica con Buscador en vivo -->
+        <!-- Infraestructura con Buscador Interno -->
         <div class="gen-container infra-container" id="panel-infraestructura-critica">
             <div class="gen-header infra-header" onclick="toggleSeccion('panel-infraestructura-critica')">
                 <span>🏫🏥🚓 Escuelas, Hospitales y Comisarías (Buscador Interno)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
-                
                 <div class="sub-infra-dropdown" id="sub-drop-escuelas">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-escuelas')">
                         <span id="titulo-cant-escuelas">🏫 Escuelas Registradas</span>
@@ -857,24 +768,6 @@
                         <ul id="lista-comisarias-detalle" style="margin: 4px 0; padding-left: 14px;"></ul>
                     </div>
                 </div>
-
-            </div>
-        </div>
-
-        <div class="section-heading">
-            <span>🔍 Transparencia & Corrupción Nominal</span>
-        </div>
-        <div class="data-row"><span>Causas Activas (Corrupción / 100k):</span><strong id="panel-corrupcion-tasa" style="color: #b91c1c;">-</strong></div>
-        <div class="data-row"><span>Índice Opacidad Licitaciones:</span><strong id="panel-opacidad">-</strong></div>
-        <div class="data-row"><span>Discrecionalidad Pauta Oficial:</span><strong id="panel-pauta-corrupcion">-</strong></div>
-
-        <div class="dropdown-container" id="panel-dropdown">
-            <div class="dropdown-header" onclick="toggleDropdown()">
-                <span>📂 Funcionarios y Causas Nominales (Detalle)</span>
-                <span class="arrow-icon">▼</span>
-            </div>
-            <div class="dropdown-content">
-                <ul id="panel-condenados-lista"></ul>
             </div>
         </div>
 
@@ -887,7 +780,7 @@
         <div class="data-row"><span>Ausentismo Promedio Bloque:</span><strong id="panel-ausentismo">-</strong></div>
 
         <div class="section-heading">
-            <span>⚖️ Historial de Votaciones Clave</span>
+            <span>⚖️ Historial de Votaciones Clave en el Congreso</span>
         </div>
         <div class="data-row"><span>Ley Bases / Paquete Fiscal:</span><span id="panel-voto-bases" class="voto-badge">-</span></div>
         <div class="data-row"><span>Presupuesto Nacional:</span><span id="panel-voto-presupuesto" class="voto-badge">-</span></div>
@@ -901,7 +794,6 @@
         </div>
         <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
 
-        <!-- Gráfico Visual de Pobreza -->
         <div class="metric-dropdown" id="drop-pobreza">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-pobreza')">
                 <span>📈 Tendencia Pobreza (Últimos 6 años - Gráfico)</span><span class="arrow-icon">▼</span>
@@ -911,7 +803,6 @@
             </div>
         </div>
 
-        <!-- Gráfico Visual de Desempleo -->
         <div class="metric-dropdown" id="drop-desempleo">
             <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-desempleo')">
                 <span>📈 Tendencia Desempleo (Últimos 6 años - Gráfico)</span><span class="arrow-icon">▼</span>
@@ -921,49 +812,15 @@
             </div>
         </div>
 
-        <div class="metric-dropdown" id="drop-empleo-tipo">
-            <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-empleo-tipo')">
-                <span>Estructura de Empleo: Blanco vs Negro (6 Años)</span><span class="arrow-icon">▼</span>
-            </div>
-            <div class="metric-dropdown-content"><ul id="list-empleo-tipo"></ul></div>
-        </div>
-
         <div class="data-row"><span>Canasta Básica Total (CBT):</span><strong id="panel-cbt">-</strong></div>
         <div class="data-row"><span>Salario Promedio Real (RIPTE):</span><strong id="panel-salario">-</strong></div>
         <div class="data-row"><span>Alquiler Promedio (2 amb):</span><strong id="panel-alquiler">-</strong></div>
-        <div class="data-row"><span>Ingresos Brutos (Alícuota máx):</span><strong id="panel-iibb">-</strong></div>
-
-        <div class="tax-box">
-            <strong>🏛️ Nuevos Impuestos / Tasas Creadas:</strong>
-            <span id="panel-impuestos-nuevos">-</span>
-            <div style="margin-top: 4px;"><strong>Pros:</strong> <span id="panel-impuestos-pros">-</span></div>
-            <div style="margin-top: 2px;"><strong>Contras:</strong> <span id="panel-impuestos-contras">-</span></div>
-        </div>
 
         <div class="section-heading">
             <span>🏦 Finanzas Públicas & Deuda Real</span>
         </div>
         <div class="data-row"><span>Resultado Fiscal Provincial:</span><strong id="panel-resultado-fiscal">-</strong></div>
         <div class="data-row"><span>Stock Deuda Pública (USD):</span><strong id="panel-deuda-total">-</strong></div>
-        <div class="data-row"><span>Peso Masa Salarial Estadal:</span><strong id="panel-masa-salarial">-</strong></div>
-        <div class="data-row"><span>Autonomía Financiera (Recaudación):</span><strong id="panel-autonomia">-</strong></div>
-
-        <div class="section-heading">
-            <span>🛡️ Seguridad & Conflictividad Social</span>
-        </div>
-        <div class="data-row"><span>Tasa Inseguridad (Delitos / 100k):</span><strong id="panel-inseguridad">-</strong></div>
-        <div class="data-row"><span>Homicidios Dolosos (cada 100k):</span><strong id="panel-homicidios">-</strong></div>
-        <div class="data-row"><span>Siniestros Viales Fatales (Anual):</span><strong id="panel-vial">-</strong></div>
-
-        <div class="section-heading">
-            <span>🏥 Salud, Educación & Servicios</span>
-        </div>
-        <div class="data-row"><span>Presupuesto Educación / Salud:</span><strong id="panel-presupuesto-social">-</strong></div>
-        <div class="data-row"><span>Mortalidad Infantil:</span><strong id="panel-mortalidad-infantil">-</strong></div>
-        <div class="data-row"><span>Camas UTI (cada 10k hab):</span><strong id="panel-camas">-</strong></div>
-        <div class="data-row"><span>Escolarización Secundaria:</span><strong id="panel-escuela">-</strong></div>
-        <div class="data-row"><span>Cobertura Agua y Cloacas:</span><strong id="panel-agua">-</strong></div>
-        <div class="data-row"><span>Conexión Internet Fibra Óptica:</span><strong id="panel-internet">-</strong></div>
     </div>
 
     <script>
@@ -971,6 +828,15 @@
             "Buenos Aires": { 
                 nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
                 cant_escuelas: 4920, cant_hospitales: 81, cant_comisarias: 410,
+                electoral: {
+                    resultado: "Fuerza ganadora en gobernación con 45% de los votos positivos; polarización marcada con JxC y LLA.",
+                    participacion: "Participación electoral histórica del 74.5%; 5.2% de votos en blanco y nulos."
+                },
+                tarifas: {
+                    servicios: "Luz residencial bimestral: $58.000 | Gas: $34.000 | Agua: $22.000.",
+                    transporte: "Colectivo (Boleto mínimo 0-3km): $1.015,61 | Trenes metropolitanos (líneas Roca/Sarmiento): desde $320.",
+                    bici: "Sistemas de bicicletas públicas municipales implementados en principales partidos del conurbano."
+                },
                 perfil: {
                     motor: "Industrial manufacturero, petroquímico, automotriz y agropecuario intensivo.",
                     exportaciones: "Manufacturas de origen industrial (MOI), cereales, oleaginosas y derivados cárnicos."
@@ -979,49 +845,30 @@
                     lectura: "64% alcanzando o superando los niveles satisfactorios en pruebas de comprensión.",
                     matematica: "52% con desempeño satisfactorio; fuerte brecha entre gestión estatal y privada."
                 },
-                tarifas: {
-                    servicios: "Costo promedio bimestral servicios residenciales: Luz ($58.000), Gas ($34.000), Agua ($22.000).",
-                    peso: "Representa el 14.8% del ingreso medio del hogar tipo del conurbano."
-                },
-                justicia: {
-                    duracion: "Promedio de 5.8 años en instrucción y elevación a juicio en causas complejas.",
-                    efectividad: "Tasa de condena efectiva en delitos urbanos de baja complejidad estimada en 11.2%."
-                },
-                ambiental: {
-                    suelos: "Monitoreo activo de cuencas hídricas del Río Reconquista y Matanza-Riachuelo.",
-                    clima: "Planes de alerta temprana ante sudestadas y anegamientos urbanos en zonas bajas."
-                },
                 poderes: {
                     ejecutivo: "Encabezado por el Gobernador. Administra la administración pública provincial, la policía bonaerense y gestiona directamente hospitales y escuelas públicas.",
                     legislativo: "Compuesto por la Legislatura Provincial (Senadores y Diputados). Sanciona leyes locales y aprueba el presupuesto provincial.",
                     judicial: "Suprema Corte de Justicia de la Provincia. Garantiza constitucionalidad y administra justicia penal, civil y laboral."
                 },
-                banca: {
-                    entidad: "Banco de la Provincia de Buenos Aires (BAPRO)",
-                    creditos: "Líneas especiales para capital de trabajo Pyme y sector agropecuario con bonificación de tasas.",
-                    tasas: "Promedio de tasas activas competitivas fondeadas con depósitos judiciales y provinciales."
-                },
-                votacionesDetalle: {
-                    comportamiento: "Bloque mayoritario alineado con la oposición al pacto fiscal nacional, votando mayoritariamente en contra de las iniciativas de desregulación.",
-                    negociaciones: "Defensa cerrada de los fondos coparticipables y de las transferencias automáticas no discretcionales."
-                },
-                corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", condenados: [
-                    "<strong>Julio Alak</strong> (Exintendente / Ministro): Causa por administración fraudulenta y contrataciones directas. Exp. 4589/12. Estado: Procesado y elevado a juicio oral.",
-                    "<strong>Pablo Bruera</strong> (Exintendente de La Plata): Causa por negociaciones incompatibles y lavado de fondos públicos. Exp. 12450/15. Estado: Elevado a juicio."
-                ], poblacion: 17569053, 
+                poblacion: 17569053, 
                 pobreza_historial: [{anio: 2021, val: "45.0%"}, {anio: 2022, val: "42.1%"}, {anio: 2023, val: "41.8%"}, {anio: 2024, val: "46.0%"}, {anio: 2025, val: "47.5%"}, {anio: 2026, val: "48.2%"}],
                 desempleo_historial: [{anio: 2021, val: "9.2%"}, {anio: 2022, val: "8.0%"}, {anio: 2023, val: "7.5%"}, {anio: 2024, val: "8.9%"}, {anio: 2025, val: "8.2%"}, {anio: 2026, val: "8.7%"}],
-                empleo_tipo_historial: [{anio: 2026, val: "Priv. 38% | Público 18% | Informal 44%"}, {anio: 2023, val: "Priv. 37% | Público 19% | Informal 44%"}, {anio: 2021, val: "Priv. 35% | Público 20% | Informal 45%"}],
-                impuestos_nuevos: "Tasa adicional portuaria y sobretasa a grandes embarcaciones comerciales.",
-                impuestos_pros: "Genera fondos específicos para infraestructura vial municipal.",
-                impuestos_contras: "Aumenta los costos logísticos y resta competitividad exportadora regional.",
-                costo_alquiler: 550000, canasta_basica_total: 910000, salario_promedio_ripte: 750000, ingresos_brutos_alicuota: 4.8, resultado_fiscal: "Déficit Primario Moderado", deuda_total_usd: "USD 5.420 Millones", peso_masa_salarial: "52.4%", autonomia_financiera: "38.5%", inseguridad_tasa: 980, homicidios_tasa_100k: 6.2, siniestros_viales_fatales: 1150, presupuesto_social: "Educación 28% | Salud 19%", mortalidad_infantil_tasa: 8.4, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.5, cobertura_agua_cloacas: 76.2, cobertura_internet_fibra: 68.4,
+                costo_alquiler: 550000, canasta_basica_total: 910000, salario_promedio_ripte: 750000, resultado_fiscal: "Déficit Primario Moderado", deuda_total_usd: "USD 5.420 Millones",
                 legislativo: { diputados: 70, senadores: 3, fuerza: "UxP / PRO", ausentismo: "4.2%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", 
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
+                electoral: {
+                    resultado: "Triunfo en balotaje / primera vuelta de Juntos por la Cambio / PRO con fuerte presencia de LLA.",
+                    participacion: "Participación electoral del 71.2%; 3.8% de votos en blanco."
+                },
+                tarifas: {
+                    servicios: "Luz residencial bimestral: $65.000 | Gas: $38.000 | Agua: $26.000.",
+                    transporte: "Colectivo: $788,28 | Subte (Red SUBE escalonada): 1° a 20° viaje $1.753,00 | Trenes urbanos: desde $300.",
+                    bici: "Ecobici (Sistema público de bicicletas de CABA con viajes bonificados y estaciones en toda la traza urbana)."
+                },
                 perfil: {
                     motor: "Economía del conocimiento, servicios financieros, software, turismo y comercio corporativo.",
                     exportaciones: "Servicios profesionales basados en el conocimiento (SBC), consultoría y tecnología."
@@ -1030,48 +877,30 @@
                     lectura: "86% alcanzando o superando los niveles satisfactorios en pruebas de comprensión.",
                     matematica: "78% con desempeño satisfactorio; el distrito con mejores indicadores de rendimiento."
                 },
-                tarifas: {
-                    servicios: "Costo promedio bimestral servicios residenciales: Luz ($65.000), Gas ($38.000), Agua ($26.000).",
-                    peso: "Representa el 9.5% del ingreso medio del hogar porteño."
-                },
-                justicia: {
-                    duracion: "Promedio de 4.2 años en resolución de procesos contenciosos y penales locales.",
-                    efectividad: "Tasa de esclarecimiento y condena en fuero local del 18.5%."
-                },
-                ambiental: {
-                    suelos: "Gestión de residuos sólidos urbanos con planta de reciclaje y separación en origen.",
-                    clima: "Sistemas de mitigación pluvial subterránea en cuencas de arroyos entubados."
-                },
                 poderes: {
                     ejecutivo: "Ejercido por el Jefe de Gobierno. Administra la Ciudad, la Policía de la Ciudad, y los hospitales y escuelas públicas autónomas.",
                     legislativo: "Legislatura Porteña unicameral. Sanciona códigos contravencionales, urbanísticos y leyes fiscales.",
                     judicial: "Tribunal Superior de Justicia de la CABA y fuero local en contravenciones, contencioso administrativo y penal."
                 },
-                banca: {
-                    entidad: "Banco de la Ciudad de Buenos Aires (Banco Ciudad)",
-                    creditos: "Líneas hipotecarias UVA accesibles y financiamiento para desarrollos comerciales urbanos.",
-                    tasas: "Tasas preferenciales en tarjeta de beneficios y líneas de descuento corporativo."
-                },
-                votacionesDetalle: {
-                    comportamiento: "Representantes alineados con posturas de equilibrio fiscal, apoyo parcial a reformas estructurales y modernización económica.",
-                    negociaciones: "Coordinación legislativa enfocada en la recuperación de los puntos de coparticipación cautelares."
-                },
-                corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: [
-                    "<strong>Exfuncionarios de Área de Obras Menores</strong>: Investigados por presunta cartelización de licitaciones de veredas y mobiliario urbano. Exp. 3120/21. Estado: En instrucción."
-                ], poblacion: 3120612, 
+                poblacion: 3120612, 
                 pobreza_historial: [{anio: 2021, val: "16.8%"}, {anio: 2022, val: "14.2%"}, {anio: 2023, val: "15.0%"}, {anio: 2024, val: "17.4%"}, {anio: 2025, val: "18.2%"}, {anio: 2026, val: "19.5%"}],
                 desempleo_historial: [{anio: 2021, val: "7.1%"}, {anio: 2022, val: "5.5%"}, {anio: 2023, val: "4.9%"}, {anio: 2024, val: "5.8%"}, {anio: 2025, val: "5.4%"}, {anio: 2026, val: "5.2%"}],
-                empleo_tipo_historial: [{anio: 2026, val: "Priv. 68% | Público 8% | Informal 24%"}, {anio: 2023, val: "Priv. 67% | Público 9% | Informal 24%"}, {anio: 2021, val: "Priv. 65% | Público 10% | Informal 25%"}],
-                impuestos_nuevos: "Eliminación progresiva de alícuota a tarjetas de crédito y simplificación de IIBB.",
-                impuestos_pros: "Alivia la carga impositiva sobre el consumo y estimula el comercio.",
-                impuestos_contras: "Exige un ajuste riguroso y reasignación de partidas en gasto corriente.",
-                costo_alquiler: 780000, canasta_basica_total: 980000, salario_promedio_ripte: 1250000, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Superávit Financiero", deuda_total_usd: "USD 2.150 Millones", peso_masa_salarial: "44.1%", autonomia_financiera: "82.4%", inseguridad_tasa: 920, homicidios_tasa_100k: 2.8, siniestros_viales_fatales: 95, presupuesto_social: "Educación 22% | Salud 21%", mortalidad_infantil_tasa: 4.9, camas_uti_cada_10k: 9.8, escolarizacion_secundaria: 96.8, cobertura_agua_cloacas: 99.1, cobertura_internet_fibra: 94.2,
+                costo_alquiler: 780000, canasta_basica_total: 980000, salario_promedio_ripte: 1250000, resultado_fiscal: "Superávit Financiero", deuda_total_usd: "USD 2.150 Millones",
                 legislativo: { diputados: 25, senadores: 3, fuerza: "PRO / LLA", ausentismo: "3.1%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Tierra del Fuego": { 
                 nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", 
                 cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
+                electoral: {
+                    resultado: "Amplia victoria de la alianza provincial gobernante con tracción de frentes locales.",
+                    participacion: "Participación del 69.8%; voto en blanco del 6.1%."
+                },
+                tarifas: {
+                    servicios: "Luz residencial: $45.000 | Gas (con subsidio zona fría): $28.000 | Agua: $18.000.",
+                    transporte: "Colectivo urbano insular (Ushuaia / Río Grande): tarifa plana regional.",
+                    bici: "Ciclovías urbanas y programas locales de movilidad saludable."
+                },
                 perfil: {
                     motor: "Industria electrónica de ensamblaje (Ley 19.640), pesca marítima, hidrocarburos y turismo antártico.",
                     exportaciones: "Electrodomésticos, teléfonos celulares, productos pesqueros e hidrocarburos."
@@ -1080,42 +909,15 @@
                     lectura: "72% alcanzando o superando los niveles satisfactorios en comprensión.",
                     matematica: "58% con desempeño satisfactorio en evaluaciones provinciales y nacionales."
                 },
-                tarifas: {
-                    servicios: "Costo promedio servicios residenciales con zona fría: Luz ($45.000), Gas ($28.000), Agua ($18.000).",
-                    peso: "Representa el 11.2% del ingreso medio insular."
-                },
-                justicia: {
-                    duracion: "Promedio de 4.8 años en resolución judicial provincial.",
-                    efectividad: "Tasa de resolución de litigios del 14.2%."
-                },
-                ambiental: {
-                    suelos: "Protección estricta de reservas naturales fueguinas y control de especies exóticas.",
-                    clima: "Sistemas de calefacción centralizada y control de emisiones industriales."
-                },
                 poderes: {
                     ejecutivo: "Gobernador provincial. Dirige la administración provincial, entes autónomos insulares y políticas de radicación industrial.",
                     legislativo: "Legislatura de Tierra del Fuego. Sanciona normativas provinciales y presupuestos.",
                     judicial: "Superior Tribunal de Justicia de Tierra del Fuego."
                 },
-                banca: {
-                    entidad: "Banco de Tierra del Fuego (BTF)",
-                    creditos: "Líneas de financiamiento para consumo local y sostenimiento de cadenas industriales insulares.",
-                    tasas: "Tasas reguladas orientadas a incentivar la radicación comercial y familiar en la isla."
-                },
-                votacionesDetalle: {
-                    comportamiento: "Postura intransigente en defensa del régimen industrial y subregión aduanera especial.",
-                    negociaciones: "Votaciones articuladas en defensa de presupuestos universitarios y fondos patagónicos."
-                },
-                corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: [
-                    "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por procesos judiciales en adjudicaciones de servicios públicos y contrataciones directas de emergencia. Exp. 1820/21. Estado: En instrucción."
-                ], poblacion: 190641, 
+                poblacion: 190641, 
                 pobreza_historial: [{anio: 2021, val: "34.2%"}, {anio: 2022, val: "31.8%"}, {anio: 2023, val: "30.5%"}, {anio: 2024, val: "34.0%"}, {anio: 2025, val: "35.2%"}, {anio: 2026, val: "36.5%"}],
                 desempleo_historial: [{anio: 2021, val: "8.1%"}, {anio: 2022, val: "7.0%"}, {anio: 2023, val: "6.4%"}, {anio: 2024, val: "7.9%"}, {anio: 2025, val: "6.8%"}, {anio: 2026, val: "7.2%"}],
-                empleo_tipo_historial: [{anio: 2026, val: "Priv. 55% | Público 20% | Informal 25%"}, {anio: 2023, val: "Priv. 54% | Público 21% | Informal 25%"}, {anio: 2021, val: "Priv. 52% | Público 23% | Informal 25%"}],
-                impuestos_nuevos: "Tasa de verificación electrónica y aduanera industrial.",
-                impuestos_pros: "Mantiene incentivos al subrégimen industrial tecnológico fueguino.",
-                impuestos_contras: "Altos costos fiscales comparativos para el continente.",
-                costo_alquiler: 620000, canasta_basica_total: 990000, salario_promedio_ripte: 1150000, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero", deuda_total_usd: "USD 390 Millones", peso_masa_salarial: "54.1%", autonomia_financiera: "42.0%", inseguridad_tasa: 480, homicidios_tasa_100k: 2.2, siniestros_viales_fatales: 22, presupuesto_social: "Educación 28% | Salud 21%", mortalidad_infantil_tasa: 5.2, camas_uti_cada_10k: 6.0, escolarizacion_secundaria: 94.5, cobertura_agua_cloacas: 91.2, cobertura_internet_fibra: 82.0,
+                costo_alquiler: 620000, canasta_basica_total: 990000, salario_promedio_ripte: 1150000, resultado_fiscal: "Déficit Financiero", deuda_total_usd: "USD 390 Millones",
                 legislativo: { diputados: 5, senadores: 3, fuerza: "FORJA / UxP", ausentismo: "3.1%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             }
@@ -1126,6 +928,15 @@
             return {
                 nombre: nombre, gobernador: "Autoridad Provincial Consensuada", legislatura: "Legislatura Provincial", coparticipacion_real: "3.5%",
                 cant_escuelas: 650, cant_hospitales: 20, cant_comisarias: 45,
+                electoral: {
+                    resultado: "Elecciones provinciales con triunfo de fuerza local consolidada.",
+                    participacion: "Participación cívica promedio del 72%."
+                },
+                tarifas: {
+                    servicios: "Servicios residenciales estándar provinciales.",
+                    transporte: "Transporte público automotor urbano regional.",
+                    bici: "Corredores de movilidad sustentable locales."
+                },
                 perfil: {
                     motor: "Agroindustria regional, comercio local y producción primaria diversificada.",
                     exportaciones: "Materias primas y bienes manufacturados regionales."
@@ -1134,43 +945,15 @@
                     lectura: "68% alcanzando o superando los niveles esperados.",
                     matematica: "54% con desempeño satisfactorio."
                 },
-                tarifas: {
-                    servicios: "Costo promedio mensual servicios residenciales estándar.",
-                    peso: "Representa el 12.5% del ingreso medio provincial."
-                },
-                justicia: {
-                    duracion: "Promedio de 5.0 años en instrucción judicial.",
-                    efectividad: "Tasa de condena estimada en 12.0%."
-                },
-                ambiental: {
-                    suelos: "Monitoreo y preservación de recursos naturales provinciales.",
-                    clima: "Planes de contingencia ante eventos climáticos estacionales."
-                },
                 poderes: {
                     ejecutivo: "Encabezado por el Gobernador de " + nombre + ". Administra servicios públicos locales, salud y seguridad.",
                     legislativo: "Cámara legislativa provincial encargada de sancionar leyes de presupuesto y régimen fiscal.",
                     judicial: "Superior Tribunal de Justicia provincial."
                 },
-                banca: {
-                    entidad: "Agente Financiero Provincial Consensuado",
-                    creditos: "Líneas de crédito estándar para operatoria comercial y servicios públicos.",
-                    tasas: "Tasas alineadas con directrices del sistema financiero nacional."
-                },
-                votacionesDetalle: {
-                    comportamiento: "Representantes provinciales con participación activa en comisiones de coparticipación y obra pública.",
-                    negociaciones: "Consenso interbloques para la aprobación de leyes presupuestarias."
-                },
-                corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada",
-                condenados: ["<strong>Registros locales</strong>: Sin causas de alto impacto con condena firme reciente."],
                 poblacion: 850000,
                 pobreza_historial: [{anio: 2021, val: "40.0%"}, {anio: 2022, val: "38.5%"}, {anio: 2023, val: "37.5%"}, {anio: 2024, val: "41.0%"}, {anio: 2025, val: "42.5%"}, {anio: 2026, val: "44.0%"}],
                 desempleo_historial: [{anio: 2021, val: "7.5%"}, {anio: 2022, val: "6.6%"}, {anio: 2023, val: "6.1%"}, {anio: 2024, val: "7.4%"}, {anio: 2025, val: "6.7%"}, {anio: 2026, val: "7.0%"}],
-                empleo_tipo_historial: [{anio: 2026, val: "Priv. 38% | Público 22% | Informal 40%"}],
-                impuestos_nuevos: "Tasas retributivas provinciales ordinarias.", impuestos_pros: "Sostenimiento fiscal básico.", impuestos_contras: "Presión tributaria estándar.",
-                costo_alquiler: 420000, canasta_basica_total: 860000, salario_promedio_ripte: 750000, ingresos_brutos_alicuota: 3.8,
-                resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 200 Millones", peso_masa_salarial: "52.0%", autonomia_financiera: "35.0%",
-                inseguridad_tasa: 500, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 90,
-                presupuesto_social: "Educación 27% | Salud 19%", mortalidad_infantil_tasa: 8.0, camas_uti_cada_10k: 4.5, escolarizacion_secundaria: 88.0, cobertura_agua_cloacas: 78.0, cobertura_internet_fibra: 65.0,
+                costo_alquiler: 420000, canasta_basica_total: 860000, salario_promedio_ripte: 750000, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 200 Millones",
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Fuerza Mayoritaria Local", ausentismo: "3.5%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             };
@@ -1250,10 +1033,6 @@
             el.className = "voto-badge " + (voto === "Afirmativo" ? "voto-afirmativo" : voto === "Negativo" ? "voto-negativo" : "voto-abstencion");
         }
 
-        function toggleDropdown() {
-            document.getElementById('panel-dropdown').classList.toggle('open');
-        }
-
         function toggleSeccion(idContenedor) {
             document.getElementById(idContenedor).classList.toggle('open');
         }
@@ -1266,16 +1045,6 @@
             document.getElementById(dropId).classList.toggle('open');
         }
 
-        function llenarListaHistorica(idUl, historial) {
-            const ul = document.getElementById(idUl);
-            if (!historial || historial.length === 0) {
-                ul.innerHTML = "<li><span>Sin datos históricos</span></li>";
-                return;
-            }
-            ul.innerHTML = historial.map(item => `<span>Año ${item.anio}:</span> <strong>${item.val}</strong>`).join('</li><li>');
-            ul.innerHTML = "<li>" + ul.innerHTML + "</li>";
-        }
-
         function mostrarDatos(nombreProv) {
             const data = obtenerDatosProvincia(nombreProv);
             if (!data) return;
@@ -1283,15 +1052,11 @@
             document.getElementById('btn-volver-mapa').style.display = 'block';
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${data.nombre}`;
 
-            document.getElementById('panel-dropdown').classList.remove('open');
+            document.getElementById('panel-electoral').classList.remove('open');
+            document.getElementById('panel-tarifas').classList.remove('open');
             document.getElementById('panel-perfil').classList.remove('open');
             document.getElementById('panel-educacion-calidad').classList.remove('open');
-            document.getElementById('panel-tarifas').classList.remove('open');
-            document.getElementById('panel-justicia').classList.remove('open');
-            document.getElementById('panel-ambiental').classList.remove('open');
             document.getElementById('panel-poderes').classList.remove('open');
-            document.getElementById('panel-banca').classList.remove('open');
-            document.getElementById('panel-votaciones').classList.remove('open');
             document.getElementById('panel-infraestructura-critica').classList.remove('open');
             document.getElementById('sub-drop-escuelas').classList.remove('open');
             document.getElementById('sub-drop-hospitales').classList.remove('open');
@@ -1308,34 +1073,24 @@
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
 
-            // Perfil, educación, tarifas, justicia, ambiental
+            // Electoral y Tarifas transporte completas
+            document.getElementById('elec-resultado').innerText = data.electoral.resultado;
+            document.getElementById('elec-participacion').innerText = data.electoral.participacion;
+
+            document.getElementById('tarifa-servicios').innerText = data.tarifas.servicios;
+            document.getElementById('tarifa-transporte').innerText = data.tarifas.transporte;
+            document.getElementById('tarifa-bici').innerText = data.tarifas.bici;
+
             document.getElementById('perfil-motor').innerText = data.perfil.motor;
             document.getElementById('perfil-exportaciones').innerText = data.perfil.exportaciones;
 
             document.getElementById('edu-lectura').innerText = data.educacionCalidad.lectura;
             document.getElementById('edu-matematica').innerText = data.educacionCalidad.matematica;
 
-            document.getElementById('tarifa-servicios').innerText = data.tarifas.servicios;
-            document.getElementById('tarifa-peso').innerText = data.tarifas.peso;
-
-            document.getElementById('justicia-duracion').innerText = data.justicia.duracion;
-            document.getElementById('justicia-efectividad').innerText = data.justicia.efectividad;
-
-            document.getElementById('ambiental-suelos').innerText = data.ambiental.suelos;
-            document.getElementById('ambiental-clima').innerText = data.ambiental.clima;
-
             document.getElementById('poder-ejecutivo-desc').innerText = data.poderes.ejecutivo;
             document.getElementById('poder-legislativo-desc').innerText = data.poderes.legislativo;
             document.getElementById('poder-judicial-desc').innerText = data.poderes.judicial;
 
-            document.getElementById('banca-entidad').innerText = data.banca.entidad;
-            document.getElementById('banca-creditos').innerText = data.banca.creditos;
-            document.getElementById('banca-tasas').innerText = data.banca.tasas;
-
-            document.getElementById('voto-comportamiento').innerText = data.votacionesDetalle.comportamiento;
-            document.getElementById('voto-negociaciones').innerText = data.votacionesDetalle.negociaciones;
-
-            // Listados Completos
             document.getElementById('titulo-cant-escuelas').innerText = `🏫 Escuelas Registradas (${data.cant_escuelas} en total)`;
             document.getElementById('lista-escuelas-detalle').innerHTML = generarListaCompleta(data.cant_escuelas, data.nombre);
 
@@ -1344,18 +1099,6 @@
 
             document.getElementById('titulo-cant-comisarias').innerText = `🚓 Comisarías / Seccionales Policiales (${data.cant_comisarias} en total)`;
             document.getElementById('lista-comisarias-detalle').innerHTML = generarListaComisariasCompleta(data.cant_comisarias);
-
-            document.getElementById('panel-corrupcion-tasa').innerText = data.corrupcion_tasa;
-            document.getElementById('panel-opacidad').innerText = data.opacidad_licitaciones;
-            document.getElementById('panel-pauta-corrupcion').innerText = data.pauta_corrupcion;
-
-            let condenadosHTML = '';
-            if (data.condenados && data.condenados.length > 0) {
-                condenadosHTML = data.condenados.map(item => `<li>${item}</li>`).join('');
-            } else {
-                condenadosHTML = `<li>Sin registros públicos significativos de condenas firmes recientes.</li>`;
-            }
-            document.getElementById('panel-condenados-lista').innerHTML = condenadosHTML;
 
             document.getElementById('panel-diputados').innerText = `${data.legislativo.diputados} bancas`;
             document.getElementById('panel-senadores').innerText = `${data.legislativo.senadores} bancas`;
@@ -1373,32 +1116,13 @@
 
             renderizarGrafico('chart-pobreza', data.pobreza_historial);
             renderizarGrafico('chart-desempleo', data.desempleo_historial);
-            llenarListaHistorica('list-empleo-tipo', data.empleo_tipo_historial);
 
             document.getElementById('panel-cbt').innerText = `$${data.canasta_basica_total.toLocaleString('es-AR')}`;
             document.getElementById('panel-salario').innerText = `$${data.salario_promedio_ripte.toLocaleString('es-AR')}`;
             document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
-            document.getElementById('panel-iibb').innerText = `${data.ingresos_brutos_alicuota}%`;
-
-            document.getElementById('panel-impuestos-nuevos').innerText = data.impuestos_nuevos;
-            document.getElementById('panel-impuestos-pros').innerText = data.impuestos_pros;
-            document.getElementById('panel-impuestos-contras').innerText = data.impuestos_contras;
 
             document.getElementById('panel-resultado-fiscal').innerText = data.resultado_fiscal;
             document.getElementById('panel-deuda-total').innerText = data.deuda_total_usd;
-            document.getElementById('panel-masa-salarial').innerText = data.peso_masa_salarial;
-            document.getElementById('panel-autonomia').innerText = data.autonomia_financiera;
-
-            document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa}`;
-            document.getElementById('panel-homicidios').innerText = `${data.homicidios_tasa_100k}`;
-            document.getElementById('panel-vial').innerText = `${data.siniestros_viales_fatales}`;
-
-            document.getElementById('panel-presupuesto-social').innerText = data.presupuesto_social;
-            document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
-            document.getElementById('panel-camas').innerText = `${data.camas_uti_cada_10k}`;
-            document.getElementById('panel-escuela').innerText = `${data.escolarizacion_secundaria}%`;
-            document.getElementById('panel-agua').innerText = `${data.cobertura_agua_cloacas}%`;
-            document.getElementById('panel-internet').innerText = `${data.cobertura_internet_fibra}%`;
 
             panel.style.display = 'block';
         }
