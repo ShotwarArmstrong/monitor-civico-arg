@@ -395,9 +395,13 @@
         .agenda-header { color: #1e40af; background: #dbeafe; }
         .agenda-header:hover { background: #bfdbfe; }
 
-        .infra-container { background: #faf5ff; border: 1px solid #e9d5ff; }
-        .infra-header { color: #6b21a8; background: #f3e8ff; }
-        .infra-header:hover { background: #e9d5ff; }
+        .banca-container { background: #fefce8; border: 1px solid #fef08a; }
+        .banca-header { color: #854d0e; background: #fef9c3; }
+        .banca-header:hover { background: #fef08a; }
+
+        .votaciones-container { background: #faf5ff; border: 1px solid #e9d5ff; }
+        .votaciones-header { color: #6b21a8; background: #f3e8ff; }
+        .votaciones-header:hover { background: #e9d5ff; }
 
         .comunicados-container { background: #fff7ed; border: 1px solid #fed7aa; }
         .comunicados-header { color: #c2410c; background: #ffedd5; }
@@ -411,10 +415,14 @@
         .auditorias-header { color: #334155; background: #e2e8f0; }
         .auditorias-header:hover { background: #cbd5e1; }
 
+        .infra-container { background: #fdf4ff; border: 1px solid #f5d0fe; }
+        .infra-header { color: #86198f; background: #fae8ff; }
+        .infra-header:hover { background: #f5d0fe; }
+
         /* Subdesplegables internos con scroll */
         .sub-infra-dropdown {
             background: #ffffff;
-            border: 1px solid #d8b4fe;
+            border: 1px solid #f5d0fe;
             border-radius: 6px;
             margin: 6px 0;
             overflow: hidden;
@@ -427,11 +435,11 @@
             cursor: pointer;
             font-size: 0.78em;
             font-weight: bold;
-            color: #6b21a8;
-            background: #f3e8ff;
+            color: #86198f;
+            background: #fae8ff;
             user-select: none;
         }
-        .sub-infra-header:hover { background: #e9d5ff; }
+        .sub-infra-header:hover { background: #f5d0fe; }
         .sub-infra-content {
             max-height: 0;
             overflow-y: auto;
@@ -444,7 +452,7 @@
         .sub-infra-dropdown.open .sub-infra-content {
             max-height: 320px;
             padding: 6px 10px 8px 10px;
-            border-top: 1px dashed #d8b4fe;
+            border-top: 1px dashed #f5d0fe;
         }
         .sub-infra-dropdown.open .arrow-icon {
             transform: rotate(180deg);
@@ -676,7 +684,47 @@
             </div>
         </div>
 
-        <!-- NUEVA SECCIÓN: Comunicados Oficiales & Alertas -->
+        <!-- NUEVA SECCIÓN: Banca Pública & Agente Financiero -->
+        <div class="gen-container banca-container" id="panel-banca">
+            <div class="gen-header banca-header" onclick="toggleSeccion('panel-banca')">
+                <span>🏦 Banca Pública, Agente Financiero & Créditos</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Institución Bancaria de Referencia</strong>
+                    <span id="banca-entidad">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Colocación de Créditos Productivos Pymes</strong>
+                    <span id="banca-creditos">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Exposición y Tasas de Descuento de Cheques</strong>
+                    <span id="banca-tasas">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVA SECCIÓN: Agenda de Votaciones & Bloques -->
+        <div class="gen-container votaciones-container" id="panel-votaciones">
+            <div class="gen-header votaciones-header" onclick="toggleSeccion('panel-votaciones')">
+                <span>🗳️ Agenda de Votaciones & Posicionamiento de Bloques</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Comportamiento del Bloque Provincial en el Congreso</strong>
+                    <span id="voto-comportamiento">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Leyes Clave y Negociaciones con el Ejecutivo Nacional</strong>
+                    <span id="voto-negociaciones">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comunicados Oficiales & Alertas -->
         <div class="gen-container comunicados-container" id="panel-comunicados">
             <div class="gen-header comunicados-header" onclick="toggleSeccion('panel-comunicados')">
                 <span>📢 Comunicados Oficiales & Alertas de Gestión</span>
@@ -694,7 +742,7 @@
             </div>
         </div>
 
-        <!-- NUEVA SECCIÓN: Documentos Oficiales y Licitaciones (PDF) -->
+        <!-- Documentos Oficiales y Licitaciones (PDF) -->
         <div class="gen-container docs-container" id="panel-docs">
             <div class="gen-header docs-header" onclick="toggleSeccion('panel-docs')">
                 <span>📂 Documentos Oficiales & Licitaciones (PDF)</span>
@@ -716,7 +764,7 @@
             </div>
         </div>
 
-        <!-- NUEVA SECCIÓN: Auditorías Ciudadanas & ONGs -->
+        <!-- Auditorías Ciudadanas & ONGs -->
         <div class="gen-container auditorias-container" id="panel-auditorias">
             <div class="gen-header auditorias-header" onclick="toggleSeccion('panel-auditorias')">
                 <span>🔍 Auditorías Ciudadanas & Informes ONGs</span>
@@ -734,7 +782,7 @@
             </div>
         </div>
 
-        <!-- Desplegable de Infraestructura Crítica con listados COMPLETOS y numéricos -->
+        <!-- Desplegable de Infraestructura Crítica -->
         <div class="gen-container infra-container" id="panel-infraestructura-critica">
             <div class="gen-header infra-header" onclick="toggleSeccion('panel-infraestructura-critica')">
                 <span>🏫🏥🚓 Escuelas, Hospitales y Comisarías (Listados Completos)</span>
@@ -742,7 +790,6 @@
             </div>
             <div class="gen-content">
                 
-                <!-- Subdesplegable Escuelas (Completo con scroll) -->
                 <div class="sub-infra-dropdown" id="sub-drop-escuelas">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-escuelas')">
                         <span id="titulo-cant-escuelas">🏫 Escuelas Registradas</span>
@@ -753,7 +800,6 @@
                     </div>
                 </div>
 
-                <!-- Subdesplegable Hospitales (Completo con scroll) -->
                 <div class="sub-infra-dropdown" id="sub-drop-hospitales">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-hospitales')">
                         <span id="titulo-cant-hospitales">🏥 Hospitales & Centros de Salud</span>
@@ -764,7 +810,6 @@
                     </div>
                 </div>
 
-                <!-- Subdesplegable Comisarias (Completo con scroll) -->
                 <div class="sub-infra-dropdown" id="sub-drop-comisarias">
                     <div class="sub-infra-header" onclick="toggleSubInfra('sub-drop-comisarias')">
                         <span id="titulo-cant-comisarias">🚓 Comisarías / Seccionales Policiales</span>
@@ -899,6 +944,15 @@
                     social: "Negociación paritaria docente continua y reequipamiento de hospitales de alta complejidad.",
                     institucional: "Transparencia en contrataciones directas y control de fondos de coparticipación municipal."
                 },
+                banca: {
+                    entidad: "Banco de la Provincia de Buenos Aires (BAPRO)",
+                    creditos: "Líneas especiales para capital de trabajo Pyme y sector agropecuario con bonificación de tasas.",
+                    tasas: "Promedio de tasas activas competitivas fondeadas con depósitos judiciales y provinciales."
+                },
+                votacionesDetalle: {
+                    comportamiento: "Bloque mayoritario allineado con la oposición al pacto fiscal nacional, votando mayoritariamente en contra de las iniciativas de desregulación.",
+                    negociaciones: "Defensa cerrada de los fondos coparticipables y de las transferencias automáticas no discretcionales."
+                },
                 comunicados: {
                     boletin: "Decreto N° 1420/2026: Ampliación de partidas presupuestarias para asistencia alimentaria escolar.",
                     resoluciones: "Resolución Ministerial N° 890: Cronograma de paritarias y actualización salarial docente."
@@ -939,6 +993,15 @@
                     social: "Digitalización plena de trámites educativos y optimización de guardias hospitalarias.",
                     institucional: "Reclamo judicial activo en Corte Suprema por fondos de coparticipación retenidos."
                 },
+                banca: {
+                    entidad: "Banco de la Ciudad de Buenos Aires (Banco Ciudad)",
+                    creditos: "Líneas hipotecarias UVA accesibles y financiamiento para desarrollos comerciales urbanos.",
+                    tasas: "Tasas preferenciales en tarjeta de beneficios y líneas de descuento corporativo."
+                },
+                votacionesDetalle: {
+                    comportamiento: "Representantes alineados con posturas de equilibrio fiscal, apoyo parcial a reformas estructurales y modernización económica.",
+                    negociaciones: "Coordinación legislativa enfocada en la recuperación de los puntos de coparticipación cautelares."
+                },
                 comunicados: {
                     boletin: "Decreto N° 312/2026: Modernización y digitalización de habilitaciones comerciales.",
                     resoluciones: "Resolución SSS N° 45: Ampliación de cobertura en atención de adultos mayores."
@@ -977,6 +1040,15 @@
                     infraestructura: "Ampliación de matriz energética insular, puerto multipropósito y conectividad en Ruta Nacional 3.",
                     social: "Defensa activa del subrégimen industrial tecnológico y de puestos de trabajo fabriles.",
                     institucional: "Soberanía antártica y geopolítica insular argentina."
+                },
+                banca: {
+                    entidad: "Banco de Tierra del Fuego (BTF)",
+                    creditos: "Líneas de financiamiento para consumo local y sostenimiento de cadenas industriales insulares.",
+                    tasas: "Tasas reguladas orientadas a incentivar la radicación comercial y familiar en la isla."
+                },
+                votacionesDetalle: {
+                    comportamiento: "Postura intransigente en defensa del régimen industrial y subregión aduanera especial.",
+                    negociaciones: "Votaciones articuladas en defensa de presupuestos universitarios y fondos patagónicos."
                 },
                 comunicados: {
                     boletin: "Decreto Provincial N° 850: Promoción de inversiones tecnológicas y beneficios fiscales.",
@@ -1020,6 +1092,15 @@
                     infraestructura: "Mantenimiento de corredores viales y expansión de servicios básicos.",
                     social: "Optimización de la atención primaria sanitaria y cobertura educativa.",
                     institucional: "Transparencia institucional y modernización de procesos digitales."
+                },
+                banca: {
+                    entidad: "Agente Financiero Provincial Consensuado",
+                    creditos: "Líneas de crédito estándar para operatoria comercial y servicios públicos.",
+                    tasas: "Tasas alineadas con directrices del sistema financiero nacional."
+                },
+                votacionesDetalle: {
+                    comportamiento: "Representantes provinciales con participación activa en comisiones de coparticipación y obra pública.",
+                    negociaciones: "Consenso interbloques para la aprobación de leyes presupuestarias."
                 },
                 comunicados: {
                     boletin: "Boletín Oficial N° 11.200: Resoluciones generales de gestión y administración.",
@@ -1125,6 +1206,8 @@
             document.getElementById('panel-dropdown').classList.remove('open');
             document.getElementById('panel-poderes').classList.remove('open');
             document.getElementById('panel-agenda').classList.remove('open');
+            document.getElementById('panel-banca').classList.remove('open');
+            document.getElementById('panel-votaciones').classList.remove('open');
             document.getElementById('panel-comunicados').classList.remove('open');
             document.getElementById('panel-docs').classList.remove('open');
             document.getElementById('panel-auditorias').classList.remove('open');
@@ -1151,6 +1234,14 @@
             document.getElementById('agenda-infraestructura').innerText = data.agenda.infraestructura;
             document.getElementById('agenda-social').innerText = data.agenda.social;
             document.getElementById('agenda-institucional').innerText = data.agenda.institucional;
+
+            // Banca & Votaciones detalle
+            document.getElementById('banca-entidad').innerText = data.banca.entidad;
+            document.getElementById('banca-creditos').innerText = data.banca.creditos;
+            document.getElementById('banca-tasas').innerText = data.banca.tasas;
+
+            document.getElementById('voto-comportamiento').innerText = data.votacionesDetalle.comportamiento;
+            document.getElementById('voto-negociaciones').innerText = data.votacionesDetalle.negociaciones;
 
             // Comunicados & Documentos & Auditorias
             document.getElementById('comunicado-boletin').innerText = data.comunicados.boletin;
