@@ -90,7 +90,7 @@
 
         #btn-volver-mapa {
             position: absolute;
-            bottom: 50px;
+            bottom: 55px;
             left: 20px;
             z-index: 200;
             background: #0284c7;
@@ -106,7 +106,7 @@
         }
         #btn-volver-mapa:hover { background: #0369a1; }
 
-        /* Fuentes Oficiales Fijas al pie de la página */
+        /* Fuentes Oficiales con Enlaces Interactivos en Azul */
         #footer-fuentes {
             position: fixed;
             bottom: 0;
@@ -122,6 +122,16 @@
             box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
         }
         #footer-fuentes strong { color: #0284c7; }
+        #footer-fuentes a {
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 3px;
+        }
+        #footer-fuentes a:hover {
+            text-decoration: underline;
+            color: #0369a1;
+        }
 
         #map-container {
             position: absolute;
@@ -258,13 +268,20 @@
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Mapa Completo</button>
 
-    <!-- Pie de página con Fuentes Oficiales Fijo -->
+    <!-- Pie de página con Fuentes Oficiales Enlazadas en Azul -->
     <div id="footer-fuentes">
-        <span><strong>Fuentes Oficiales:</strong> INDEC · Ministerio de Economía · H. Congreso de la Nación (HCDN/Senado) · Ministerio de Seguridad · Ministerio de Salud · Banco Central (BCRA)</span>
+        <span><strong>Fuentes Oficiales:</strong> 
+            <a href="https://www.indec.gob.ar" target="_blank">INDEC</a> · 
+            <a href="https://www.argentina.gob.ar/economia" target="_blank">Ministerio de Economía</a> · 
+            <a href="https://www.hcdn.gob.ar" target="_blank">H. Congreso de la Nación (HCDN/Senado)</a> · 
+            <a href="https://www.argentina.gob.ar/seguridad" target="_blank">Ministerio de Seguridad</a> · 
+            <a href="https://www.argentina.gob.ar/salud" target="_blank">Ministerio de Salud</a> · 
+            <a href="https://www.bcra.gob.ar" target="_blank">Banco Central (BCRA)</a>
+        </span>
     </div>
 
     <div id="map-container">
-        <!-- Mapa Vectorial con clics directos, Malvinas destacadas y etiquetas -->
+        <!-- Mapa Vectorial con todas las provincias corregidas y clicables -->
         <svg id="map-svg" viewBox="0 0 400 850" xmlns="http://www.w3.org/2000/svg">
             <g id="mapa-argentina-riesgo">
                 <!-- Jujuy -->
@@ -327,8 +344,8 @@
                 <path class="provincia-real" data-nombre="San Luis" fill="#f97316" onclick="mostrarDatos('San Luis')" d="M 145,315 Q 175,330 165,390 Q 120,375 145,315 Z" />
                 <text x="150" y="355" class="provincia-label" font-size="7.5px">San Luis</text>
 
-                <!-- Mendoza -->
-                <path class="provincia-real" data-nombre="Mendoza" fill="#f97316" onclick="mostrarDatos('Mendoza')" d="M 85,290 Q 145,315 Q 120,375 Q 75,355 Q 85,290 Z" />
+                <!-- Mendoza (Corregida y completamente interactiva) -->
+                <path class="provincia-real" data-nombre="Mendoza" fill="#f97316" onclick="mostrarDatos('Mendoza')" d="M 85,290 Q 145,315 120,375 Q 75,355 85,290 Z" />
                 <text x="108" y="335" class="provincia-label">Mendoza</text>
 
                 <!-- La Pampa -->
@@ -363,7 +380,7 @@
                 <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#f97316" onclick="mostrarDatos('Tierra del Fuego')" d="M 110,750 Q 175,755 160,795 Q 100,785 110,750 Z" />
                 <text x="138" y="775" class="provincia-label" font-size="7px">T. del Fuego</text>
 
-                <!-- Islas Malvinas (Soberanas e integradas) -->
+                <!-- Islas Malvinas -->
                 <g id="islas-malvinas">
                     <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 315,550 Q 335,545 330,575 Q 310,570 315,550 Z" />
                     <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 345,560 Q 370,555 365,590 Q 340,585 345,560 Z" />
