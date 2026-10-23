@@ -349,6 +349,53 @@
             transform: rotate(180deg);
         }
 
+        /* Estilo específico para Desplegable de los Tres Poderes */
+        .poderes-container {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+        .poderes-header {
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.82em;
+            font-weight: bold;
+            color: #166534;
+            background: #dcfce7;
+            user-select: none;
+        }
+        .poderes-header:hover { background: #bbf7d0; }
+        .poderes-content {
+            max-height: 0;
+            overflow-y: auto;
+            transition: max-height 0.3s ease-out;
+            padding: 0 12px;
+            font-size: 0.78em;
+            color: #1e293b;
+            background: #f0fdf4;
+        }
+        .poderes-container.open .poderes-content {
+            max-height: 380px;
+            padding: 8px 12px 12px 12px;
+            border-top: 1px dashed #bbf7d0;
+        }
+        .poderes-container.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+        .poder-card {
+            background: #ffffff;
+            border: 1px solid #d1fae5;
+            border-radius: 6px;
+            padding: 6px 8px;
+            margin: 6px 0;
+        }
+        .poder-card strong { color: #15803d; display: block; margin-bottom: 2px; }
+
         .voto-badge {
             padding: 2px 6px;
             border-radius: 4px;
@@ -498,7 +545,7 @@
         </svg>
     </div>
 
-    <!-- Panel Lateral con Desplegables de Últimos 6 Años -->
+    <!-- Panel Lateral -->
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
         <h2 id="panel-nombre" class="province-title">-</h2>
@@ -512,6 +559,28 @@
         <div class="data-row"><span>Gobernador / Gestión:</span><strong id="panel-gobernador">-</strong></div>
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
+
+        <!-- NUEVO APARTADO: Los Tres Poderes y sus Competencias -->
+        <div class="poderes-container" id="panel-poderes">
+            <div class="poderes-header" onclick="togglePoderes()">
+                <span>⚖️ Los Tres Poderes del Estado & Competencias</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="poderes-content">
+                <div class="poder-card">
+                    <strong>1. Poder Ejecutivo (Gobernador Provincial)</strong>
+                    <span id="poder-ejecutivo-desc">-</span>
+                </div>
+                <div class="poder-card">
+                    <strong>2. Poder Legislativo (Diputados / Senadores Provinciales)</strong>
+                    <span id="poder-legislativo-desc">-</span>
+                </div>
+                <div class="poder-card">
+                    <strong>3. Poder Judicial (Corte / Superior Tribunal Provincial)</strong>
+                    <span id="poder-judicial-desc">-</span>
+                </div>
+            </div>
+        </div>
 
         <div class="section-heading">🔍 Transparencia & Corrupción Nominal</div>
         <div class="data-row"><span>Causas Activas (Corrupción / 100k):</span><strong id="panel-corrupcion-tasa" style="color: #b91c1c;">-</strong></div>
@@ -601,7 +670,13 @@
     <script>
         const datosProvincias = {
             "Buenos Aires": { 
-                nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", condenados: [
+                nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
+                poderes: {
+                    ejecutivo: "Encabezado por el Gobernador. Administra la administración pública provincial, la policía bonaerense y **gestiona directamente los hospitales públicos y el sistema educativo provincial**.",
+                    legislativo: "Compuesto por la Legislatura Provincial (Senadores y Diputados). Sanciona leyes locales, aprueba el presupuesto provincial y controla la ejecución de gastos.",
+                    judicial: "Supervisado por la Suprema Corte de Justicia de la Provincia. Garantiza la constitucionalidad de las normas locales y administra la justicia penal, civil y laboral provincial."
+                },
+                corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", condenados: [
                     "<strong>Julio Alak</strong> (Exintendente / Ministro): Causa por administración fraudulenta y contrataciones directas. Exp. 4589/12. Estado: Procesado y elevado a juicio oral.",
                     "<strong>Pablo Bruera</strong> (Exintendente de La Plata): Causa por negociaciones incompatibles y lavado de fondos públicos. Exp. 12450/15. Estado: Elevado a juicio."
                 ], poblacion: 17569053, 
@@ -616,7 +691,13 @@
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
-                nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: [
+                nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", 
+                poderes: {
+                    ejecutivo: "Ejercido por el Jefe de Gobierno. Administra la Ciudad, la Policía de la Ciudad, y los hospitales y escuelas públicas de gestión autónoma.",
+                    legislativo: "Legislatura Porteña unicameral. Sanciona códigos contravencionales, urbanísticos y leyes fiscales de la metrópoli.",
+                    judicial: "Tribunal Superior de Justicia de la CABA y fuero local en contravenciones, contencioso administrativo y penal propio."
+                },
+                corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: [
                     "<strong>Exfuncionarios de Área de Obras Menores</strong>: Investigados por presunta cartelización de licitaciones de veredas y mobiliario urbano. Exp. 3120/21. Estado: En instrucción."
                 ], poblacion: 3120612, 
                 pobreza_historial: [{anio: 2026, val: "19.5%"}, {anio: 2025, val: "18.2%"}, {anio: 2024, val: "17.4%"}, {anio: 2023, val: "15.0%"}, {anio: 2022, val: "14.2%"}, {anio: 2021, val: "16.8%"}],
@@ -630,7 +711,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Catamarca": { 
-                nombre: "Catamarca", gobernador: "Raúl Jalil (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "2.8%", corrupcion_tasa: "5.1 causas / 100k", opacidad_licitaciones: "Alta (72%)", pauta_corrupcion: "Alta (Control de pauta estatal)", condenados: [
+                nombre: "Catamarca", gobernador: "Raúl Jalil (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "2.8%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial. Dirige la administración central, planes mineros y servicios provinciales de salud y educación.",
+                    legislativo: "Cámara de Diputados y Cámara de Senadores provinciales.",
+                    judicial: "Corte de Justicia de Catamarca."
+                },
+                corrupcion_tasa: "5.1 causas / 100k", opacidad_licitaciones: "Alta (72%)", pauta_corrupcion: "Alta (Control de pauta estatal)", condenados: [
                     "<strong>Exministros de Obras Públicas Provinciales</strong>: Procesados por adjudicación directa en proyectos viales mineros sin licitación abierta. Exp. 892/19. Estado: Elevado a juicio."
                 ], poblacion: 429556, 
                 pobreza_historial: [{anio: 2026, val: "45.1%"}, {anio: 2025, val: "44.0%"}, {anio: 2024, val: "43.2%"}, {anio: 2023, val: "38.5%"}, {anio: 2022, val: "40.0%"}, {anio: 2021, val: "43.5%"}],
@@ -644,7 +731,13 @@
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Abstención", rigi: "Abstención" }
             },
             "Chaco": { 
-                nombre: "Chaco", gobernador: "Leandro Zdero (JxC / UCR)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "5.1%", corrupcion_tasa: "6.4 causas / 100k", opacidad_licitaciones: "Muy Alta (81%)", pauta_corrupcion: "Crítica (Herencia de desvíos)", condenados: [
+                nombre: "Chaco", gobernador: "Leandro Zdero (JxC / UCR)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "5.1%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial. Administra los servicios esenciales provinciales.",
+                    legislativo: "Cámara de Diputados de la Provincia del Chaco.",
+                    judicial: "Superior Tribunal de Justicia del Chaco."
+                },
+                corrupcion_tasa: "6.4 causas / 100k", opacidad_licitaciones: "Muy Alta (81%)", pauta_corrupcion: "Crítica (Herencia de desvíos)", condenados: [
                     "<strong>Emerenciano Sena y Patricia Acuña</strong> (Dirigentes sociales): Causa por administración fraudulenta de fondos de vivienda social y desvío de subsidios estatales. Exp. 11200/23. Estado: Procesados con prisión preventiva."
                 ], poblacion: 1142963, 
                 pobreza_historial: [{anio: 2026, val: "57.2%"}, {anio: 2025, val: "56.0%"}, {anio: 2024, val: "55.4%"}, {anio: 2023, val: "53.2%"}, {anio: 2022, val: "54.0%"}, {anio: 2021, val: "55.8%"}],
@@ -658,7 +751,13 @@
                 votaciones: { bases: "Abstención", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Chubut": { 
-                nombre: "Chubut", gobernador: "Ignacio Torres (Despierta Chubut)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.2%", corrupcion_tasa: "3.9 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: [
+                nombre: "Chubut", gobernador: "Ignacio Torres (Despierta Chubut)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.2%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial. Ejecuta el presupuesto provincial y dirige áreas de educación, salud y seguridad.",
+                    legislativo: "Legislatura de la Provincia de Chubut.",
+                    judicial: "Superior Tribunal de Justicia de Chubut."
+                },
+                corrupcion_tasa: "3.9 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Diego Correa</strong> (Exfuncionario provincial): Causa 'Embrujo' por asociación ilícita, enriquecimiento ilícito y retornos de obra pública. Fecha de condena: 2021. Exp. 7521/18. Estado: Condena firme a 10 años de prisión."
                 ], poblacion: 603120, 
                 pobreza_historial: [{anio: 2026, val: "39.5%"}, {anio: 2025, val: "38.2%"}, {anio: 2024, val: "37.5%"}, {anio: 2023, val: "34.0%"}, {anio: 2022, val: "35.2%"}, {anio: 2021, val: "38.1%"}],
@@ -672,7 +771,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Córdoba": { 
-                nombre: "Córdoba", gobernador: "Martín Llaryora (Hacemos Unidos)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "9.2%", corrupcion_tasa: "3.5 causas / 100k", opacidad_licitaciones: "Baja/Media (35%)", pauta_corrupcion: "Controlada", condenados: [
+                nombre: "Córdoba", gobernador: "Martín Llaryora (Hacemos Unidos)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "9.2%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial. Responsable de la gestión estatal y servicios públicos provinciales.",
+                    legislativo: "Unicameral de Córdoba.",
+                    judicial: "Tribunal Superior de Justicia de Córdoba."
+                },
+                corrupcion_tasa: "3.5 causas / 100k", opacidad_licitaciones: "Baja/Media (35%)", pauta_corrupcion: "Controlada", condenados: [
                     "<strong>Exintendentes municipales del interior</strong>: Causas por peculado y administración fraudulenta en fondos de coparticipación menor. Exp. 1450/20. Estado: Condenas de ejecución condicional."
                 ], poblacion: 3978984, 
                 pobreza_historial: [{anio: 2026, val: "42.8%"}, {anio: 2025, val: "41.5%"}, {anio: 2024, val: "40.2%"}, {anio: 2023, val: "36.8%"}, {anio: 2022, val: "37.5%"}, {anio: 2021, val: "40.1%"}],
@@ -686,7 +791,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Corrientes": { 
-                nombre: "Corrientes", gobernador: "Gustavo Valdés (ECO + UCR)", legislatura: "Bicameral (Mayoría ECO)", coparticipacion_real: "4.8%", corrupcion_tasa: "4.2 causas / 100k", opacidad_licitaciones: "Alta (64%)", pauta_corrupcion: "Alta", condenados: [
+                nombre: "Corrientes", gobernador: "Gustavo Valdés (ECO + UCR)", legislatura: "Bicameral (Mayoría ECO)", coparticipacion_real: "4.8%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Senado y Cámara de Diputados de Corrientes.",
+                    judicial: "Superior Tribunal de Justicia de Corrientes."
+                },
+                corrupcion_tasa: "4.2 causas / 100k", opacidad_licitaciones: "Alta (64%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exfuncionarios de área de salud provincial</strong>: Investigados por sobreprecios en compras directas de insumos médicos durante emergencias sanitarias. Exp. 984/21. Estado: Elevado a juicio."
                 ], poblacion: 1197553, 
                 pobreza_historial: [{anio: 2026, val: "48.9%"}, {anio: 2025, val: "47.8%"}, {anio: 2024, val: "46.5%"}, {anio: 2023, val: "42.0%"}, {anio: 2022, val: "43.5%"}, {anio: 2021, val: "46.2%"}],
@@ -700,7 +811,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Entre Ríos": { 
-                nombre: "Entre Ríos", gobernador: "Rogelio Frigerio (JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "5.1%", corrupcion_tasa: "3.8 causas / 100k", opacidad_licitaciones: "Media (45%)", pauta_corrupcion: "Moderada", condenados: [
+                nombre: "Entre Ríos", gobernador: "Rogelio Frigerio (JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "5.1%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Senado y Cámara de Diputados de Entre Ríos.",
+                    judicial: "Superior Tribunal de Justicia de Entre Ríos."
+                },
+                corrupcion_tasa: "3.8 causas / 100k", opacidad_licitaciones: "Media (45%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios y operadores legislativos</strong>: Causa por contratos truchos en la Legislatura provincial (defraudación al Estado por más de 2.000 millones de pesos). Fecha de condena: 2022. Exp. 5410/18. Estado: Condenas firmes confirmadas por Cámara de Casación."
                 ], poblacion: 1426426, 
                 pobreza_historial: [{anio: 2026, val: "44.2%"}, {anio: 2025, val: "43.0%"}, {anio: 2024, val: "42.1%"}, {anio: 2023, val: "38.2%"}, {anio: 2022, val: "39.0%"}, {anio: 2021, val: "41.5%"}],
@@ -714,7 +831,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Formosa": { 
-                nombre: "Formosa", gobernador: "Gildo Insfrán (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "3.8%", corrupcion_tasa: "7.5 causas / 100k", opacidad_licitaciones: "Extrema (92%)", pauta_corrupcion: "Monopolio absoluto estatal", condenados: [
+                nombre: "Formosa", gobernador: "Gildo Insfrán (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "3.8%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Legislatura de Formosa.",
+                    judicial: "Superior Tribunal de Justicia de Formosa."
+                },
+                corrupcion_tasa: "7.5 causas / 100k", opacidad_licitaciones: "Extrema (92%)", pauta_corrupcion: "Monopolio absoluto estatal", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por adjudicaciones directas recurrentes y opacidad en cuentas públicas. Exp. 310/15. Estado: Protegidos por blindaje de fueros locales e inacción judicial."
                 ], poblacion: 606041, 
                 pobreza_historial: [{anio: 2026, val: "53.5%"}, {anio: 2025, val: "52.2%"}, {anio: 2024, val: "51.0%"}, {anio: 2023, val: "49.8%"}, {anio: 2022, val: "50.5%"}, {anio: 2021, val: "52.0%"}],
@@ -728,7 +851,13 @@
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Jujuy": { 
-                nombre: "Jujuy", gobernador: "Carlos Sadir (Frente Cambia Jujuy)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "3.1%", corrupcion_tasa: "4.5 causas / 100k", opacidad_licitaciones: "Alta (65%)", pauta_corrupcion: "Alta", condenados: [
+                nombre: "Jujuy", gobernador: "Carlos Sadir (Frente Cambia Jujuy)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "3.1%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Legislatura de Jujuy.",
+                    judicial: "Superior Tribunal de Justicia de Jujuy."
+                },
+                corrupcion_tasa: "4.5 causas / 100k", opacidad_licitaciones: "Alta (65%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Milagro Sala</strong> (Exdirigente social): Causa 'Pibes Veleros' por defraudación al Estado, asociación ilícita y extorsión por desvío de fondos públicos de vivienda. Fecha de condena: 2019 (Ratificada por CSJN en 2023). Exp. 2450/16. Estado: Condena firme a 13 años de prisión."
                 ], poblacion: 797955, 
                 pobreza_historial: [{anio: 2026, val: "46.5%"}, {anio: 2025, val: "45.2%"}, {anio: 2024, val: "44.0%"}, {anio: 2023, val: "40.2%"}, {anio: 2022, val: "41.5%"}, {anio: 2021, val: "44.0%"}],
@@ -742,7 +871,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "La Pampa": { 
-                nombre: "La Pampa", gobernador: "Sergio Ziliotto (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "1.9%", corrupcion_tasa: "2.1 causas / 100k", opacidad_licitaciones: "Baja (30%)", pauta_corrupcion: "Baja", condenados: [
+                nombre: "La Pampa", gobernador: "Sergio Ziliotto (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "1.9%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Cámara de Diputados de La Pampa.",
+                    judicial: "Superior Tribunal de Justicia de La Pampa."
+                },
+                corrupcion_tasa: "2.1 causas / 100k", opacidad_licitaciones: "Baja (30%)", pauta_corrupcion: "Baja", condenados: [
                     "Sin registros significativos de condenas firmes por corrupción institucional reciente en fueros provinciales."
                 ], poblacion: 366022, 
                 pobreza_historial: [{anio: 2026, val: "37.8%"}, {anio: 2025, val: "36.5%"}, {anio: 2024, val: "35.2%"}, {anio: 2023, val: "31.5%"}, {anio: 2022, val: "32.4%"}, {anio: 2021, val: "35.0%"}],
@@ -756,7 +891,13 @@
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "La Rioja": { 
-                nombre: "La Rioja", gobernador: "Ricardo Quintela (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "2.5%", corrupcion_tasa: "5.8 causas / 100k", opacidad_licitaciones: "Muy Alta (78%)", pauta_corrupcion: "Muy Alta", condenados: [
+                nombre: "La Rioja", gobernador: "Ricardo Quintela (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "2.5%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Función Legislativa de La Rioja.",
+                    judicial: "Tribunal Superior de Justicia de La Rioja."
+                },
+                corrupcion_tasa: "5.8 causas / 100k", opacidad_licitaciones: "Muy Alta (78%)", pauta_corrupcion: "Muy Alta", condenados: [
                     "<strong>Exfuncionarios de administraciones provinciales</strong>: Investigados por emisión ilegal de cuasimonedas y opacidad en destino de fondos fiduciarios nacionales. Exp. 1200/22. Estado: En instrucción."
                 ], poblacion: 384607, 
                 pobreza_historial: [{anio: 2026, val: "47.1%"}, {anio: 2025, val: "46.0%"}, {anio: 2024, val: "45.2%"}, {anio: 2023, val: "41.5%"}, {anio: 2022, val: "42.8%"}, {anio: 2021, val: "45.0%"}],
@@ -770,7 +911,13 @@
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Mendoza": { 
-                nombre: "Mendoza", gobernador: "Alfredo Cornejo (Cambia Mendoza / JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "4.3%", corrupcion_tasa: "3.1 causas / 100k", opacidad_licitaciones: "Baja (32%)", pauta_corrupcion: "Regulada", condenados: [
+                nombre: "Mendoza", gobernador: "Alfredo Cornejo (Cambia Mendoza / JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "4.3%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "H. Legislatura de Mendoza (Senado y Cámara de Diputados).",
+                    judicial: "Suprema Corte de Justicia de Mendoza."
+                },
+                corrupcion_tasa: "3.1 causas / 100k", opacidad_licitaciones: "Baja (32%)", pauta_corrupcion: "Regulada", condenados: [
                     "<strong>Exfuncionarios de Vialidad Provincial</strong>: Procesados por irregularidades en adjudicaciones menores de mantenimiento de rutas. Exp. 980/20. Estado: Elevado a juicio."
                 ], poblacion: 2014533, 
                 pobreza_historial: [{anio: 2026, val: "44.5%"}, {anio: 2025, val: "43.2%"}, {anio: 2024, val: "42.0%"}, {anio: 2023, val: "38.1%"}, {anio: 2022, val: "39.2%"}, {anio: 2021, val: "42.0%"}],
@@ -784,7 +931,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Misiones": { 
-                nombre: "Misiones", gobernador: "Hugo Passalacqua (Frente Renovador)", legislatura: "Unicameral (Mayoría FR)", coparticipacion_real: "3.5%", corrupcion_tasa: "4.1 causas / 100k", opacidad_licitaciones: "Media (52%)", pauta_corrupcion: "Moderada", condenados: [
+                nombre: "Misiones", gobernador: "Hugo Passalacqua (Frente Renovador)", legislatura: "Unicameral (Mayoría FR)", coparticipacion_real: "3.5%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Cámara de Representantes de Misiones.",
+                    judicial: "Superior Tribunal de Justicia de Misiones."
+                },
+                corrupcion_tasa: "4.1 causas / 100k", opacidad_licitaciones: "Media (52%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exintendentes municipales</strong>: Procesados por desvío de fondos coparticipables y malversación de subsidios agrarios. Exp. 650/21. Estado: Procesados en primera instancia."
                 ], poblacion: 1280960, 
                 pobreza_historial: [{anio: 2026, val: "48.2%"}, {anio: 2025, val: "47.0%"}, {anio: 2024, val: "45.8%"}, {anio: 2023, val: "41.5%"}, {anio: 2022, val: "42.8%"}, {anio: 2021, val: "45.5%"}],
@@ -798,7 +951,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Neuquén": { 
-                nombre: "Neuquén", gobernador: "Rolando Figueroa (Comunidad)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.1%", corrupcion_tasa: "3.4 causas / 100k", opacidad_licitaciones: "Media (40%)", pauta_corrupcion: "Moderada", condenados: [
+                nombre: "Neuquén", gobernador: "Rolando Figueroa (Comunidad)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.1%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Legislatura de la Provincia del Neuquén.",
+                    judicial: "Tribunal Superior de Justicia de Neuquén."
+                },
+                corrupcion_tasa: "3.4 causas / 100k", opacidad_licitaciones: "Media (40%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de Legislatura Provincial</strong>: Causa por desvío millonario de fondos mediante contrataciones de empleados 'ñoquis' y retiros fraudulentos de cajeros. Fecha de instrucción: 2022. Exp. 4200/21. Estado: Elevado a juicio oral."
                 ], poblacion: 726590, 
                 pobreza_historial: [{anio: 2026, val: "38.5%"}, {anio: 2025, val: "37.2%"}, {anio: 2024, val: "36.0%"}, {anio: 2023, val: "32.1%"}, {anio: 2022, val: "33.5%"}, {anio: 2021, val: "36.2%"}],
@@ -812,7 +971,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Río Negro": { 
-                nombre: "Río Negro", gobernador: "Alberto Weretilneck (Juntos Somos Río Negro)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.8%", corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (46%)", pauta_corrupcion: "Moderada", condenados: [
+                nombre: "Río Negro", gobernador: "Alberto Weretilneck (Juntos Somos Río Negro)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.8%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Legislatura de Río Negro.",
+                    judicial: "Superior Tribunal de Justicia de Río Negro."
+                },
+                corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (46%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de Catastro Provincial</strong>: Investigados por ventas irregulares de tierras fiscales protegidas en zona cordillerana. Exp. 1102/19. Estado: Procesados."
                 ], poblacion: 762067, 
                 pobreza_historial: [{anio: 2026, val: "41.2%"}, {anio: 2025, val: "40.0%"}, {anio: 2024, val: "38.8%"}, {anio: 2023, val: "35.1%"}, {anio: 2022, val: "36.4%"}, {anio: 2021, val: "39.0%"}],
@@ -826,7 +991,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Salta": { 
-                nombre: "Salta", gobernador: "Gustavo Sáenz (Identidad Provincial)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "4.1%", corrupcion_tasa: "4.9 causas / 100k", opacidad_licitaciones: "Alta (70%)", pauta_corrupcion: "Alta", condenados: [
+                nombre: "Salta", gobernador: "Gustavo Sáenz (Identidad Provincial)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "4.1%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Cámara de Senadores y Cámara de Diputados de Salta.",
+                    judicial: "Corte de Justicia de Salta."
+                },
+                corrupcion_tasa: "4.9 causas / 100k", opacidad_licitaciones: "Alta (70%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exintendentes municipales del norte provincial</strong>: Condenados por malversación de fondos destinados a asistencia alimentaria e hídrica de comunidades originarias. Exp. 3340/20. Estado: Condena firme."
                 ], poblacion: 1440672, 
                 pobreza_historial: [{anio: 2026, val: "49.5%"}, {anio: 2025, val: "48.2%"}, {anio: 2024, val: "47.0%"}, {anio: 2023, val: "43.1%"}, {anio: 2022, val: "44.5%"}, {anio: 2021, val: "47.2%"}],
@@ -840,7 +1011,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "San Juan": { 
-                nombre: "San Juan", gobernador: "Marcelo Orrego (Unidos por San Juan)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.0%", corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Baja/Media (38%)", pauta_corrupcion: "Moderada", condenados: [
+                nombre: "San Juan", gobernador: "Marcelo Orrego (Unidos por San Juan)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.0%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Cámara de Diputados de San Juan.",
+                    judicial: "Corte de Justicia de San Juan."
+                },
+                corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Baja/Media (38%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de administraciones municipales</strong>: Causas por faltas administrativas menores en revisión judicial. Exp. 512/21. Estado: En instrucción."
                 ], poblacion: 818234, 
                 pobreza_historial: [{anio: 2026, val: "42.0%"}, {anio: 2025, val: "40.8%"}, {anio: 2024, val: "39.5%"}, {anio: 2023, val: "36.0%"}, {anio: 2022, val: "37.2%"}, {anio: 2021, val: "39.8%"}],
@@ -854,7 +1031,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "San Luis": { 
-                nombre: "San Luis", gobernador: "Claudio Poggi (Cambia San Luis)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "2.0%", corrupcion_tasa: "2.8 causas / 100k", opacidad_licitaciones: "Baja (33%)", pauta_corrupcion: "Baja", condenados: [
+                nombre: "San Luis", gobernador: "Claudio Poggi (Cambia San Luis)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "2.0%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Senado y Cámara de Diputados de San Luis.",
+                    judicial: "Superior Tribunal de Justicia de San Luis."
+                },
+                corrupcion_tasa: "2.8 causas / 100k", opacidad_licitaciones: "Baja (33%)", pauta_corrupcion: "Baja", condenados: [
                     "<strong>Exfuncionarios del área de Obras Públicas</strong>: Investigados por auditorías de transición de gestión y faltantes de inventario en infraestructura (Período 2023-2024). Exp. 890/23. Estado: En instrucción."
                 ], poblacion: 540905, 
                 pobreza_historial: [{anio: 2026, val: "40.2%"}, {anio: 2025, val: "39.0%"}, {anio: 2024, val: "37.8%"}, {anio: 2023, val: "34.2%"}, {anio: 2022, val: "35.5%"}, {anio: 2021, val: "38.0%"}],
@@ -868,7 +1051,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santa Cruz": { 
-                nombre: "Santa Cruz", gobernador: "Claudio Vidal (Por Santa Cruz)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "1.7%", corrupcion_tasa: "5.2 causas / 100k", opacidad_licitaciones: "Alta (74%)", pauta_corrupcion: "Alta", condenados: [
+                nombre: "Santa Cruz", gobernador: "Claudio Vidal (Por Santa Cruz)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "1.7%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Cámara de Diputados de Santa Cruz.",
+                    judicial: "Tribunal Superior de Justicia de Santa Cruz."
+                },
+                corrupcion_tasa: "5.2 causas / 100k", opacidad_licitaciones: "Alta (74%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exfuncionarios de administraciones provinciales históricas</strong>: Vinculados a causas de direccionamiento de obra vial y sobreprecios energéticos. Exp. 5420/16. Estado: Elevados a juicio oral."
                 ], poblacion: 333473, 
                 pobreza_historial: [{anio: 2026, val: "35.8%"}, {anio: 2025, val: "34.5%"}, {anio: 2024, val: "33.2%"}, {anio: 2023, val: "30.1%"}, {anio: 2022, val: "31.4%"}, {anio: 2021, val: "34.0%"}],
@@ -882,7 +1071,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Tierra del Fuego": { 
-                nombre: "Tierra del Fuego", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: [
+                nombre: "Tierra del Fuego", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Legislatura de Tierra del Fuego.",
+                    judicial: "Superior Tribunal de Justicia de Tierra del Fuego."
+                },
+                corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por procesos judiciales en adjudicaciones de servicios públicos y contrataciones directas de emergencia. Exp. 1820/21. Estado: En instrucción."
                 ], poblacion: 190641, 
                 pobreza_historial: [{anio: 2026, val: "36.5%"}, {anio: 2025, val: "35.2%"}, {anio: 2024, val: "34.0%"}, {anio: 2023, val: "30.5%"}, {anio: 2022, val: "31.8%"}, {anio: 2021, val: "34.2%"}],
@@ -896,7 +1091,13 @@
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Tucumán": { 
-                nombre: "Tucumán", gobernador: "Osvaldo Jaldo (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "4.7%", corrupcion_tasa: "5.5 causas / 100k", opacidad_licitaciones: "Alta (75%)", pauta_corrupcion: "Muy Alta", condenados: [
+                nombre: "Tucumán", gobernador: "Osvaldo Jaldo (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "4.7%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Legislatura de Tucumán.",
+                    judicial: "Corte Suprema de Justicia de Tucumán."
+                },
+                corrupcion_tasa: "5.5 causas / 100k", opacidad_licitaciones: "Alta (75%)", pauta_corrupcion: "Muy Alta", condenados: [
                     "<strong>Exfuncionarios y legisladores provinciales</strong>: Causa por fraude laboral masivo ('contratos fantasma' en la Legislatura provincial por más de 60 millones de dólares). Exp. 7410/19. Estado: Elevado a juicio oral."
                 ], poblacion: 1703186, 
                 pobreza_historial: [{anio: 2026, val: "49.2%"}, {anio: 2025, val: "48.0%"}, {anio: 2024, val: "46.8%"}, {anio: 2023, val: "43.5%"}, {anio: 2022, val: "44.8%"}, {anio: 2021, val: "47.5%"}],
@@ -910,7 +1111,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santa Fe": { 
-                nombre: "Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "9.5%", corrupcion_tasa: "4.6 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: [
+                nombre: "Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "9.5%", 
+                poderes: {
+                    ejecutivo: "Encabezado por el Gobernador. Administra la fuerza policial provincial, **los hospitales públicos provinciales y todo el sistema de escuelas públicas santafesinas**.",
+                    legislativo: "Cámara de Senadores y Cámara de Diputadas y Diputados de la Provincia de Santa Fe. Sanciona leyes impositivas, códigos procesales y presupuesto provincial.",
+                    judicial: "Corte Suprema de Justicia de la Provincia de Santa Fe. Administra el fuero penal, civil y constitucional local."
+                },
+                corrupcion_tasa: "4.6 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Alejandro Granados / Exjefes policiales y exministros</strong>: Causas por connivencia con bandas narcocriminales, lavado de activos y asociación ilícita policial. Fecha de condena: 2021-2023. Exp. 1520/18. Estado: Condenas firmes a prisión efectiva."
                 ], poblacion: 3556522, 
                 pobreza_historial: [{anio: 2026, val: "43.8%"}, {anio: 2025, val: "42.5%"}, {anio: 2024, val: "41.2%"}, {anio: 2023, val: "37.5%"}, {anio: 2022, val: "38.8%"}, {anio: 2021, val: "41.0%"}],
@@ -924,7 +1131,13 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santiago del Estero": { 
-                nombre: "Santiago del Estero", gobernador: "Gerardo Zamora (Frente Cívico / UxP)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "4.5%", corrupcion_tasa: "6.1 causas / 100k", opacidad_licitaciones: "Muy Alta (85%)", pauta_corrupcion: "Control absoluto estatal", condenados: [
+                nombre: "Santiago del Estero", gobernador: "Gerardo Zamora (Frente Cívico / UxP)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "4.5%", 
+                poderes: {
+                    ejecutivo: "Gobernador provincial.",
+                    legislativo: "Cámara de Diputados de Santiago del Estero.",
+                    judicial: "Superior Tribunal de Justicia de Santiago del Estero."
+                },
+                corrupcion_tasa: "6.1 causas / 100k", opacidad_licitaciones: "Muy Alta (85%)", pauta_corrupcion: "Control absoluto estatal", condenados: [
                     "<strong>Exfuncionarios del poder ejecutivo provincial</strong>: Investigados por adjudicaciones monopólicas en obra pública y licitaciones sin compulsa de precios. Exp. 890/17. Estado: Protegidos por fueros y baja alternancia en fueros locales."
                 ], poblacion: 1054028, 
                 pobreza_historial: [{anio: 2026, val: "54.2%"}, {anio: 2025, val: "53.0%"}, {anio: 2024, val: "51.8%"}, {anio: 2023, val: "48.5%"}, {anio: 2022, val: "49.8%"}, {anio: 2021, val: "52.1%"}],
@@ -964,6 +1177,11 @@
             container.classList.toggle('open');
         }
 
+        function togglePoderes() {
+            const container = document.getElementById('panel-poderes');
+            container.classList.toggle('open');
+        }
+
         function toggleMetricDrop(dropId) {
             const container = document.getElementById(dropId);
             container.classList.toggle('open');
@@ -987,6 +1205,7 @@
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${nombreProv}`;
 
             document.getElementById('panel-dropdown').classList.remove('open');
+            document.getElementById('panel-poderes').classList.remove('open');
             document.querySelectorAll('.metric-dropdown').forEach(el => el.classList.remove('open'));
 
             const panel = document.getElementById('info-panel');
@@ -998,6 +1217,11 @@
             document.getElementById('panel-gobernador').innerText = data.gobernador;
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
+
+            // Rellenar datos de los Tres Poderes
+            document.getElementById('poder-ejecutivo-desc').innerText = data.poderes.ejecutivo;
+            document.getElementById('poder-legislativo-desc').innerText = data.poderes.legislativo;
+            document.getElementById('poder-judicial-desc').innerText = data.poderes.judicial;
 
             document.getElementById('panel-corrupcion-tasa').innerText = data.corrupcion_tasa;
             document.getElementById('panel-opacidad').innerText = data.opacidad_licitaciones;
@@ -1048,7 +1272,7 @@
             document.getElementById('panel-vial').innerText = `${data.siniestros_viales_fatales}`;
 
             document.getElementById('panel-presupuesto-social').innerText = data.presupuesto_social;
-            document.include = document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
+            document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
             document.getElementById('panel-camas').innerText = `${data.camas_uti_cada_10k}`;
             document.getElementById('panel-escuela').innerText = `${data.escolarizacion_secundaria}%`;
             document.getElementById('panel-agua').innerText = `${data.cobertura_agua_cloacas}%`;
