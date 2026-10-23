@@ -1,0 +1,31 @@
+name: Actualizar Indicadores INDEC
+
+on:
+  schedule:
+    # Se ejecuta todos los días a las 08:00 UTC
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Ejecutar script de extracción
+      run: python backend/fetch_indec.py
+
+    - name: Guardar cambios en el repositorio
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add data/indicadores.json
+        git commit -m "Auto-actualización de datos INDEC" || exit 0
+        git push
