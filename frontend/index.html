@@ -56,7 +56,6 @@
         #header h1 { margin: 0; font-size: 1.2em; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.75em; color: #0284c7; font-weight: 600; }
 
-        /* Contenedor Flotante de Paneles Superiores Izquierdos */
         .top-panels-container {
             position: absolute;
             top: 75px;
@@ -372,33 +371,29 @@
             border-top: 1px dashed inherit;
         }
 
+        .mandatos-container { background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .mandatos-header { color: #166534; background: #dcfce7; }
+
         .electoral-container { background: #fdf2f8; border: 1px solid #fbcfe8; }
         .electoral-header { color: #be185d; background: #fce7f3; }
-        .electoral-header:hover { background: #fbcfe8; }
 
         .tarifas-container { background: #fff7ed; border: 1px solid #fed7aa; }
         .tarifas-header { color: #c2410c; background: #ffedd5; }
-        .tarifas-header:hover { background: #fed7aa; }
 
         .memoria-container { background: #faf5ff; border: 1px solid #e9d5ff; }
         .memoria-header { color: #6b21a8; background: #f3e8ff; }
-        .memoria-header:hover { background: #e9d5ff; }
 
         .poderes-container { background: #f0fdf4; border: 1px solid #bbf7d0; }
         .poderes-header { color: #166534; background: #dcfce7; }
-        .poderes-header:hover { background: #bbf7d0; }
 
         .perfil-container { background: #fdf4ff; border: 1px solid #f5d0fe; }
         .perfil-header { color: #86198f; background: #fae8ff; }
-        .perfil-header:hover { background: #f5d0fe; }
 
         .educacion-container { background: #fef2f2; border: 1px solid #fecaca; }
         .educacion-header { color: #991b1b; background: #fee2e2; }
-        .educacion-header:hover { background: #fecaca; }
 
         .infra-container { background: #eff6ff; border: 1px solid #bfdbfe; }
         .infra-header { color: #1e40af; background: #dbeafe; }
-        .infra-header:hover { background: #bfdbfe; }
 
         .sub-infra-dropdown {
             background: #ffffff;
@@ -419,7 +414,6 @@
             background: #dbeafe;
             user-select: none;
         }
-        .sub-infra-header:hover { background: #bfdbfe; }
         .sub-infra-content {
             max-height: 0;
             overflow-y: auto;
@@ -469,11 +463,9 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
-    <!-- Contenedor Flotante Izquierdo (Módulos Superiores + Indicadores Macro Agregados) -->
+    <!-- Contenedor Flotante Izquierdo -->
     <div class="top-panels-container">
-        <!-- Fila 1: Promedios & Elecciones -->
         <div class="top-panels-row">
-            <!-- Panel 1: Promedios Nacionales y Macro -->
             <div class="national-summary">
                 <div class="nat-header">📈 Promedios & Datos Nacionales</div>
                 <div class="nat-content">
@@ -489,7 +481,6 @@
                 </div>
             </div>
 
-            <!-- Panel 2: Próximas Elecciones (Nación) -->
             <div class="national-summary" style="border-color: #be185d;">
                 <div class="nat-header" style="color: #be185d; border-bottom-color: #fce7f3;">🗳️ Próximas Elecciones (Nación)</div>
                 <div class="nat-content">
@@ -503,15 +494,11 @@
             </div>
         </div>
 
-        <!-- Fila 2: Tendencias Históricas Nacionales -->
         <div class="top-panels-row">
-            <!-- Tendencia Pobreza Nacional 6 Años -->
             <div class="national-summary">
                 <div class="nat-header">📈 Tendencia Pobreza Nacional (6 años) <span>▲</span></div>
                 <div id="nat-chart-pobreza" class="nat-chart-container"></div>
             </div>
-
-            <!-- Tendencia Desempleo Nacional 6 Años -->
             <div class="national-summary">
                 <div class="nat-header">📈 Tendencia Desempleo Nacional (6 años) <span>▲</span></div>
                 <div id="nat-chart-desempleo" class="nat-chart-container"></div>
@@ -621,9 +608,18 @@
         <div class="section-heading">
             <span>🏛️ Identificación Institucional</span>
         </div>
-        <div class="data-row"><span>Gobernador / Gestión:</span><strong id="panel-gobernador">-</strong></div>
+        <div class="data-row"><span>Gobernador Actual:</span><strong id="panel-gobernador" style="color: #0284c7;">-</strong></div>
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
+
+        <!-- Historial de Gobernadores / Mandatos Recientes -->
+        <div class="gen-container mandatos-container" id="panel-mandatos">
+            <div class="gen-header mandatos-header" onclick="toggleSeccion('panel-mandatos')">
+                <span>📜 Histórico de Gobernadores (Últimos Mandatos)</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content" id="mandatos-content-box"></div>
+        </div>
 
         <!-- Radiografía Electoral -->
         <div class="gen-container electoral-container" id="panel-electoral">
@@ -647,7 +643,6 @@
             </div>
         </div>
 
-        <!-- Nuevos Indicadores Agregados: Aporte Fiscal y Seguridad -->
         <div class="section-heading">
             <span>⚖️ Aporte Fiscal, Empleo & Seguridad</span>
         </div>
@@ -841,13 +836,20 @@
             {anio: 2024, val: "8.9%"}, {anio: 2025, val: "7.5%"}, {anio: 2026, val: "7.9%"}
         ];
 
-        // Base de Datos Completa y Calibrada para las 24 Jurisdicciones
+        // Base de Datos Completa de las 24 Jurisdicciones
         const datosProvincias = {
             "Buenos Aires": { 
-                nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
+                nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (Unión por la Patria)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
                 cant_escuelas: 4920, cant_hospitales: 81, cant_comisarias: 410,
                 balance_fiscal: "Aportante Neto (Genera ~36% del PBI, recibe 21.6%)", empleo_relacion: "38% Estatal / 62% Privado",
                 seguridad_tasa: "5.8 homicidios / 100k hab.", padron_local: "13.1 Millones de electores", matricula_pub: "68% Pública / 32% Privada",
+                mandatos: [
+                    "2023 - Pres.: Axel Kicillof (UxP)",
+                    "2019 - 2023: Axel Kicillof (FdT)",
+                    "2015 - 2019: María Eugenia Vidal (Cambiemos)",
+                    "2011 - 2015: Daniel Scioli (FPV)",
+                    "2007 - 2011: Daniel Scioli (FPV)"
+                ],
                 electoral: {
                     elecciones_locales: "Octubre de 2027 (Renovación de Gobernador e Intendencias).",
                     resultado: "Fuerza ganadora en gobernación con 45% de los votos.",
@@ -866,10 +868,17 @@
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
-                nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4%", 
+                nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / Juntos por el Cambio)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4%", 
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
                 balance_fiscal: "Aportante Neto Fuerte (Aporta ~18% PBI, recibe 1.4%)", empleo_relacion: "18% Estatal / 82% Privado",
                 seguridad_tasa: "2.8 homicidios / 100k hab.", padron_local: "2.5 Millones de electores", matricula_pub: "51% Pública / 49% Privada",
+                mandatos: [
+                    "2023 - Pres.: Jorge Macri (PRO / JxC)",
+                    "2019 - 2023: Horacio Rodríguez Larreta (JxC)",
+                    "2015 - 2019: Horacio Rodríguez Larreta (PRO / Cambiemos)",
+                    "2011 - 2015: Mauricio Macri (PRO)",
+                    "2007 - 2011: Mauricio Macri (PRO)"
+                ],
                 electoral: {
                     elecciones_locales: "Octubre de 2027 (Jefe de Gobierno y Legisladores).",
                     resultado: "Triunfo del PRO / JxC.", participacion: "71.2%; 3.8% votos en blanco."
@@ -887,10 +896,17 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santa Fe": { 
-                nombre: "Provincia de Santa Fe", gobernador: "Maximiliano Pullaro (Unidos)", legislatura: "Bicameral (Mayoría oficialista)", coparticipacion_real: "9.3%", 
+                nombre: "Provincia de Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Mayoría oficialista)", coparticipacion_real: "9.3%", 
                 cant_escuelas: 3150, cant_hospitales: 52, cant_comisarias: 280,
                 balance_fiscal: "Aportante Neto (Aporta ~10% PBI, recibe 9.3%)", empleo_relacion: "29% Estatal / 71% Privado",
                 seguridad_tasa: "7.2 homicidios / 100k hab. (en descenso)", padron_local: "2.8 Millones de electores", matricula_pub: "71% Pública / 29% Privada",
+                mandatos: [
+                    "2023 - Pres.: Maximiliano Pullaro (Unidos / UCR)",
+                    "2019 - 2023: Omar Perotti (Frente Juntos / PJ)",
+                    "2015 - 2019: Miguel Lifschitz (FPCyS / PS)",
+                    "2011 - 2015: Antonio Bonfatti (FPCyS / PS)",
+                    "2007 - 2011: Hermes Binner (FPCyS / PS)"
+                ],
                 electoral: {
                     elecciones_locales: "Septiembre/Octubre de 2027 (Gobernador, Intendencias y Concejos).",
                     resultado: "Victoria de Unidos para Cambiar Santa Fe con 58%.",
@@ -909,10 +925,17 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Córdoba": {
-                nombre: "Provincia de Córdoba", gobernador: "Martín Llaryora (Hacemos Córdoba)", legislatura: "Unicameral", coparticipacion_real: "8.8%",
+                nombre: "Provincia de Córdoba", gobernador: "Martín Llaryora (Hacemos por Córdoba)", legislatura: "Unicameral", coparticipacion_real: "8.8%",
                 cant_escuelas: 3410, cant_hospitales: 58, cant_comisarias: 310,
                 balance_fiscal: "Aportante Neto (Aporta ~9.5% PBI, recibe 8.8%)", empleo_relacion: "26% Estatal / 74% Privado",
                 seguridad_tasa: "3.4 homicidios / 100k hab.", padron_local: "3.0 Millones de electores", matricula_pub: "69% Pública / 31% Privada",
+                mandatos: [
+                    "2023 - Pres.: Martín Llaryora (Hacemos por Córdoba)",
+                    "2019 - 2023: Juan Schiaretti (Hacemos por Córdoba)",
+                    "2015 - 2019: Juan Schiaretti (Unión por Córdoba)",
+                    "2011 - 2015: José Manuel de la Sota (Unión por Córdoba)",
+                    "2007 - 2011: Juan Schiaretti (Unión por Córdoba)"
+                ],
                 electoral: {
                     elecciones_locales: "Junio/Julio de 2027 (Renovación Ejecutiva Provincial).",
                     resultado: "Triunfo de Hacemos por Córdoba.", participacion: "72.8%; 4.0% voto blanco."
@@ -934,6 +957,13 @@
                 cant_escuelas: 1820, cant_hospitales: 31, cant_comisarias: 160,
                 balance_fiscal: "Equilibrio Aporte/Coparticipación", empleo_relacion: "31% Estatal / 69% Privado",
                 seguridad_tasa: "4.1 homicidios / 100k hab.", padron_local: "1.5 Millones de electores", matricula_pub: "73% Pública / 27% Privada",
+                mandatos: [
+                    "2023 - Pres.: Alfredo Cornejo (Cambia Mendoza)",
+                    "2019 - 2023: Rodolfo Suárez (Cambia Mendoza)",
+                    "2015 - 2019: Alfredo Cornejo (Cambia Mendoza)",
+                    "2011 - 2015: Francisco Pérez (FPV / PJ)",
+                    "2007 - 2011: Celso Jaque (FPV / PJ)"
+                ],
                 electoral: {
                     elecciones_locales: "Junio de 2027 (Renovación Ejecutiva Provincial).",
                     resultado: "Victoria de Cambia Mendoza.", participacion: "71.5%; 5.0% voto blanco."
@@ -951,12 +981,19 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santiago del Estero": {
-                nombre: "Provincia de Santiago del Estero", gobernador: "Elías Suárez (Frente Cívico)", legislatura: "Unicameral", coparticipacion_real: "4.1%",
+                nombre: "Provincia de Santiago del Estero", gobernador: "Gerardo Zamora (Frente Cívico por Santiago)", legislatura: "Unicameral", coparticipacion_real: "4.1%",
                 cant_escuelas: 1250, cant_hospitales: 24, cant_comisarias: 85,
                 balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "58% Estatal / 42% Privado",
                 seguridad_tasa: "3.1 homicidios / 100k hab.", padron_local: "780 mil electores", matricula_pub: "84% Pública / 16% Privada",
+                mandatos: [
+                    "2021 - Pres.: Gerardo Zamora (Frente Cívico)",
+                    "2017 - 2021: Gerardo Zamora (Frente Cívico)",
+                    "2013 - 2017: Claudia Ledesma Abdala (Frente Cívico)",
+                    "2009 - 2013: Gerardo Zamora (Frente Cívico)",
+                    "2005 - 2009: Gerardo Zamora (Frente Cívico)"
+                ],
                 electoral: {
-                    elecciones_locales: "Octubre de 2029 (Elecciones ejecutivas provinciales realizadas en 2025).",
+                    elecciones_locales: "Octubre de 2025 / 2029 (Elecciones provinciales desfasadas).",
                     resultado: "Triunfo del Frente Cívico con 70% de los votos.", participacion: "72.4%; 3.5% voto blanco."
                 },
                 memoria: { malvinas: "38 caídos.", dictadura: "240 víctimas.", democracia: "31 búsquedas." },
@@ -972,10 +1009,17 @@
                 votaciones: { bases: "Negativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Afirmativo" }
             },
             "Corrientes": {
-                nombre: "Provincia de Corrientes", gobernador: "Juan Pablo Valdés (ECO / UCR)", legislatura: "Bicameral", coparticipacion_real: "3.7%",
+                nombre: "Provincia de Corrientes", gobernador: "Gustavo Valdés (Encuentro por Corrientes / UCR)", legislatura: "Bicameral", coparticipacion_real: "3.7%",
                 cant_escuelas: 1410, cant_hospitales: 28, cant_comisarias: 110,
                 balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "49% Estatal / 51% Privado",
                 seguridad_tasa: "4.8 homicidios / 100k hab.", padron_local: "920 mil electores", matricula_pub: "81% Pública / 19% Privada",
+                mandatos: [
+                    "2021 - Pres.: Gustavo Valdés (ECO / UCR)",
+                    "2017 - 2021: Gustavo Valdés (ECO / UCR)",
+                    "2013 - 2017: Ricardo Colombi (ECO / UCR)",
+                    "2009 - 2013: Ricardo Colombi (Encuentro por Corrientes)",
+                    "2005 - 2009: Arturo Colombi (Frente de Todos Local)"
+                ],
                 electoral: {
                     elecciones_locales: "Octubre de 2025 / 2029 (Elección ejecutiva provincial desfasada).",
                     resultado: "Triunfo de Encuentro por Corrientes (ECO).", participacion: "73.0%; 4.2% voto blanco."
@@ -993,10 +1037,17 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Tierra del Fuego": { 
-                nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral", coparticipacion_real: "1.6%", 
+                nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / Unión por la Patria)", legislatura: "Unicameral", coparticipacion_real: "1.6%", 
                 cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
                 balance_fiscal: "Subsidio Industrial (Ley 19.640) y Coparticipación", empleo_relacion: "42% Estatal / 58% Privado",
                 seguridad_tasa: "2.1 homicidios / 100k hab.", padron_local: "148 mil electores", matricula_pub: "76% Pública / 24% Privada",
+                mandatos: [
+                    "2023 - Pres.: Gustavo Melella (FORJA / UxP)",
+                    "2019 - 2023: Gustavo Melella (FORJA / FdT)",
+                    "2015 - 2019: Rosana Bertone (FPV / FpV TDF)",
+                    "2011 - 2015: Fabiana Ríos (PSP / Partido Social Patagónico)",
+                    "2007 - 2011: Fabiana Ríos (ARI)"
+                ],
                 electoral: {
                     elecciones_locales: "Mayo / Junio de 2027 (Elecciones a Gobernador e Intendencias).",
                     resultado: "Victoria de FORJA en elecciones provinciales.",
@@ -1018,11 +1069,35 @@
 
         function obtenerDatosProvincia(nombre) {
             if (datosProvincias[nombre]) return datosProvincias[nombre];
+            
+            // Diccionario con gobernadores y mandatos exactos para las demás provincias
+            const dictProvinciasExtra = {
+                "Jujuy": { gov: "Carlos Sadir (UCR / Cambia Jujuy)", mandatos: ["2023 - Pres.: Carlos Sadir", "2019 - 2023: Gerardo Morales", "2015 - 2019: Gerardo Morales", "2011 - 2015: Eduardo Fellner", "2007 - 2011: Walter Barrionuevo"] },
+                "Salta": { gov: "Gustavo Sáenz (Identidad Salteña)", mandatos: ["2023 - Pres.: Gustavo Sáenz", "2019 - 2023: Gustavo Sáenz", "2015 - 2019: Juan Manuel Urtubey", "2011 - 2015: Juan Manuel Urtubey", "2007 - 2011: Juan Manuel Urtubey"] },
+                "Tucumán": { gov: "Osvaldo Jaldo (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Osvaldo Jaldo", "2019 - 2023: Juan Manzur", "2015 - 2019: Juan Manzur", "2011 - 2015: José Alperovich", "2007 - 2011: José Alperovich"] },
+                "Catamarca": { gov: "Raúl Jalil (Unión por la Patria)", mandatos: ["2023 - Pres.: Raúl Jalil", "2019 - 2023: Raúl Jalil", "2015 - 2019: Lucía Corpacci", "2011 - 2015: Lucía Corpacci", "2007 - 2011: Eduardo Brizuela del Moral"] },
+                "La Rioja": { gov: "Ricardo Quintela (Unión por la Patria)", mandatos: ["2023 - Pres.: Ricardo Quintela", "2019 - 2023: Ricardo Quintela", "2015 - 2019: Sergio Casas", "2011 - 2015: Beder Herrera", "2007 - 2011: Beder Herrera"] },
+                "San Juan": { gov: "Marcelo Orrego (Cambia San Juan)", mandatos: ["2023 - Pres.: Marcelo Orrego", "2019 - 2023: Sergio Uñac", "2015 - 2019: Sergio Uñac", "2011 - 2015: José Luis Gioja", "2007 - 2011: José Luis Gioja"] },
+                "San Luis": { gov: "Claudio Poggi (Cambia San Luis)", mandatos: ["2023 - Pres.: Claudio Poggi", "2019 - 2023: Alberto Rodríguez Saá", "2015 - 2019: Alberto Rodríguez Saá", "2011 - 2015: Claudio Poggi", "2007 - 2011: Alberto Rodríguez Saá"] },
+                "Entre Ríos": { gov: "Rogelio Frigerio (Juntos por Entre Ríos)", mandatos: ["2023 - Pres.: Rogelio Frigerio", "2019 - 2023: Gustavo Bordet", "2015 - 2019: Gustavo Bordet", "2011 - 2015: Sergio Urribarri", "2007 - 2011: Sergio Urribarri"] },
+                "Chaco": { gov: "Leandro Zdero (Juntos por el Cambio)", mandatos: ["2023 - Pres.: Leandro Zdero", "2019 - 2023: Jorge Capitanich", "2015 - 2019: Domingo Peppo", "2011 - 2015: Jorge Capitanich", "2007 - 2011: Jorge Capitanich"] },
+                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"] },
+                "Misiones": { gov: "Hugo Passalacqua (Frente Renovador de la Concordia)", mandatos: ["2023 - Pres.: Hugo Passalacqua", "2019 - 2023: Oscar Herrera Ahuad", "2015 - 2019: Hugo Passalacqua", "2011 - 2015: Maurice Closs", "2007 - 2011: Maurice Closs"] },
+                "La Pampa": { gov: "Sergio Ziliotto (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Sergio Ziliotto", "2019 - 2023: Sergio Ziliotto", "2015 - 2019: Carlos Verna", "2011 - 2015: Oscar Jorge", "2007 - 2011: Oscar Jorge"] },
+                "Neuquén": { gov: "Rolando Figueroa (Comunidad)", mandatos: ["2023 - Pres.: Rolando Figueroa", "2019 - 2023: Omar Gutiérrez (MPN)", "2015 - 2019: Omar Gutiérrez (MPN)", "2011 - 2015: Jorge Sapag (MPN)", "2007 - 2011: Jorge Sapag (MPN)"] },
+                "Río Negro": { gov: "Alberto Weretilneck (Juntos Somos Río Negro)", mandatos: ["2023 - Pres.: Alberto Weretilneck", "2019 - 2023: Arabela Carreras", "2015 - 2019: Alberto Weretilneck", "2011 - 2015: Alberto Weretilneck / Carlos Soria", "2007 - 2011: Miguel Saiz"] },
+                "Chubut": { gov: "Ignacio Torres (Despierta Chubut / JxC)", mandatos: ["2023 - Pres.: Ignacio Torres", "2019 - 2023: Mariano Arcioni", "2015 - 2019: Mario Das Neves / Mariano Arcioni", "2011 - 2015: Martín Buzzi", "2007 - 2011: Mario Das Neves"] },
+                "Santa Cruz": { gov: "Claudio Vidal (Por Santa Cruz)", mandatos: ["2023 - Pres.: Claudio Vidal", "2019 - 2023: Alicia Kirchner", "2015 - 2019: Alicia Kirchner", "2011 - 2015: Daniel Peralta", "2007 - 2011: Daniel Peralta"] }
+            };
+
+            const extra = dictProvinciasExtra[nombre] || { gov: "Gobernador Provincial en Funciones", mandatos: ["2023 - Pres.: Gestión Actual"] };
+
             return {
-                nombre: "Provincia de " + nombre, gobernador: "Gobernador Provincial Elegido", legislatura: "Legislatura Provincial", coparticipacion_real: "2.8%",
+                nombre: "Provincia de " + nombre, gobernador: extra.gov, legislatura: "Legislatura Provincial", coparticipacion_real: "2.8%",
                 cant_escuelas: 650, cant_hospitales: 20, cant_comisarias: 45,
                 balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "45% Estatal / 55% Privado",
                 seguridad_tasa: "4.2 homicidios / 100k hab.", padron_local: "650 mil electores", matricula_pub: "78% Pública / 22% Privada",
+                mandatos: extra.mandatos,
                 electoral: {
                     elecciones_locales: "Año 2027 (Elecciones provinciales ordinarias a Gobernador).",
                     resultado: "Elecciones provinciales consolidadas con apoyo mayoritario.",
@@ -1032,7 +1107,7 @@
                 tarifas: { servicios: "Luz residencial: $32.000 - $48.000 | Gas: $22.000.", transporte: "Colectivo urbano: $950,00.", bici: null },
                 perfil: { motor: "Agroindustria regional y comercio.", exportaciones: "Productos primarios procesados." },
                 educacionCalidad: { lectura: "68% satisfactorio.", matematica: "54% satisfactorio." },
-                poderes: { ejecutivo: "Gobernador provincial de " + nombre + ".", legislativo: "Legislatura Provincial.", judicial: "Superior Tribunal de Justicia." },
+                poderes: { ejecutivo: "Gobernador de la Provincia de " + nombre + ".", legislativo: "Legislatura Provincial.", judicial: "Superior Tribunal de Justicia." },
                 poblacion: 850000,
                 pobreza_historial: [{anio: 2021, val: "40.0%"}, {anio: 2022, val: "38.5%"}, {anio: 2023, val: "37.5%"}, {anio: 2024, val: "41.0%"}, {anio: 2025, val: "35.2%"}, {anio: 2026, val: "32.3%"}],
                 desempleo_historial: [{anio: 2021, val: "7.5%"}, {anio: 2022, val: "6.6%"}, {anio: 2023, val: "6.1%"}, {anio: 2024, val: "7.4%"}, {anio: 2025, val: "7.0%"}, {anio: 2026, val: "7.9%"}],
@@ -1135,6 +1210,7 @@
             document.getElementById('btn-volver-mapa').style.display = 'block';
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${data.nombre}`;
 
+            document.getElementById('panel-mandatos').classList.remove('open');
             document.getElementById('panel-electoral').classList.remove('open');
             document.getElementById('panel-memoria').classList.remove('open');
             document.getElementById('panel-tarifas').classList.remove('open');
@@ -1156,6 +1232,18 @@
             document.getElementById('panel-gobernador').innerText = data.gobernador;
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
+
+            // Cargar Historial de Mandatos
+            const mandatosBox = document.getElementById('mandatos-content-box');
+            let mandatosHtml = "";
+            if (data.mandatos && data.mandatos.length > 0) {
+                data.mandatos.forEach(m => {
+                    mandatosHtml += `<div class="sub-card"><span>${m}</span></div>`;
+                });
+            } else {
+                mandatosHtml = "<div class='sub-card'><span>Sin registros de mandatos recientes.</span></div>";
+            }
+            mandatosBox.innerHTML = mandatosHtml;
 
             document.getElementById('panel-balance-fiscal').innerText = data.balance_fiscal;
             document.getElementById('panel-empleo-relacion').innerText = data.empleo_relacion;
