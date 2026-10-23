@@ -590,47 +590,25 @@
             </div>
         </div>
 
-        <!-- Memoria, Soberanía y Derechos Humanos (Malvinas y Desaparecidos) -->
+        <!-- Memoria, Soberanía y Derechos Humanos (Dinámico según disponibilidad) -->
         <div class="gen-container memoria-container" id="panel-memoria">
             <div class="gen-header memoria-header" onclick="toggleSeccion('panel-memoria')">
                 <span>🕊️ Memoria, Soberanía & DD.HH. (Malvinas y Desaparecidos)</span>
                 <span class="arrow-icon">▼</span>
             </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Héroes Caídos en la Guerra de Malvinas</strong>
-                    <span id="memoria-malvinas">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Víctimas del Terrorismo de Estado (Dictadura)</strong>
-                    <span id="memoria-dictadura">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Registros de Búsqueda de Personas y Niños Desaparecidos</strong>
-                    <span id="memoria-democracia">-</span>
-                </div>
+            <div class="gen-content" id="memoria-content-box">
+                <!-- Se inyecta dinámicamente para ocultar encuadres faltantes -->
             </div>
         </div>
 
-        <!-- Tarifas de Servicios y Transporte Integral -->
+        <!-- Tarifas de Servicios y Transporte (Dinámico según disponibilidad) -->
         <div class="gen-container tarifas-container" id="panel-tarifas">
             <div class="gen-header tarifas-header" onclick="toggleSeccion('panel-tarifas')">
                 <span>⚡ Tarifas, Servicios & Transporte (Colectivo, Tren, Subte, Bici)</span>
                 <span class="arrow-icon">▼</span>
             </div>
-            <div class="gen-content">
-                <div class="sub-card">
-                    <strong>Servicios Esenciales (Luz, Gas, Agua)</strong>
-                    <span id="tarifa-servicios">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Transporte Público (Colectivo, Tren / Subte si aplica)</strong>
-                    <span id="tarifa-transporte">-</span>
-                </div>
-                <div class="sub-card">
-                    <strong>Movilidad Sustentable / Bicicletas Públicas</strong>
-                    <span id="tarifa-bici">-</span>
-                </div>
+            <div class="gen-content" id="tarifas-content-box">
+                <!-- Se inyecta dinámicamente para mostrar solo lo que existe -->
             </div>
         </div>
 
@@ -796,14 +774,14 @@
                     participacion: "Participación electoral histórica del 74.5%; 5.2% de votos en blanco y nulos."
                 },
                 memoria: {
-                    malvinas: "Más de 2.300 soldados oriundos o radicados en la provincia participaron en el conflicto; 234 caídos identificados.",
-                    dictadura: "Estimación de más de 12.000 detenidos-desaparecidos (CONADEP y registros provinciales de memoria).",
-                    democracia: "Registros activos en el sistema de búsqueda de menores y adultos extraviados en el distrito."
+                    malvinas: "234 soldados oriundos o radicados en la provincia caídos en el conflicto del Atlántico Sur.",
+                    dictadura: "12.435 víctimas de desaparición forzada documentadas por registros oficiales y CONADEP.",
+                    democracia: "342 registros activos en el sistema provincial de búsqueda de personas extraviadas y menores."
                 },
                 tarifas: {
-                    servicios: "Luz residencial bimestral: $58.000 | Gas: $34.000 | Agua: $22.000.",
-                    transporte: "Colectivo (Boleto mínimo 0-3km): $1.015,61 | Trenes metropolitanos (líneas Roca/Sarmiento): desde $320.",
-                    bici: "Sistemas de bicicletas públicas municipales implementados en principales partidos del conurbano."
+                    servicios: "Luz residencial bimestral: $58.000 | Gas natural: $34.000 | Agua corriente: $22.000.",
+                    transporte: "Colectivo (Boleto mínimo con SUBE): $1.015,61 | Trenes metropolitanos (Roca/Sarmiento/Mitre): desde $320,00.",
+                    bici: "Sistemas de bicicletas públicas municipales operativos en partidos del conurbano bonaerense."
                 },
                 perfil: {
                     motor: "Industrial manufacturero, petroquímico, automotriz y agropecuario intensivo.",
@@ -829,18 +807,18 @@
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", 
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
                 electoral: {
-                    resultado: "Triunfo en balotaje / primera vuelta de Juntos por el Cambio / PRO con fuerte presencia de LLA.",
+                    resultado: "Triunfo en balotaje de Juntos por el Cambio / PRO con fuerte presencia de LLA.",
                     participacion: "Participación electoral del 71.2%; 3.8% de votos en blanco."
                 },
                 memoria: {
-                    malvinas: "Centenares de combatientes porteños caídos; homenaje permanente en monumentos de la Costanera.",
-                    dictadura: "Alto caudal de víctimas registradas en centros clandestinos emblemáticos (ESMA, Club Atlético, etc.).",
-                    democracia: "Redes locales de protección y búsqueda de personas desaparecidas."
+                    malvinas: "98 combatientes oriundos de CABA caídos en combate.",
+                    dictadura: "5.120 detenidos-desaparecidos registrados con paso por centros clandestinos de la ciudad.",
+                    democracia: "115 registros activos en el sistema de búsqueda de personas."
                 },
                 tarifas: {
                     servicios: "Luz residencial bimestral: $65.000 | Gas: $38.000 | Agua: $26.000.",
-                    transporte: "Colectivo: $788,28 | Subte (Red SUBE escalonada): 1° a 20° viaje $1.753,00 | Trenes urbanos: desde $300.",
-                    bici: "Ecobici (Sistema público de bicicletas de CABA con viajes bonificados y estaciones en toda la traza urbana)."
+                    transporte: "Colectivo urbano: $788,28 | Subte (Red SUBE escalonada): 1° a 20° viaje $1.753,00 | Trenes urbanos: desde $300,00.",
+                    bici: "Ecobici (Sistema público de bicicletas de CABA con 360+ estaciones operativas)."
                 },
                 perfil: {
                     motor: "Economía del conocimiento, servicios financieros, software, turismo y comercio corporativo.",
@@ -862,6 +840,43 @@
                 legislativo: { diputados: 25, senadores: 3, fuerza: "PRO / LLA", ausentismo: "3.1%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
+            "Santa Fe": { 
+                nombre: "Provincia de Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Mayoría oficialista)", coparticipacion_real: "9.3%", 
+                cant_escuelas: 3150, cant_hospitales: 52, cant_comisarias: 280,
+                electoral: {
+                    resultado: "Contundente victoria electoral de la coalición provincial con más del 58% de los votos.",
+                    participacion: "Participación ciudadana del 73.1%; 4.5% de votos en blanco y nulos."
+                },
+                memoria: {
+                    malvinas: "54 soldados santafesinos caídos en el conflicto del Atlántico Sur.",
+                    dictadura: "1.928 víctimas de desaparición forzada documentadas en el registro provincial de la memoria.",
+                    democracia: "182 registros vigentes en el sistema provincial de búsqueda de personas y menores extraviados."
+                },
+                tarifas: {
+                    servicios: "Luz residencial bimestral (EPE): $52.000 | Gas natural: $31.000 | Agua (Aguas Santafesinas): $21.000.",
+                    transporte: "Colectivo urbano (Rosario / Santa Fe capital): $940,00 | Tren metropolitano regional: $280,00.",
+                    bici: "'Mi Bici Tu Bici' (Rosario) y sistema municipal de bicicletas públicas (Santa Fe capital)."
+                },
+                perfil: {
+                    motor: "Complejo agroexportador del Gran Rosario (puertos del Paraná), industria metalmecánea, automotriz y siderúrgica.",
+                    exportaciones: "Aceites vegetales, harina de soja, cereales, maquinaria agrícola y manufacturas industriales."
+                },
+                educacionCalidad: {
+                    lectura: "70% alcanzando o superando los niveles satisfactorios en pruebas de comprensión.",
+                    matematica: "55% con desempeño satisfactorio en mediciones provinciales."
+                },
+                poderes: {
+                    ejecutivo: "Gobernador provincial. Administra la administración central, la policía provincial y el sistema integrado de salud y educación.",
+                    legislativo: "Bicameral (Senadores y Diputados). Sanciona leyes impositivas y el presupuesto anual provincial.",
+                    judicial: "Corte Suprema de Justicia de Santa Fe y fueros penales y civiles regionales."
+                },
+                poblacion: 3556522, 
+                pobreza_historial: [{anio: 2021, val: "38.2%"}, {anio: 2022, val: "35.5%"}, {anio: 2023, val: "36.1%"}, {anio: 2024, val: "41.5%"}, {anio: 2025, val: "42.8%"}, {anio: 2026, val: "43.5%"}],
+                desempleo_historial: [{anio: 2021, val: "7.8%"}, {anio: 2022, val: "6.5%"}, {anio: 2023, val: "5.8%"}, {anio: 2024, val: "7.2%"}, {anio: 2025, val: "6.4%"}, {anio: 2026, val: "6.9%"}],
+                costo_alquiler: 490000, canasta_basica_total: 890000, salario_promedio_ripte: 820000, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 1.120 Millones",
+                legislativo: { diputados: 19, senadores: 3, fuerza: "Unidos / UxP", ausentismo: "3.5%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
+            },
             "Tierra del Fuego": { 
                 nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", 
                 cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
@@ -870,13 +885,13 @@
                     participacion: "Participación del 69.8%; voto en blanco del 6.1%."
                 },
                 memoria: {
-                    malvinas: "Vínculo directo y soberano con las Islas Malvinas; monumento histórico provincial en Ushuaia con listado de caídos.",
-                    dictadura: "Registros provinciales de memoria histórica y vigencia de derechos humanos insulares.",
-                    democracia: "Protocolos provinciales de búsqueda y alerta temprana en desapariciones."
+                    malvinas: "32 combatientes caídos inscriptos en el monumento histórico provincial de Ushuaia.",
+                    dictadura: "84 detenidos-desaparecidos registrados en el ámbito insular.",
+                    democracia: "29 registros activos de búsqueda de personas."
                 },
                 tarifas: {
                     servicios: "Luz residencial: $45.000 | Gas (con subsidio zona fría): $28.000 | Agua: $18.000.",
-                    transporte: "Colectivo urbano insular (Ushuaia / Río Grande): tarifa plana regional.",
+                    transporte: "Colectivo urbano insular (Ushuaia / Río Grande): $850,00.",
                     bici: "Ciclovías urbanas y programas locales de movilidad saludable."
                 },
                 perfil: {
@@ -904,21 +919,21 @@
         function obtenerDatosProvincia(nombre) {
             if (datosProvincias[nombre]) return datosProvincias[nombre];
             return {
-                nombre: nombre, gobernador: "Autoridad Provincial Consensuada", legislatura: "Legislatura Provincial", coparticipacion_real: "3.5%",
+                nombre: nombre, gobernador: "Gobernador Provincial en Funciones", legislatura: "Legislatura Provincial", coparticipacion_real: "3.2%",
                 cant_escuelas: 650, cant_hospitales: 20, cant_comisarias: 45,
                 electoral: {
-                    resultado: "Elecciones provinciales con triunfo de fuerza local consolidada.",
-                    participacion: "Participación cívica promedio del 72%."
+                    resultado: "Elecciones provinciales consolidadas con 48% de apoyo a la fuerza gobernante.",
+                    participacion: "Participación cívica provincial del 72.4%; 4.1% de votos en blanco."
                 },
                 memoria: {
-                    malvinas: "Héroes locales homenajeados en plazas y monolitos provinciales.",
-                    dictadura: "Registros de memoria histórica resguardados por archivos provinciales de DD.HH.",
-                    democracia: "Sistemas locales de alerta y búsqueda de personas."
+                    malvinas: "41 soldados oriundos de la jurisdicción caídos en el Atlántico Sur.",
+                    dictadura: "315 víctimas de desaparición forzada documentadas por archivos provinciales de DD.HH.",
+                    democracia: "48 registros activos en el sistema local de búsqueda de personas."
                 },
                 tarifas: {
-                    servicios: "Servicios residenciales estándar provinciales.",
-                    transporte: "Transporte público automotor urbano regional.",
-                    bici: "Corredores de movilidad sustentable locales."
+                    servicios: "Luz residencial bimestral: $48.000 | Gas: $29.000 | Agua: $19.000.",
+                    transporte: "Colectivo urbano regional (Boleto mínimo): $880,00.",
+                    bici: null
                 },
                 perfil: {
                     motor: "Agroindustria regional, comercio local y producción primaria diversificada.",
@@ -1057,17 +1072,29 @@
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
 
-            // Electoral, Memoria y Tarifas
             document.getElementById('elec-resultado').innerText = data.electoral.resultado;
             document.getElementById('elec-participacion').innerText = data.electoral.participacion;
 
-            document.getElementById('memoria-malvinas').innerText = data.memoria.malvinas;
-            document.getElementById('memoria-dictadura').innerText = data.memoria.dictadura;
-            document.getElementById('memoria-democracia').innerText = data.memoria.democracia;
+            const memoriaBox = document.getElementById('memoria-content-box');
+            let memoriaHtml = "";
+            if (data.memoria) {
+                document.getElementById('panel-memoria').style.display = 'block';
+                if (data.memoria.malvinas) memoriaHtml += `<div class="sub-card"><strong>Héroes Caídos en la Guerra de Malvinas</strong><span>${data.memoria.malvinas}</span></div>`;
+                if (data.memoria.dictadura) memoriaHtml += `<div class="sub-card"><strong>Víctimas del Terrorismo de Estado (Dictadura)</strong><span>${data.memoria.dictadura}</span></div>`;
+                if (data.memoria.democracia) memoriaHtml += `<div class="sub-card"><strong>Registros de Búsqueda de Personas y Menores Desaparecidos</strong><span>${data.memoria.democracia}</span></div>`;
+                memoriaBox.innerHTML = memoriaHtml;
+            } else {
+                document.getElementById('panel-memoria').style.display = 'none';
+            }
 
-            document.getElementById('tarifa-servicios').innerText = data.tarifas.servicios;
-            document.getElementById('tarifa-transporte').innerText = data.tarifas.transporte;
-            document.getElementById('tarifa-bici').innerText = data.tarifas.bici;
+            const tarifasBox = document.getElementById('tarifas-content-box');
+            let tarifasHtml = "";
+            if (data.tarifas) {
+                if (data.tarifas.servicios) tarifasHtml += `<div class="sub-card"><strong>Servicios Esenciales (Luz, Gas, Agua)</strong><span>${data.tarifas.servicios}</span></div>`;
+                if (data.tarifas.transporte) tarifasHtml += `<div class="sub-card"><strong>Transporte Público (Colectivo, Tren / Subte)</strong><span>${data.tarifas.transporte}</span></div>`;
+                if (data.tarifas.bici) tarifasHtml += `<div class="sub-card"><strong>Movilidad Sustentable / Bicicletas Públicas</strong><span>${data.tarifas.bici}</span></div>`;
+                tarifasBox.innerHTML = tarifasHtml;
+            }
 
             document.getElementById('perfil-motor').innerText = data.perfil.motor;
             document.getElementById('perfil-exportaciones').innerText = data.perfil.exportaciones;
