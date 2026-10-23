@@ -23,7 +23,6 @@
             background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #bae6fd 100%);
         }
 
-        /* Fondo institucional con estrellas y soles bien espaciados */
         .background-pattern {
             position: absolute;
             top: 0;
@@ -106,7 +105,6 @@
         }
         #btn-volver-mapa:hover { background: #0369a1; }
 
-        /* Fuentes Oficiales con Enlaces Interactivos en Azul */
         #footer-fuentes {
             position: fixed;
             bottom: 0;
@@ -146,7 +144,7 @@
         }
 
         #map-svg {
-            height: 78vh;
+            height: 75vh;
             max-width: 90vw;
             filter: drop-shadow(0px 12px 25px rgba(0,0,0,0.18));
         }
@@ -165,7 +163,7 @@
         }
 
         .provincia-label {
-            font-size: 8.5px;
+            font-size: 8px;
             font-weight: bold;
             fill: #1e293b;
             text-anchor: middle;
@@ -177,7 +175,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 420px;
+            width: 440px;
             max-height: calc(100vh - 90px);
             z-index: 3000;
             background: var(--card-bg);
@@ -236,7 +234,7 @@
         .voto-badge {
             padding: 2px 6px;
             border-radius: 4px;
-            font-size: 0.78em;
+            font-size: 0.75em;
             font-weight: bold;
             color: white;
         }
@@ -268,129 +266,128 @@
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Mapa Completo</button>
 
-    <!-- Pie de página con Fuentes Oficiales Enlazadas en Azul -->
     <div id="footer-fuentes">
         <span><strong>Fuentes Oficiales:</strong> 
             <a href="https://www.indec.gob.ar" target="_blank">INDEC</a> · 
             <a href="https://www.argentina.gob.ar/economia" target="_blank">Ministerio de Economía</a> · 
-            <a href="https://www.hcdn.gob.ar" target="_blank">H. Congreso de la Nación (HCDN/Senado)</a> · 
+            <a href="https://www.hcdn.gob.ar" target="_blank">H. Congreso de la Nación</a> · 
             <a href="https://www.argentina.gob.ar/seguridad" target="_blank">Ministerio de Seguridad</a> · 
             <a href="https://www.argentina.gob.ar/salud" target="_blank">Ministerio de Salud</a> · 
-            <a href="https://www.bcra.gob.ar" target="_blank">Banco Central (BCRA)</a>
+            <a href="https://www.bcra.gob.ar" target="_blank">BCRA</a>
         </span>
     </div>
 
     <div id="map-container">
-        <!-- Mapa Vectorial con todas las provincias corregidas y clicables -->
-        <svg id="map-svg" viewBox="0 0 400 850" xmlns="http://www.w3.org/2000/svg">
+        <!-- Mapa Vectorial con provincias separadas y distribuidas -->
+        <svg id="map-svg" viewBox="0 0 400 900" xmlns="http://www.w3.org/2000/svg">
             <g id="mapa-argentina-riesgo">
-                <!-- Jujuy -->
-                <path class="provincia-real" data-nombre="Jujuy" fill="#f97316" onclick="mostrarDatos('Jujuy')" d="M 160,30 Q 185,25 200,45 Q 205,75 180,85 Q 155,75 160,30 Z" />
-                <text x="180" y="60" class="provincia-label">Jujuy</text>
+                <!-- Jujuy (Separada arriba para evitar solapamiento) -->
+                <path class="provincia-real" data-nombre="Jujuy" fill="#f97316" onclick="mostrarDatos('Jujuy')" d="M 155,10 Q 185,5 200,25 Q 205,55 180,65 Q 150,55 155,10 Z" />
+                <text x="178" y="40" class="provincia-label">Jujuy</text>
 
                 <!-- Salta -->
-                <path class="provincia-real" data-nombre="Salta" fill="#ef4444" onclick="mostrarDatos('Salta')" d="M 125,75 Q 180,80 200,45 Q 235,70 250,90 Q 240,140 180,135 Q 125,120 125,75 Z" />
-                <text x="185" y="105" class="provincia-label">Salta</text>
+                <path class="provincia-real" data-nombre="Salta" fill="#ef4444" onclick="mostrarDatos('Salta')" d="M 120,65 Q 180,70 200,25 Q 235,55 250,75 Q 240,125 180,120 Q 120,105 120,65 Z" />
+                <text x="180" y="92" class="provincia-label">Salta</text>
 
                 <!-- Formosa -->
-                <path class="provincia-real" data-nombre="Formosa" fill="#b91c1c" onclick="mostrarDatos('Formosa')" d="M 250,90 Q 310,95 335,110 Q 325,145 240,140 Q 240,120 250,90 Z" />
-                <text x="290" y="125" class="provincia-label">Formosa</text>
+                <path class="provincia-real" data-nombre="Formosa" fill="#b91c1c" onclick="mostrarDatos('Formosa')" d="M 250,75 Q 310,80 335,95 Q 325,130 240,125 Q 240,105 250,75 Z" />
+                <text x="290" y="108" class="provincia-label">Formosa</text>
 
                 <!-- Tucumán -->
-                <path class="provincia-real" data-nombre="Tucumán" fill="#ef4444" onclick="mostrarDatos('Tucumán')" d="M 155,135 Q 185,135 190,160 Q 165,165 155,135 Z" />
-                <text x="173" y="152" class="provincia-label" font-size="7px">Tucumán</text>
+                <path class="provincia-real" data-nombre="Tucumán" fill="#ef4444" onclick="mostrarDatos('Tucumán')" d="M 150,125 Q 180,125 185,148 Q 160,152 150,125 Z" />
+                <text x="168" y="139" class="provincia-label" font-size="6.5px">Tucumán</text>
 
                 <!-- Catamarca -->
-                <path class="provincia-real" data-nombre="Catamarca" fill="#ef4444" onclick="mostrarDatos('Catamarca')" d="M 105,115 Q 155,120 155,135 Q 165,165 180,180 Q 165,220 100,175 Q 95,140 105,115 Z" />
-                <text x="138" y="155" class="provincia-label">Catamarca</text>
+                <path class="provincia-real" data-nombre="Catamarca" fill="#ef4444" onclick="mostrarDatos('Catamarca')" d="M 100,105 Q 150,110 150,125 Q 160,152 175,168 Q 160,205 95,160 Q 90,125 100,105 Z" />
+                <text x="133" y="142" class="provincia-label">Catamarca</text>
 
                 <!-- Chaco -->
-                <path class="provincia-real" data-nombre="Chaco" fill="#b91c1c" onclick="mostrarDatos('Chaco')" d="M 240,140 Q 325,145 315,190 Q 235,185 240,140 Z" />
-                <text x="280" y="168" class="provincia-label">Chaco</text>
+                <path class="provincia-real" data-nombre="Chaco" fill="#b91c1c" onclick="mostrarDatos('Chaco')" d="M 240,125 Q 325,130 315,175 Q 235,170 240,125 Z" />
+                <text x="280" y="152" class="provincia-label">Chaco</text>
 
                 <!-- Santiago del Estero -->
-                <path class="provincia-real" data-nombre="Santiago del Estero" fill="#b91c1c" onclick="mostrarDatos('Santiago del Estero')" d="M 180,135 Q 240,140 235,185 Q 195,220 165,180 Q 165,165 180,135 Z" />
-                <text x="205" y="175" class="provincia-label" font-size="7.5px">S. del Estero</text>
+                <path class="provincia-real" data-nombre="Santiago del Estero" fill="#b91c1c" onclick="mostrarDatos('Santiago del Estero')" d="M 175,120 Q 240,125 235,170 Q 190,205 160,168 Q 160,152 175,120 Z" />
+                <text x="200" y="158" class="provincia-label" font-size="7px">S. del Estero</text>
 
                 <!-- Misiones -->
-                <path class="provincia-real" data-nombre="Misiones" fill="#f97316" onclick="mostrarDatos('Misiones')" d="M 345,135 Q 380,130 395,165 Q 375,205 345,185 Z" />
-                <text x="370" y="165" class="provincia-label">Misiones</text>
+                <path class="provincia-real" data-nombre="Misiones" fill="#f97316" onclick="mostrarDatos('Misiones')" d="M 345,120 Q 380,115 395,150 Q 375,190 345,170 Z" />
+                <text x="370" y="150" class="provincia-label">Misiones</text>
 
                 <!-- Corrientes -->
-                <path class="provincia-real" data-nombre="Corrientes" fill="#ef4444" onclick="mostrarDatos('Corrientes')" d="M 315,190 Q 375,205 355,265 Q 295,250 315,190 Z" />
-                <text x="332" y="230" class="provincia-label">Corrientes</text>
+                <path class="provincia-real" data-nombre="Corrientes" fill="#ef4444" onclick="mostrarDatos('Corrientes')" d="M 315,175 Q 375,190 355,250 Q 295,235 315,175 Z" />
+                <text x="332" y="212" class="provincia-label">Corrientes</text>
 
                 <!-- Santa Fe -->
-                <path class="provincia-real" data-nombre="Santa Fe" fill="#ef4444" onclick="mostrarDatos('Santa Fe')" d="M 235,185 Q 295,190 295,250 Q 280,340 230,335 Q 215,250 235,185 Z" />
-                <text x="258" y="265" class="provincia-label">Santa Fe</text>
+                <path class="provincia-real" data-nombre="Santa Fe" fill="#ef4444" onclick="mostrarDatos('Santa Fe')" d="M 235,170 Q 295,175 295,235 Q 280,325 230,320 Q 215,235 235,170 Z" />
+                <text x="258" y="250" class="provincia-label">Santa Fe</text>
 
                 <!-- La Rioja -->
-                <path class="provincia-real" data-nombre="La Rioja" fill="#ef4444" onclick="mostrarDatos('La Rioja')" d="M 100,175 Q 165,220 155,260 Q 95,235 100,175 Z" />
-                <text x="132" y="218" class="provincia-label">La Rioja</text>
+                <path class="provincia-real" data-nombre="La Rioja" fill="#ef4444" onclick="mostrarDatos('La Rioja')" d="M 95,160 Q 160,205 150,245 Q 90,220 95,160 Z" />
+                <text x="127" y="202" class="provincia-label">La Rioja</text>
 
                 <!-- San Juan -->
-                <path class="provincia-real" data-nombre="San Juan" fill="#f97316" onclick="mostrarDatos('San Juan')" d="M 95,235 Q 155,260 145,315 Q 85,290 95,235 Z" />
-                <text x="120" y="280" class="provincia-label">San Juan</text>
+                <path class="provincia-real" data-nombre="San Juan" fill="#f97316" onclick="mostrarDatos('San Juan')" d="M 90,220 Q 150,245 140,300 Q 80,275 90,220 Z" />
+                <text x="115" y="262" class="provincia-label">San Juan</text>
 
                 <!-- Córdoba -->
-                <path class="provincia-real" data-nombre="Córdoba" fill="#ef4444" onclick="mostrarDatos('Córdoba')" d="M 165,220 Q 235,185 215,250 Q 230,335 175,330 Q 155,270 165,220 Z" />
-                <text x="195" y="280" class="provincia-label">Córdoba</text>
+                <path class="provincia-real" data-nombre="Córdoba" fill="#ef4444" onclick="mostrarDatos('Córdoba')" d="M 160,205 Q 235,170 215,235 Q 230,320 170,315 Q 150,255 160,205 Z" />
+                <text x="190" y="262" class="provincia-label">Córdoba</text>
 
                 <!-- Entre Ríos -->
-                <path class="provincia-real" data-nombre="Entre Ríos" fill="#f97316" onclick="mostrarDatos('Entre Ríos')" d="M 295,250 Q 355,265 335,335 Q 280,340 295,250 Z" />
-                <text x="315" y="300" class="provincia-label" font-size="7.5px">Entre Ríos</text>
+                <path class="provincia-real" data-nombre="Entre Ríos" fill="#f97316" onclick="mostrarDatos('Entre Ríos')" d="M 295,235 Q 355,250 335,320 Q 280,325 295,235 Z" />
+                <text x="315" y="285" class="provincia-label" font-size="7px">Entre Ríos</text>
 
                 <!-- San Luis -->
-                <path class="provincia-real" data-nombre="San Luis" fill="#f97316" onclick="mostrarDatos('San Luis')" d="M 145,315 Q 175,330 165,390 Q 120,375 145,315 Z" />
-                <text x="150" y="355" class="provincia-label" font-size="7.5px">San Luis</text>
+                <path class="provincia-real" data-nombre="San Luis" fill="#f97316" onclick="mostrarDatos('San Luis')" d="M 140,300 Q 170,315 160,375 Q 115,360 140,300 Z" />
+                <text x="145" y="340" class="provincia-label" font-size="7px">San Luis</text>
 
-                <!-- Mendoza (Corregida y completamente interactiva) -->
-                <path class="provincia-real" data-nombre="Mendoza" fill="#f97316" onclick="mostrarDatos('Mendoza')" d="M 85,290 Q 145,315 120,375 Q 75,355 85,290 Z" />
-                <text x="108" y="335" class="provincia-label">Mendoza</text>
+                <!-- Mendoza -->
+                <path class="provincia-real" data-nombre="Mendoza" fill="#f97316" onclick="mostrarDatos('Mendoza')" d="M 80,275 Q 140,300 115,360 Q 70,340 80,275 Z" />
+                <text x="103" y="320" class="provincia-label">Mendoza</text>
+
+                <!-- Neuquén (Separado y visible con claridad) -->
+                <path class="provincia-real" data-nombre="Neuquén" fill="#f97316" onclick="mostrarDatos('Neuquén')" d="M 70,360 Q 115,360 105,440 Q 60,425 70,360 Z" />
+                <text x="88" y="400" class="provincia-label">Neuquén</text>
 
                 <!-- La Pampa -->
-                <path class="provincia-real" data-nombre="La Pampa" fill="#f97316" onclick="mostrarDatos('La Pampa')" d="M 165,390 Q 230,335 220,430 Q 155,420 165,390 Z" />
-                <text x="190" y="390" class="provincia-label">La Pampa</text>
+                <path class="provincia-real" data-nombre="La Pampa" fill="#f97316" onclick="mostrarDatos('La Pampa')" d="M 160,375 Q 230,320 220,415 Q 150,405 160,375 Z" />
+                <text x="185" y="375" class="provincia-label">La Pampa</text>
                 
                 <!-- Provincia de Buenos Aires -->
-                <path class="provincia-real" data-nombre="Buenos Aires" fill="#ef4444" onclick="mostrarDatos('Buenos Aires')" d="M 230,335 Q 280,340 335,335 Q 320,440 250,500 Q 175,435 220,430 Q 220,360 230,335 Z" />
-                <text x="260" y="415" class="provincia-label" fill="#ffffff">Buenos Aires</text>
+                <path class="provincia-real" data-nombre="Buenos Aires" fill="#ef4444" onclick="mostrarDatos('Buenos Aires')" d="M 230,320 Q 280,325 335,320 Q 320,425 250,485 Q 170,420 220,415 Q 220,345 230,320 Z" />
+                <text x="255" y="400" class="provincia-label" fill="#ffffff">Buenos Aires</text>
                 
                 <!-- CABA -->
-                <rect class="provincia-real" data-nombre="Ciudad Autónoma de Buenos Aires (CABA)" fill="#16a34a" onclick="mostrarDatos('Ciudad Autónoma de Buenos Aires (CABA)')" x="270" y="335" width="22" height="22" rx="3" />
-                <text x="281" y="348" class="provincia-label" fill="#ffffff" font-size="7px">CABA</text>
-
-                <!-- Neuquén -->
-                <path class="provincia-real" data-nombre="Neuquén" fill="#f97316" onclick="mostrarDatos('Neuquén')" d="M 75,355 Q 120,375 110,455 Q 65,440 75,355 Z" />
-                <text x="92" y="410" class="provincia-label">Neuquén</text>
+                <rect class="provincia-real" data-nombre="Ciudad Autónoma de Buenos Aires (CABA)" fill="#16a34a" onclick="mostrarDatos('Ciudad Autónoma de Buenos Aires (CABA)')" x="265" y="320" width="22" height="22" rx="3" />
+                <text x="276" y="333" class="provincia-label" fill="#ffffff" font-size="6.5px">CABA</text>
 
                 <!-- Río Negro -->
-                <path class="provincia-real" data-nombre="Río Negro" fill="#f97316" onclick="mostrarDatos('Río Negro')" d="M 110,455 Q 220,430 235,510 Q 95,505 110,455 Z" />
-                <text x="160" y="480" class="provincia-label">Río Negro</text>
+                <path class="provincia-real" data-nombre="Río Negro" fill="#f97316" onclick="mostrarDatos('Río Negro')" d="M 105,440 Q 220,415 235,495 Q 90,490 105,440 Z" />
+                <text x="155" y="465" class="provincia-label">Río Negro</text>
 
                 <!-- Chubut -->
-                <path class="provincia-real" data-nombre="Chubut" fill="#f97316" onclick="mostrarDatos('Chubut')" d="M 95,505 Q 235,510 215,610 Q 80,600 95,505 Z" />
-                <text x="155" y="560" class="provincia-label">Chubut</text>
+                <path class="provincia-real" data-nombre="Chubut" fill="#f97316" onclick="mostrarDatos('Chubut')" d="M 90,490 Q 235,495 215,595 Q 75,585 90,490 Z" />
+                <text x="150" y="545" class="provincia-label">Chubut</text>
 
                 <!-- Santa Cruz -->
-                <path class="provincia-real" data-nombre="Santa Cruz" fill="#f97316" onclick="mostrarDatos('Santa Cruz')" d="M 80,600 Q 215,610 185,720 Q 65,710 80,600 Z" />
-                <text x="140" y="660" class="provincia-label">Santa Cruz</text>
+                <path class="provincia-real" data-nombre="Santa Cruz" fill="#f97316" onclick="mostrarDatos('Santa Cruz')" d="M 75,585 Q 215,595 185,705 Q 60,695 75,585 Z" />
+                <text x="135" y="645" class="provincia-label">Santa Cruz</text>
 
                 <!-- Tierra del Fuego -->
-                <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#f97316" onclick="mostrarDatos('Tierra del Fuego')" d="M 110,750 Q 175,755 160,795 Q 100,785 110,750 Z" />
-                <text x="138" y="775" class="provincia-label" font-size="7px">T. del Fuego</text>
+                <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#f97316" onclick="mostrarDatos('Tierra del Fuego')" d="M 105,735 Q 170,740 155,780 Q 95,770 105,735 Z" />
+                <text x="133" y="760" class="provincia-label" font-size="6.5px">T. del Fuego</text>
 
                 <!-- Islas Malvinas -->
                 <g id="islas-malvinas">
-                    <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 315,550 Q 335,545 330,575 Q 310,570 315,550 Z" />
-                    <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 345,560 Q 370,555 365,590 Q 340,585 345,560 Z" />
-                    <text x="340" y="605" class="provincia-label" font-size="8px">Islas Malvinas</text>
+                    <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 315,535 Q 335,530 330,560 Q 310,555 315,535 Z" />
+                    <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 345,545 Q 370,540 365,575 Q 340,570 345,545 Z" />
+                    <text x="340" y="590" class="provincia-label" font-size="7.5px">Islas Malvinas</text>
                 </g>
             </g>
         </svg>
     </div>
 
-    <!-- Panel Lateral de Datos -->
+    <!-- Panel Lateral de Datos Ampliado -->
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
         <h2 id="panel-nombre" class="province-title">-</h2>
@@ -400,153 +397,181 @@
             <div class="metric-sub">Índice de Riesgo Integral</div>
         </div>
 
-        <div class="section-heading">🏛️ Representación Legislativa</div>
+        <div class="section-heading">🏛️ Identificación Institucional</div>
+        <div class="data-row"><span>Gobernador / Gestión:</span><strong id="panel-gobernador">-</strong></div>
+        <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
+        <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
+
+        <div class="section-heading">🏛️ Representación Legislativa (Nación)</div>
         <div class="data-row"><span>Diputados Nacionales:</span><strong id="panel-diputados">-</strong></div>
         <div class="data-row"><span>Senadores Nacionales:</span><strong id="panel-senadores">-</strong></div>
         <div class="data-row"><span>Fuerza Mayoritaria:</span><strong id="panel-fuerza-mayoritaria">-</strong></div>
         <div class="data-row"><span>Ausentismo Promedio Bloque:</span><strong id="panel-ausentismo">-</strong></div>
-        <div class="data-row"><span>Proyectos Presentados (Promedio):</span><strong id="panel-proyectos">-</strong></div>
 
         <div class="section-heading">⚖️ Historial de Votaciones Clave</div>
         <div class="data-row"><span>Ley Bases / Paquete Fiscal:</span><span id="panel-voto-bases" class="voto-badge">-</span></div>
         <div class="data-row"><span>Presupuesto Nacional:</span><span id="panel-voto-presupuesto" class="voto-badge">-</span></div>
+        <div class="data-row"><span>Fórmula Jubilatoria:</span><span id="panel-voto-jubilados" class="voto-badge">-</span></div>
+        <div class="data-row"><span>Financiamiento Universitario:</span><span id="panel-voto-universidades" class="voto-badge">-</span></div>
+        <div class="data-row"><span>Boleta Única de Papel (BUP):</span><span id="panel-voto-bup" class="voto-badge">-</span></div>
+        <div class="data-row"><span>RIGI (Inversiones):</span><span id="panel-voto-rigi" class="voto-badge">-</span></div>
 
-        <div class="section-heading">📊 Economía (Realidad de la Calle)</div>
+        <div class="section-heading">📊 Economía & Costo de Vida</div>
         <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
         <div class="data-row"><span>Tasa de Pobreza:</span><strong id="panel-pobreza">-</strong></div>
+        <div class="data-row"><span>Canasta Básica Total (CBT):</span><strong id="panel-cbt">-</strong></div>
+        <div class="data-row"><span>Salario Promedio Real (RIPTE):</span><strong id="panel-salario">-</strong></div>
         <div class="data-row"><span>Empleo Informal / Changas:</span><strong id="panel-informal">-</strong></div>
-        <div class="data-row"><span>Salario Promedio Real:</span><strong id="panel-salario">-</strong></div>
         <div class="data-row"><span>Alquiler Promedio (2 amb):</span><strong id="panel-alquiler">-</strong></div>
-        <div class="data-row"><span>Canasta Básica Total:</span><strong id="panel-cbt">-</strong></div>
-        <div class="data-row"><span>Ingresos Brutos (Alícuota):</span><strong id="panel-iibb">-</strong></div>
+        <div class="data-row"><span>Ingresos Brutos (Alícuota máx):</span><strong id="panel-iibb">-</strong></div>
         <div style="font-weight: bold; margin: 8px 0 2px 0; font-size: 0.8em; color: #0284c7;">Histórico de Desempleo Real:</div>
         <ul id="panel-historial" class="history-list"></ul>
+
+        <div class="section-heading">🏦 Finanzas Públicas & Deuda</div>
+        <div class="data-row"><span>Resultado Fiscal Provincial:</span><strong id="panel-resultado-fiscal">-</strong></div>
+        <div class="data-row"><span>Stock Deuda Pública (USD):</span><strong id="panel-deuda-total">-</strong></div>
+        <div class="data-row"><span>Peso Masa Salarial Estadal:</span><strong id="panel-masa-salarial">-</strong></div>
+        <div class="data-row"><span>Autonomía Financiera (Recaudación):</span><strong id="panel-autonomia">-</strong></div>
 
         <div class="section-heading">🛡️ Seguridad</div>
         <div class="data-row"><span>Tasa Inseguridad (Delitos / 100k):</span><strong id="panel-inseguridad">-</strong></div>
         <div class="data-row"><span>Homicidios Dolosos (cada 100k):</span><strong id="panel-homicidios">-</strong></div>
         <div class="data-row"><span>Siniestros Viales Fatales (Anual):</span><strong id="panel-vial">-</strong></div>
 
-        <div class="section-heading">🏥 Salud & Educación</div>
-        <div class="data-row"><span>Tasa de Natalidad (por mil):</span><strong id="panel-natalidad">-</strong></div>
-        <div class="data-row"><span>Tasa de Mortalidad Infantil:</span><strong id="panel-mortalidad-infantil">-</strong></div>
-        <div class="data-row"><span>Mortalidad General (por mil):</span><strong id="panel-mortalidad">-</strong></div>
+        <div class="section-heading">🏥 Salud, Educación & Servicios</div>
+        <div class="data-row"><span>Mortalidad Infantil:</span><strong id="panel-mortalidad-infantil">-</strong></div>
         <div class="data-row"><span>Camas UTI (cada 10k hab):</span><strong id="panel-camas">-</strong></div>
         <div class="data-row"><span>Escolarización Secundaria:</span><strong id="panel-escuela">-</strong></div>
-
-        <div class="section-heading">🏛️ Gestión & Infraestructura</div>
-        <div class="data-row"><span>Transferencias Discrecionales:</span><strong id="panel-transf-disc">-</strong></div>
-        <div class="data-row"><span>Pauta Oficial Provincial:</span><strong id="panel-pauta-oficial">-</strong></div>
         <div class="data-row"><span>Cobertura Agua y Cloacas:</span><strong id="panel-agua">-</strong></div>
         <div class="data-row"><span>Conexión Internet Fibra Óptica:</span><strong id="panel-internet">-</strong></div>
-        <div class="data-row"><span>Deuda Provincial Per Cápita:</span><strong id="panel-deuda">-</strong></div>
     </div>
 
     <script>
         const datosProvincias = {
             "Buenos Aires": { 
-                nombre: "Provincia de Buenos Aires", poblacion: 17569053, pobreza_porcentaje: 48.2, costo_alquiler: 550000, canasta_basica_total: 910000, salario_promedio_ripte: 750000, empleo_informal_porcentaje: 44.5, ingresos_brutos_alicuota: 4.8, transferencias_discrecionales: "$ 420.500 Millones", pauta_oficial: "$ 32.400 Millones", inseguridad_tasa: 980, homicidios_tasa_100k: 6.2, siniestros_viales_fatales: 1150, natalidad_tasa: 12.8, mortalidad_infantil_tasa: 8.4, mortalidad_tasa: 7.8, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.5, cobertura_agua_cloacas: 76.2, cobertura_internet_fibra: 68.4, deuda_per_capita_usd: 420,
-                legislativo: { diputados: 70, senadores: 3, fuerza: "UxP / PRO", ausentismo: "4.2%", proyectos: 24, votoBases: "Negativo", votoPresupuesto: "Negativo" },
+                nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", poblacion: 17569053, pobreza_porcentaje: 48.2, costo_alquiler: 550000, canasta_basica_total: 910000, salario_promedio_ripte: 750000, empleo_informal_porcentaje: 44.5, ingresos_brutos_alicuota: 4.8, resultado_fiscal: "Déficit Primario Moderado", deuda_total_usd: "USD 5.420 Millones", peso_masa_salarial: "52.4%", autonomia_financiera: "38.5%", inseguridad_tasa: 980, homicidios_tasa_100k: 6.2, siniestros_viales_fatales: 1150, mortalidad_infantil_tasa: 8.4, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.5, cobertura_agua_cloacas: 76.2, cobertura_internet_fibra: 68.4,
+                legislativo: { diputados: 70, senadores: 3, fuerza: "UxP / PRO", ausentismo: "4.2%" },
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 8.7 }, { anio: 2025, tasa: 8.2 }, { anio: 2024, tasa: 8.9 }] 
             },
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
-                nombre: "Ciudad Autónoma de Buenos Aires (CABA)", poblacion: 3120612, pobreza_porcentaje: 19.5, costo_alquiler: 780000, canasta_basica_total: 980000, salario_promedio_ripte: 1250000, empleo_informal_porcentaje: 24.0, ingresos_brutos_alicuota: 3.0, transferencias_discrecionales: "$ 185.200 Millones", pauta_oficial: "$ 68.900 Millones", inseguridad_tasa: 920, homicidios_tasa_100k: 2.8, siniestros_viales_fatales: 95, natalidad_tasa: 10.1, mortalidad_infantil_tasa: 4.9, mortalidad_tasa: 9.1, camas_uti_cada_10k: 9.8, escolarizacion_secundaria: 96.8, cobertura_agua_cloacas: 99.1, cobertura_internet_fibra: 94.2, deuda_per_capita_usd: 680,
-                legislativo: { diputados: 25, senadores: 3, fuerza: "PRO / LLA", ausentismo: "3.1%", proyectos: 38, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", poblacion: 3120612, pobreza_porcentaje: 19.5, costo_alquiler: 780000, canasta_basica_total: 980000, salario_promedio_ripte: 1250000, empleo_informal_porcentaje: 24.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Superávit Financiero", deuda_total_usd: "USD 2.150 Millones", peso_masa_salarial: "44.1%", autonomia_financiera: "82.4%", inseguridad_tasa: 920, homicidios_tasa_100k: 2.8, siniestros_viales_fatales: 95, mortalidad_infantil_tasa: 4.9, camas_uti_cada_10k: 9.8, escolarizacion_secundaria: 96.8, cobertura_agua_cloacas: 99.1, cobertura_internet_fibra: 94.2,
+                legislativo: { diputados: 25, senadores: 3, fuerza: "PRO / LLA", ausentismo: "3.1%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 5.2 }, { anio: 2025, tasa: 5.4 }, { anio: 2024, tasa: 5.8 }] 
             },
             "Catamarca": { 
-                nombre: "Catamarca", poblacion: 429556, pobreza_porcentaje: 45.1, costo_alquiler: 340000, canasta_basica_total: 840000, salario_promedio_ripte: 690000, empleo_informal_porcentaje: 42.0, ingresos_brutos_alicuota: 3.5, transferencias_discrecionales: "$ 95.800 Millones", pauta_oficial: "$ 4.500 Millones", inseguridad_tasa: 340, homicidios_tasa_100k: 2.1, siniestros_viales_fatales: 55, natalidad_tasa: 13.2, mortalidad_infantil_tasa: 8.1, mortalidad_tasa: 6.5, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 87.2, cobertura_agua_cloacas: 78.0, cobertura_internet_fibra: 58.4, deuda_per_capita_usd: 150,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "UxP", ausentismo: "2.5%", proyectos: 19, votoBases: "Negativo", votoPresupuesto: "Negativo" },
+                nombre: "Catamarca", gobernador: "Raúl Jalil (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "2.8%", poblacion: 429556, pobreza_porcentaje: 45.1, costo_alquiler: 340000, canasta_basica_total: 840000, salario_promedio_ripte: 690000, empleo_informal_porcentaje: 42.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 85 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "14.2%", inseguridad_tasa: 340, homicidios_tasa_100k: 2.1, siniestros_viales_fatales: 55, mortalidad_infantil_tasa: 8.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 87.2, cobertura_agua_cloacas: 78.0, cobertura_internet_fibra: 58.4,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "UxP", ausentismo: "2.5%" },
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Abstención", rigi: "Abstención" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.1 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.5 }] 
             },
             "Chaco": { 
-                nombre: "Chaco", poblacion: 1142963, pobreza_porcentaje: 57.2, costo_alquiler: 310000, canasta_basica_total: 820000, salario_promedio_ripte: 610000, empleo_informal_porcentaje: 51.0, ingresos_brutos_alicuota: 4.1, transferencias_discrecionales: "$ 148.300 Millones", pauta_oficial: "$ 8.200 Millones", inseguridad_tasa: 610, homicidios_tasa_100k: 4.8, siniestros_viales_fatales: 180, natalidad_tasa: 15.5, mortalidad_infantil_tasa: 10.8, mortalidad_tasa: 8.2, camas_uti_cada_10k: 3.5, escolarizacion_secundaria: 82.1, cobertura_agua_cloacas: 64.5, cobertura_internet_fibra: 52.1, deuda_per_capita_usd: 230,
-                legislativo: { diputados: 7, senadores: 3, fuerza: "UCR / UxP", ausentismo: "5.8%", proyectos: 15, votoBases: "Abstención", votoPresupuesto: "Afirmativo" },
+                nombre: "Chaco", gobernador: "Leandro Zdero (JxC / UCR)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "5.1%", poblacion: 1142963, pobreza_porcentaje: 57.2, costo_alquiler: 310000, canasta_basica_total: 820000, salario_promedio_ripte: 610000, empleo_informal_porcentaje: 51.0, ingresos_brutos_alicuota: 4.1, resultado_fiscal: "Déficit Financiero Ordenado", deuda_total_usd: "USD 310 Millones", peso_masa_salarial: "61.2%", autonomia_financiera: "12.5%", inseguridad_tasa: 610, homicidios_tasa_100k: 4.8, siniestros_viales_fatales: 180, mortalidad_infantil_tasa: 10.8, camas_uti_cada_10k: 3.5, escolarizacion_secundaria: 82.1, cobertura_agua_cloacas: 64.5, cobertura_internet_fibra: 52.1,
+                legislativo: { diputados: 7, senadores: 3, fuerza: "UCR / UxP", ausentismo: "5.8%" },
+                votaciones: { bases: "Abstención", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 9.5 }, { anio: 2025, tasa: 8.9 }, { anio: 2024, tasa: 9.8 }] 
             },
             "Chubut": { 
-                nombre: "Chubut", poblacion: 603120, pobreza_porcentaje: 39.5, costo_alquiler: 480000, canasta_basica_total: 940000, salario_promedio_ripte: 1050000, empleo_informal_porcentaje: 31.0, ingresos_brutos_alicuota: 3.8, transferencias_discrecionales: "$ 62.100 Millones", pauta_oficial: "$ 5.800 Millones", inseguridad_tasa: 520, homicidios_tasa_100k: 4.2, siniestros_viales_fatales: 72, natalidad_tasa: 11.2, mortalidad_infantil_tasa: 6.2, mortalidad_tasa: 7.1, camas_uti_cada_10k: 5.1, escolarizacion_secundaria: 89.0, cobertura_agua_cloacas: 86.1, cobertura_internet_fibra: 65.0, deuda_per_capita_usd: 890,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "Despierta Chubut / UxP", ausentismo: "3.5%", proyectos: 21, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Chubut", gobernador: "Ignacio Torres (Despierta Chubut)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.2%", poblacion: 603120, pobreza_porcentaje: 39.5, costo_alquiler: 480000, canasta_basica_total: 940000, salario_promedio_ripte: 1050000, empleo_informal_porcentaje: 31.0, ingresos_brutos_alicuota: 3.8, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 620 Millones", peso_masa_salarial: "48.0%", autonomia_financiera: "45.1%", inseguridad_tasa: 520, homicidios_tasa_100k: 4.2, siniestros_viales_fatales: 72, mortalidad_infantil_tasa: 6.2, camas_uti_cada_10k: 5.1, escolarizacion_secundaria: 89.0, cobertura_agua_cloacas: 86.1, cobertura_internet_fibra: 65.0,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "Despierta Chubut / UxP", ausentismo: "3.5%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.4 }, { anio: 2025, tasa: 6.1 }, { anio: 2024, tasa: 7.0 }] 
             },
             "Córdoba": { 
-                nombre: "Córdoba", poblacion: 3978984, pobreza_porcentaje: 42.8, costo_alquiler: 510000, canasta_basica_total: 880000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 39.0, ingresos_brutos_alicuota: 4.0, transferencias_discrecionales: "$ 215.400 Millones", pauta_oficial: "$ 24.100 Millones", inseguridad_tasa: 740, homicidios_tasa_100k: 3.1, siniestros_viales_fatales: 380, natalidad_tasa: 12.0, mortalidad_infantil_tasa: 7.2, mortalidad_tasa: 7.4, camas_uti_cada_10k: 6.1, escolarizacion_secundaria: 92.5, cobertura_agua_cloacas: 81.5, cobertura_internet_fibra: 78.0, deuda_per_capita_usd: 380,
-                legislativo: { diputados: 18, senadores: 3, fuerza: "Hacemos Coalición Federal / LLA", ausentismo: "2.8%", proyectos: 31, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Córdoba", gobernador: "Martín Llaryora (Hacemos Unidos)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "9.2%", poblacion: 3978984, pobreza_porcentaje: 42.8, costo_alquiler: 510000, canasta_basica_total: 880000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 39.0, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Primario", deuda_total_usd: "USD 1.620 Millones", peso_masa_salarial: "46.5%", autonomia_financiera: "52.0%", inseguridad_tasa: 740, homicidios_tasa_100k: 3.1, siniestros_viales_fatales: 380, mortalidad_infantil_tasa: 7.2, camas_uti_cada_10k: 6.1, escolarizacion_secundaria: 92.5, cobertura_agua_cloacas: 81.5, cobertura_internet_fibra: 78.0,
+                legislativo: { diputados: 18, senadores: 3, fuerza: "Hacemos Coalición Federal / LLA", ausentismo: "2.8%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.2 }, { anio: 2025, tasa: 6.9 }, { anio: 2024, tasa: 7.6 }] 
             },
             "Corrientes": { 
-                nombre: "Corrientes", poblacion: 1197553, pobreza_porcentaje: 48.9, costo_alquiler: 360000, canasta_basica_total: 830000, salario_promedio_ripte: 640000, empleo_informal_porcentaje: 46.0, ingresos_brutos_alicuota: 3.9, transferencias_discrecionales: "$ 112.500 Millones", pauta_oficial: "$ 6.700 Millones", inseguridad_tasa: 480, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 195, natalidad_tasa: 14.8, mortalidad_infantil_tasa: 9.5, mortalidad_tasa: 7.6, camas_uti_cada_10k: 4.0, escolarizacion_secundaria: 84.3, cobertura_agua_cloacas: 71.0, cobertura_internet_fibra: 56.8, deuda_per_capita_usd: 120,
-                legislativo: { diputados: 7, senadores: 3, fuerza: "ECO + Vamos Corrientes", ausentismo: "4.0%", proyectos: 18, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Corrientes", gobernador: "Gustavo Valdés (ECO + UCR)", legislatura: "Bicameral (Mayoría ECO)", coparticipacion_real: "4.8%", poblacion: 1197553, pobreza_porcentaje: 48.9, costo_alquiler: 360000, canasta_basica_total: 830000, salario_promedio_ripte: 640000, empleo_informal_porcentaje: 46.0, ingresos_brutos_alicuota: 3.9, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 140 Millones", peso_masa_salarial: "54.0%", autonomia_financiera: "19.8%", inseguridad_tasa: 480, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 195, mortalidad_infantil_tasa: 9.5, camas_uti_cada_10k: 4.0, escolarizacion_secundaria: 84.3, cobertura_agua_cloacas: 71.0, cobertura_internet_fibra: 56.8,
+                legislativo: { diputados: 7, senadores: 3, fuerza: "ECO + Vamos Corrientes", ausentismo: "4.0%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.9 }, { anio: 2025, tasa: 7.5 }, { anio: 2024, tasa: 8.4 }] 
             },
             "Entre Ríos": { 
-                nombre: "Entre Ríos", poblacion: 1426426, pobreza_porcentaje: 44.2, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 710000, empleo_informal_porcentaje: 40.5, ingresos_brutos_alicuota: 4.0, transferencias_discrecionales: "$ 98.400 Millones", pauta_oficial: "$ 9.100 Millones", inseguridad_tasa: 450, homicidios_tasa_100k: 2.9, siniestros_viales_fatales: 140, natalidad_tasa: 12.3, mortalidad_infantil_tasa: 7.1, mortalidad_tasa: 7.9, camas_uti_cada_10k: 4.5, escolarizacion_secundaria: 89.4, cobertura_agua_cloacas: 80.5, cobertura_internet_fibra: 67.2, deuda_per_capita_usd: 260,
-                legislativo: { diputados: 9, senadores: 3, fuerza: "Juntos por Entre Ríos", ausentismo: "3.2%", proyectos: 22, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Entre Ríos", gobernador: "Rogelio Frigerio (JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "5.1%", poblacion: 1426426, pobreza_porcentaje: 44.2, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 710000, empleo_informal_porcentaje: 40.5, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Déficit Leve en Saneamiento", deuda_total_usd: "USD 380 Millones", peso_masa_salarial: "55.2%", autonomia_financiera: "26.4%", inseguridad_tasa: 450, homicidios_tasa_100k: 2.9, siniestros_viales_fatales: 140, mortalidad_infantil_tasa: 7.1, camas_uti_cada_10k: 4.5, escolarizacion_secundaria: 89.4, cobertura_agua_cloacas: 80.5, cobertura_internet_fibra: 67.2,
+                legislativo: { diputados: 9, senadores: 3, fuerza: "Juntos por Entre Ríos", ausentismo: "3.2%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.1 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.6 }] 
             },
             "Formosa": { 
-                nombre: "Formosa", poblacion: 606041, pobreza_porcentaje: 53.5, costo_alquiler: 290000, canasta_basica_total: 800000, salario_promedio_ripte: 590000, empleo_informal_porcentaje: 49.0, ingresos_brutos_alicuota: 3.0, transferencias_discrecionales: "$ 134.200 Millones", pauta_oficial: "$ 3.900 Millones", inseguridad_tasa: 310, homicidios_tasa_100k: 3.8, siniestros_viales_fatales: 88, natalidad_tasa: 15.1, mortalidad_infantil_tasa: 10.1, mortalidad_tasa: 8.0, camas_uti_cada_10k: 3.8, escolarizacion_secundaria: 85.0, cobertura_agua_cloacas: 68.2, cobertura_internet_fibra: 51.0, deuda_per_capita_usd: 110,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "Partido Justicialista (Gildo Insfrán)", ausentismo: "1.9%", proyectos: 12, votoBases: "Negativo", votoPresupuesto: "Negativo" },
+                nombre: "Formosa", gobernador: "Gildo Insfrán (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "3.8%", poblacion: 606041, pobreza_porcentaje: 53.5, costo_alquiler: 290000, canasta_basica_total: 800000, salario_promedio_ripte: 590000, empleo_informal_porcentaje: 49.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 70 Millones", peso_masa_salarial: "68.5%", autonomia_financiera: "8.1%", inseguridad_tasa: 310, homicidios_tasa_100k: 3.8, siniestros_viales_fatales: 88, mortalidad_infantil_tasa: 10.1, camas_uti_cada_10k: 3.8, escolarizacion_secundaria: 85.0, cobertura_agua_cloacas: 68.2, cobertura_internet_fibra: 51.0,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "Partido Justicialista", ausentismo: "1.9%" },
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.6 }, { anio: 2025, tasa: 7.3 }, { anio: 2024, tasa: 8.2 }] 
             },
             "Jujuy": { 
-                nombre: "Jujuy", poblacion: 797955, pobreza_porcentaje: 46.5, costo_alquiler: 330000, canasta_basica_total: 820000, salario_promedio_ripte: 680000, empleo_informal_porcentaje: 44.0, ingresos_brutos_alicuota: 3.5, transferencias_discrecionales: "$ 105.600 Millones", pauta_oficial: "$ 7.400 Millones", inseguridad_tasa: 420, homicidios_tasa_100k: 3.2, siniestros_viales_fatales: 110, natalidad_tasa: 13.5, mortalidad_infantil_tasa: 8.5, mortalidad_tasa: 7.3, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.0, cobertura_agua_cloacas: 77.4, cobertura_internet_fibra: 59.5, deuda_per_capita_usd: 510,
-                legislativo: { diputados: 6, senadores: 3, fuerza: "Frente Cambia Jujuy", ausentismo: "3.7%", proyectos: 20, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Jujuy", gobernador: "Carlos Sadir (Frente Cambia Jujuy)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "3.1%", poblacion: 797955, pobreza_porcentaje: 46.5, costo_alquiler: 330000, canasta_basica_total: 820000, salario_promedio_ripte: 680000, empleo_informal_porcentaje: 44.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 410 Millones", peso_masa_salarial: "55.0%", autonomia_financiera: "17.2%", inseguridad_tasa: 420, homicidios_tasa_100k: 3.2, siniestros_viales_fatales: 110, mortalidad_infantil_tasa: 8.5, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.0, cobertura_agua_cloacas: 77.4, cobertura_internet_fibra: 59.5,
+                legislativo: { diputados: 6, senadores: 3, fuerza: "Frente Cambia Jujuy", ausentismo: "3.7%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.4 }, { anio: 2025, tasa: 7.0 }, { anio: 2024, tasa: 7.9 }] 
             },
             "La Pampa": { 
-                nombre: "La Pampa", poblacion: 366022, pobreza_porcentaje: 37.8, costo_alquiler: 400000, canasta_basica_total: 870000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 32.0, ingresos_brutos_alicuota: 3.2, transferencias_discrecionales: "$ 54.200 Millones", pauta_oficial: "$ 5.100 Millones", inseguridad_tasa: 380, homicidios_tasa_100k: 1.9, siniestros_viales_fatales: 48, natalidad_tasa: 11.5, mortalidad_infantil_tasa: 5.8, mortalidad_tasa: 7.0, camas_uti_cada_10k: 5.8, escolarizacion_secundaria: 93.1, cobertura_agua_cloacas: 89.0, cobertura_internet_fibra: 72.4, deuda_per_capita_usd: 90,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "Frente de Todos / PJ", ausentismo: "2.1%", proyectos: 26, votoBases: "Negativo", votoPresupuesto: "Negativo" },
+                nombre: "La Pampa", gobernador: "Sergio Ziliotto (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "1.9%", poblacion: 366022, pobreza_porcentaje: 37.8, costo_alquiler: 400000, canasta_basica_total: 870000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 32.0, ingresos_brutos_alicuota: 3.2, resultado_fiscal: "Déficit Operativo por Cajas", deuda_total_usd: "USD 35 Millones", peso_masa_salarial: "58.1%", autonomia_financiera: "31.0%", inseguridad_tasa: 380, homicidios_tasa_100k: 1.9, siniestros_viales_fatales: 48, mortalidad_infantil_tasa: 5.8, camas_uti_cada_10k: 5.8, escolarizacion_secundaria: 93.1, cobertura_agua_cloacas: 89.0, cobertura_internet_fibra: 72.4,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "Frente de Todos / PJ", ausentismo: "2.1%" },
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.1 }, { anio: 2025, tasa: 5.8 }, { anio: 2024, tasa: 6.6 }] 
             },
             "La Rioja": { 
-                nombre: "La Rioja", poblacion: 384607, pobreza_porcentaje: 47.1, costo_alquiler: 340000, canasta_basica_total: 820000, salario_promedio_ripte: 650000, empleo_informal_porcentaje: 43.5, ingresos_brutos_alicuota: 3.0, transferencias_discrecionales: "$ 118.900 Millones", pauta_oficial: "$ 6.200 Millones", inseguridad_tasa: 390, homicidios_tasa_100k: 2.4, siniestros_viales_fatales: 62, natalidad_tasa: 13.0, mortalidad_infantil_tasa: 8.0, mortalidad_tasa: 7.2, camas_uti_cada_10k: 4.4, escolarizacion_secundaria: 87.5, cobertura_agua_cloacas: 81.2, cobertura_internet_fibra: 60.1, deuda_per_capita_usd: 340,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "Union por la Patria", ausentismo: "4.8%", proyectos: 17, votoBases: "Negativo", votoPresupuesto: "Negativo" },
+                nombre: "La Rioja", gobernador: "Ricardo Quintela (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "2.5%", poblacion: 384607, pobreza_porcentaje: 47.1, costo_alquiler: 340000, canasta_basica_total: 820000, salario_promedio_ripte: 650000, empleo_informal_porcentaje: 43.5, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero con Cuasimoneda", deuda_total_usd: "USD 280 Millones", peso_masa_salarial: "66.0%", autonomia_financiera: "11.2%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.4, siniestros_viales_fatales: 62, mortalidad_infantil_tasa: 8.0, camas_uti_cada_10k: 4.4, escolarizacion_secundaria: 87.5, cobertura_agua_cloacas: 81.2, cobertura_internet_fibra: 60.1,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "Union por la Patria", ausentismo: "4.8%" },
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.0 }, { anio: 2025, tasa: 6.7 }, { anio: 2024, tasa: 7.5 }] 
             },
             "Mendoza": { 
-                nombre: "Mendoza", poblacion: 2014533, pobreza_porcentaje: 44.5, costo_alquiler: 470000, canasta_basica_total: 870000, salario_promedio_ripte: 720000, empleo_informal_porcentaje: 40.0, ingresos_brutos_alicuota: 4.0, transferencias_discrecionales: "$ 110.300 Millones", pauta_oficial: "$ 14.800 Millones", inseguridad_tasa: 680, homicidios_tasa_100k: 3.9, siniestros_viales_fatales: 160, natalidad_tasa: 11.8, mortalidad_infantil_tasa: 6.9, mortalidad_tasa: 7.5, camas_uti_cada_10k: 5.0, escolarizacion_secundaria: 90.1, cobertura_agua_cloacas: 84.2, cobertura_internet_fibra: 71.3, deuda_per_capita_usd: 290,
-                legislativo: { diputados: 10, senadores: 3, fuerza: "Cambia Mendoza / PRO", ausentismo: "3.0%", proyectos: 29, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Mendoza", gobernador: "Alfredo Cornejo (Cambia Mendoza / JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "4.3%", poblacion: 2014533, pobreza_porcentaje: 44.5, costo_alquiler: 470000, canasta_basica_total: 870000, salario_promedio_ripte: 720000, empleo_informal_porcentaje: 40.0, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Fiscal Operativo", deuda_total_usd: "USD 540 Millones", peso_masa_salarial: "45.0%", autonomia_financiera: "48.2%", inseguridad_tasa: 680, homicidios_tasa_100k: 3.9, siniestros_viales_fatales: 160, mortalidad_infantil_tasa: 6.9, camas_uti_cada_10k: 5.0, escolarizacion_secundaria: 90.1, cobertura_agua_cloacas: 84.2, cobertura_internet_fibra: 71.3,
+                legislativo: { diputados: 10, senadores: 3, fuerza: "Cambia Mendoza / PRO", ausentismo: "3.0%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.8 }, { anio: 2025, tasa: 6.5 }, { anio: 2024, tasa: 7.3 }] 
             },
             "Misiones": { 
-                nombre: "Misiones", poblacion: 1280960, pobreza_porcentaje: 48.2, costo_alquiler: 350000, canasta_basica_total: 840000, salario_promedio_ripte: 670000, empleo_informal_porcentaje: 45.0, ingresos_brutos_alicuota: 4.5, transferencias_discrecionales: "$ 96.400 Millones", pauta_oficial: "$ 11.200 Millones", inseguridad_tasa: 410, homicidios_tasa_100k: 4.5, siniestros_viales_fatales: 210, natalidad_tasa: 15.2, mortalidad_infantil_tasa: 8.9, mortalidad_tasa: 7.4, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.2, cobertura_agua_cloacas: 70.4, cobertura_internet_fibra: 58.0, deuda_per_capita_usd: 160,
-                legislativo: { diputados: 7, senadores: 3, fuerza: "Frente Renovador de la Concordia", ausentismo: "2.2%", proyectos: 23, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Misiones", gobernador: "Hugo Passalacqua (Frente Renovador)", legislatura: "Unicameral (Mayoría FR)", coparticipacion_real: "3.5%", poblacion: 1280960, pobreza_porcentaje: 48.2, costo_alquiler: 350000, canasta_basica_total: 840000, salario_promedio_ripte: 670000, empleo_informal_porcentaje: 45.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 95 Millones", peso_masa_salarial: "51.2%", autonomia_financiera: "34.5%", inseguridad_tasa: 410, homicidios_tasa_100k: 4.5, siniestros_viales_fatales: 210, mortalidad_infantil_tasa: 8.9, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.2, cobertura_agua_cloacas: 70.4, cobertura_internet_fibra: 58.0,
+                legislativo: { diputados: 7, senadores: 3, fuerza: "Frente Renovador de la Concordia", ausentismo: "2.2%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.5 }, { anio: 2025, tasa: 6.2 }, { anio: 2024, tasa: 7.0 }] 
             },
             "Neuquén": { 
-                nombre: "Neuquén", poblacion: 726590, pobreza_porcentaje: 38.5, costo_alquiler: 610000, canasta_basica_total: 960000, salario_promedio_ripte: 1280000, empleo_informal_porcentaje: 28.0, ingresos_brutos_alicuota: 3.5, transferencias_discrecionales: "$ 68.900 Millones", pauta_oficial: "$ 10.400 Millones", inseguridad_tasa: 550, homicidios_tasa_100k: 4.1, siniestros_viales_fatales: 85, natalidad_tasa: 12.1, mortalidad_infantil_tasa: 5.9, mortalidad_tasa: 6.8, camas_uti_cada_10k: 5.5, escolarizacion_secundaria: 91.0, cobertura_agua_cloacas: 85.0, cobertura_internet_fibra: 76.5, deuda_per_capita_usd: 940,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "Movimiento Popular Neuquino / LLA", ausentismo: "3.4%", proyectos: 25, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Neuquén", gobernador: "Rolando Figueroa (Comunidad)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.1%", poblacion: 726590, pobreza_porcentaje: 38.5, costo_alquiler: 610000, canasta_basica_total: 960000, salario_promedio_ripte: 1280000, empleo_informal_porcentaje: 28.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit por Regalías hidrocarburíferas", deuda_total_usd: "USD 1.100 Millones", peso_masa_salarial: "42.0%", autonomia_financiera: "65.4%", inseguridad_tasa: 550, homicidios_tasa_100k: 4.1, siniestros_viales_fatales: 85, mortalidad_infantil_tasa: 5.9, camas_uti_cada_10k: 5.5, escolarizacion_secundaria: 91.0, cobertura_agua_cloacas: 85.0, cobertura_internet_fibra: 76.5,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "Movimiento Popular Neuquino / LLA", ausentismo: "3.4%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 5.9 }, { anio: 2025, tasa: 5.6 }, { anio: 2024, tasa: 6.3 }] 
             },
             "Río Negro": { 
-                nombre: "Río Negro", poblacion: 762067, pobreza_porcentaje: 41.2, costo_alquiler: 470000, canasta_basica_total: 920000, salario_promedio_ripte: 920000, empleo_informal_porcentaje: 33.0, ingresos_brutos_alicuota: 3.7, transferencias_discrecionales: "$ 72.100 Millones", pauta_oficial: "$ 8.500 Millones", inseguridad_tasa: 490, homicidios_tasa_100k: 3.6, siniestros_viales_fatales: 98, natalidad_tasa: 11.9, mortalidad_infantil_tasa: 6.5, mortalidad_tasa: 7.1, camas_uti_cada_10k: 4.9, escolarizacion_secundaria: 89.8, cobertura_agua_cloacas: 83.1, cobertura_internet_fibra: 69.8, deuda_per_capita_usd: 520,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "Juntos Somos Río Negro", ausentismo: "3.8%", proyectos: 21, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Río Negro", gobernador: "Alberto Weretilneck (Juntos Somos Río Negro)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.8%", poblacion: 762067, pobreza_porcentaje: 41.2, costo_alquiler: 470000, canasta_basica_total: 920000, salario_promedio_ripte: 920000, empleo_informal_porcentaje: 33.0, ingresos_brutos_alicuota: 3.7, resultado_fiscal: "Déficit Financiero Leve", deuda_total_usd: "USD 580 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "35.1%", inseguridad_tasa: 490, homicidios_tasa_100k: 3.6, siniestros_viales_fatales: 98, mortalidad_infantil_tasa: 6.5, camas_uti_cada_10k: 4.9, escolarizacion_secundaria: 89.8, cobertura_agua_cloacas: 83.1, cobertura_internet_fibra: 69.8,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "Juntos Somos Río Negro", ausentismo: "3.8%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.7 }, { anio: 2025, tasa: 6.4 }, { anio: 2024, tasa: 7.2 }] 
             },
             "Salta": { 
-                nombre: "Salta", poblacion: 1440672, pobreza_porcentaje: 49.5, costo_alquiler: 360000, canasta_basica_total: 840000, salario_promedio_ripte: 660000, empleo_informal_porcentaje: 48.0, ingresos_brutos_alicuota: 3.6, transferencias_discrecionales: "$ 115.400 Millones", pauta_oficial: "$ 9.800 Millones", inseguridad_tasa: 580, homicidios_tasa_100k: 4.9, siniestros_viales_fatales: 155, natalidad_tasa: 14.5, mortalidad_infantil_tasa: 9.1, mortalidad_tasa: 7.8, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 86.0, cobertura_agua_cloacas: 75.2, cobertura_internet_fibra: 61.2, deuda_per_capita_usd: 280,
-                legislativo: { diputados: 7, senadores: 3, fuerza: "Gustavo Sáenz Conducción", ausentismo: "4.5%", proyectos: 18, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Salta", gobernador: "Gustavo Sáenz (Identidad Provincial)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "4.1%", poblacion: 1440672, pobreza_porcentaje: 49.5, costo_alquiler: 360000, canasta_basica_total: 840000, salario_promedio_ripte: 660000, empleo_informal_porcentaje: 48.0, ingresos_brutos_alicuota: 3.6, resultado_fiscal: "Equilibrio Operativo", deuda_total_usd: "USD 350 Millones", peso_masa_salarial: "53.0%", autonomia_financiera: "24.5%", inseguridad_tasa: 580, homicidios_tasa_100k: 4.9, siniestros_viales_fatales: 155, mortalidad_infantil_tasa: 9.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 86.0, cobertura_agua_cloacas: 75.2, cobertura_internet_fibra: 61.2,
+                legislativo: { diputados: 7, senadores: 3, fuerza: "Gustavo Sáenz Conducción", ausentismo: "4.5%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 8.1 }, { anio: 2025, tasa: 7.7 }, { anio: 2024, tasa: 8.6 }] 
             },
             "San Juan": { 
-                nombre: "San Juan", poblacion: 818234, pobreza_porcentaje: 42.0, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 730000, empleo_informal_porcentaje: 38.0, ingresos_brutos_alicuota: 3.3, transferencias_discrecionales: "$ 84.100 Millones", pauta_oficial: "$ 7.900 Millones", inseguridad_tasa: 430, homicidios_tasa_100k: 2.3, siniestros_viales_fatales: 90, natalidad_tasa: 13.1, mortalidad_infantil_tasa: 7.0, mortalidad_tasa: 7.2, camas_uti_cada_10k: 4.7, escolarizacion_secundaria: 89.2, cobertura_agua_cloacas: 82.5, cobertura_internet_fibra: 64.0, deuda_per_capita_usd: 190,
-                legislativo: { diputados: 6, senadores: 3, fuerza: "Por San Juan / UxP", ausentismo: "3.0%", proyectos: 22, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "San Juan", gobernador: "Marcelo Orrego (Unidos por San Juan)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.0%", poblacion: 818234, pobreza_porcentaje: 42.0, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 730000, empleo_informal_porcentaje: 38.0, ingresos_brutos_alicuota: 3.3, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 160 Millones", peso_masa_salarial: "52.0%", autonomia_financiera: "28.3%", inseguridad_tasa: 430, homicidios_tasa_100k: 2.3, siniestros_viales_fatales: 90, mortalidad_infantil_tasa: 7.0, camas_uti_cada_10k: 4.7, escolarizacion_secundaria: 89.2, cobertura_agua_cloacas: 82.5, cobertura_internet_fibra: 64.0,
+                legislativo: { diputados: 6, senadores: 3, fuerza: "Por San Juan / UxP", ausentismo: "3.0%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.2 }, { anio: 2025, tasa: 5.9 }, { anio: 2024, tasa: 6.7 }] 
             },
             "San Luis": { 
-                nombre: "San Luis", poblacion: 540905, pobreza_porcentaje: 40.2, costo_alquiler: 390000, canasta_basica_total: 860000, salario_promedio_ripte: 740000, empleo_informal_porcentaje: 35.5, ingresos_brutos_alicuota: 3.5, transferencias_discrecionales: "$ 61.500 Millones", pauta_oficial: "$ 8.100 Millones", inseguridad_tasa: 390, homicidios_tasa_100k: 2.5, siniestros_viales_fatales: 68, natalidad_tasa: 12.5, mortalidad_infantil_tasa: 6.8, mortalidad_tasa: 7.0, camas_uti_cada_10k: 5.2, escolarizacion_secundaria: 90.5, cobertura_agua_cloacas: 86.0, cobertura_internet_fibra: 79.1, deuda_per_capita_usd: 140,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "Cambia San Luis / PJ", ausentismo: "2.6%", proyectos: 20, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "San Luis", gobernador: "Claudio Poggi (Cambia San Luis)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "2.0%", poblacion: 540905, pobreza_porcentaje: 40.2, costo_alquiler: 390000, canasta_basica_total: 860000, salario_promedio_ripte: 740000, empleo_informal_porcentaje: 35.5, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Administrado", deuda_total_usd: "USD 80 Millones", peso_masa_salarial: "49.5%", autonomia_financiera: "39.1%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.5, siniestros_viales_fatales: 68, mortalidad_infantil_tasa: 6.8, camas_uti_cada_10k: 5.2, escolarizacion_secundaria: 90.5, cobertura_agua_cloacas: 86.0, cobertura_internet_fibra: 79.1,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "Cambia San Luis / PJ", ausentismo: "2.6%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 5.8 }, { anio: 2025, tasa: 5.5 }, { anio: 2024, tasa: 6.2 }] 
             },
             "Santa Cruz": { 
-                nombre: "Santa Cruz", poblacion: 333473, pobreza_porcentaje: 35.8, costo_alquiler: 550000, canasta_basica_total: 970000, salario_promedio_ripte: 1200000, empleo_informal_porcentaje: 26.5, ingresos_brutos_alicuota: 3.0, transferencias_discrecionales: "$ 74.800 Millones", pauta_oficial: "$ 11.500 Millones", inseguridad_tasa: 460, homicidios_tasa_100k: 3.0, siniestros_viales_fatales: 42, natalidad_tasa: 11.4, mortalidad_infantil_tasa: 5.6, mortalidad_tasa: 6.9, camas_uti_cada_10k: 5.7, escolarizacion_secundaria: 92.0, cobertura_agua_cloacas: 88.4, cobertura_internet_fibra: 67.5, deuda_per_capita_usd: 480,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "Por Santa Cruz", ausentismo: "4.1%", proyectos: 16, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
+                nombre: "Santa Cruz", gobernador: "Claudio Vidal (Por Santa Cruz)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "1.7%", poblacion: 333473, pobreza_porcentaje: 35.8, costo_alquiler: 550000, canasta_basica_total: 970000, salario_promedio_ripte: 1200000, empleo_informal_porcentaje: 26.5, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Estructural en Caja de Previsión", deuda_total_usd: "USD 420 Millones", peso_masa_salarial: "62.0%", autonomia_financiera: "31.2%", inseguridad_tasa: 460, homicidios_tasa_100k: 3.0, siniestros_viales_fatales: 42, mortalidad_infantil_tasa: 5.6, camas_uti_cada_10k: 5.7, escolarizacion_secundaria: 92.0, cobertura_agua_cloacas: 88.4, cobertura_internet_fibra: 67.5,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "Por Santa Cruz", ausentismo: "4.1%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 5.5 }, { anio: 2025, tasa: 5.2 }, { anio: 2024, tasa: 6.0 }] 
             },
             "Tierra del Fuego": { 
-                nombre: "Tierra del Fuego", poblacion: 190641, pobreza_porcentaje: 36.5, costo_alquiler: 620000, canasta_basica_total: 990000, salario_promedio_ripte: 1150000, empleo_informal_porcentaje: 25.0, ingresos_brutos_alicuota: 3.0, transferencias_discrecionales: "$ 48.500 Millones", pauta_oficial: "$ 6.400 Millones", inseguridad_tasa: 480, homicidios_tasa_100k: 2.2, siniestros_viales_fatales: 22, natalidad_tasa: 12.8, mortalidad_infantil_tasa: 5.2, mortalidad_tasa: 6.5, camas_uti_cada_10k: 6.0, escolarizacion_secundaria: 94.5, cobertura_agua_cloacas: 91.2, cobertura_internet_fibra: 82.0, deuda_per_capita_usd: 610,
-                legislativo: { diputados: 5, senadores: 3, fuerza: "FORJA / UxP", ausentismo: "3.1%", proyectos: 28, votoBases: "Negativo", votoPresupuesto: "Negativo" },
+                nombre: "Tierra del Fuego", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", poblacion: 190641, pobreza_porcentaje: 36.5, costo_alquiler: 620000, canasta_basica_total: 990000, salario_promedio_ripte: 1150000, empleo_informal_porcentaje: 25.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero", deuda_total_usd: "USD 390 Millones", peso_masa_salarial: "54.1%", autonomia_financiera: "42.0%", inseguridad_tasa: 480, homicidios_tasa_100k: 2.2, siniestros_viales_fatales: 22, mortalidad_infantil_tasa: 5.2, camas_uti_cada_10k: 6.0, escolarizacion_secundaria: 94.5, cobertura_agua_cloacas: 91.2, cobertura_internet_fibra: 82.0,
+                legislativo: { diputados: 5, senadores: 3, fuerza: "FORJA / UxP", ausentismo: "3.1%" },
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.2 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.9 }] 
             }
         };
@@ -558,6 +583,12 @@
             const inseguridad = (p.inseguridad_tasa || 500) / 12;
             let score = (pobr * 0.55) + (desempleo * 2.2) + (inseguridad * 0.25);
             return Math.min(Math.max(Math.round(score), 15), 100);
+        }
+
+        function asignarBadgeVoto(idElemento, voto) {
+            const el = document.getElementById(idElemento);
+            el.innerText = voto;
+            el.className = "voto-badge " + (voto === "Afirmativo" ? "voto-afirmativo" : voto === "Negativo" ? "voto-negativo" : "voto-abstencion");
         }
 
         function mostrarDatos(nombreProv) {
@@ -573,46 +604,48 @@
             document.getElementById('panel-nombre').innerText = data.nombre;
             document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`;
 
+            // Identificación Institucional
+            document.getElementById('panel-gobernador').innerText = data.gobernador;
+            document.getElementById('panel-legislatura-local').innerText = data.legislatura;
+            document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
+
             // Legislativos
             document.getElementById('panel-diputados').innerText = `${data.legislativo.diputados} bancas`;
             document.getElementById('panel-senadores').innerText = `${data.legislativo.senadores} bancas`;
             document.getElementById('panel-fuerza-mayoritaria').innerText = data.legislativo.fuerza;
             document.getElementById('panel-ausentismo').innerText = data.legislativo.ausentismo;
-            document.getElementById('panel-proyectos').innerText = `${data.legislativo.proyectos} anuales (promedio)`;
 
-            // Votaciones Clave
-            const vb = document.getElementById('panel-voto-bases');
-            vb.innerText = data.legislativo.votoBases;
-            vb.className = "voto-badge " + (data.legislativo.votoBases === "Afirmativo" ? "voto-afirmativo" : data.legislativo.votoBases === "Negativo" ? "voto-negativo" : "voto-abstencion");
+            // Votaciones Clave Ampliadas (6 leyes)
+            asignarBadgeVoto('panel-voto-bases', data.votaciones.bases);
+            asignarBadgeVoto('panel-voto-presupuesto', data.votaciones.presupuesto);
+            asignarBadgeVoto('panel-voto-jubilados', data.votaciones.jubilados);
+            asignarBadgeVoto('panel-voto-universidades', data.votaciones.universidades);
+            asignarBadgeVoto('panel-voto-bup', data.votaciones.bup);
+            asignarBadgeVoto('panel-voto-rigi', data.votaciones.rigi);
 
-            const vp = document.getElementById('panel-voto-presupuesto');
-            vp.innerText = data.legislativo.votoPresupuesto;
-            vp.className = "voto-badge " + (data.legislativo.votoPresupuesto === "Afirmativo" ? "voto-afirmativo" : data.legislativo.votoPresupuesto === "Negativo" ? "voto-negativo" : "voto-abstencion");
-
-            // Economía & Gestión
+            // Economía & Finanzas
             document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
             document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
-            document.getElementById('panel-informal').innerText = `${data.empleo_informal_porcentaje}%`;
-            document.getElementById('panel-salario').innerText = `$${data.salario_promedio_ripte.toLocaleString('es-AR')}`;
-            document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
             document.getElementById('panel-cbt').innerText = `$${data.canasta_basica_total.toLocaleString('es-AR')}`;
+            document.getElementById('panel-salario').innerText = `$${data.salario_promedio_ripte.toLocaleString('es-AR')}`;
+            document.getElementById('panel-informal').innerText = `${data.empleo_informal_porcentaje}%`;
+            document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
             document.getElementById('panel-iibb').innerText = `${data.ingresos_brutos_alicuota}%`;
+
+            document.getElementById('panel-resultado-fiscal').innerText = data.resultado_fiscal;
+            document.getElementById('panel-deuda-total').innerText = data.deuda_total_usd;
+            document.getElementById('panel-masa-salarial').innerText = data.peso_masa_salarial;
+            document.getElementById('panel-autonomia').innerText = data.autonomia_financiera;
 
             document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa}`;
             document.getElementById('panel-homicidios').innerText = `${data.homicidios_tasa_100k}`;
             document.getElementById('panel-vial').innerText = `${data.siniestros_viales_fatales}`;
 
-            document.getElementById('panel-natalidad').innerText = `${data.natalidad_tasa} ‰`;
             document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
-            document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;
             document.getElementById('panel-camas').innerText = `${data.camas_uti_cada_10k}`;
             document.getElementById('panel-escuela').innerText = `${data.escolarizacion_secundaria}%`;
-
-            document.getElementById('panel-transf-disc').innerText = data.transferencias_discrecionales;
-            document.getElementById('panel-pauta-oficial').innerText = data.pauta_oficial;
             document.getElementById('panel-agua').innerText = `${data.cobertura_agua_cloacas}%`;
             document.getElementById('panel-internet').innerText = `${data.cobertura_internet_fibra}%`;
-            document.getElementById('panel-deuda').innerText = `USD ${data.deuda_per_capita_usd}`;
 
             let historialHTML = '';
             if (data.desempleo_historial) {
