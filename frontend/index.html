@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor Cívico Argentina - Mapa Realista</title>
+    <title>Monitor Cívico Argentina</title>
     <style>
         :root {
             --celeste: #74acdf;
@@ -103,7 +103,7 @@
             position: absolute;
             bottom: 30px;
             left: 20px;
-            z-index: 1000;
+            z-index: 3000;
             background: #0284c7;
             color: white;
             border: none;
@@ -128,24 +128,27 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
+            pointer-events: auto;
         }
 
         #map-svg {
             height: 86vh;
             max-width: 90vw;
             filter: drop-shadow(0px 8px 20px rgba(0,0,0,0.15));
+            pointer-events: auto;
         }
 
         .provincia-shape {
             stroke: #334155;
             stroke-width: 1.2;
             cursor: pointer;
+            pointer-events: auto;
             transition: all 0.2s ease;
         }
         .provincia-shape:hover {
             fill: #ffb81c !important;
             stroke: #0f172a !important;
-            stroke-width: 2.2 !important;
+            stroke-width: 2.5 !important;
             filter: brightness(1.1);
         }
 
@@ -155,15 +158,16 @@
             right: 20px;
             width: 440px;
             max-height: calc(100vh - 40px);
-            z-index: 2000;
+            z-index: 4000;
             background: var(--card-bg);
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
             overflow-y: auto;
             display: none;
             border: 2px solid var(--celeste);
             color: var(--text);
+            pointer-events: auto;
         }
         .close-btn {
             float: right;
@@ -245,7 +249,7 @@
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Argentina Completa</button>
 
     <div id="map-container">
-        <!-- Mapa Vectorial Exacto con Contorno Real de Argentina y CABA independiente -->
+        <!-- Mapa Vectorial con CABA Ampliado e Independiente -->
         <svg id="map-svg" viewBox="0 0 450 900" xmlns="http://www.w3.org/2000/svg">
             <g id="provincias-group">
                 <!-- Jujuy -->
@@ -286,8 +290,8 @@
                 <!-- Provincia de Buenos Aires (Excluyendo CABA) -->
                 <path class="provincia-shape" data-nombre="Buenos Aires" fill="#ef4444" d="M 230,345 L 275,350 L 340,340 L 320,445 L 250,510 L 175,448 L 220,430 Z" />
                 
-                <!-- CABA (Ciudad Autónoma de Buenos Aires - Independiente dentro de Buenos Aires) -->
-                <polygon class="provincia-shape" data-nombre="Ciudad Autónoma de Buenos Aires (CABA)" fill="#16a34a" points="280,348 298,348 300,362 282,362" />
+                <!-- CABA (Ciudad Autónoma de Buenos Aires - Bloque Grande y Visible) -->
+                <polygon class="provincia-shape" data-nombre="Ciudad Autónoma de Buenos Aires (CABA)" fill="#16a34a" points="265,335 295,335 298,365 268,365" />
 
                 <!-- Neuquén -->
                 <path class="provincia-shape" data-nombre="Neuquén" fill="#f97316" d="M 80,360 L 125,385 L 115,460 L 65,445 Z" />
@@ -309,7 +313,7 @@
         </svg>
     </div>
 
-    <!-- Panel Lateral con Datos Realistas -->
+    <!-- Panel Lateral de Datos -->
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
         <h2 id="panel-nombre" class="province-title">-</h2>
@@ -379,12 +383,12 @@
                 desempleo_historial: [{ anio: 2026, tasa: 7.1 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.5 }] 
             },
             "Chaco": { 
-                nombre: "Chaco", poblacion: 1142963, pobreza_porcentaje: 57.2, costo_alquiler: 310000, canasta_basica_total: 820000, salario_promedio_ripte: 610000, empleo_informal_porcentaje: 51.0, ingresos_brutos_alicuota: 4.1, transferencias_discrecionales: "$ 148.300 Millones", pauta_oficial: "$ 8.200 Millones", inseguridad_tasa: 610, homicidios_tasa_100k: 4.8, siniestros_viales_fatales: 180, natalidad_tasa: 15.5, mortalidad_infantil_tasa": 10.8, mortalidad_tasa": 8.2, camas_uti_cada_10k": 3.5, escolarizacion_secundaria: 82.1, cobertura_agua_cloacas": 64.5, cobertura_internet_fibra": 52.1, deuda_per_capita_usd: 230,
+                nombre: "Chaco", poblacion: 1142963, pobreza_porcentaje: 57.2, costo_alquiler: 310000, canasta_basica_total: 820000, salario_promedio_ripte: 610000, empleo_informal_porcentaje: 51.0, ingresos_brutos_alicuota: 4.1, transferencias_discrecionales: "$ 148.300 Millones", pauta_oficial: "$ 8.200 Millones", inseguridad_tasa: 610, homicidios_tasa_100k: 4.8, siniestros_viales_fatales: 180, natalidad_tasa: 15.5, mortalidad_infantil_tasa: 10.8, mortalidad_tasa: 8.2, camas_uti_cada_10k: 3.5, escolarizacion_secundaria: 82.1, cobertura_agua_cloacas: 64.5, cobertura_internet_fibra: 52.1, deuda_per_capita_usd: 230,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "UCR / UxP", ausentismo: "5.8%", proyectos: 15, votoBases: "Abstención", votoPresupuesto: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 9.5 }, { anio: 2025, tasa: 8.9 }, { anio: 2024, tasa: 9.8 }] 
             },
             "Chubut": { 
-                nombre: "Chubut", poblacion: 603120, pobreza_porcentaje: 39.5, costo_alquiler: 480000, canasta_basica_total: 940000, salario_promedio_ripte: 1050000, empleo_informal_porcentaje: 31.0, ingresos_brutos_alicuota: 3.8, transferencias_discrecionales: "$ 62.100 Millones", pauta_oficial: "$ 5.800 Millones", inseguridad_tasa: 520, homicidios_tasa_100k": 4.2, siniestros_viales_fatales": 72, natalidad_tasa": 11.2, mortalidad_infantil_tasa": 6.2, mortalidad_tasa": 7.1, camas_uti_cada_10k": 5.1, escolarizacion_secundaria": 89.0, cobertura_agua_cloacas": 86.1, cobertura_internet_fibra": 65.0, deuda_per_capita_usd: 890,
+                nombre: "Chubut", poblacion: 603120, pobreza_porcentaje: 39.5, costo_alquiler: 480000, canasta_basica_total: 940000, salario_promedio_ripte: 1050000, empleo_informal_porcentaje: 31.0, ingresos_brutos_alicuota: 3.8, transferencias_discrecionales: "$ 62.100 Millones", pauta_oficial: "$ 5.800 Millones", inseguridad_tasa: 520, homicidios_tasa_100k: 4.2, siniestros_viales_fatales: 72, natalidad_tasa: 11.2, mortalidad_infantil_tasa": 6.2, mortalidad_tasa": 7.1, camas_uti_cada_10k": 5.1, escolarizacion_secundaria: 89.0, cobertura_agua_cloacas: 86.1, cobertura_internet_fibra": 65.0, deuda_per_capita_usd: 890,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Despierta Chubut / UxP", ausentismo: "3.5%", proyectos: 21, votoBases: "Afirmativo", votoPresupuesto: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.4 }, { anio: 2025, tasa: 6.1 }, { anio: 2024, tasa: 7.0 }] 
             },
@@ -494,7 +498,7 @@
             return Math.min(Math.max(Math.round(score), 15), 100);
         }
 
-        // Asignación directa y robusta de eventos de click a cada provincia del mapa SVG
+        // Manejador de clics garantizado con listeners directos
         document.querySelectorAll('.provincia-shape').forEach(elem => {
             elem.addEventListener('click', function(e) {
                 e.stopPropagation();
