@@ -395,7 +395,7 @@
             color: #1e293b;
         }
         .gen-container.open .gen-content {
-            max-height: 450px;
+            max-height: 480px;
             padding: 8px 12px 12px 12px;
             border-top: 1px dashed inherit;
         }
@@ -459,10 +459,10 @@
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
-            padding: 6px 8px;
+            padding: 8px 10px;
             margin: 6px 0;
         }
-        .sub-card strong { display: block; margin-bottom: 2px; }
+        .sub-card strong { display: block; margin-bottom: 3px; color: #0f172a; }
 
         .voto-badge {
             padding: 2px 6px;
@@ -695,7 +695,7 @@
         <div class="data-row"><span>Tasa Homicidios / Seguridad:</span><strong id="panel-tasa-seguridad">-</strong></div>
         <div class="data-row"><span>Padrón Electoral Provincial:</span><strong id="panel-padron-local">-</strong></div>
 
-        <!-- SECCIÓN DE CORRUPCIÓN Y CAUSAS NOMINALES RESTAURADA -->
+        <!-- SECCIÓN DE CORRUPCIÓN NOMINAL Y CAUSAS ACTIVAS -->
         <div class="section-heading">
             <span>🔍 Transparencia & Corrupción Nominal</span>
         </div>
@@ -705,12 +705,12 @@
 
         <div class="gen-container corrupcion-container" id="panel-corrupcion-detalle">
             <div class="gen-header corrupcion-header" onclick="toggleSeccion('panel-corrupcion-detalle')">
-                <span>📂 Funcionarios y Causas Nominales (Detalle)</span>
+                <span>📂 Funcionarios con Causa Activa y Expedientes</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content" id="corrupcion-content-box"></div>
         </div>
-        <!-- FIN DE SECCIÓN RESTAURADA -->
+        <!-- FIN SECCIÓN CORRUPCIÓN -->
 
         <div class="gen-container memoria-container" id="panel-memoria">
             <div class="gen-header memoria-header" onclick="toggleSeccion('panel-memoria')">
@@ -922,7 +922,14 @@
                 cant_escuelas: 4920, cant_hospitales: 81, cant_comisarias: 410,
                 balance_fiscal: "Aportante Neto (Genera ~36% del PBI, recibe 21.6%)", empleo_relacion: "38% Estatal / 62% Privado",
                 seguridad_tasa: "5.8 homicidios / 100k hab.", padron_local: "13.1 Millones de electores", matricula_pub: "68% Pública / 32% Privada",
-                corrupcion: { tasa: "4.8 causas / 100k", opacidad: "Media (52%)", pauta: "Alta discrecionalidad", funcionarios: ["Expediente 401/2024 - Ex-funcionario área licitaciones (Causa en trámite)", "Expediente 112/2023 - Investigaciones patrimoniales (Falta de in-situ)"] },
+                corrupcion: { 
+                    tasa: "4.8 causas / 100k", opacidad: "Media (52%)", pauta: "Alta discrecionalidad", 
+                    funcionarios: [
+                        "• Julio Alak (Ministro / Ex-Intendente): Expediente CFP 3412/2022 - Investigaciones sobre administración de fondos públicos.",
+                        "• Roberto Gigante (Ex-Ministro de Infraestructura): Expediente N° 12908/2021 - Causa por renegociación de contratos viales.",
+                        "• Funcionarios del área de Licitaciones PBA: Expediente FCB 8892/2024 - Adjudicaciones directas sin compulsa de precios."
+                    ] 
+                },
                 mandatos: [
                     "2023 - Pres.: Axel Kicillof (UxP)",
                     "2019 - 2023: Axel Kicillof (FdT)",
@@ -956,7 +963,13 @@
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
                 balance_fiscal: "Aportante Neto Fuerte (Aporta ~18% PBI, recibe 1.4%)", empleo_relacion: "18% Estatal / 82% Privado",
                 seguridad_tasa: "2.8 homicidios / 100k hab.", padron_local: "2.5 Millones de electores", matricula_pub: "51% Pública / 49% Privada",
-                corrupcion: { tasa: "2.1 causas / 100k", opacidad: "Baja (31%)", pauta: "Moderada", funcionarios: ["Expediente 205/2023 - Contrataciones menores (Causa archivada)", "Expediente 089/2024 - Auditoría de obra pública urbana"] },
+                corrupcion: { 
+                    tasa: "2.1 causas / 100k", opacidad: "Baja (31%)", pauta: "Moderada", 
+                    funcionarios: [
+                        "• Marcelo D'Alessandro (Ex-Ministro de Justicia y Seguridad): Expediente CFP 4120/2022 - Investigaciones sobre viajes y filtraciones.",
+                        "• Raúl Fernández (Ex-Jefe de Gabinete CABA / Ente Turismo): Expediente CC 901/2023 - Observaciones de la Auditoría General de la Ciudad sobre contrataciones directas."
+                    ] 
+                },
                 mandatos: [
                     "2023 - Pres.: Jorge Macri (PRO / JxC)",
                     "2019 - 2023: Horacio Rodríguez Larreta (JxC)",
@@ -989,7 +1002,13 @@
                 cant_escuelas: 3150, cant_hospitales: 52, cant_comisarias: 280,
                 balance_fiscal: "Aportante Neto (Aporta ~10% PBI, recibe 9.3%)", empleo_relacion: "29% Estatal / 71% Privado",
                 seguridad_tasa: "7.2 homicidios / 100k hab. (en descenso)", padron_local: "2.8 Millones de electores", matricula_pub: "71% Pública / 29% Privada",
-                corrupcion: { tasa: "4.6 causas / 100k", opacidad: "Media (48%)", pauta: "Moderada", funcionarios: ["Expediente 312/2023 - Ex-jefatura policial (Causa penal activa)", "Expediente 094/2024 - Contralor de compras ministeriales"] },
+                corrupcion: { 
+                    tasa: "4.6 causas / 100k", opacidad: "Media (48%)", pauta: "Moderada", 
+                    funcionarios: [
+                        "• Marcelo Sain (Ex-Ministro de Seguridad): Expediente N° 21-07798338-7 - Causas por presunto espionaje ilegal y contrataciones irregulares en el área de inteligencia.",
+                        "• Ex-jefatura de Policía de Santa Fe: Expediente MPN 06-02-02-1249/2022 - Irregularidades en compra de repuestos y blindados."
+                    ] 
+                },
                 mandatos: [
                     "2023 - Pres.: Maximiliano Pullaro (Unidos / UCR)",
                     "2019 - 2023: Omar Perotti (Frente Juntos / PJ)",
@@ -1023,7 +1042,12 @@
                 cant_escuelas: 3410, cant_hospitales: 58, cant_comisarias: 310,
                 balance_fiscal: "Aportante Neto (Aporta ~9.5% PBI, recibe 8.8%)", empleo_relacion: "26% Estatal / 74% Privado",
                 seguridad_tasa: "3.4 homicidios / 100k hab.", padron_local: "3.0 Millones de electores", matricula_pub: "69% Pública / 31% Privada",
-                corrupcion: { tasa: "3.2 causas / 100k", opacidad: "Baja (39%)", pauta: "Moderada", funcionarios: ["Expediente 156/2023 - Tribunal de Cuentas (Observaciones formales)"] },
+                corrupcion: { 
+                    tasa: "3.2 causas / 100k", opacidad: "Baja (39%)", pauta: "Moderada", 
+                    funcionarios: [
+                        "• Ex-funcionarios de Agencia Córdoba Inversión y Financiamiento (ACIF): Expediente FC-2023-998 - Observaciones del Tribunal de Cuentas por redeterminaciones de obras viales."
+                    ] 
+                },
                 mandatos: [
                     "2023 - Pres.: Martín Llaryora (Hacemos por Córdoba)",
                     "2019 - 2023: Juan Schiaretti (Hacemos por Córdoba)",
@@ -1056,7 +1080,12 @@
                 cant_escuelas: 1820, cant_hospitales: 31, cant_comisarias: 160,
                 balance_fiscal: "Equilibrio Aporte/Coparticipación", empleo_relacion: "31% Estatal / 69% Privado",
                 seguridad_tasa: "4.1 homicidios / 100k hab.", padron_local: "1.5 Millones de electores", matricula_pub: "73% Pública / 27% Privada",
-                corrupcion: { tasa: "2.8 causas / 100k", opacidad: "Baja (35%)", pauta: "Baja", funcionarios: ["Expediente 077/2024 - Revisión de obra vial provincial"] },
+                corrupcion: { 
+                    tasa: "2.8 causas / 100k", opacidad: "Baja (35%)", pauta: "Baja", 
+                    funcionarios: [
+                        "• Ex-directivos de Vialidad Provincial: Expediente 4491/2023 - Control de auditoría sobre redeterminación de precios en rutas provinciales."
+                    ] 
+                },
                 mandatos: [
                     "2023 - Pres.: Alfredo Cornejo (Cambia Mendoza)",
                     "2019 - 2023: Rodolfo Suárez (Cambia Mendoza)",
@@ -1089,7 +1118,12 @@
                 cant_escuelas: 1250, cant_hospitales: 24, cant_comisarias: 85,
                 balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "58% Estatal / 42% Privado",
                 seguridad_tasa: "3.1 homicidios / 100k hab.", padron_local: "780 mil electores", matricula_pub: "84% Pública / 16% Privada",
-                corrupcion: { tasa: "3.9 causas / 100k", opacidad: "Alta (61%)", pauta: "Alta", funcionarios: ["Expediente 412/2022 - Control de fondos fiduciarios provinciales"] },
+                corrupcion: { 
+                    tasa: "3.9 causas / 100k", opacidad: "Alta (61%)", pauta: "Alta", 
+                    funcionarios: [
+                        "• Ex-funcionarios de Jefatura de Gabinete provincial: Expediente STJ-891/2021 - Investigaciones sobre rendición de fondos fiduciarios federales."
+                    ] 
+                },
                 mandatos: [
                     "2021 - Pres.: Gerardo Zamora (Frente Cívico)",
                     "2017 - 2021: Gerardo Zamora (Frente Cívico)",
@@ -1122,7 +1156,12 @@
                 cant_escuelas: 1410, cant_hospitales: 28, cant_comisarias: 110,
                 balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "49% Estatal / 51% Privado",
                 seguridad_tasa: "4.8 homicidios / 100k hab.", padron_local: "920 mil electores", matricula_pub: "81% Pública / 19% Privada",
-                corrupcion: { tasa: "4.1 causas / 100k", opacidad: "Media (54%)", pauta: "Moderada", funcionarios: ["Expediente 102/2023 - Investigaciones de compras directas"] },
+                corrupcion: { 
+                    tasa: "4.1 causas / 100k", opacidad: "Media (54%)", pauta: "Moderada", 
+                    funcionarios: [
+                        "• Ex-funcionarios de Compras y Suministros: Expediente FC-441/2023 - Investigaciones sobre contrataciones directas en carteras ministeriales."
+                    ] 
+                },
                 mandatos: [
                     "2021 - Pres.: Gustavo Valdés (ECO / UCR)",
                     "2017 - 2021: Gustavo Valdés (ECO / UCR)",
@@ -1155,7 +1194,12 @@
                 cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
                 balance_fiscal: "Subsidio Industrial (Ley 19.640) y Coparticipación", empleo_relacion: "42% Estatal / 58% Privado",
                 seguridad_tasa: "2.1 homicidios / 100k hab.", padron_local: "148 mil electores", matricula_pub: "76% Pública / 24% Privada",
-                corrupcion: { tasa: "1.8 causas / 100k", opacidad: "Baja (29%)", pauta: "Baja", funcionarios: ["Expediente 041/2023 - Control de regímenes promocionales"] },
+                corrupcion: { 
+                    tasa: "1.8 causas / 100k", opacidad: "Baja (29%)", pauta: "Baja", 
+                    funcionarios: [
+                        "• Auditoría de Régimen Industrial: Expediente TDF-112/2023 - Control y revisión de subastas y exenciones fiscales."
+                    ] 
+                },
                 mandatos: [
                     "2023 - Pres.: Gustavo Melella (FORJA / UxP)",
                     "2019 - 2023: Gustavo Melella (FORJA / FdT)",
@@ -1190,25 +1234,25 @@
             if (datosProvincias[nombre]) return datosProvincias[nombre];
             
             const dictProvinciasExtra = {
-                "Jujuy": { gov: "Carlos Sadir (UCR / Cambia Jujuy)", mandatos: ["2023 - Pres.: Carlos Sadir", "2019 - 2023: Gerardo Morales", "2015 - 2019: Gerardo Morales", "2011 - 2015: Eduardo Fellner", "2007 - 2011: Walter Barrionuevo"], rep: { dip: "Guillermo Snopek (UxP), Jorge Rizzotti (UCR)", sen: "Mario Fiad (UCR), Ezequiel Atauche (LLA)" }, corr: { tasa: "3.5 causas / 100k", opacidad: "Media (50%)", pauta: "Moderada", funcs: ["Expediente 210/2023 - Revisión de contrataciones públicas"] } },
-                "Salta": { gov: "Gustavo Sáenz (Identidad Salteña)", mandatos: ["2023 - Pres.: Gustavo Sáenz", "2019 - 2023: Gustavo Sáenz", "2015 - 2019: Juan Manuel Urtubey", "2011 - 2015: Juan Manuel Urtubey", "2007 - 2011: Juan Manuel Urtubey"], rep: { dip: "Emiliano Estrada (UxP), Pamela Calletti (HCF)", sen: "Sergio Leavy (UxP), Nora Giménez (UxP)" }, corr: { tasa: "3.7 causas / 100k", opacidad: "Media (52%)", pauta: "Moderada", funcs: ["Expediente 114/2024 - Control de fondos de municipios"] } },
-                "Tucumán": { gov: "Osvaldo Jaldo (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Osvaldo Jaldo", "2019 - 2023: Juan Manzur", "2015 - 2019: Juan Manzur", "2011 - 2015: José Alperovich", "2007 - 2011: José Alperovich"], rep: { dip: "Pablo Yedlin (UxP), Roberto Sánchez (UCR)", sen: "Juan Manzur (UxP), Sandra Mendoza (UxP)" }, corr: { tasa: "4.2 causas / 100k", opacidad: "Alta (58%)", pauta: "Alta", funcs: ["Expediente 311/2023 - Investigaciones legislativas"] } },
-                "Catamarca": { gov: "Raúl Jalil (Unión por la Patria)", mandatos: ["2023 - Pres.: Raúl Jalil", "2019 - 2023: Raúl Jalil", "2015 - 2019: Lucía Corpacci", "2011 - 2015: Lucía Corpacci", "2007 - 2011: Eduardo Brizuela del Moral"], rep: { dip: "Dante López Rodríguez (UxP), Francisco Monti (UCR)", sen: "Lucía Corpacci (UxP), Flavio Fama (UCR)" }, corr: { tasa: "3.0 causas / 100k", opacidad: "Media (45%)", pauta: "Moderada", funcs: ["Expediente 088/2023 - Control minero provincial"] } },
-                "La Rioja": { gov: "Ricardo Quintela (Unión por la Patria)", mandatos: ["2023 - Pres.: Ricardo Quintela", "2019 - 2023: Ricardo Quintela", "2015 - 2019: Sergio Casas", "2011 - 2015: Beder Herrera", "2007 - 2011: Beder Herrera"], rep: { dip: "Gabriela Pedrali (UxP), Sergio Casas (UxP)", sen: "Fernando Rejal (UxP), Florencia López (UxP)" }, corr: { tasa: "3.4 causas / 100k", opacidad: "Media (49%)", pauta: "Alta", funcs: ["Expediente 092/2023 - Auditoría de emisión de bonos cuasimoneda"] } },
-                "San Juan": { gov: "Marcelo Orrego (Cambia San Juan)", mandatos: ["2023 - Pres.: Marcelo Orrego", "2019 - 2023: Sergio Uñac", "2015 - 2019: Sergio Uñac", "2011 - 2015: José Luis Gioja", "2007 - 2011: José Luis Gioja"], rep: { dip: "José Luis Gioja (UxP), Nancy Picón (Producción y Trabajo)", sen: "Sergio Uñac (UxP), Bruno Olivera (LLA)" }, corr: { tasa: "2.6 causas / 100k", opacidad: "Baja (38%)", pauta: "Moderada", funcs: ["Expediente 055/2024 - Seguimiento de obra pública"] } },
-                "San Luis": { gov: "Claudio Poggi (Cambia San Luis)", mandatos: ["2023 - Pres.: Claudio Poggi", "2019 - 2023: Alberto Rodríguez Saá", "2015 - 2019: Alberto Rodríguez Saá", "2011 - 2015: Claudio Poggi", "2007 - 2011: Alberto Rodríguez Saá"], rep: { dip: "Alejandro Cacace (UCR), Ernesto Ali (UxP)", sen: "Bartolomé Abdala (LLA), Ivana Arrascaeta (LLA)" }, corr: { tasa: "3.1 causas / 100k", opacidad: "Media (44%)", pauta: "Moderada", funcs: ["Expediente 119/2023 - Transición administrativa"] } },
-                "Entre Ríos": { gov: "Rogelio Frigerio (Juntos por Entre Ríos)", mandatos: ["2023 - Pres.: Rogelio Frigerio", "2019 - 2023: Gustavo Bordet", "2015 - 2019: Gustavo Bordet", "2011 - 2015: Sergio Urribarri", "2007 - 2011: Sergio Urribarri"], rep: { dip: "Atilio Benedit (UCR), Blanca Osuna (UxP)", sen: "Alfredo De Angeli (PRO), Stefanía Cora (UxP)" }, corr: { tasa: "3.8 causas / 100k", opacidad: "Media (47%)", pauta: "Moderada", funcs: ["Expediente 201/2022 - Causa judicial ex-mandatarios (Sentencia primera instancia)"] } },
-                "Chaco": { gov: "Leandro Zdero (Juntos por el Cambio)", mandatos: ["2023 - Pres.: Leandro Zdero", "2019 - 2023: Jorge Capitanich", "2015 - 2019: Domingo Peppo", "2011 - 2015: Jorge Capitanich", "2007 - 2011: Jorge Capitanich"], rep: { dip: "Juan Manuel Pedrini (UxP), Marilú Quiroz (PRO)", sen: "Víctor Zimmerman (UCR), Alicia Terada (CC)" }, corr: { tasa: "5.4 causas / 100k", opacidad: "Alta (65%)", pauta: "Alta", funcs: ["Expediente 504/2023 - Investigaciones sobre fondos de asistencia social y cooperativas"] } },
-                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"], rep: { dip: "Ramiro Fernández Patri (UxP), Fernando Carbajal (UCR)", sen: "José Mayans (UxP), María Teresa González (UxP)" }, corr: { tasa: "4.9 causas / 100k", opacidad: "Alta (72%)", pauta: "Alta", funcs: ["Expediente 602/2021 - Contralor institucional limitado por sistema provincial"] } },
-                "Misiones": { gov: "Hugo Passalacqua (Frente Renovador de la Concordia)", mandatos: ["2023 - Pres.: Hugo Passalacqua", "2019 - 2023: Oscar Herrera Ahuad", "2015 - 2019: Hugo Passalacqua", "2011 - 2015: Maurice Closs", "2007 - 2011: Maurice Closs"], rep: { dip: "Carlos Fernández (FRconcordia), Florencia Klipauka (LLA)", sen: "Carlos Arce (FRconcordia), Sonia Rojas Decut (FRconcordia)" }, corr: { tasa: "2.9 causas / 100k", opacidad: "Baja (37%)", pauta: "Moderada", funcs: ["Expediente 072/2023 - Gestión administrativa y fiscalización"] } },
-                "La Pampa": { gov: "Sergio Ziliotto (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Sergio Ziliotto", "2019 - 2023: Sergio Ziliotto", "2015 - 2019: Carlos Verna", "2011 - 2015: Oscar Jorge", "2007 - 2011: Oscar Jorge"], rep: { dip: "Hernán Pérez Araujo (UxP), Martin Maquieyra (PRO)", sen: "Daniel Bensusán (UxP), Victoria Huala (PRO)" }, corr: { tasa: "2.4 causas / 100k", opacidad: "Baja (33%)", pauta: "Baja", funcs: ["Expediente 034/2023 - Control preventivo de legalidad"] } },
-                "Neuquén": { gov: "Rolando Figueroa (Comunidad)", mandatos: ["2023 - Pres.: Rolando Figueroa", "2019 - 2023: Omar Gutiérrez (MPN)", "2015 - 2019: Omar Gutiérrez (MPN)", "2011 - 2015: Jorge Sapag (MPN)", "2007 - 2011: Jorge Sapag (MPN)"], rep: { dip: "Osvaldo Llancafilo (MPN), Tanya Bertoldi (UxP)", sen: "Lucila Crexell (MPN), Parrilli (UxP)" }, corr: { tasa: "3.0 causas / 100k", opacidad: "Media (40%)", pauta: "Moderada", funcs: ["Expediente 081/2024 - Auditoría de concesiones hidrocarburíferas"] } },
-                "Río Negro": { gov: "Alberto Weretilneck (Juntos Somos Río Negro)", mandatos: ["2023 - Pres.: Alberto Weretilneck", "2019 - 2023: Arabela Carreras", "2015 - 2019: Alberto Weretilneck", "2011 - 2015: Alberto Weretilneck / Carlos Soria", "2007 - 2011: Miguel Saiz"], rep: { dip: "Agustis Domingo (JSRN), Aníbal Tortoriello (PRO)", sen: "Martín Doñate (UxP), Mónica Silva (JSRN)" }, corr: { tasa: "3.3 causas / 100k", opacidad: "Media (43%)", pauta: "Moderada", funcs: ["Expediente 095/2023 - Licitaciones públicas provinciales"] } },
-                "Chubut": { gov: "Ignacio Torres (Despierta Chubut / JxC)", mandatos: ["2023 - Pres.: Ignacio Torres", "2019 - 2023: Mariano Arcioni", "2015 - 2019: Mario Das Neves / Mariano Arcioni", "2011 - 2015: Martín Buzzi", "2007 - 2001: Mario Das Neves"], rep: { dip: "Jorge Ávila (HCF), Ana Clara Romero (PRO)", sen: "Carlos Linares (UxP), Edith Terenzi (JxC)" }, corr: { tasa: "4.0 causas / 100k", opacidad: "Media (51%)", pauta: "Moderada", funcs: ["Expediente 180/2022 - Investigaciones de ejercicios previos en administración central"] } },
-                "Santa Cruz": { gov: "Claudio Vidal (Por Santa Cruz)", mandatos: ["2023 - Pres.: Claudio Vidal", "2019 - 2023: Alicia Kirchner", "2015 - 2019: Alicia Kirchner", "2011 - 2015: Daniel Peralta", "2007 - 2011: Daniel Peralta"], rep: { dip: "Sergio Acevedo (Por Santa Cruz), Gustavo González (UxP)", sen: "José María Carambia (Por Santa Cruz), Natalia Gadano (Por Santa Cruz)" }, corr: { tasa: "4.5 causas / 100k", opacidad: "Alta (59%)", pauta: "Alta", funcs: ["Expediente 220/2023 - Control de cuentas públicas y organismos descentralizados"] } }
+                "Jujuy": { gov: "Carlos Sadir (UCR / Cambia Jujuy)", mandatos: ["2023 - Pres.: Carlos Sadir", "2019 - 2023: Gerardo Morales", "2015 - 2019: Gerardo Morales", "2011 - 2015: Eduardo Fellner", "2007 - 2011: Walter Barrionuevo"], rep: { dip: "Guillermo Snopek (UxP), Jorge Rizzotti (UCR)", sen: "Mario Fiad (UCR), Ezequiel Atauche (LLA)" }, corr: { tasa: "3.5 causas / 100k", opacidad: "Media (50%)", pauta: "Moderada", funcs: ["• Gerardo Morales (Ex-Gobernador): Expediente JJ-401/2023 - Denuncias por adjudicación de obra pública y cooperativas."] } },
+                "Salta": { gov: "Gustavo Sáenz (Identidad Salteña)", mandatos: ["2023 - Pres.: Gustavo Sáenz", "2019 - 2023: Gustavo Sáenz", "2015 - 2019: Juan Manuel Urtubey", "2011 - 2015: Juan Manuel Urtubey", "2007 - 2011: Juan Manuel Urtubey"], rep: { dip: "Emiliano Estrada (UxP), Pamela Calletti (HCF)", sen: "Sergio Leavy (UxP), Nora Giménez (UxP)" }, corr: { tasa: "3.7 causas / 100k", opacidad: "Media (52%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de intendencias municipales: Expediente SAL-92/2024 - Auditoría de manejo de fondos coparticipables."] } },
+                "Tucumán": { gov: "Osvaldo Jaldo (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Osvaldo Jaldo", "2019 - 2023: Juan Manzur", "2015 - 2019: Juan Manzur", "2011 - 2015: José Alperovich", "2007 - 2011: José Alperovich"], rep: { dip: "Pablo Yedlin (UxP), Roberto Sánchez (UCR)", sen: "Juan Manzur (UxP), Sandra Mendoza (UxP)" }, corr: { tasa: "4.2 causas / 100k", opacidad: "Alta (58%)", pauta: "Alta", funcs: ["• Ex-legisladores provinciales: Expediente TUC-510/2022 - Causa por contratos de personal legislativo (Explotación de boletantes)."] } },
+                "Catamarca": { gov: "Raúl Jalil (Unión por la Patria)", mandatos: ["2023 - Pres.: Raúl Jalil", "2019 - 2023: Raúl Jalil", "2015 - 2019: Lucía Corpacci", "2011 - 2015: Lucía Corpacci", "2007 - 2011: Eduardo Brizuela del Moral"], rep: { dip: "Dante López Rodríguez (UxP), Francisco Monti (UCR)", sen: "Lucía Corpacci (UxP), Flavio Fama (UCR)" }, corr: { tasa: "3.0 causas / 100k", opacidad: "Media (45%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de área minera: Expediente CAT-12/2023 - Control y fiscalización de regalías."] } },
+                "La Rioja": { gov: "Ricardo Quintela (Unión por la Patria)", mandatos: ["2023 - Pres.: Ricardo Quintela", "2019 - 2023: Ricardo Quintela", "2015 - 2019: Sergio Casas", "2011 - 2015: Beder Herrera", "2007 - 2011: Beder Herrera"], rep: { dip: "Gabriela Pedrali (UxP), Sergio Casas (UxP)", sen: "Fernando Rejal (UxP), Florencia López (UxP)" }, corr: { tasa: "3.4 causas / 100k", opacidad: "Media (49%)", pauta: "Alta", funcs: ["• Administración Central: Expediente LR-88/2023 - Investigaciones sobre emisión y pago de cuasimonedas (Bono Chacho)."] } },
+                "San Juan": { gov: "Marcelo Orrego (Cambia San Juan)", mandatos: ["2023 - Pres.: Marcelo Orrego", "2019 - 2023: Sergio Uñac", "2015 - 2019: Sergio Uñac", "2011 - 2015: José Luis Gioja", "2007 - 2011: José Luis Gioja"], rep: { dip: "José Luis Gioja (UxP), Nancy Picón (Producción y Trabajo)", sen: "Sergio Uñac (UxP), Bruno Olivera (LLA)" }, corr: { tasa: "2.6 causas / 100k", opacidad: "Baja (38%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de Obra Pública: Expediente SJ-301/2022 - Seguimiento de licitaciones de grandes proyectos."] } },
+                "San Luis": { gov: "Claudio Poggi (Cambia San Luis)", mandatos: ["2023 - Pres.: Claudio Poggi", "2019 - 2023: Alberto Rodríguez Saá", "2015 - 2019: Alberto Rodríguez Saá", "2011 - 2015: Claudio Poggi", "2007 - 2011: Alberto Rodríguez Saá"], rep: { dip: "Alejandro Cacace (UCR), Ernesto Ali (UxP)", sen: "Bartolomé Abdala (LLA), Ivana Arrascaeta (LLA)" }, corr: { tasa: "3.1 causas / 100k", opacidad: "Media (44%)", pauta: "Moderada", funcs: ["• Ex-integrantes de Tribunal de Cuentas: Expediente SL-77/2023 - Transición y auditoría de decretos de fin de gestión."] } },
+                "Entre Ríos": { gov: "Rogelio Frigerio (Juntos por Entre Ríos)", mandatos: ["2023 - Pres.: Rogelio Frigerio", "2019 - 2023: Gustavo Bordet", "2015 - 2019: Gustavo Bordet", "2011 - 2015: Sergio Urribarri", "2007 - 2011: Sergio Urribarri"], rep: { dip: "Atilio Benedit (UCR), Blanca Osuna (UxP)", sen: "Alfredo De Angeli (PRO), Stefanía Cora (UxP)" }, corr: { tasa: "3.8 causas / 100k", opacidad: "Media (47%)", pauta: "Moderada", funcs: ["• Sergio Urribarri (Ex-Gobernador): Expediente STJ-ER 1234/2021 - Condena en primera instancia por peculado y negociaciones incompatibles."] } },
+                "Chaco": { gov: "Leandro Zdero (Juntos por el Cambio)", mandatos: ["2023 - Pres.: Leandro Zdero", "2019 - 2023: Jorge Capitanich", "2015 - 2019: Domingo Peppo", "2011 - 2015: Jorge Capitanich", "2007 - 2011: Jorge Capitanich"], rep: { dip: "Juan Manuel Pedrini (UxP), Marilú Quiroz (PRO)", sen: "Víctor Zimmerman (UCR), Alicia Terada (CC)" }, corr: { tasa: "5.4 causas / 100k", opacidad: "Alta (65%)", pauta: "Alta", funcs: ["• Emerenciano Sena / Ex-funcionarios de fundaciones: Expediente N° 8.132/2023 - Investigaciones por administración fraudulenta de fondos públicos y desvío de subsidios estatales."] } },
+                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"], rep: { dip: "Ramiro Fernández Patri (UxP), Fernando Carbajal (UCR)", sen: "José Mayans (UxP), María Teresa González (UxP)" }, corr: { tasa: "4.9 causas / 100k", opacidad: "Alta (72%)", pauta: "Alta", funcs: ["• Ex-funcionarios de Tesorería Provincial: Expediente FOR-901/2020 - Observaciones de la Auditoría General de la Nación sobre opacidad presupuestaria."] } },
+                "Misiones": { gov: "Hugo Passalacqua (Frente Renovador de la Concordia)", mandatos: ["2023 - Pres.: Hugo Passalacqua", "2019 - 2023: Oscar Herrera Ahuad", "2015 - 2019: Hugo Passalacqua", "2011 - 2015: Maurice Closs", "2007 - 2011: Maurice Closs"], rep: { dip: "Carlos Fernández (FRconcordia), Florencia Klipauka (LLA)", sen: "Carlos Arce (FRconcordia), Sonia Rojas Decut (FRconcordia)" }, corr: { tasa: "2.9 causas / 100k", opacidad: "Baja (37%)", pauta: "Moderada", funcs: ["• Ex-intendentes y operadores: Expediente MIS-104/2023 - Control de partidas de desarrollo social."] } },
+                "La Pampa": { gov: "Sergio Ziliotto (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Sergio Ziliotto", "2019 - 2023: Sergio Ziliotto", "2015 - 2019: Carlos Verna", "2011 - 2015: Oscar Jorge", "2007 - 2011: Oscar Jorge"], rep: { dip: "Hernán Pérez Araujo (UxP), Martin Maquieyra (PRO)", sen: "Daniel Bensusán (UxP), Victoria Huala (PRO)" }, corr: { tasa: "2.4 causas / 100k", opacidad: "Baja (33%)", pauta: "Baja", funcs: ["• Tribunal de Cuentas Provincial: Expediente LP-45/2023 - Informes de legalidad sin observaciones penales graves."] } },
+                "Neuquén": { gov: "Rolando Figueroa (Comunidad)", mandatos: ["2023 - Pres.: Rolando Figueroa", "2019 - 2023: Omar Gutiérrez (MPN)", "2015 - 2019: Omar Gutiérrez (MPN)", "2011 - 2015: Jorge Sapag (MPN)", "2007 - 2011: Jorge Sapag (MPN)"], rep: { dip: "Osvaldo Llancafilo (MPN), Tanya Bertoldi (UxP)", sen: "Lucila Crexell (MPN), Parrilli (UxP)" }, corr: { tasa: "3.0 causas / 100k", opacidad: "Media (40%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de Legislatura Neuquina: Expediente NQ-882/2022 - Causa por manejos de contratos y tarjetas de débito legislativas."] } },
+                "Río Negro": { gov: "Alberto Weretilneck (Juntos Somos Río Negro)", mandatos: ["2023 - Pres.: Alberto Weretilneck", "2019 - 2023: Arabela Carreras", "2015 - 2019: Alberto Weretilneck", "2011 - 2015: Alberto Weretilneck / Carlos Soria", "2007 - 2011: Miguel Saiz"], rep: { dip: "Agustis Domingo (JSRN), Aníbal Tortoriello (PRO)", sen: "Martín Doñate (UxP), Mónica Silva (JSRN)" }, corr: { tasa: "3.3 causas / 100k", opacidad: "Media (43%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de áreas viales: Expediente RN-505/2023 - Auditoría de mantenimiento de rutas secundarias."] } },
+                "Chubut": { gov: "Ignacio Torres (Despierta Chubut / JxC)", mandatos: ["2023 - Pres.: Ignacio Torres", "2019 - 2023: Mariano Arcioni", "2015 - 2019: Mario Das Neves / Mariano Arcioni", "2011 - 2015: Martín Buzzi", "2007 - 2001: Mario Das Neves"], rep: { dip: "Jorge Ávila (HCF), Ana Clara Romero (PRO)", sen: "Carlos Linares (UxP), Edith Terenzi (JxC)" }, corr: { tasa: "4.0 causas / 100k", opacidad: "Media (51%)", pauta: "Moderada", funcs: ["• Mariano Arcioni (Ex-Gobernador) / Ex-ministros: Expediente CHU-777/2021 - Investigaciones acumuladas por presunto enriquecimiento ilícito y desvío de fondos provinciales."] } },
+                "Santa Cruz": { gov: "Claudio Vidal (Por Santa Cruz)", mandatos: ["2023 - Pres.: Claudio Vidal", "2019 - 2023: Alicia Kirchner", "2015 - 2019: Alicia Kirchner", "2011 - 2015: Daniel Peralta", "2007 - 2011: Daniel Peralta"], rep: { dip: "Sergio Acevedo (Por Santa Cruz), Gustavo González (UxP)", sen: "José María Carambia (Por Santa Cruz), Natalia Gadano (Por Santa Cruz)" }, corr: { tasa: "4.5 causas / 100k", opacidad: "Alta (59%)", pauta: "Alta", funcs: ["• Ex-funcionarios de administraciones provinciales previas: Expediente SC-332/2022 - Causas por retrasos injustificados en entrega de obra pública escolar y vial."] } }
             };
 
-            const extra = dictProvinciasExtra[nombre] || { gov: "Gobernador Provincial en Funciones", mandatos: ["2023 - Pres.: Gestión Actual"], rep: { dip: "Representantes Parlamentarios", sen: "Senadores Provinciales" }, corr: { tasa: "3.5 causas / 100k", opacidad: "Media (45%)", pauta: "Moderada", funcs: ["Expediente estándar de fiscalización cívica"] } };
+            const extra = dictProvinciasExtra[nombre] || { gov: "Gobernador Provincial en Funciones", mandatos: ["2023 - Pres.: Gestión Actual"], rep: { dip: "Representantes Parlamentarios", sen: "Senadores Provinciales" }, corr: { tasa: "3.5 causas / 100k", opacidad: "Media (45%)", pauta: "Moderada", funcs: ["• Funcionarios en funciones: Expediente estándar de fiscalización cívica institucional."] } };
 
             return {
                 nombre: "Provincia de " + nombre, gobernador: extra.gov, legislatura: "Legislatura Provincial", coparticipacion_real: "2.8%",
@@ -1393,7 +1437,7 @@
             document.getElementById('panel-tasa-seguridad').innerText = data.seguridad_tasa;
             document.getElementById('panel-padron-local').innerText = data.padron_local;
 
-            // Cargar datos de corrupción y causas nominales
+            // Datos detallados de corrupción y nombres/expedientes
             document.getElementById('panel-causas-tasa').innerText = data.corrupcion.tasa;
             document.getElementById('panel-opacidad').innerText = data.corrupcion.opacidad;
             document.getElementById('panel-pauta').innerText = data.corrupcion.pauta;
@@ -1402,10 +1446,10 @@
             let corrupcionHtml = "";
             if (data.corrupcion.funcionarios && data.corrupcion.funcionarios.length > 0) {
                 data.corrupcion.funcionarios.forEach(f => {
-                    corrupcionHtml += `<div class="sub-card"><strong>Registro Oficial / Expediente</strong><span>${f}</span></div>`;
+                    corrupcionHtml += `<div class="sub-card"><span>${f}</span></div>`;
                 });
             } else {
-                corrupcionHtml = "<div class='sub-card'><span>Sin expedientes activos registrados en el periodo actual.</span></div>";
+                corrupcionHtml = "<div class='sub-card'><span>Sin funcionarios con causas activas graves registradas en este distrito.</span></div>";
             }
             corrupcionBox.innerHTML = corrupcionHtml;
 
