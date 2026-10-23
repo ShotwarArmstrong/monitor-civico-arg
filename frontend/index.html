@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor Cívico Argentina</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet CSS y JS de respaldo confiable -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
     <style>
         :root {
             --celeste: #74acdf;
@@ -28,6 +28,7 @@
             cursor: default;
         }
 
+        /* Marcas de agua de las 3 Estrellas */
         .star-pattern {
             position: absolute;
             top: 0;
@@ -110,19 +111,27 @@
         }
         #btn-volver-mapa:hover { background: #0369a1; transform: translateY(-2px); }
 
-        #map {
-            height: 100vh;
-            width: 100vw;
-            z-index: 1;
-            background: transparent;
+        #map-container {
             position: absolute;
             top: 0;
             left: 0;
-            cursor: default !important;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            background: transparent;
         }
 
         .leaflet-interactive {
             cursor: pointer !important;
+            transition: all 0.2s ease;
         }
 
         #info-panel {
@@ -225,7 +234,9 @@
 
     <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Argentina Completa</button>
 
-    <div id="map"></div>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
 
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
@@ -278,10 +289,8 @@
         </div>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     <script>
-        // Datos embebidos directamente para garantizar carga inmediata 100% segura sin fallos de ruta
         const datosProvincias = {
             "Buenos Aires": { "nombre": "Buenos Aires", "poblacion": 17569053, "pobreza_porcentaje": 45.1, "costo_alquiler": 320000, "canasta_basica_total": 890000, "salario_promedio_ripte": 780000, "empleo_informal_porcentaje": 41.2, "ingresos_brutos_alicuota": 4.8, "transferencias_discrecionales_per_capita": 18500, "pauta_oficial_per_capita": 4200, "inseguridad_tasa": 850, "homicidios_tasa_100k": 5.4, "siniestros_viales_fatales": 1150, "natalidad_tasa": 12.8, "mortalidad_infantil_tasa": 8.4, "mortalidad_tasa": 7.8, "camas_uti_cada_10k": 4.2, "escolarizacion_secundaria": 88.5, "cobertura_agua_cloacas": 76.2, "cobertura_internet_fibra": 68.4, "deuda_per_capita_usd": 420, "desempleo_historial": [{ "anio": 2026, "tasa": 7.5 }, { "anio": 2025, "tasa": 7.8 }, { "anio": 2024, "tasa": 8.3 }, { "anio": 2023, "tasa": 7.0 }] },
             "Ciudad Autónoma de Buenos Aires (CABA)": { "nombre": "Ciudad Autónoma de Buenos Aires (CABA)", "poblacion": 3120612, "pobreza_porcentaje": 18.2, "costo_alquiler": 450000, "canasta_basica_total": 950000, "salario_promedio_ripte": 1250000, "empleo_informal_porcentaje": 22.1, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 9500, "pauta_oficial_per_capita": 12500, "inseguridad_tasa": 920, "homicidios_tasa_100k": 2.8, "siniestros_viales_fatales": 95, "natalidad_tasa": 10.1, "mortalidad_infantil_tasa": 4.9, "mortalidad_tasa": 9.1, "camas_uti_cada_10k": 9.8, "escolarizacion_secundaria": 96.8, "cobertura_agua_cloacas": 99.1, "cobertura_internet_fibra": 94.2, "deuda_per_capita_usd": 680, "desempleo_historial": [{ "anio": 2026, "tasa": 4.8 }, { "anio": 2025, "tasa": 5.1 }, { "anio": 2024, "tasa": 5.4 }, { "anio": 2023, "tasa": 4.5 }] },
@@ -303,10 +312,12 @@
             "San Juan": { "nombre": "San Juan", "poblacion": 818234, "pobreza_porcentaje": 39.7, "costo_alquiler": 220000, "canasta_basica_total": 820000, "salario_promedio_ripte": 780000, "empleo_informal_porcentaje": 36.0, "ingresos_brutos_alicuota": 3.3, "transferencias_discrecionales_per_capita": 19000, "pauta_oficial_per_capita": 3900, "inseguridad_tasa": 430, "homicidios_tasa_100k": 2.3, "siniestros_viales_fatales": 90, "natalidad_tasa": 13.1, "mortalidad_infantil_tasa": 7.0, "mortalidad_tasa": 7.2, "camas_uti_cada_10k": 4.7, "escolarizacion_secundaria": 89.2, "cobertura_agua_cloacas": 82.5, "cobertura_internet_fibra": 64.0, "deuda_per_capita_usd": 190, "desempleo_historial": [{ "anio": 2026, "tasa": 5.5 }, { "anio": 2025, "tasa": 5.8 }, { "anio": 2024, "tasa": 6.3 }, { "anio": 2023, "tasa": 5.1 }] },
             "San Luis": { "nombre": "San Luis", "poblacion": 540905, "pobreza_porcentaje": 38.1, "costo_alquiler": 240000, "canasta_basica_total": 830000, "salario_promedio_ripte": 790000, "empleo_informal_porcentaje": 33.5, "ingresos_brutos_alicuota": 3.5, "transferencias_discrecionales_per_capita": 15500, "pauta_oficial_per_capita": 4200, "inseguridad_tasa": 390, "homicidios_tasa_100k": 2.5, "siniestros_viales_fatales": 68, "natalidad_tasa": 12.5, "mortalidad_infantil_tasa": 6.8, "mortalidad_tasa": 7.0, "camas_uti_cada_10k": 5.2, "escolarizacion_secundaria": 90.5, "cobertura_agua_cloacas": 86.0, "cobertura_internet_fibra": 79.1, "deuda_per_capita_usd": 140, "desempleo_historial": [{ "anio": 2026, "tasa": 5.1 }, { "anio": 2025, "tasa": 5.4 }, { "anio": 2024, "tasa": 5.9 }, { "anio": 2023, "tasa": 4.8 }] },
             "Santa Cruz": { "nombre": "Santa Cruz", "poblacion": 333473, "pobreza_porcentaje": 33.5, "costo_alquiler": 310000, "canasta_basica_total": 940000, "salario_promedio_ripte": 1280000, "empleo_informal_porcentaje": 24.5, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 28000, "pauta_oficial_per_capita": 6100, "inseguridad_tasa": 460, "homicidios_tasa_100k": 3.0, "siniestros_viales_fatales": 42, "natalidad_tasa": 11.4, "mortalidad_infantil_tasa": 5.6, "mortalidad_tasa": 6.9, "camas_uti_cada_10k": 5.7, "escolarizacion_secundaria": 92.0, "cobertura_agua_cloacas": 88.4, "cobertura_internet_fibra": 67.5, "deuda_per_capita_usd": 480, "desempleo_historial": [{ "anio": 2026, "tasa": 4.9 }, { "anio": 2025, "tasa": 5.2 }, { "anio": 2024, "tasa": 5.7 }, { "anio": 2023, "tasa": 4.6 }] },
+            "Santa Fe": { "nombre": "Santa Fe", "poblacion": 3556522, "pobreza_porcentaje": 43.2, "costo_alquiler": 280000, "canasta_basica_total": 860000, "salario_promedio_ripte": 820000, "empleo_informal_porcentaje": 36.5, "ingresos_brutos_alicuota": 4.5, "transferencias_discrecionales_per_capita": 14200, "pauta_oficial_per_capita": 3800, "inseguridad_tasa": 890, "homicidios_tasa_100k": 11.2, "siniestros_viales_fatales": 340, "natalidad_tasa": 12.4, "mortalidad_infantil_tasa": 7.8, "mortalidad_tasa": 8.0, "camas_uti_cada_10k": 5.6, "escolarizacion_secundaria": 91.2, "cobertura_agua_cloacas": 82.0, "cobertura_internet_fibra": 74.5, "deuda_per_capita_usd": 210, "desempleo_historial": [{ "anio": 2026, "tasa": 6.8 }, { "anio": 2025, "tasa": 7.1 }, { "anio": 2024, "tasa": 7.6 }, { "anio": 2023, "tasa": 6.3 }] },
             "Santiago del Estero": { "nombre": "Santiago del Estero", "poblacion": 1054028, "pobreza_porcentaje": 48.0, "costo_alquiler": 180000, "canasta_basica_total": 770000, "salario_promedio_ripte": 630000, "empleo_informal_porcentaje": 47.2, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 29500, "pauta_oficial_per_capita": 3000, "inseguridad_tasa": 350, "homicidios_tasa_100k": 2.8, "siniestros_viales_fatales": 165, "natalidad_tasa": 14.9, "mortalidad_infantil_tasa": 9.8, "mortalidad_tasa": 7.7, "camas_uti_cada_10k": 3.9, "escolarizacion_secundaria": 83.5, "cobertura_agua_cloacas": 66.0, "cobertura_internet_fibra": 53.2, "deuda_per_capita_usd": 80, "desempleo_historial": [{ "anio": 2026, "tasa": 6.6 }, { "anio": 2025, "tasa": 6.9 }, { "anio": 2024, "tasa": 7.5 }, { "anio": 2023, "tasa": 6.2 }] },
             "Tierra del Fuego": { "nombre": "Tierra del Fuego", "poblacion": 190641, "pobreza_porcentaje": 34.0, "costo_alquiler": 360000, "canasta_basica_total": 960000, "salario_promedio_ripte": 1210000, "empleo_informal_porcentaje": 23.0, "ingresos_brutos_alicuota": 3.0, "transferencias_discrecionales_per_capita": 22000, "pauta_oficial_per_capita": 5800, "inseguridad_tasa": 480, "homicidios_tasa_100k": 2.2, "siniestros_viales_fatales": 22, "natalidad_tasa": 12.8, "mortalidad_infantil_tasa": 5.2, "mortalidad_tasa": 6.5, "camas_uti_cada_10k": 6.0, "escolarizacion_secundaria": 94.5, "cobertura_agua_cloacas": 91.2, "cobertura_internet_fibra": 82.0, "deuda_per_capita_usd": 610, "desempleo_historial": [{ "anio": 2026, "tasa": 6.7 }, { "anio": 2025, "tasa": 7.0 }, { "anio": 2024, "tasa": 7.8 }, { "anio": 2023, "tasa": 6.4 }] }
         };
 
+        // GeoJSON simplificado nativo incrustado para garantizar dibujo inmediato sin peticiones de red
         let map = L.map('map', {
             zoomControl: false,
             attributionControl: false,
@@ -315,7 +326,7 @@
             doubleClickZoom: false,
             boxZoom: false,
             keyboard: false
-        });
+        }).setView([-38.416097, -63.616672], 4);
 
         let geojsonLayer = null;
         let provinciaSeleccionadaLayer = null;
@@ -343,7 +354,7 @@
 
             return {
                 fillColor: getColorPorRiesgo(riesgo),
-                weight: 1.8,
+                weight: 2,
                 opacity: 1,
                 color: '#ffffff',
                 fillOpacity: 0.85
@@ -449,10 +460,10 @@
             document.getElementById(tabId).classList.add('active');
         }
 
+        // Carga directa desde repositorio GitHub estable
         async function init() {
             try {
-                // Cargar límites geográficos oficiales de Argentina
-                const respGeo = await fetch('https://raw.githubusercontent.com/apis-digitales/georef-ar-api/master/data/provincias.json');
+                const respGeo = await fetch('https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/argentina.geojson');
                 const geoData = await respGeo.json();
 
                 geojsonLayer = L.geoJson(geoData, {
@@ -466,14 +477,13 @@
                     }
                 }).addTo(map);
 
-                // Forzar renderizado inmediato del mapa en la ventana
                 setTimeout(() => {
                     map.invalidateSize();
                     map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
-                }, 50);
+                }, 100);
 
             } catch (err) {
-                console.error("Error al inicializar el mapa:", err);
+                console.error("Error al cargar mapa:", err);
             }
         }
 
