@@ -1,0 +1,18 @@
+{
+  "pais": "Argentina",
+  "actualizacion": "2026",
+  "provincias": [
+    {
+      "nombre": "Santa Fe",
+      "poblacion": 3556522,
+      "pobreza_porcentaje": 43.2,
+      "desempleo_porcentaje": 6.8
+    },
+    {
+      "nombre": "Buenos Aires",
+      "poblacion": 17569053,
+      "pobreza_porcentaje": 45.1,
+      "desempleo_porcentaje": 7.5
+    }
+  ]
+}
