@@ -271,7 +271,6 @@
             transform: rotate(180deg);
         }
 
-        /* Gráfico Visual en Dashboard */
         .chart-container {
             display: flex;
             justify-content: space-around;
@@ -319,58 +318,6 @@
         }
         .search-box:focus { border-color: #0284c7; }
 
-        .dropdown-container {
-            background: #fff5f5;
-            border: 1px solid #fecaca;
-            border-radius: 8px;
-            margin: 8px 0;
-            overflow: hidden;
-        }
-        .dropdown-header {
-            padding: 8px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-size: 0.82em;
-            font-weight: bold;
-            color: #991b1b;
-            background: #fee2e2;
-            user-select: none;
-        }
-        .dropdown-header:hover { background: #fecaca; }
-        .arrow-icon {
-            transition: transform 0.3s ease;
-            font-size: 1.1em;
-        }
-        .dropdown-content {
-            max-height: 0;
-            overflow-y: auto;
-            transition: max-height 0.3s ease-out;
-            padding: 0 12px;
-            font-size: 0.78em;
-            color: #334155;
-            background: #fff5f5;
-        }
-        .dropdown-content ul {
-            margin: 8px 0;
-            padding-left: 14px;
-        }
-        .dropdown-content li {
-            margin-bottom: 8px;
-            border-bottom: 1px dashed #fca5a5;
-            padding-bottom: 6px;
-        }
-        .dropdown-container.open .dropdown-content {
-            max-height: 300px;
-            padding: 8px 12px 12px 12px;
-            border-top: 1px dashed #fca5a5;
-        }
-        .dropdown-container.open .arrow-icon {
-            transform: rotate(180deg);
-        }
-
-        /* Contenedores Genéricos Desplegables */
         .gen-container {
             border-radius: 8px;
             margin: 8px 0;
@@ -411,6 +358,10 @@
         .tarifas-container { background: #fff7ed; border: 1px solid #fed7aa; }
         .tarifas-header { color: #c2410c; background: #ffedd5; }
         .tarifas-header:hover { background: #fed7aa; }
+
+        .memoria-container { background: #faf5ff; border: 1px solid #e9d5ff; }
+        .memoria-header { color: #6b21a8; background: #f3e8ff; }
+        .memoria-header:hover { background: #e9d5ff; }
 
         .poderes-container { background: #f0fdf4; border: 1px solid #bbf7d0; }
         .poderes-header { color: #166534; background: #dcfce7; }
@@ -485,16 +436,6 @@
         .voto-afirmativo { background: #16a34a; }
         .voto-negativo { background: #dc2626; }
         .voto-abstencion { background: #ca8a04; }
-
-        .tax-box {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-radius: 8px;
-            padding: 8px 10px;
-            margin: 8px 0;
-            font-size: 0.78em;
-        }
-        .tax-box strong { color: #b45309; display: block; margin-bottom: 3px; }
     </style>
 </head>
 <body>
@@ -631,10 +572,10 @@
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
 
-        <!-- Radiografía Electoral e Historial de Votación Presidencial / Legislativa -->
+        <!-- Radiografía Electoral e Historial de Votación -->
         <div class="gen-container electoral-container" id="panel-electoral">
             <div class="gen-header electoral-header" onclick="toggleSeccion('panel-electoral')">
-                <span>🗳️ Radiografía Electoral & Votaciones (Presidenciales / Diputados / Senadores)</span>
+                <span>🗳️ Radiografía Electoral & Votaciones (Presidenciales / Legislativas)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
@@ -649,7 +590,29 @@
             </div>
         </div>
 
-        <!-- Tarifas de Servicios y Transporte Integral (Colectivo, Tren, Subte, Bici) -->
+        <!-- Memoria, Soberanía y Derechos Humanos (Malvinas y Desaparecidos) -->
+        <div class="gen-container memoria-container" id="panel-memoria">
+            <div class="gen-header memoria-header" onclick="toggleSeccion('panel-memoria')">
+                <span>🕊️ Memoria, Soberanía & DD.HH. (Malvinas y Desaparecidos)</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Héroes Caídos en la Guerra de Malvinas</strong>
+                    <span id="memoria-malvinas">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Víctimas del Terrorismo de Estado (Dictadura)</strong>
+                    <span id="memoria-dictadura">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Registros de Búsqueda de Personas y Niños Desaparecidos</strong>
+                    <span id="memoria-democracia">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarifas de Servicios y Transporte Integral -->
         <div class="gen-container tarifas-container" id="panel-tarifas">
             <div class="gen-header tarifas-header" onclick="toggleSeccion('panel-tarifas')">
                 <span>⚡ Tarifas, Servicios & Transporte (Colectivo, Tren, Subte, Bici)</span>
@@ -832,6 +795,11 @@
                     resultado: "Fuerza ganadora en gobernación con 45% de los votos positivos; polarización marcada con JxC y LLA.",
                     participacion: "Participación electoral histórica del 74.5%; 5.2% de votos en blanco y nulos."
                 },
+                memoria: {
+                    malvinas: "Más de 2.300 soldados oriundos o radicados en la provincia participaron en el conflicto; 234 caídos identificados.",
+                    dictadura: "Estimación de más de 12.000 detenidos-desaparecidos (CONADEP y registros provinciales de memoria).",
+                    democracia: "Registros activos en el sistema de búsqueda de menores y adultos extraviados en el distrito."
+                },
                 tarifas: {
                     servicios: "Luz residencial bimestral: $58.000 | Gas: $34.000 | Agua: $22.000.",
                     transporte: "Colectivo (Boleto mínimo 0-3km): $1.015,61 | Trenes metropolitanos (líneas Roca/Sarmiento): desde $320.",
@@ -861,8 +829,13 @@
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", 
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
                 electoral: {
-                    resultado: "Triunfo en balotaje / primera vuelta de Juntos por la Cambio / PRO con fuerte presencia de LLA.",
+                    resultado: "Triunfo en balotaje / primera vuelta de Juntos por el Cambio / PRO con fuerte presencia de LLA.",
                     participacion: "Participación electoral del 71.2%; 3.8% de votos en blanco."
+                },
+                memoria: {
+                    malvinas: "Centenares de combatientes porteños caídos; homenaje permanente en monumentos de la Costanera.",
+                    dictadura: "Alto caudal de víctimas registradas en centros clandestinos emblemáticos (ESMA, Club Atlético, etc.).",
+                    democracia: "Redes locales de protección y búsqueda de personas desaparecidas."
                 },
                 tarifas: {
                     servicios: "Luz residencial bimestral: $65.000 | Gas: $38.000 | Agua: $26.000.",
@@ -895,6 +868,11 @@
                 electoral: {
                     resultado: "Amplia victoria de la alianza provincial gobernante con tracción de frentes locales.",
                     participacion: "Participación del 69.8%; voto en blanco del 6.1%."
+                },
+                memoria: {
+                    malvinas: "Vínculo directo y soberano con las Islas Malvinas; monumento histórico provincial en Ushuaia con listado de caídos.",
+                    dictadura: "Registros provinciales de memoria histórica y vigencia de derechos humanos insulares.",
+                    democracia: "Protocolos provinciales de búsqueda y alerta temprana en desapariciones."
                 },
                 tarifas: {
                     servicios: "Luz residencial: $45.000 | Gas (con subsidio zona fría): $28.000 | Agua: $18.000.",
@@ -931,6 +909,11 @@
                 electoral: {
                     resultado: "Elecciones provinciales con triunfo de fuerza local consolidada.",
                     participacion: "Participación cívica promedio del 72%."
+                },
+                memoria: {
+                    malvinas: "Héroes locales homenajeados en plazas y monolitos provinciales.",
+                    dictadura: "Registros de memoria histórica resguardados por archivos provinciales de DD.HH.",
+                    democracia: "Sistemas locales de alerta y búsqueda de personas."
                 },
                 tarifas: {
                     servicios: "Servicios residenciales estándar provinciales.",
@@ -1053,6 +1036,7 @@
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${data.nombre}`;
 
             document.getElementById('panel-electoral').classList.remove('open');
+            document.getElementById('panel-memoria').classList.remove('open');
             document.getElementById('panel-tarifas').classList.remove('open');
             document.getElementById('panel-perfil').classList.remove('open');
             document.getElementById('panel-educacion-calidad').classList.remove('open');
@@ -1073,9 +1057,13 @@
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
 
-            // Electoral y Tarifas transporte completas
+            // Electoral, Memoria y Tarifas
             document.getElementById('elec-resultado').innerText = data.electoral.resultado;
             document.getElementById('elec-participacion').innerText = data.electoral.participacion;
+
+            document.getElementById('memoria-malvinas').innerText = data.memoria.malvinas;
+            document.getElementById('memoria-dictadura').innerText = data.memoria.dictadura;
+            document.getElementById('memoria-democracia').innerText = data.memoria.democracia;
 
             document.getElementById('tarifa-servicios').innerText = data.tarifas.servicios;
             document.getElementById('tarifa-transporte').innerText = data.tarifas.transporte;
