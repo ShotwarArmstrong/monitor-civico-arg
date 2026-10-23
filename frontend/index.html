@@ -3,121 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor Cívico Argentina</title>
+    <title>Monitor Cívico Argentina - Mapa Interactivo</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
             --primary: #0077b6;
-            --bg: #f4f6f8;
+            --bg: #1e293b;
             --card-bg: #ffffff;
-            --text: #1d2d44;
+            --text: #0f172a;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * { box-sizing: border-box; }
+        body, html {
             margin: 0;
-            padding: 20px;
-            background-color: var(--bg);
-            color: var(--text);
-        }
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .container {
-            max-width: 1100px;
-            margin: 20px auto;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-left: 5px solid var(--primary);
-        }
-        .card h3 { margin-top: 0; color: var(--primary); font-size: 1.2em; }
-        .metric { font-size: 1.8em; font-weight: bold; margin: 5px 0; color: #d90429; }
-        .metric-label { font-size: 0.85em; color: #666; }
-        .history-title { font-weight: bold; margin-top: 15px; margin-bottom: 5px; font-size: 0.9em; color: #333; }
-        .history-list {
-            list-style: none;
             padding: 0;
-            margin: 0;
-            font-size: 0.85em;
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background-color: var(--bg);
         }
-        .history-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 3px 0;
-            border-bottom: 1px dashed #eee;
+        #header {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.85);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
         }
+        #header h1 { margin: 0; font-size: 1.3em; letter-spacing: 0.5px; }
+        #header p { margin: 3px 0 0 0; font-size: 0.8em; color: #94a3b8; }
+        
+        #map {
+            height: 100vh;
+            width: 100vw;
+            z-index: 1;
+            background: #0f172a;
+        }
+
+        /* Panel lateral de información */
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 340px;
+            max-height: calc(100vh - 40px);
+            z-index: 1000;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow-y: auto;
+            display: none;
+            color: var(--text);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #64748b;
+        }
+        .close-btn:hover { color: #000; }
+        .province-title { margin: 0 0 10px 0; color: var(--primary); font-size: 1.4em; }
+        .metric-box {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .metric-val { font-size: 2em; font-weight: bold; color: #e11d48; }
+        .metric-sub { font-size: 0.8em; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .history-list { list-style: none; padding: 0; margin: 10px 0 0 0; font-size: 0.85em; }
+        .history-list li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #cbd5e1; }
     </style>
 </head>
 <body>
 
-    <header>
+    <div id="header">
         <h1>Monitor Cívico Argentina</h1>
-        <p>Indicadores públicos e impacto económico transparente</p>
-    </header>
-
-    <div class="container">
-        <h2>Panel de Indicadores Regionales</h2>
-        <div id="indicadores-container" class="grid">
-            <p>Cargando datos oficiales...</p>
-        </div>
+        <p>Haz clic en una provincia para ver el informe público completo</p>
     </div>
 
+    <div id="map"></div>
+
+    <div id="info-panel">
+        <span class="close-btn" onclick="cerrarPanel()">&times;</span>
+        <h2 id="panel-nombre" class="province-title">-</h2>
+        
+        <div class="metric-box">
+            <div id="panel-pobreza" class="metric-val">- %</div>
+            <div class="metric-sub">Tasa de Pobreza</div>
+        </div>
+
+        <div><strong>Población:</strong> <span id="panel-poblacion">-</span> hab.</div>
+
+        <h4 style="margin: 15px 0 5px 0; color: #334155;">Evolución del Desempleo:</h4>
+        <ul id="panel-historial" class="history-list"></ul>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        async function cargarDatos() {
-            try {
-                const response = await fetch('../data/indicadores.json');
-                const data = await response.json();
-                
-                const container = document.getElementById('indicadores-container');
-                container.innerHTML = '';
+        let map = L.map('map', { zoomControl: false }).setView([-38.416097, -63.616672], 4);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-                data.provincias.forEach(prov => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
+        // Capa oscura base para resaltar provincias
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 18,
+            attribution: '&copy; OpenStreetMap &copy; CARTO'
+        }).addTo(map);
 
-                    let historialHTML = '';
-                    if (prov.desempleo_historial && prov.desempleo_historial.length > 0) {
-                        historialHTML = prov.desempleo_historial.map((item, index) => {
-                            const etiqueta = index === 0 ? `Actual (${item.anio})` : `Hace ${index} año${index > 1 ? 's' : ''} (${item.anio})`;
-                            return `<li><span>${etiqueta}:</span> <strong>${item.tasa}%</strong></li>`;
-                        }).join('');
-                    } else if (prov.desempleo_porcentaje) {
-                        historialHTML = `<li><span>Actual:</span> <strong>${prov.desempleo_porcentaje}%</strong></li>`;
-                    }
+        let datosProvincias = {};
 
-                    card.innerHTML = `
-                        <h3>${prov.nombre}</h3>
-                        <div class="metric">${prov.pobreza_porcentaje}%</div>
-                        <div class="metric-label">Tasa de Pobreza</div>
-                        <hr style="border:0; border-top:1px solid #eee; margin:12px 0;">
-                        <div><strong>Población:</strong> ${prov.poblacion.toLocaleString('es-AR')} hab.</div>
-                        <div class="history-title">Evolución del Desempleo:</div>
-                        <ul class="history-list">
-                            ${historialHTML}
-                        </ul>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (error) {
-                console.error("Error al cargar indicadores:", error);
-                document.getElementById('indicadores-container').innerHTML = "<p>Error al cargar los datos públicos.</p>";
+        // Escala de colores según nivel de pobreza
+        function getColor(pobreza) {
+            return pobreza > 45 ? '#e11d48' :
+                   pobreza > 40 ? '#f97316' :
+                   pobreza > 35 ? '#eab308' :
+                   pobreza > 20 ? '#84cc16' : '#22c55e';
+        }
+
+        function style(feature) {
+            const nombre = feature.properties.nam || feature.properties.name;
+            const provData = datosProvincias[nombre];
+            const pobreza = provData ? provData.pobreza_porcentaje : 0;
+            return {
+                fillColor: getColor(pobreza),
+                weight: 1.5,
+                opacity: 1,
+                color: '#ffffff',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+
+        function highlightFeature(e) {
+            var layer = e.target;
+            layer.setStyle({
+                weight: 3,
+                color: '#60a5fa',
+                dashArray: '',
+                fillOpacity: 0.9
+            });
+            layer.bringToFront();
+        }
+
+        function resetHighlight(e, geojsonLayer) {
+            geojsonLayer.resetStyle(e.target);
+        }
+
+        function seleccionarProvincia(e) {
+            const feature = e.target.feature;
+            const nombreProv = feature.properties.nam || feature.properties.name;
+            const data = datosProvincias[nombreProv];
+
+            const panel = document.getElementById('info-panel');
+            if (data) {
+                document.getElementById('panel-nombre').innerText = data.nombre;
+                document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
+                document.getElementById('panel-poblacion').innerText = data.poblacion.toLocaleString('es-AR');
+
+                let historialHTML = '';
+                if (data.desempleo_historial) {
+                    historialHTML = data.desempleo_historial.map((item, index) => {
+                        const etiqueta = index === 0 ? `Año ${item.anio} (Actual)` : `Hace ${index} año${index > 1 ? 's' : ''} (${item.anio})`;
+                        return `<li><span>${etiqueta}:</span> <strong>${item.tasa}%</strong></li>`;
+                    }).join('');
+                }
+                document.getElementById('panel-historial').innerHTML = historialHTML;
+                panel.style.display = 'block';
             }
         }
 
-        cargarDatos();
+        async function init() {
+            try {
+                // 1. Cargar nuestros indicadores
+                const respIndicadores = await fetch('../data/indicadores.json');
+                const dataIndicadores = await respIndicadores.json();
+
+                // Mapear por nombre para acceso rápido
+                dataIndicadores.provincias.forEach(p => {
+                    datosProvincias[p.nombre] = p;
+                });
+
+                // 2. Cargar límites geográficos oficiales GeoJSON de Argentina
+                const respGeo = await fetch('https://raw.githubusercontent.com/apis-digitales/georef-ar-api/master/data/provincias.json');
+                const geoData = await respGeo.json();
+
+                let geojsonLayer = L.geoJson(geoData, {
+                    style: style,
+                    onEachFeature: function(feature, layer) {
+                        layer.on({
+                            mouseover: highlightFeature,
+                            mouseout: (e) => resetHighlight(e, geojsonLayer),
+                            click: seleccionarProvincia
+                        });
+                    }
+                }).addTo(map);
+
+            } catch (err) {
+                console.error("Error inicializando mapa:", err);
+            }
+        }
+
+        function cerrarPanel() {
+            document.getElementById('info-panel').style.display = 'none';
+        }
+
+        init();
     </script>
 </body>
 </html>
