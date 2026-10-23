@@ -9,11 +9,11 @@
     <style>
         :root {
             --primary: #0284c7;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
+            --bg: #0b0f19;
+            --card-bg: #131c31;
             --text: #f8fafc;
             --text-muted: #94a3b8;
-            --border: #334155;
+            --border: #1e293b;
         }
         * { box-sizing: border-box; }
         body, html {
@@ -27,68 +27,44 @@
             color: var(--text);
         }
 
-        /* Encabezado Flotante Superior */
+        /* Encabezado */
         #header {
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(19, 28, 49, 0.9);
             padding: 12px 25px;
             border-radius: 30px;
             backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             text-align: center;
             border: 1px solid rgba(255,255,255,0.1);
         }
         #header h1 { margin: 0; font-size: 1.2em; letter-spacing: 0.5px; color: #fff; }
         #header p { margin: 2px 0 0 0; font-size: 0.75em; color: var(--text-muted); }
 
-        /* Selector de Capas / Indicadores */
-        #controls-panel {
-            position: absolute;
-            top: 80px;
-            left: 20px;
-            z-index: 1000;
-            background: rgba(30, 41, 59, 0.9);
-            padding: 12px 16px;
-            border-radius: 12px;
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        #controls-panel label { display: block; font-size: 0.75em; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
-        #controls-panel select {
-            background: #0f172a;
-            color: #fff;
-            border: 1px solid var(--border);
-            padding: 8px 12px;
-            border-radius: 8px;
-            outline: none;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-
+        /* Mapa autónomo (sin tiles externas mundiales) */
         #map {
             height: 100vh;
             width: 100vw;
             z-index: 1;
-            background: #090d16;
+            background: #070a12;
         }
 
-        /* Panel Lateral de Información */
+        /* Panel lateral de información */
         #info-panel {
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 360px;
+            width: 380px;
             max-height: calc(100vh - 40px);
             z-index: 1000;
             background: var(--card-bg);
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             overflow-y: auto;
             display: none;
             border: 1px solid var(--border);
@@ -108,7 +84,7 @@
         .close-btn:hover { color: #fff; }
         .province-title { margin: 0 0 15px 0; color: #38bdf8; font-size: 1.4em; }
 
-        /* Pestañas dentro del Panel */
+        /* Pestañas */
         .tabs {
             display: flex;
             gap: 5px;
@@ -129,12 +105,11 @@
             border-bottom-color: #38bdf8;
             font-weight: bold;
         }
-
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         .metric-box {
-            background: #0f172a;
+            background: #0b0f19;
             border-radius: 10px;
             padding: 12px;
             margin: 10px 0;
@@ -147,28 +122,19 @@
         .data-row {
             display: flex;
             justify-content: space-between;
-            padding: 6px 0;
+            padding: 7px 0;
             border-bottom: 1px dashed var(--border);
             font-size: 0.88em;
         }
         .history-list { list-style: none; padding: 0; margin: 10px 0 0 0; font-size: 0.85em; }
-        .history-list li { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed var(--border); }
+        .history-list li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--border); }
     </style>
 </head>
 <body>
 
     <div id="header">
         <h1>Monitor Cívico Argentina</h1>
-        <p>Explora el mapa interactivo y selecciona una provincia</p>
-    </div>
-
-    <div id="controls-panel">
-        <label for="indicator-select">Ver en el mapa:</label>
-        <select id="indicator-select" onchange="cambiarIndicador()">
-            <option value="pobreza">Tasa de Pobreza (%)</option>
-            <option value="desempleo">Desempleo Actual (%)</option>
-            <option value="poblacion">Población (Habitantes)</option>
-        </select>
+        <p>Mapa de Riesgo Integral y Transparencia Pública</p>
     </div>
 
     <div id="map"></div>
@@ -178,80 +144,84 @@
         <h2 id="panel-nombre" class="province-title">-</h2>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('tab-general')">General</button>
-            <button class="tab-btn" onclick="switchTab('tab-empleo')">Desempleo</button>
+            <button class="tab-btn active" onclick="switchTab('tab-general')">General & Riesgo</button>
+            <button class="tab-btn" onclick="switchTab('tab-empleo')">Empleo & Economía</button>
+            <button class="tab-btn" onclick="switchTab('tab-seguridad')">Seguridad & Salud</button>
         </div>
 
         <!-- Pestaña 1: General -->
         <div id="tab-general" class="tab-content active">
             <div class="metric-box">
-                <div id="panel-pobreza" class="metric-val">- %</div>
-                <div class="metric-sub">Tasa de Pobreza</div>
+                <div id="panel-riesgo" class="metric-val">- / 100</div>
+                <div class="metric-sub">Índice de Riesgo Integral</div>
             </div>
-            <div class="data-row">
-                <span>Población Total:</span>
-                <strong id="panel-poblacion">-</strong>
-            </div>
+            <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
+            <div class="data-row"><span>Tasa de Pobreza:</span><strong id="panel-pobreza">-</strong></div>
         </div>
 
         <!-- Pestaña 2: Empleo -->
         <div id="tab-empleo" class="tab-content">
-            <div style="font-weight: bold; margin-bottom: 8px; font-size: 0.9em; color: #38bdf8;">Evolución del Desempleo:</div>
+            <div class="data-row"><span>Costo Promedio Alquiler (2 amb):</span><strong id="panel-alquiler">-</strong></div>
+            <div style="font-weight: bold; margin: 15px 0 8px 0; font-size: 0.9em; color: #38bdf8;">Evolución del Desempleo:</div>
             <ul id="panel-historial" class="history-list"></ul>
+        </div>
+
+        <!-- Pestaña 3: Seguridad y Salud -->
+        <div id="tab-seguridad" class="tab-content">
+            <div class="data-row"><span>Tasa de Inseguridad (c/ 100k hab):</span><strong id="panel-inseguridad">-</strong></div>
+            <div class="data-row"><span>Tasa de Mortalidad:</span><strong id="panel-mortalidad">-</strong></div>
         </div>
     </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        let map = L.map('map', { zoomControl: false }).setView([-38.416097, -63.616672], 4);
-        L.control.zoom({ position: 'bottomright' }).addTo(map);
+        // Inicializar mapa centrado exclusivamente en Argentina con límites estrictos
+        let map = L.map('map', {
+            zoomControl: false,
+            minZoom: 4,
+            maxZoom: 8,
+            maxBounds: [[-56.0, -75.0], [-21.0, -51.0]]
+        }).setView([-38.416097, -63.616672], 5);
 
-        // Capa de mapa base totalmente abierta (OpenStreetMap estándar)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '&copy; OpenStreetMap'
-        }).addTo(map);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
 
         let datosProvincias = {};
         let geojsonLayer = null;
-        let indicadorActual = 'pobreza';
 
-        function getColor(val, indicador) {
-            if (indicador === 'pobreza') {
-                return val > 45 ? '#e11d48' :
-                       val > 40 ? '#f97316' :
-                       val > 35 ? '#eab308' :
-                       val > 20 ? '#84cc16' : '#22c55e';
-            } else if (indicador === 'desempleo') {
-                return val > 7.5 ? '#e11d48' :
-                       val > 6.5 ? '#f97316' :
-                       val > 5.5 ? '#eab308' : '#22c55e';
-            } else {
-                return val > 10000000 ? '#0284c7' :
-                       val > 3000000  ? '#0369a1' :
-                       val > 1000000  ? '#075985' : '#0c4a6e';
-            }
+        // Cálculo del Índice de Riesgo General (0 a 100) combinando factores
+        function calcularIndiceRiesgo(p) {
+            if (!p) return 50;
+            const pobr = p.pobreza_porcentaje || 40;
+            const desempleo = (p.desempleo_historial && p.desempleo_historial[0]) ? p.desempleo_historial[0].tasa : 6;
+            const inseguridad = (p.inseguridad_tasa || 500) / 15; // normalizado
+            
+            // Ponderación integral
+            let score = (pobr * 0.5) + (desempleo * 2.5) + (inseguridad * 0.2);
+            return Math.min(Math.max(Math.round(score), 10), 100);
+        }
+
+        // Escala de colores de Verde a Rojo basada en el Índice de Riesgo
+        function getColorPorRiesgo(score) {
+            return score > 75 ? '#991b1b' : // Rojo oscuro crítico
+                   score > 60 ? '#dc2626' : // Rojo
+                   score > 45 ? '#f97316' : // Naranja
+                   score > 30 ? '#eab308' : // Amarillo
+                   '#16a34a';               // Verde (menor riesgo)
         }
 
         function style(feature) {
             const nombre = feature.properties.nam || feature.properties.name;
             const provData = datosProvincias[nombre];
-            let val = 0;
-
-            if (provData) {
-                if (indicadorActual === 'pobreza') val = provData.pobreza_porcentaje || 0;
-                else if (indicadorActual === 'desempleo') val = (provData.desempleo_historial && provData.desempleo_historial[0]) ? provData.desempleo_historial[0].tasa : 0;
-                else if (indicadorActual === 'poblacion') val = provData.poblacion || 0;
-            }
+            const riesgo = calcularIndiceRiesgo(provData);
 
             return {
-                fillColor: getColor(val, indicadorActual),
+                fillColor: getColorPorRiesgo(riesgo),
                 weight: 1.5,
                 opacity: 1,
                 color: '#ffffff',
                 dashArray: '3',
-                fillOpacity: 0.75
+                fillOpacity: 0.8
             };
         }
 
@@ -277,25 +247,25 @@
 
             const panel = document.getElementById('info-panel');
             if (data) {
+                const riesgoScore = calcularIndiceRiesgo(data);
                 document.getElementById('panel-nombre').innerText = data.nombre;
-                document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
+                document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`;
                 document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
+                document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
+                document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
+                document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa} delitos`;
+                document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;
 
                 let historialHTML = '';
                 if (data.desempleo_historial) {
                     historialHTML = data.desempleo_historial.map((item, index) => {
-                        const etiqueta = index === 0 ? `Actual (${item.anio})` : `Hace ${index} año${index > 1 ? 's' : ''} (${item.anio})`;
+                        const etiqueta = index === 0 ? `Año ${item.anio} (Actual)` : `Hace ${index} año${index > 1 ? 's' : ''} (${item.anio})`;
                         return `<li><span>${etiqueta}:</span> <strong>${item.tasa}%</strong></li>`;
                     }).join('');
                 }
                 document.getElementById('panel-historial').innerHTML = historialHTML;
                 panel.style.display = 'block';
             }
-        }
-
-        function cambiarIndicador() {
-            indicadorActual = document.getElementById('indicator-select').value;
-            if (geojsonLayer) geojsonLayer.setStyle(style);
         }
 
         function switchTab(tabId) {
@@ -319,6 +289,7 @@
                     datosProvincias[p.nombre] = p;
                 });
 
+                // Cargar límites vectoriales oficiales de las provincias argentinas
                 const respGeo = await fetch('https://raw.githubusercontent.com/apis-digitales/georef-ar-api/master/data/provincias.json');
                 const geoData = await respGeo.json();
 
@@ -334,7 +305,7 @@
                 }).addTo(map);
 
             } catch (err) {
-                console.error("Error cargando mapa e indicadores:", err);
+                console.error("Error cargando mapa autónomo:", err);
             }
         }
 
