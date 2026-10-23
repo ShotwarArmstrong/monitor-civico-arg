@@ -56,7 +56,7 @@
         #header h1 { margin: 0; font-size: 1.2em; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.75em; color: #0284c7; font-weight: 600; }
 
-        /* Panel Nacional Masivo con Desplegable */
+        /* Panel Nacional Fijo (Abierto por completo) */
         #national-summary {
             position: absolute;
             top: 80px;
@@ -67,38 +67,27 @@
             border-radius: 12px;
             border: 2px solid var(--celeste);
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            width: 290px;
+            width: 310px;
         }
         .nat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
             font-size: 0.82em;
             color: #0369a1;
             text-transform: uppercase;
             font-weight: bold;
             border-bottom: 2px solid #e0f2fe;
             padding-bottom: 5px;
-            user-select: none;
+            margin-bottom: 6px;
+            text-align: center;
         }
-        .nat-header:hover { color: #0284c7; }
         .nat-content {
-            max-height: 110px;
+            max-height: 440px;
             overflow-y: auto;
-            transition: max-height 0.3s ease-out;
-        }
-        #national-summary.open .nat-content {
-            max-height: 380px;
-        }
-        #national-summary.open .arrow-icon {
-            transform: rotate(180deg);
         }
         .nat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px 0;
+            padding: 4px 0;
             font-size: 0.78em;
             border-bottom: 1px dashed #e2e8f0;
         }
@@ -161,9 +150,10 @@
             z-index: 10;
         }
 
+        /* Mapa gigante y protagonista */
         #map-svg {
-            height: 75vh;
-            max-width: 90vw;
+            height: 90vh;
+            max-width: 96vw;
             filter: drop-shadow(0px 12px 25px rgba(0,0,0,0.18));
         }
 
@@ -193,7 +183,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 460px;
+            width: 480px;
             max-height: calc(100vh - 90px);
             z-index: 3000;
             background: var(--card-bg);
@@ -349,15 +339,13 @@
             transform: rotate(180deg);
         }
 
-        /* Estilo específico para Desplegable de los Tres Poderes */
-        .poderes-container {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
+        /* Contenedores Genéricos Desplegables en Panel */
+        .gen-container {
             border-radius: 8px;
             margin: 8px 0;
             overflow: hidden;
         }
-        .poderes-header {
+        .gen-header {
             padding: 8px 12px;
             display: flex;
             justify-content: space-between;
@@ -365,36 +353,49 @@
             cursor: pointer;
             font-size: 0.82em;
             font-weight: bold;
-            color: #166534;
-            background: #dcfce7;
             user-select: none;
         }
-        .poderes-header:hover { background: #bbf7d0; }
-        .poderes-content {
+        .gen-content {
             max-height: 0;
             overflow-y: auto;
             transition: max-height 0.3s ease-out;
             padding: 0 12px;
             font-size: 0.78em;
             color: #1e293b;
-            background: #f0fdf4;
         }
-        .poderes-container.open .poderes-content {
-            max-height: 380px;
+        .gen-container.open .gen-content {
+            max-height: 320px;
             padding: 8px 12px 12px 12px;
-            border-top: 1px dashed #bbf7d0;
+            border-top: 1px dashed inherit;
         }
-        .poderes-container.open .arrow-icon {
+        .gen-container.open .arrow-icon {
             transform: rotate(180deg);
         }
-        .poder-card {
+
+        /* Tematización de contenedores */
+        .poderes-container { background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .poderes-header { color: #166534; background: #dcfce7; }
+        .poderes-header:hover { background: #bbf7d0; }
+        .poderes-content { background: #f0fdf4; }
+
+        .agenda-container { background: #eff6ff; border: 1px solid #bfdbfe; }
+        .agenda-header { color: #1e40af; background: #dbeafe; }
+        .agenda-header:hover { background: #bfdbfe; }
+        .agenda-content { background: #eff6ff; }
+
+        .infra-container { background: #faf5ff; border: 1px solid #e9d5ff; }
+        .infra-header { color: #6b21a8; background: #f3e8ff; }
+        .infra-header:hover { background: #e9d5ff; }
+        .infra-content { background: #faf5ff; }
+
+        .sub-card {
             background: #ffffff;
-            border: 1px solid #d1fae5;
+            border: 1px solid #e2e8f0;
             border-radius: 6px;
             padding: 6px 8px;
             margin: 6px 0;
         }
-        .poder-card strong { color: #15803d; display: block; margin-bottom: 2px; }
+        .sub-card strong { display: block; margin-bottom: 2px; }
 
         .voto-badge {
             padding: 2px 6px;
@@ -431,12 +432,9 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
-    <!-- Panel de Promedios Nacionales Masivo Desplegable -->
+    <!-- Panel Nacional Fijo -->
     <div id="national-summary">
-        <div class="nat-header" onclick="toggleNationalSummary()">
-            <span>📈 Promedios & Datos Nacionales</span>
-            <span class="arrow-icon">▼</span>
-        </div>
+        <div class="nat-header">📈 Promedios & Datos Nacionales</div>
         <div class="nat-content">
             <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
             <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">45.2%</span></div>
@@ -446,6 +444,9 @@
             <div class="nat-row"><span>Canasta Básica Total (Cbt):</span><span class="nat-val">$925.000</span></div>
             <div class="nat-row"><span>Salario Promedio Ripte:</span><span class="nat-val">$810.000</span></div>
             <div class="nat-row"><span>Empleados Públicos (Total):</span><span class="nat-val">3.45 Millones</span></div>
+            <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800</span></div>
+            <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350</span></div>
+            <div class="nat-row"><span>Comisarías / Seccionales:</span><span class="nat-val">~ 2.900</span></div>
             <div class="nat-row"><span>Presión Tributaria Efectiva:</span><span class="nat-val">28.4% PBI</span></div>
             <div class="nat-row"><span>Deuda Externa Consolidada:</span><span class="nat-val">USD 412 Mil Mill.</span></div>
             <div class="nat-row"><span>Causas Corrupción Federales:</span><span class="nat-val">1.420 Activas</span></div>
@@ -457,9 +458,9 @@
     <div id="footer-fuentes">
         <span><strong>Fuentes Oficiales:</strong> 
             <a href="https://www.indec.gob.ar" target="_blank">INDEC</a> · 
-            <a href="https://www.argentina.gob.ar/economia" target="_blank">Ministerio de Economía</a> · 
-            <a href="https://www.hcdn.gob.ar" target="_blank">H. Congreso de la Nación</a> · 
-            <a href="https://www.argentina.gob.ar/seguridad" target="_blank">Ministerio de Seguridad</a> · 
+            <a href="https://www.argentina.gob.ar/educacion" target="_blank">DINIECE / Educ.AR</a> · 
+            <a href="https://www.argentina.gob.ar/saluz" target="_blank">SISA / Ministerio de Salud</a> · 
+            <a href="https://www.hcdn.gob.ar" target="_blank">H. Congreso</a> · 
             <a href="https://www.bcra.gob.ar" target="_blank">BCRA</a>
         </span>
     </div>
@@ -545,14 +546,14 @@
         </svg>
     </div>
 
-    <!-- Panel Lateral -->
+    <!-- Panel Lateral de Auditoría de Provincia -->
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
         <h2 id="panel-nombre" class="province-title">-</h2>
         
         <div class="metric-box">
             <div id="panel-riesgo" class="metric-val">- / 100</div>
-            <div class="metric-sub">Índice de Riesgo Integral</div>
+            <div class="metric-sub">Índice de Riesgo Integral Cívico-Económico</div>
         </div>
 
         <div class="section-heading">🏛️ Identificación Institucional</div>
@@ -560,24 +561,74 @@
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
 
-        <!-- NUEVO APARTADO: Los Tres Poderes y sus Competencias -->
-        <div class="poderes-container" id="panel-poderes">
-            <div class="poderes-header" onclick="togglePoderes()">
+        <!-- Desplegable: Tres Poderes -->
+        <div class="gen-container poderes-container" id="panel-poderes">
+            <div class="gen-header poderes-header" onclick="toggleSeccion('panel-poderes')">
                 <span>⚖️ Los Tres Poderes del Estado & Competencias</span>
                 <span class="arrow-icon">▼</span>
             </div>
-            <div class="poderes-content">
-                <div class="poder-card">
-                    <strong>1. Poder Ejecutivo (Gobernador Provincial)</strong>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>1. Poder Ejecutivo Provincial</strong>
                     <span id="poder-ejecutivo-desc">-</span>
                 </div>
-                <div class="poder-card">
-                    <strong>2. Poder Legislativo (Diputados / Senadores Provinciales)</strong>
+                <div class="sub-card">
+                    <strong>2. Poder Legislativo Provincial</strong>
                     <span id="poder-legislativo-desc">-</span>
                 </div>
-                <div class="poder-card">
-                    <strong>3. Poder Judicial (Corte / Superior Tribunal Provincial)</strong>
+                <div class="sub-card">
+                    <strong>3. Poder Judicial Provincial</strong>
                     <span id="poder-judicial-desc">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desplegable: Agenda Provincial -->
+        <div class="gen-container agenda-container" id="panel-agenda">
+            <div class="gen-header agenda-header" onclick="toggleSeccion('panel-agenda')">
+                <span>📅 Agenda Provincial & Prioridades de Gestión</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Prioridad Económica / Infraestructura</strong>
+                    <span id="agenda-infraestructura">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Foco Sanitario y Educativo</strong>
+                    <span id="agenda-social">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Desafío Institucional / Transparencia</strong>
+                    <span id="agenda-institucional">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVO: Desplegable de Infraestructura Crítica: Escuelas, Hospitales y Comisarías -->
+        <div class="gen-container infra-container" id="panel-infraestructura-critica">
+            <div class="gen-header infra-header" onclick="toggleSeccion('panel-infraestructura-critica')">
+                <span>🏫🏥🚓 Escuelas, Hospitales y Comisarías (Detalle)</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong style="color: #6b21a8;">Total Escuelas en la Provincia:</strong>
+                    <span id="infra-total-escuelas" style="font-weight: bold; font-size: 1.1em; color: #1e293b;">-</span>
+                    <div style="margin-top: 4px;"><strong>Principales Establecimientos / Ejemplos:</strong></div>
+                    <ul id="lista-escuelas-detalle" style="margin: 4px 0; padding-left: 14px; font-size: 0.95em;"></ul>
+                </div>
+                <div class="sub-card">
+                    <strong style="color: #6b21a8;">Total Hospitales / Centros de Salud:</strong>
+                    <span id="infra-total-hospitales" style="font-weight: bold; font-size: 1.1em; color: #1e293b;">-</span>
+                    <div style="margin-top: 4px;"><strong>Principales Hospitales Referencia:</strong></div>
+                    <ul id="lista-hospitales-detalle" style="margin: 4px 0; padding-left: 14px; font-size: 0.95em;"></ul>
+                </div>
+                <div class="sub-card">
+                    <strong style="color: #6b21a8;">Total Seccionales / Comisarías Policiales:</strong>
+                    <span id="infra-total-comisarias" style="font-weight: bold; font-size: 1.1em; color: #1e293b;">-</span>
+                    <div style="margin-top: 4px;"><strong>Principales Dependencias Clave:</strong></div>
+                    <ul id="lista-comisarias-detalle" style="margin: 4px 0; padding-left: 14px; font-size: 0.95em;"></ul>
                 </div>
             </div>
         </div>
@@ -672,9 +723,19 @@
             "Buenos Aires": { 
                 nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
                 poderes: {
-                    ejecutivo: "Encabezado por el Gobernador. Administra la administración pública provincial, la policía bonaerense y **gestiona directamente los hospitales públicos y el sistema educativo provincial**.",
-                    legislativo: "Compuesto por la Legislatura Provincial (Senadores y Diputados). Sanciona leyes locales, aprueba el presupuesto provincial y controla la ejecución de gastos.",
-                    judicial: "Supervisado por la Suprema Corte de Justicia de la Provincia. Garantiza la constitucionalidad de las normas locales y administra la justicia penal, civil y laboral provincial."
+                    ejecutivo: "Encabezado por el Gobernador. Administra la administración pública provincial, la policía bonaerense y gestiona directamente hospitales y escuelas públicas.",
+                    legislativo: "Compuesto por la Legislatura Provincial (Senadores y Diputados). Sanciona leyes locales y aprueba el presupuesto provincial.",
+                    judicial: "Suprema Corte de Justicia de la Provincia. Garantiza constitucionalidad y administra justicia penal, civil y laboral."
+                },
+                agenda: {
+                    infraestructura: "Plan de mejora vial en rutas provinciales y expansión de redes cloacales en el conurbano.",
+                    social: "Negociación paritaria docente continua y reequipamiento de hospitales de alta complejidad.",
+                    institucional: "Transparencia en contrataciones directas y control de fondos de coparticipación municipal."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "4.920 establecimientos", ejemplos: ["Escuela Normal Superior de La Plata", "Colegio Nacional Rafael Hernández", "EET N° 1 de Avellaneda", "Instituto Politécnico Superior de Mar del Plata"] },
+                    hospitales: { total: "81 hospitales provinciales / 320 municipales", ejemplos: ["Hospital Dr. Alejandro Korn (Melchor Romero)", "Hospital Interzonal General Agüero (San Martín)", "Hospital Sor María Ludovica (La Plata)", "Hospital Petrona V. de Cordero (San Fernando)"] },
+                    comisarias: { total: "410 seccionales de policía", ejemplos: ["Comisaría Primera de La Plata", "Comisaría Segunda de Quilmes", "Comisaría Primera de Lomas de Zamora", "Comisaría Primera de Mar del Plata"] }
                 },
                 corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", condenados: [
                     "<strong>Julio Alak</strong> (Exintendente / Ministro): Causa por administración fraudulenta y contrataciones directas. Exp. 4589/12. Estado: Procesado y elevado a juicio oral.",
@@ -693,9 +754,19 @@
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", 
                 poderes: {
-                    ejecutivo: "Ejercido por el Jefe de Gobierno. Administra la Ciudad, la Policía de la Ciudad, y los hospitales y escuelas públicas de gestión autónoma.",
-                    legislativo: "Legislatura Porteña unicameral. Sanciona códigos contravencionales, urbanísticos y leyes fiscales de la metrópoli.",
-                    judicial: "Tribunal Superior de Justicia de la CABA y fuero local en contravenciones, contencioso administrativo y penal propio."
+                    ejecutivo: "Ejercido por el Jefe de Gobierno. Administra la Ciudad, la Policía de la Ciudad, y los hospitales y escuelas públicas autónomas.",
+                    legislativo: "Legislatura Porteña unicameral. Sanciona códigos contravencionales, urbanísticos y leyes fiscales.",
+                    judicial: "Tribunal Superior de Justicia de la CABA y fuero local en contravenciones, contencioso administrativo y penal."
+                },
+                agenda: {
+                    infraestructura: "Renovación de centros urbanos y soterramiento de interferencias pluviales.",
+                    social: "Digitalización plena de trámites educativos y optimización de guardias hospitalarias.",
+                    institucional: "Reclamo judicial activo en Corte Suprema por fondos de coparticipación retenidos."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.410 establecimientos (gestión estatal y privada)", ejemplos: ["Colegio Nacional de Buenos Aires (UBA)", "Escuela Normal N° 1 Pte. Roque Sáenz Peña", "Escuela Superior de Comercio Carlos Pellegrini"] },
+                    hospitales: { total: "34 hospitales generales y especializados de agudos", ejemplos: ["Hospital General de Agudos J. A. Fernández", "Hospital de Pediatría Prof. Dr. Juan P. Garrahan", "Hospital General de Agudos B. Rivadavia", "Hospital Ramos Mejía"] },
+                    comisarias: { total: "54 comisarías vecinales (Policía de la Ciudad)", ejemplos: ["Comisaría Vecinal 1-A (Constitución/Retiro)", "Comisaría Vecinal 2-B (Recoleta)", "Comisaría Vecinal 14-C (Palermo)"] }
                 },
                 corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: [
                     "<strong>Exfuncionarios de Área de Obras Menores</strong>: Investigados por presunta cartelización de licitaciones de veredas y mobiliario urbano. Exp. 3120/21. Estado: En instrucción."
@@ -717,6 +788,16 @@
                     legislativo: "Cámara de Diputados y Cámara de Senadores provinciales.",
                     judicial: "Corte de Justicia de Catamarca."
                 },
+                agenda: {
+                    infraestructura: "Pavimentación de corredores viales vinculados a yacimientos de litio.",
+                    social: "Capacitación técnica orientada a la industria minera local.",
+                    institucional: "Fortalecimiento de auditorías ambientales en proyectos extractivos."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "490 establecimientos", ejemplos: ["Escuela Normal Fray Mamerto Esquiú", "Colegio Nacional Dr. Fidel M. Castro", "Escuela Agrotécnica de Andalgalá"] },
+                    hospitales: { total: "14 hospitales zonales y regionales", ejemplos: ["Hospital Interzonal San Juan Bautista", "Hospital de Niños Eva Perón", "Hospital Zonal de Belén"] },
+                    comisarias: { total: "48 seccionales policiales", examples: ["Comisaría Primera de San Fernando del Valle", "Comisaría Departamental de Tinogasta"] }
+                },
                 corrupcion_tasa: "5.1 causas / 100k", opacidad_licitaciones: "Alta (72%)", pauta_corrupcion: "Alta (Control de pauta estatal)", condenados: [
                     "<strong>Exministros de Obras Públicas Provinciales</strong>: Procesados por adjudicación directa en proyectos viales mineros sin licitación abierta. Exp. 892/19. Estado: Elevado a juicio."
                 ], poblacion: 429556, 
@@ -736,6 +817,16 @@
                     ejecutivo: "Gobernador provincial. Administra los servicios esenciales provinciales.",
                     legislativo: "Cámara de Diputados de la Provincia del Chaco.",
                     judicial: "Superior Tribunal de Justicia del Chaco."
+                },
+                agenda: {
+                    infraestructura: "Finalización de acueductos troncales y saneamiento financiero de empresas públicas.",
+                    social: "Revisión y auditoría de planes sociales provinciales y asistencia escolar.",
+                    institucional: "Transparencia absoluta en adjudicaciones a organizaciones sociales y fundaciones."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.280 establecimientos", ejemplos: ["Escuela Normal Superior Domingo F. Sarmiento (Resistencia)", "Colegio Nacional José María Paz", "EET N° 2 General San Martín"] },
+                    hospitales: { total: "28 hospitales públicos", ejemplos: ["Hospital Pediátrico Dr. Avelino Castelán", "Hospital 4 de Junio (Sáenz Peña)", "Hospital Perrando (Resistencia)"] },
+                    comisarias: { total: "95 seccionales policiales", ejemplos: ["Comisaría Primera de Resistencia", "Comisaría Segunda de Presidencia Roque Sáenz Peña"] }
                 },
                 corrupcion_tasa: "6.4 causas / 100k", opacidad_licitaciones: "Muy Alta (81%)", pauta_corrupcion: "Crítica (Herencia de desvíos)", condenados: [
                     "<strong>Emerenciano Sena y Patricia Acuña</strong> (Dirigentes sociales): Causa por administración fraudulenta de fondos de vivienda social y desvío de subsidios estatales. Exp. 11200/23. Estado: Procesados con prisión preventiva."
@@ -757,6 +848,16 @@
                     legislativo: "Legislatura de la Provincia de Chubut.",
                     judicial: "Superior Tribunal de Justicia de Chubut."
                 },
+                agenda: {
+                    infraestructura: "Optimización de rutas portuarias y mantenimiento de conectividad patagónica.",
+                    social: "Regularización del calendario escolar y refuerzo de servicios sanitarios comarcales.",
+                    institucional: "Defensa federal de los recursos hidrocarburíferos y pesqueros provinciales."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "640 establecimientos", ejemplos: ["Escuela N° 1 Pernille Svinth (Rawson)", "Colegio Nacional Perito Moreno (Comodoro Rivadavia)", "Escuela de Arte de Trelew"] },
+                    hospitales: { total: "22 hospitales regionales", ejemplos: ["Hospital Regional Comodoro Rivadavia", "Hospital Zonal de Trelew Dra. S. Esandi", "Hospital Zonal de Esquel"] },
+                    comisarias: { total: "58 seccionales policiales", ejemplos: ["Comisaría Primera de Trelew", "Comisaría Primera de Comodoro Rivadavia", "Comisaría Primera de Rawson"] }
+                },
                 corrupcion_tasa: "3.9 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Diego Correa</strong> (Exfuncionario provincial): Causa 'Embrujo' por asociación ilícita, enriquecimiento ilícito y retornos de obra pública. Fecha de condena: 2021. Exp. 7521/18. Estado: Condena firme a 10 años de prisión."
                 ], poblacion: 603120, 
@@ -776,6 +877,16 @@
                     ejecutivo: "Gobernador provincial. Responsable de la gestión estatal y servicios públicos provinciales.",
                     legislativo: "Unicameral de Córdoba.",
                     judicial: "Tribunal Superior de Justicia de Córdoba."
+                },
+                agenda: {
+                    infraestructura: "Construcción de anillos viales metropolitanos y expansión de gasoductos troncales.",
+                    social: "Programas de empleo joven y articulación público-privada en educación técnica.",
+                    institucional: "Modernización digital del Estado provincial y simplificación registral."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "3.280 establecimientos", ejemplos: ["Colegio Nacional de Monserrat (UNC)", "Escuela Normal Superior Dr. Alejandro Carbó", "IPEM N° 206 Amadeo Sabattini"] },
+                    hospitales: { total: "42 hospitales provinciales y regionales", ejemplos: ["Hospital de Niños de la Santísima Trinidad", "Hospital San Roque", "Hospital Rawson", "Hospital Misericordia"] },
+                    comisarias: { total: "185 dependencias policiales (Departamentales Sur/Norte)", ejemplos: ["Comisaría 1ª (Centro Córdoba)", "Comisaría Distrito Villa Carlos Paz", "Comisaría Río Cuarto"] }
                 },
                 corrupcion_tasa: "3.5 causas / 100k", opacidad_licitaciones: "Baja/Media (35%)", pauta_corrupcion: "Controlada", condenados: [
                     "<strong>Exintendentes municipales del interior</strong>: Causas por peculado y administración fraudulenta en fondos de coparticipación menor. Exp. 1450/20. Estado: Condenas de ejecución condicional."
@@ -797,6 +908,16 @@
                     legislativo: "Senado y Cámara de Diputados de Corrientes.",
                     judicial: "Superior Tribunal de Justicia de Corrientes."
                 },
+                agenda: {
+                    infraestructura: "Desarrollo de parques industriales y refuerzo energético provincial.",
+                    social: "Planes de mitigación de emergencias hídricas y asistencia a pequeños productores.",
+                    institucional: "Transparencia en licitaciones de obra pública vial."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.450 establecimientos", ejemplos: ["Escuela Normal General San Martín", "Colegio Nacional Cnel. José M.<bos>3", "EET N° 1 Gral. Madariaga"] },
+                    hospitales: { total: "26 hospitales públicos", ejemplos: ["Hospital Escuela Gral. José de San Martín", "Hospital Pediátrico Juan Pablo II", "Hospital Zonal de Goya"] },
+                    comisarias: { total: "68 seccionales policiales", ejemplos: ["Comisaría Primera de Corrientes Capital", "Comisaría Segunda de Goya", "Comisaría de Paso de los Libres"] }
+                },
                 corrupcion_tasa: "4.2 causas / 100k", opacidad_licitaciones: "Alta (64%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exfuncionarios de área de salud provincial</strong>: Investigados por sobreprecios en compras directas de insumos médicos durante emergencias sanitarias. Exp. 984/21. Estado: Elevado a juicio."
                 ], poblacion: 1197553, 
@@ -816,6 +937,16 @@
                     ejecutivo: "Gobernador provincial.",
                     legislativo: "Senado y Cámara de Diputados de Entre Ríos.",
                     judicial: "Superior Tribunal de Justicia de Entre Ríos."
+                },
+                agenda: {
+                    infraestructura: "Readecuación de caminos rurales productivos y optimización portuaria fluvial.",
+                    social: "Ajuste del gasto político para destinar mayores recursos a comedores escolares.",
+                    institucional: "Reforma política y limitación de contrataciones en la Legislatura."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.610 establecimientos", ejemplos: ["Escuela Normal Superior Prof. J. M. Torres (Paraná)", "Colegio Nacional del Uruguay (Concepción)", "Escuela Centenario de Gualeguaychú"] },
+                    hospitales: { total: "31 hospitales públicos", ejemplos: ["Hospital San Martín de Paraná", "Hospital Materno Infantil San Roque", "Hospital Centenario de Gualeguaychú"] },
+                    comisarias: { total: "74 seccionales policiales", ejemplos: ["Comisaría Primera de Paraná", "Comisaría Primera de Concordia", "Comisaría Primera de Gualeguaychú"] }
                 },
                 corrupcion_tasa: "3.8 causas / 100k", opacidad_licitaciones: "Media (45%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios y operadores legislativos</strong>: Causa por contratos truchos en la Legislatura provincial (defraudación al Estado por más de 2.000 millones de pesos). Fecha de condena: 2022. Exp. 5410/18. Estado: Condenas firmes confirmadas por Cámara de Casación."
@@ -837,6 +968,16 @@
                     legislativo: "Legislatura de Formosa.",
                     judicial: "Superior Tribunal de Justicia de Formosa."
                 },
+                agenda: {
+                    infraestructura: "Obras hídricas multipropósito y extensión de redes eléctricas rurales.",
+                    social: "Sostenimiento de planes alimentarios focalizados y educación pública centralizada.",
+                    institucional: "Fortalecimiento de la administración centralizada provincial."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "890 establecimientos", ejemplos: ["Escuela Normal Superior República del Paraguay", "Colegio Gobernador Juan José Silva", "EPES N° 20"] },
+                    hospitales: { total: "19 hospitales públicos", ejemplos: ["Hospital de Alta Complejidad Pte. Juan D. Perón", "Hospital Central de Formosa", "Hospital Distrital de Clorinda"] },
+                    comisarias: { total: "42 seccionales policiales", ejemplos: ["Comisaría Primera de Formosa Capital", "Comisaría Segunda de Clorinda"] }
+                },
                 corrupcion_tasa: "7.5 causas / 100k", opacidad_licitaciones: "Extrema (92%)", pauta_corrupcion: "Monopolio absoluto estatal", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por adjudicaciones directas recurrentes y opacidad en cuentas públicas. Exp. 310/15. Estado: Protegidos por blindaje de fueros locales e inacción judicial."
                 ], poblacion: 606041, 
@@ -856,6 +997,16 @@
                     ejecutivo: "Gobernador provincial.",
                     legislativo: "Legislatura de Jujuy.",
                     judicial: "Superior Tribunal de Justicia de Jujuy."
+                },
+                agenda: {
+                    infraestructura: "Ampliación de capacidad en plantas solares fotovoltaicas y mejora turística en la Quebrada.",
+                    social: "Capacitación laboral para reconversión productiva en litio y tabaco.",
+                    institucional: "Reforma constitucional local para prohibición de indultos por corrupción."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "780 establecimientos", ejemplos: ["Escuela Normal Superior Juan Ignacio Gorriti", "Colegio Nacional Teodoro Sánchez de Bustamante", "EET N° 1 Escolástico Zegada"] },
+                    hospitales: { total: "18 hospitales públicos", ejemplos: ["Hospital San Roque (San Salvador de Jujuy)", "Hospital Dr. Pablo Soria", "Hospital Wenceslao Gallardo (Palpalá)"] },
+                    comisarias: { total: "50 seccionales policiales", ejemplos: ["Comisaría Seccional 1ª (San Salvador)", "Comisaría Seccional 24ª (Humahuaca)"] }
                 },
                 corrupcion_tasa: "4.5 causas / 100k", opacidad_licitaciones: "Alta (65%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Milagro Sala</strong> (Exdirigente social): Causa 'Pibes Veleros' por defraudación al Estado, asociación ilícita y extorsión por desvío de fondos públicos de vivienda. Fecha de condena: 2019 (Ratificada por CSJN en 2023). Exp. 2450/16. Estado: Condena firme a 13 años de prisión."
@@ -877,6 +1028,16 @@
                     legislativo: "Cámara de Diputados de La Pampa.",
                     judicial: "Superior Tribunal de Justicia de La Pampa."
                 },
+                agenda: {
+                    infraestructura: "Defensa de recursos hídricos interprovinciales y pavimentación de rutas del oeste.",
+                    social: "Sostenimiento de programas alimentarios provinciales sin recortes.",
+                    institucional: "Defensa de la autonomía de cajas previsionales provinciales."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "430 establecimientos", ejemplos: ["Colegio Nacional Domingo F. Sarmiento (Santa Rosa)", "Escuela Normal Manuel Belgrano", "EET N° 1 General L. M. Campos"] },
+                    hospitales: { total: "15 hospitales regionales", ejemplos: ["Hospital Molas (Santa Rosa)", "Hospital Gobernador Centeno (General Pico)"] },
+                    comisarias: { total: "35 seccionales policiales", ejemplos: ["Comisaría Seccional Primera (Santa Rosa)", "Comisaría Primera (General Pico)"] }
+                },
                 corrupcion_tasa: "2.1 causas / 100k", opacidad_licitaciones: "Baja (30%)", pauta_corrupcion: "Baja", condenados: [
                     "Sin registros significativos de condenas firmes por corrupción institucional reciente en fueros provinciales."
                 ], poblacion: 366022, 
@@ -896,6 +1057,16 @@
                     ejecutivo: "Gobernador provincial.",
                     legislativo: "Función Legislativa de La Rioja.",
                     judicial: "Tribunal Superior de Justicia de La Rioja."
+                },
+                agenda: {
+                    infraestructura: "Inversión en parques eólicos provinciales y tendido eléctrico rural.",
+                    social: "Sostenimiento salarial mediante bonos complementarios ante crisis coparticipable.",
+                    institucional: "Emisión de cuasimonedas locales y reestructuración de deuda pública."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "520 establecimientos", ejemplos: ["Colegio Nacional N° 1 Joaquín V. González", "Escuela Normal Superior Pedro Ignacio de Castro Barros", "EET N° 1 Ing. Rogelio Boero"] },
+                    hospitales: { total: "14 hospitales públicos", ejemplos: ["Hospital Regional Vera Barros", "Hospital de la Madre y el Niño", "Hospital Zonal de Chilecito"] },
+                    comisarias: { total: "36 seccionales policiales", ejemplos: ["Comisaría Primera de La Rioja Capital"] }
                 },
                 corrupcion_tasa: "5.8 causas / 100k", opacidad_licitaciones: "Muy Alta (78%)", pauta_corrupcion: "Muy Alta", condenados: [
                     "<strong>Exfuncionarios de administraciones provinciales</strong>: Investigados por emisión ilegal de cuasimonedas y opacidad en destino de fondos fiduciarios nacionales. Exp. 1200/22. Estado: En instrucción."
@@ -917,6 +1088,16 @@
                     legislativo: "H. Legislatura de Mendoza (Senado y Cámara de Diputados).",
                     judicial: "Suprema Corte de Justicia de Mendoza."
                 },
+                agenda: {
+                    infraestructura: "Obras hidroeléctricas y modernización del sistema de riego provincial.",
+                    social: "Fomento al turismo internacional y apoyo financiero a pymes exportadoras.",
+                    institucional: "Auditoría de gestión y control estricto de compras públicas."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.720 establecimientos", ejemplos: ["Colegio Nacional Agustín Alvarez", "Escuela Normal Superior General San Martín", "Liceo Agrícola y Enológico Don Bosco"] },
+                    hospitales: { total: "29 hospitales públicos", ejemplos: ["Hospital Central de Mendoza", "Hospital Dr. Humberto Notti (Pediátrico)", "Hospital Teodoro J. Schestakow (San Rafael)"] },
+                    comisarias: { total: "79 seccionales policiales", ejemplos: ["Comisaría 3ª (Ciudad de Mendoza)", "Comisaría 8ª (Godoy Cruz)", "Comisaría 32ª (San Rafael)"] }
+                },
                 corrupcion_tasa: "3.1 causas / 100k", opacidad_licitaciones: "Baja (32%)", pauta_corrupcion: "Regulada", condenados: [
                     "<strong>Exfuncionarios de Vialidad Provincial</strong>: Procesados por irregularidades en adjudicaciones menores de mantenimiento de rutas. Exp. 980/20. Estado: Elevado a juicio."
                 ], poblacion: 2014533, 
@@ -936,6 +1117,16 @@
                     ejecutivo: "Gobernador provincial.",
                     legislativo: "Cámara de Representantes de Misiones.",
                     judicial: "Superior Tribunal de Justicia de Misiones."
+                },
+                agenda: {
+                    infraestructura: "Conectividad digital escolar y obras viales de acceso a polos turísticos.",
+                    social: "Políticas activas de salud misionera y educación disruptiva tecnológica.",
+                    institucional: "Defensa de regímenes especiales aduaneros fronterizos."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.320 establecimientos", ejemplos: ["Escuela Normal Mixta Estados Unidos del Brasil", "Colegio Nacional Martín de Moussy", "Escuela de Robótica de Misiones"] },
+                    hospitales: { total: "27 hospitales públicos", ejemplos: ["Hospital Dr. Ramón Madariaga (Posadas)", "Hospital de Pediatría Fernando Barreyro", "Hospital Samic Oberá"] },
+                    comisarias: { total: "65 seccionales policiales", ejemplos: ["Comisaría Primera de Posadas", "Comisaría Primera de Oberá", "Comisaría Primera de Iguazú"] }
                 },
                 corrupcion_tasa: "4.1 causas / 100k", opacidad_licitaciones: "Media (52%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exintendentes municipales</strong>: Procesados por desvío de fondos coparticipables y malversación de subsidios agrarios. Exp. 650/21. Estado: Procesados en primera instancia."
@@ -957,6 +1148,16 @@
                     legislativo: "Legislatura de la Provincia del Neuquén.",
                     judicial: "Tribunal Superior de Justicia de Neuquén."
                 },
+                agenda: {
+                    infraestructura: "Pavimentación de rutas petroleras y ampliación de servicios en ciudades en crecimiento demográfico.",
+                    social: "Becas provinciales universitarias financiadas con renta hidrocarburífera.",
+                    institucional: "Revisión de contratos de concesión y transparencia en regalías."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "590 establecimientos", ejemplos: ["Escuela Provincial N° 2 (Neuquén Capital)", "CPEM N° 40", "Escuela Superior de Música de Neuquén"] },
+                    hospitales: { total: "20 hospitales públicos", ejemplos: ["Hospital Regional Castro Rendón", "Hospital Bouquet Roldán", "Hospital Zonal Cutral Co-Plaza Huincul"] },
+                    comisarias: { total: "45 seccionales policiales", ejemplos: ["Comisaría Primera de Neuquén Capital", "Comisaría Segunda de Cutral Co"] }
+                },
                 corrupcion_tasa: "3.4 causas / 100k", opacidad_licitaciones: "Media (40%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de Legislatura Provincial</strong>: Causa por desvío millonario de fondos mediante contrataciones de empleados 'ñoquis' y retiros fraudulentos de cajeros. Fecha de instrucción: 2022. Exp. 4200/21. Estado: Elevado a juicio oral."
                 ], poblacion: 726590, 
@@ -976,6 +1177,16 @@
                     ejecutivo: "Gobernador provincial.",
                     legislativo: "Legislatura de Río Negro.",
                     judicial: "Superior Tribunal de Justicia de Río Negro."
+                },
+                agenda: {
+                    infraestructura: "Desarrollo del polo exportador de GNL en la costa atlántica rionegrina.",
+                    social: "Fortalecimiento de atención primaria de salud en zonas cordilleranas y alto valle.",
+                    institucional: "Articulación con municipios para descentralización de servicios."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "690 establecimientos", ejemplos: ["Escuela Normal Superior de Viedma", "CEM N° 1 de Bariloche", "CET N° 1 de General Roca"] },
+                    hospitales: { total: "24 hospitales públicos", ejemplos: ["Hospital Zonal Bariloche Dr. Ramón Carrillo", "Hospital Zonal de General Roca Dr. Francisco López Lima", "Hospital Artemio Zatti (Viedma)"] },
+                    comisarias: { total: "55 seccionales policiales", ejemplos: ["Comisaría Primera de Viedma", "Comisaría Segunda de San Carlos de Bariloche"] }
                 },
                 corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (46%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de Catastro Provincial</strong>: Investigados por ventas irregulares de tierras fiscales protegidas en zona cordillerana. Exp. 1102/19. Estado: Procesados."
@@ -997,6 +1208,16 @@
                     legislativo: "Cámara de Senadores y Cámara de Diputados de Salta.",
                     judicial: "Corte de Justicia de Salta."
                 },
+                agenda: {
+                    infraestructura: "Extensión de redes de agua potable y pozos profundos en el chaco salteño.",
+                    social: "Asistencia focalizada en comunidades originarias y planes de seguridad alimentaria.",
+                    institucional: "Transparencia en controles fronterizos y combate al narcotráfico regional."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.310 establecimientos", ejemplos: ["Colegio Nacional B. Mitre", "Escuela Normal General Manuel Belgrano", "EET N° 3138"] },
+                    hospitales: { total: "35 hospitales públicos", ejemplos: ["Hospital San Bernardo", "Hospital Público Materno Infantil", "Hospital Dr. Joaquín Castellanos (Güemes)"] },
+                    comisarias: { total: "72 seccionales policiales", ejemplos: ["Comisaría Primera de Salta Capital", "Comisaría Distrito Orán"] }
+                },
                 corrupcion_tasa: "4.9 causas / 100k", opacidad_licitaciones: "Alta (70%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exintendentes municipales del norte provincial</strong>: Condenados por malversación de fondos destinados a asistencia alimentaria e hídrica de comunidades originarias. Exp. 3340/20. Estado: Condena firme."
                 ], poblacion: 1440672, 
@@ -1016,6 +1237,16 @@
                     ejecutivo: "Gobernador provincial.",
                     legislativo: "Cámara de Diputados de San Juan.",
                     judicial: "Corte de Justicia de San Juan."
+                },
+                agenda: {
+                    infraestructura: "Optimización de obras viales cordilleranas y fomento a la exploración metalífera.",
+                    social: "Apoyo a cooperativas agrícolas y fortalecimiento de hospitales departamentales.",
+                    institucional: "Revisión de mecanismos de compras directas y transparencia fiscal."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "710 establecimientos", ejemplos: ["Escuela Normal Superior Fray M. Esquiú", "Colegio Central Universitario Mariano Moreno", "EET N° 1 M. Savio"] },
+                    hospitales: { total: "18 hospitales públicos", ejemplos: ["Hospital Dr. Guillermo Rawson", "Hospital Dr. Marcial Quiroga", "Hospital Dr. Federico Cantoni (Caucete)"] },
+                    comisarias: { total: "40 seccionales policiales", ejemplos: ["Comisaría Primera de San Juan Capital"] }
                 },
                 corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Baja/Media (38%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de administraciones municipales</strong>: Causas por faltas administrativas menores en revisión judicial. Exp. 512/21. Estado: En instrucción."
@@ -1037,6 +1268,16 @@
                     legislativo: "Senado y Cámara de Diputados de San Luis.",
                     judicial: "Superior Tribunal de Justicia de San Luis."
                 },
+                agenda: {
+                    infraestructura: "Conectividad de fibra óptica provincial y mantenimiento vial productivo.",
+                    social: "Planes de incentivo a la radicación de empresas de software y empleo tecnológico.",
+                    institucional: "Auditoría integral de transición de gestión y ordenamiento de cuentas públicas."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "450 establecimientos", ejemplos: ["Escuela Normal Juan Pascual Pringles (UNSL)", "Colegio Nacional N° 2 Juan Esteban Pedernera", "Escuela Modelo Bilingüe Digital"] },
+                    hospitales: { total: "16 hospitales públicos", ejemplos: ["Hospital Central Dr. Ramón Carrillo", "Hospital San Luis", "Hospital Zonal de Villa Mercedes"] },
+                    comisarias: { total: "34 seccionales policiales", ejemplos: ["Comisaría Primera de San Luis", "Comisaría Seccional 8ª de Villa Mercedes"] }
+                },
                 corrupcion_tasa: "2.8 causas / 100k", opacidad_licitaciones: "Baja (33%)", pauta_corrupcion: "Baja", condenados: [
                     "<strong>Exfuncionarios del área de Obras Públicas</strong>: Investigados por auditorías de transición de gestión y faltantes de inventario en infraestructura (Período 2023-2024). Exp. 890/23. Estado: En instrucción."
                 ], poblacion: 540905, 
@@ -1056,6 +1297,16 @@
                     ejecutivo: "Gobernador provincial.",
                     legislativo: "Cámara de Diputados de Santa Cruz.",
                     judicial: "Tribunal Superior de Justicia de Santa Cruz."
+                },
+                agenda: {
+                    infraestructura: "Reactivación de represas patagónicas y control ambiental en yacimientos.",
+                    social: "Saneamiento de la caja de previsión social y mejora salarial docente.",
+                    institucional: "Auditoría de contratos petroleros y revisión de cuentas públicas históricas."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "370 establecimientos", ejemplos: ["Colegio Provincial N° 1 República Argentina (Río Gallegos)", "Escuela Industrial N° 4", "Colegio María Auxiliadora"] },
+                    hospitales: { total: "15 hospitales públicos", ejemplos: ["Hospital Regional Río Gallegos", "Hospital Zonal Caleta Olivia", "Hospital Dr. Alberto Sánchez (El Calafate)"] },
+                    comisarias: { total: "32 seccionales policiales", ejemplos: ["Comisaría Primera de Río Gallegos", "Comisaría Primera de Caleta Olivia"] }
                 },
                 corrupcion_tasa: "5.2 causas / 100k", opacidad_licitaciones: "Alta (74%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exfuncionarios de administraciones provinciales históricas</strong>: Vinculados a causas de direccionamiento de obra vial y sobreprecios energéticos. Exp. 5420/16. Estado: Elevados a juicio oral."
@@ -1077,6 +1328,16 @@
                     legislativo: "Legislatura de Tierra del Fuego.",
                     judicial: "Superior Tribunal de Justicia de Tierra del Fuego."
                 },
+                agenda: {
+                    infraestructura: "Ampliación de matriz energética insular y conectividad vial en ruta nacional 3.",
+                    social: "Defensa activa del subrégimen industrial tecnológico y de puestos de trabajo.",
+                    institucional: "Soberanía antártica y articulación en proyectos geopolíticos nacionales."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "220 establecimientos", ejemplos: ["Colegio Provincial Don Bosco (Ushuaia)", "Colegio Nacional Gessell (Río Grande)", "EPET N° 1"] },
+                    hospitales: { total: "10 hospitales públicos", ejemplos: ["Hospital Regional Ushuaia", "Hospital Regional Río Grande", "Hospital Modular Tolhuin"] },
+                    comisarias: { total: "22 seccionales policiales", ejemplos: ["Comisaría Primera de Ushuaia", "Comisaría Primera de Río Grande"] }
+                },
                 corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por procesos judiciales en adjudicaciones de servicios públicos y contrataciones directas de emergencia. Exp. 1820/21. Estado: En instrucción."
                 ], poblacion: 190641, 
@@ -1097,6 +1358,16 @@
                     legislativo: "Legislatura de Tucumán.",
                     judicial: "Corte Suprema de Justicia de Tucumán."
                 },
+                agenda: {
+                    infraestructura: "Mejora de rutas provinciales agroindustriales y saneamiento ambiental de cuencas.",
+                    social: "Control de seguridad urbana y reducción de índices de delitos complejos.",
+                    institucional: "Reforma de procedimientos legislativos tras causas por contratos públicos."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.520 establecimientos", ejemplos: ["Escuela Normal Juan Bautista Alberdi", "Gymnasium Universitario (UNT)", "Colegio Nacional Mitre"] },
+                    hospitales: { total: "30 hospitales públicos", ejemplos: ["Hospital Padilla", "Hospital del Niño Jesús", "Hospital Ángel C. Padilla", "Hospital Regional Concepción"] },
+                    comisarias: { total: "76 seccionales policiales", ejemplos: ["Comisaría Primera (San Miguel de Tucumán)", "Comisaría Seccional 2ª"] }
+                },
                 corrupcion_tasa: "5.5 causas / 100k", opacidad_licitaciones: "Alta (75%)", pauta_corrupcion: "Muy Alta", condenados: [
                     "<strong>Exfuncionarios y legisladores provinciales</strong>: Causa por fraude laboral masivo ('contratos fantasma' en la Legislatura provincial por más de 60 millones de dólares). Exp. 7410/19. Estado: Elevado a juicio oral."
                 ], poblacion: 1703186, 
@@ -1113,9 +1384,19 @@
             "Santa Fe": { 
                 nombre: "Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "9.5%", 
                 poderes: {
-                    ejecutivo: "Encabezado por el Gobernador. Administra la fuerza policial provincial, **los hospitales públicos provinciales y todo el sistema de escuelas públicas santafesinas**.",
-                    legislativo: "Cámara de Senadores y Cámara de Diputadas y Diputados de la Provincia de Santa Fe. Sanciona leyes impositivas, códigos procesales y presupuesto provincial.",
+                    ejecutivo: "Encabezado por el Gobernador. Administra la fuerza policial provincial, los hospitales públicos provinciales y todo el sistema de escuelas públicas santafesinas.",
+                    legislativo: "Cámara de Senadores y Cámara de Diputadas y Diputados de la Provincia de Santa Fe. Sanciona leyes impositivas y presupuesto.",
                     judicial: "Corte Suprema de Justicia de la Provincia de Santa Fe. Administra el fuero penal, civil y constitucional local."
+                },
+                agenda: {
+                    infraestructura: "Plan de pavimentación de accesos viales productivos y optimización de corredores logísticos agroexportadores.",
+                    social: "Reforma integral del sistema carcelario, despliegue operativo de seguridad y refuerzo en comedores escolares.",
+                    institucional: "Reforma constitucional provincial, ley de ficha limpia y autonomía municipal."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "2.840 establecimientos", ejemplos: ["Escuela Normal Superior N° 32 Gral. José de San Martín (Santa Fe)", "Colegio Nacional N° 1 Gral. Urquiza (Rosario)", "Politécnico Gral. San Martín (UNR)", "Escuela Superior de Comercio Gral. Manuel Belgrano"] },
+                    hospitales: { total: "38 hospitales públicos provinciales", ejemplos: ["Hospital Provincial de Rosario", "Hospital J. M. Cullen (Santa Fe)", "Hospital Dr. Clemente Álvarez (HECA)", "Hospital Centenario de Rosario"] },
+                    comisarias: { total: "145 seccionales y dependencias de UR (Unidades Regionales)", ejemplos: ["Comisaría 1ª (Santa Fe)", "Comisaría 2ª (Rosario)", "Comisaría 5ª (Rosario)", "Comisaría Distrito Venado Tuerto"] }
                 },
                 corrupcion_tasa: "4.6 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Alejandro Granados / Exjefes policiales y exministros</strong>: Causas por connivencia con bandas narcocriminales, lavado de activos y asociación ilícita policial. Fecha de condena: 2021-2023. Exp. 1520/18. Estado: Condenas firmes a prisión efectiva."
@@ -1136,6 +1417,16 @@
                     ejecutivo: "Gobernador provincial.",
                     legislativo: "Cámara de Diputados de Santiago del Estero.",
                     judicial: "Superior Tribunal de Justicia de Santiago del Estero."
+                },
+                agenda: {
+                    infraestructura: "Construcción de autovías interurbanas y centros de desarrollo tecnológico.",
+                    social: "Planes de vivienda social y erradicación de viviendas precarias rurales.",
+                    institucional: "Coordinación de políticas de desarrollo regional del Norte Grande."
+                },
+                infraestructura_critica: {
+                    escuelas: { total: "1.180 establecimientos", ejemplos: ["Escuela Normal Superior Dr. José Benjamín Gorostiaga", "Colegio Nacional Absalón Rojas", "EET N° 1 Ing. Santiago Maradona"] },
+                    hospitales: { total: "25 hospitales públicos", ejemplos: ["Hospital Regional Dr. Ramón Carrillo", "Hospital Neumonológico Dr. Gumersindo Sayago", "Hospital Zonal de La Banda Dr. Antenor Álvarez"] },
+                    comisarias: { total: "58 seccionales policiales", ejemplos: ["Comisaría Primera (Santiago Capital)", "Comisaría Segunda (La Banda)"] }
                 },
                 corrupcion_tasa: "6.1 causas / 100k", opacidad_licitaciones: "Muy Alta (85%)", pauta_corrupcion: "Control absoluto estatal", condenados: [
                     "<strong>Exfuncionarios del poder ejecutivo provincial</strong>: Investigados por adjudicaciones monopólicas en obra pública y licitaciones sin compulsa de precios. Exp. 890/17. Estado: Protegidos por fueros y baja alternancia en fueros locales."
@@ -1172,13 +1463,8 @@
             container.classList.toggle('open');
         }
 
-        function toggleNationalSummary() {
-            const container = document.getElementById('national-summary');
-            container.classList.toggle('open');
-        }
-
-        function togglePoderes() {
-            const container = document.getElementById('panel-poderes');
+        function toggleSeccion(idContenedor) {
+            const container = document.getElementById(idContenedor);
             container.classList.toggle('open');
         }
 
@@ -1206,6 +1492,8 @@
 
             document.getElementById('panel-dropdown').classList.remove('open');
             document.getElementById('panel-poderes').classList.remove('open');
+            document.getElementById('panel-agenda').classList.remove('open');
+            document.getElementById('panel-infraestructura-critica').classList.remove('open');
             document.querySelectorAll('.metric-dropdown').forEach(el => el.classList.remove('open'));
 
             const panel = document.getElementById('info-panel');
@@ -1218,10 +1506,25 @@
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
 
-            // Rellenar datos de los Tres Poderes
+            // Tres Poderes
             document.getElementById('poder-ejecutivo-desc').innerText = data.poderes.ejecutivo;
             document.getElementById('poder-legislativo-desc').innerText = data.poderes.legislativo;
             document.getElementById('poder-judicial-desc').innerText = data.poderes.judicial;
+
+            // Agenda
+            document.getElementById('agenda-infraestructura').innerText = data.agenda.infraestructura;
+            document.getElementById('agenda-social').innerText = data.agenda.social;
+            document.getElementById('agenda-institucional').innerText = data.agenda.institucional;
+
+            // Infraestructura Crítica: Escuelas, Hospitales, Comisarías
+            document.getElementById('infra-total-escuelas').innerText = data.infraestructura_critica.escuelas.total;
+            document.getElementById('lista-escuelas-detalle').innerHTML = data.infraestructura_critica.escuelas.ejemplos.map(e => `<li>${e}</li>`).join('');
+
+            document.getElementById('infra-total-hospitales').innerText = data.infraestructura_critica.hospitales.total;
+            document.getElementById('lista-hospitales-detalle').innerHTML = data.infraestructura_critica.hospitales.ejemplos.map(h => `<li>${h}</li>`).join('');
+
+            document.getElementById('infra-total-comisarias').innerText = data.infraestructura_critica.comisarias.total;
+            document.getElementById('lista-comisarias-detalle').innerHTML = data.infraestructura_critica.comisarias.ejemplos.map(c => `<li>${c}</li>`).join('');
 
             document.getElementById('panel-corrupcion-tasa').innerText = data.corrupcion_tasa;
             document.getElementById('panel-opacidad').innerText = data.opacidad_licitaciones;
