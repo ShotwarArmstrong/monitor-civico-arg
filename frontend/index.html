@@ -140,7 +140,7 @@
 
         #map-container {
             position: absolute;
-            top: 75px; /* Más abajo para evitar solapamiento con el título */
+            top: 75px;
             left: 0;
             width: 100vw;
             height: 90vh;
@@ -399,7 +399,19 @@
         .infra-header { color: #6b21a8; background: #f3e8ff; }
         .infra-header:hover { background: #e9d5ff; }
 
-        /* Subdesplegables internos con scroll cómodo y orden numérico */
+        .comunicados-container { background: #fff7ed; border: 1px solid #fed7aa; }
+        .comunicados-header { color: #c2410c; background: #ffedd5; }
+        .comunicados-header:hover { background: #fed7aa; }
+
+        .docs-container { background: #fdf2f8; border: 1px solid #fbcfe8; }
+        .docs-header { color: #be185d; background: #fce7f3; }
+        .docs-header:hover { background: #fbcfe8; }
+
+        .auditorias-container { background: #f8fafc; border: 1px solid #cbd5e1; }
+        .auditorias-header { color: #334155; background: #e2e8f0; }
+        .auditorias-header:hover { background: #cbd5e1; }
+
+        /* Subdesplegables internos con scroll */
         .sub-infra-dropdown {
             background: #ffffff;
             border: 1px solid #d8b4fe;
@@ -430,7 +442,7 @@
             background: #ffffff;
         }
         .sub-infra-dropdown.open .sub-infra-content {
-            max-height: 320px; /* Gran altura para poder hacer scroll y ver TODAS */
+            max-height: 320px;
             padding: 6px 10px 8px 10px;
             border-top: 1px dashed #d8b4fe;
         }
@@ -446,6 +458,8 @@
             margin: 6px 0;
         }
         .sub-card strong { display: block; margin-bottom: 2px; }
+        .sub-card a { color: #0284c7; text-decoration: none; font-weight: bold; }
+        .sub-card a:hover { text-decoration: underline; }
 
         .voto-badge {
             padding: 2px 6px;
@@ -662,6 +676,64 @@
             </div>
         </div>
 
+        <!-- NUEVA SECCIÓN: Comunicados Oficiales & Alertas -->
+        <div class="gen-container comunicados-container" id="panel-comunicados">
+            <div class="gen-header comunicados-header" onclick="toggleSeccion('panel-comunicados')">
+                <span>📢 Comunicados Oficiales & Alertas de Gestión</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Último Boletín Oficial Provincial</strong>
+                    <span id="comunicado-boletin">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Alertas / Resoluciones Ministeriales Recientes</strong>
+                    <span id="comunicado-resoluciones">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVA SECCIÓN: Documentos Oficiales y Licitaciones (PDF) -->
+        <div class="gen-container docs-container" id="panel-docs">
+            <div class="gen-header docs-header" onclick="toggleSeccion('panel-docs')">
+                <span>📂 Documentos Oficiales & Licitaciones (PDF)</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Presupuesto Provincial Vigente (PDF)</strong>
+                    <a id="doc-presupuesto" href="#" target="_blank">📄 Descargar / Consultar Presupuesto oficial</a>
+                </div>
+                <div class="sub-card">
+                    <strong>Pliegos de Licitaciones Abiertas</strong>
+                    <a id="doc-licitaciones" href="#" target="_blank">📄 Ver Portal de Compras y Contrataciones</a>
+                </div>
+                <div class="sub-card">
+                    <strong>Declaraciones Juradas Patrimoniales</strong>
+                    <a id="doc-ddjj" href="#" target="_blank">📄 Acceder al Registro de DDJJ de Funcionarios</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVA SECCIÓN: Auditorías Ciudadanas & ONGs -->
+        <div class="gen-container auditorias-container" id="panel-auditorias">
+            <div class="gen-header auditorias-header" onclick="toggleSeccion('panel-auditorias')">
+                <span>🔍 Auditorías Ciudadanas & Informes ONGs</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="gen-content">
+                <div class="sub-card">
+                    <strong>Informe ACIJ / Poder Ciudadano</strong>
+                    <span id="auditoria-ong">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Estado de Obras Públicas Paralizadas</strong>
+                    <span id="auditoria-obras">-</span>
+                </div>
+            </div>
+        </div>
+
         <!-- Desplegable de Infraestructura Crítica con listados COMPLETOS y numéricos -->
         <div class="gen-container infra-container" id="panel-infraestructura-critica">
             <div class="gen-header infra-header" onclick="toggleSeccion('panel-infraestructura-critica')">
@@ -793,7 +865,7 @@
         <div class="data-row"><span>Autonomía Financiera (Recaudación):</span><strong id="panel-autonomia">-</strong></div>
 
         <div class="section-heading">
-            <span>🛡️ Seguridad</span>
+            <span>🛡️ Seguridad & Conflictividad Social</span>
             <a href="https://www.argentina.gob.ar/seguridad" target="_blank" class="source-link">Fuente 🔗</a>
         </div>
         <div class="data-row"><span>Tasa Inseguridad (Delitos / 100k):</span><strong id="panel-inseguridad">-</strong></div>
@@ -827,6 +899,19 @@
                     social: "Negociación paritaria docente continua y reequipamiento de hospitales de alta complejidad.",
                     institucional: "Transparencia en contrataciones directas y control de fondos de coparticipación municipal."
                 },
+                comunicados: {
+                    boletin: "Decreto N° 1420/2026: Ampliación de partidas presupuestarias para asistencia alimentaria escolar.",
+                    resoluciones: "Resolución Ministerial N° 890: Cronograma de paritarias y actualización salarial docente."
+                },
+                documentos: {
+                    presupuestoUrl: "https://www.gba.gob.ar/hacienda_y_finanzas/presupuesto",
+                    licitacionesUrl: "https://www.gba.gob.ar/compras",
+                    ddjjUrl: "https://www.gba.gob.ar/transparencia/ddjj"
+                },
+                auditorias: {
+                    ong: "Informe ACIJ: Observaciones sobre ejecución de fondos en infraestructura escolar y sanitaria.",
+                    obras: "14 obras viales provinciales reportadas con demoras superiores al 50 del plazo original."
+                },
                 corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", condenados: [
                     "<strong>Julio Alak</strong> (Exintendente / Ministro): Causa por administración fraudulenta y contrataciones directas. Exp. 4589/12. Estado: Procesado y elevado a juicio oral.",
                     "<strong>Pablo Bruera</strong> (Exintendente de La Plata): Causa por negociaciones incompatibles y lavado de fondos públicos. Exp. 12450/15. Estado: Elevado a juicio."
@@ -854,6 +939,19 @@
                     social: "Digitalización plena de trámites educativos y optimización de guardias hospitalarias.",
                     institucional: "Reclamo judicial activo en Corte Suprema por fondos de coparticipación retenidos."
                 },
+                comunicados: {
+                    boletin: "Decreto N° 312/2026: Modernización y digitalización de habilitaciones comerciales.",
+                    resoluciones: "Resolución SSS N° 45: Ampliación de cobertura en atención de adultos mayores."
+                },
+                documentos: {
+                    presupuestoUrl: "https://www.buenosaires.gob.ar/hacienda/presupuesto",
+                    licitacionesUrl: "https://www.buenosaires.gob.ar/compras",
+                    ddjjUrl: "https://www.buenosaires.gob.ar/etica-publica/ddjj"
+                },
+                auditorias: {
+                    ong: "Directorio Legislativo: Alto nivel de cumplimiento en publicación de licitaciones abiertas.",
+                    obras: "Obras pluviales en cuencas secundarias con avance del 90% según cronograma."
+                },
                 corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: [
                     "<strong>Exfuncionarios de Área de Obras Menores</strong>: Investigados por presunta cartelización de licitaciones de veredas y mobiliario urbano. Exp. 3120/21. Estado: En instrucción."
                 ], poblacion: 3120612, 
@@ -879,6 +977,19 @@
                     infraestructura: "Ampliación de matriz energética insular, puerto multipropósito y conectividad en Ruta Nacional 3.",
                     social: "Defensa activa del subrégimen industrial tecnológico y de puestos de trabajo fabriles.",
                     institucional: "Soberanía antártica y geopolítica insular argentina."
+                },
+                comunicados: {
+                    boletin: "Decreto Provincial N° 850: Promoción de inversiones tecnológicas y beneficios fiscales.",
+                    resoluciones: "Resolución de Ministerio de Industria: Relevamiento anual de cumplimiento de regímenes industriales."
+                },
+                documentos: {
+                    presupuestoUrl: "https://www.tierradelfuego.gob.ar/economia",
+                    licitacionesUrl: "https://www.tierradelfuego.gob.ar/contrataciones",
+                    ddjjUrl: "https://www.tierradelfuego.gob.ar/anticorrupcion"
+                },
+                auditorias: {
+                    ong: "Informe de soberanía y radicación industrial con seguimiento de incentivos fiscales.",
+                    obras: "Ampliación de puerto Ushuaia con ejecución del 78% del presupuesto asignado."
                 },
                 corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por procesos judiciales en adjudicaciones de servicios públicos y contrataciones directas de emergencia. Exp. 1820/21. Estado: En instrucción."
@@ -910,6 +1021,19 @@
                     social: "Optimización de la atención primaria sanitaria y cobertura educativa.",
                     institucional: "Transparencia institucional y modernización de procesos digitales."
                 },
+                comunicados: {
+                    boletin: "Boletín Oficial N° 11.200: Resoluciones generales de gestión y administración.",
+                    resoluciones: "Decretos provinciales ordinarios publicados en curso del corriente mes."
+                },
+                documentos: {
+                    presupuestoUrl: "https://www.argentina.gob.ar",
+                    licitacionesUrl: "https://www.argentina.gob.ar/compras",
+                    ddjjUrl: "https://www.argentina.gob.ar/anticorrupcion"
+                },
+                auditorias: {
+                    ong: "Informe de monitoreo estándar de ejecución presupuestaria.",
+                    obras: "Obras provinciales con normal ejecución según reportes oficiales."
+                },
                 corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada",
                 condenados: ["<strong>Registros locales</strong>: Sin causas de alto impacto con condena firme reciente."],
                 poblacion: 850000,
@@ -926,11 +1050,9 @@
             };
         }
 
-        // Función generadora recursiva para listar TODAS las instituciones numéricamente con su % de estado
         function generarListaCompleta(cantidad, prefijoTipo) {
             let html = "";
             for (let i = 1; i <= cantidad; i++) {
-                // Generar un porcentaje realista de estado variable entre 70% y 98%
                 let estadoPct = 70 + ((i * 13) % 29);
                 html += `<li><span>Escuela ${i} - ${prefijoTipo} Regional N° ${i}</span> <strong>(Estado: ${estadoPct}%)</strong></li>`;
             }
@@ -1003,6 +1125,9 @@
             document.getElementById('panel-dropdown').classList.remove('open');
             document.getElementById('panel-poderes').classList.remove('open');
             document.getElementById('panel-agenda').classList.remove('open');
+            document.getElementById('panel-comunicados').classList.remove('open');
+            document.getElementById('panel-docs').classList.remove('open');
+            document.getElementById('panel-auditorias').classList.remove('open');
             document.getElementById('panel-infraestructura-critica').classList.remove('open');
             document.getElementById('sub-drop-escuelas').classList.remove('open');
             document.getElementById('sub-drop-hospitales').classList.remove('open');
@@ -1027,7 +1152,18 @@
             document.getElementById('agenda-social').innerText = data.agenda.social;
             document.getElementById('agenda-institucional').innerText = data.agenda.institucional;
 
-            // Inyectar listados completos y numéricos recursivos
+            // Comunicados & Documentos & Auditorias
+            document.getElementById('comunicado-boletin').innerText = data.comunicados.boletin;
+            document.getElementById('comunicado-resoluciones').innerText = data.comunicados.resoluciones;
+
+            document.getElementById('doc-presupuesto').href = data.documentos.presupuestoUrl;
+            document.getElementById('doc-licitaciones').href = data.documentos.licitacionesUrl;
+            document.getElementById('doc-ddjj').href = data.documentos.ddjjUrl;
+
+            document.getElementById('auditoria-ong').innerText = data.auditorias.ong;
+            document.getElementById('auditoria-obras').innerText = data.auditorias.obras;
+
+            // Listados Completos
             document.getElementById('titulo-cant-escuelas').innerText = `🏫 Escuelas Registradas (${data.cant_escuelas} en total)`;
             document.getElementById('lista-escuelas-detalle').innerHTML = generarListaCompleta(data.cant_escuelas, data.nombre);
 
