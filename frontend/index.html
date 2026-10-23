@@ -231,6 +231,56 @@
         .history-list { list-style: none; padding: 0; margin: 4px 0 0 0; font-size: 0.82em; }
         .history-list li { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dashed #e2e8f0; }
 
+        /* Estilo para el acordeón desplegable de corrupción */
+        .dropdown-container {
+            background: #fff5f5;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+        .dropdown-header {
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.82em;
+            font-weight: bold;
+            color: #991b1b;
+            background: #fee2e2;
+            user-select: none;
+        }
+        .dropdown-header:hover { background: #fecaca; }
+        .arrow-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.1em;
+        }
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 12px;
+            font-size: 0.78em;
+            color: #334155;
+            background: #fff5f5;
+        }
+        .dropdown-content ul {
+            margin: 8px 0;
+            padding-left: 18px;
+        }
+        .dropdown-content li {
+            margin-bottom: 4px;
+        }
+        .dropdown-container.open .dropdown-content {
+            max-height: 250px;
+            padding: 8px 12px 12px 12px;
+            border-top: 1px dashed #fca5a5;
+        }
+        .dropdown-container.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+
         .voto-badge {
             padding: 2px 6px;
             border-radius: 4px;
@@ -278,10 +328,9 @@
     </div>
 
     <div id="map-container">
-        <!-- Mapa Vectorial con provincias separadas, visibles y ordenadas por capas (z-index SVG) -->
+        <!-- Mapa Vectorial con Santa Fe optimizado para clic garantizado -->
         <svg id="map-svg" viewBox="0 0 400 900" xmlns="http://www.w3.org/2000/svg">
             <g id="mapa-argentina-riesgo">
-                <!-- Base Grande -->
                 <path class="provincia-real" data-nombre="Santa Cruz" fill="#f97316" onclick="mostrarDatos('Santa Cruz')" d="M 75,585 Q 215,595 185,705 Q 60,695 75,585 Z" />
                 <text x="135" y="645" class="provincia-label">Santa Cruz</text>
 
@@ -291,7 +340,6 @@
                 <path class="provincia-real" data-nombre="Río Negro" fill="#f97316" onclick="mostrarDatos('Río Negro')" d="M 105,440 Q 220,415 235,495 Q 90,490 105,440 Z" />
                 <text x="155" y="465" class="provincia-label">Río Negro</text>
 
-                <!-- Neuquén (Bien separado y visible a la izquierda) -->
                 <path class="provincia-real" data-nombre="Neuquén" fill="#f97316" onclick="mostrarDatos('Neuquén')" d="M 55,360 Q 105,360 95,435 Q 45,420 55,360 Z" />
                 <text x="75" y="398" class="provincia-label">Neuquén</text>
 
@@ -301,7 +349,6 @@
                 <path class="provincia-real" data-nombre="Buenos Aires" fill="#ef4444" onclick="mostrarDatos('Buenos Aires')" d="M 230,320 Q 280,325 335,320 Q 320,425 250,485 Q 170,420 220,415 Q 220,345 230,320 Z" />
                 <text x="255" y="400" class="provincia-label" fill="#ffffff">Buenos Aires</text>
                 
-                <!-- CABA -->
                 <rect class="provincia-real" data-nombre="Ciudad Autónoma de Buenos Aires (CABA)" fill="#16a34a" onclick="mostrarDatos('Ciudad Autónoma de Buenos Aires (CABA)')" x="265" y="320" width="22" height="22" rx="3" />
                 <text x="276" y="333" class="provincia-label" fill="#ffffff" font-size="6.5px">CABA</text>
 
@@ -319,10 +366,6 @@
 
                 <path class="provincia-real" data-nombre="Entre Ríos" fill="#f97316" onclick="mostrarDatos('Entre Ríos')" d="M 295,235 Q 355,250 335,320 Q 280,325 295,235 Z" />
                 <text x="315" y="285" class="provincia-label" font-size="7px">Entre Ríos</text>
-
-                <!-- Santa Fe (Capa optimizada para click inmediato) -->
-                <path class="provincia-real" data-nombre="Santa Fe" fill="#ef4444" onclick="mostrarDatos('Santa Fe')" d="M 235,170 Q 295,175 295,235 Q 280,325 230,320 Q 215,235 235,170 Z" />
-                <text x="258" y="250" class="provincia-label">Santa Fe</text>
 
                 <path class="provincia-real" data-nombre="Corrientes" fill="#ef4444" onclick="mostrarDatos('Corrientes')" d="M 315,175 Q 375,190 355,250 Q 295,235 315,175 Z" />
                 <text x="332" y="212" class="provincia-label">Corrientes</text>
@@ -348,13 +391,15 @@
                 <path class="provincia-real" data-nombre="Santiago del Estero" fill="#b91c1c" onclick="mostrarDatos('Santiago del Estero')" d="M 170,120 Q 240,125 235,170 Q 190,205 155,168 Q 155,152 170,120 Z" />
                 <text x="195" y="158" class="provincia-label" font-size="7px">S. del Estero</text>
 
-                <!-- Jujuy (Separado y visible arriba del todo) -->
                 <path class="provincia-real" data-nombre="Jujuy" fill="#f97316" onclick="mostrarDatos('Jujuy')" d="M 145,5 Q 180,0 195,20 Q 200,50 175,60 Q 140,50 145,5 Z" />
                 <text x="170" y="35" class="provincia-label">Jujuy</text>
 
-                <!-- Tucumán (Al final absoluto del SVG para garantizar que esté arriba en el Z-Index y sea 100% clickeable) -->
                 <path class="provincia-real" data-nombre="Tucumán" fill="#ef4444" onclick="mostrarDatos('Tucumán')" d="M 145,122 Q 175,122 180,145 Q 155,149 145,122 Z" />
                 <text x="163" y="136" class="provincia-label" font-size="6.5px">Tucumán</text>
+
+                <!-- Santa Fe (Posicionada al final del SVG para garantizar respuesta inmediata al clic) -->
+                <path class="provincia-real" data-nombre="Santa Fe" fill="#ef4444" onclick="mostrarDatos('Santa Fe')" d="M 215,175 Q 295,175 295,235 Q 280,325 225,320 Q 210,235 215,175 Z" />
+                <text x="255" y="250" class="provincia-label">Santa Fe</text>
 
                 <!-- Islas Malvinas -->
                 <g id="islas-malvinas">
@@ -385,6 +430,19 @@
         <div class="data-row"><span>Causas Activas (Corrupción / 100k hab):</span><strong id="panel-corrupcion-tasa" style="color: #b91c1c;">-</strong></div>
         <div class="data-row"><span>Índice Opacidad Licitaciones:</span><strong id="panel-opacidad">-</strong></div>
         <div class="data-row"><span>Discrecionalidad Pauta Oficial:</span><strong id="panel-pauta-corrupcion">-</strong></div>
+
+        <!-- Menú desplegable interactivo para ver condenados y causas -->
+        <div class="dropdown-container" id="panel-dropdown">
+            <div class="dropdown-header" onclick="toggleDropdown()">
+                <span>📂 Ver funcionarios y causas condenadas</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+            <div class="dropdown-content">
+                <ul id="panel-condenados-lista">
+                    <!-- Se llena dinámicamente -->
+                </ul>
+            </div>
+        </div>
 
         <div class="section-heading">🏛️ Representación Legislativa (Nación)</div>
         <div class="data-row"><span>Diputados Nacionales:</span><strong id="panel-diputados">-</strong></div>
@@ -433,139 +491,145 @@
     <script>
         const datosProvincias = {
             "Buenos Aires": { 
-                nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", poblacion: 17569053, pobreza_porcentaje: 48.2, costo_alquiler: 550000, canasta_basica_total: 910000, salario_promedio_ripte: 750000, empleo_informal_porcentaje: 44.5, ingresos_brutos_alicuota: 4.8, resultado_fiscal: "Déficit Primario Moderado", deuda_total_usd: "USD 5.420 Millones", peso_masa_salarial: "52.4%", autonomia_financiera: "38.5%", inseguridad_tasa: 980, homicidios_tasa_100k: 6.2, siniestros_viales_fatales: 1150, mortalidad_infantil_tasa: 8.4, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.5, cobertura_agua_cloacas: 76.2, cobertura_internet_fibra: 68.4,
+                nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", condenados: ["Exintendentes procesados por malversación de fondos de programas sociales.", "Exfuncionarios de área vial con causas elevadas a juicio oral por sobreprecios.", "Exdirectores de organismos autárquicos con condenas en primera instancia por enriquecimiento."], poblacion: 17569053, pobreza_porcentaje: 48.2, costo_alquiler: 550000, canasta_basica_total: 910000, salario_promedio_ripte: 750000, empleo_informal_porcentaje: 44.5, ingresos_brutos_alicuota: 4.8, resultado_fiscal: "Déficit Primario Moderado", deuda_total_usd: "USD 5.420 Millones", peso_masa_salarial: "52.4%", autonomia_financiera: "38.5%", inseguridad_tasa: 980, homicidios_tasa_100k: 6.2, siniestros_viales_fatales: 1150, mortalidad_infantil_tasa: 8.4, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.5, cobertura_agua_cloacas: 76.2, cobertura_internet_fibra: 68.4,
                 legislativo: { diputados: 70, senadores: 3, fuerza: "UxP / PRO", ausentismo: "4.2%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 8.7 }, { anio: 2025, tasa: 8.2 }, { anio: 2024, tasa: 8.9 }] 
             },
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
-                nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", poblacion: 3120612, pobreza_porcentaje: 19.5, costo_alquiler: 780000, canasta_basica_total: 980000, salario_promedio_ripte: 1250000, empleo_informal_porcentaje: 24.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Superávit Financiero", deuda_total_usd: "USD 2.150 Millones", peso_masa_salarial: "44.1%", autonomia_financiera: "82.4%", inseguridad_tasa: 920, homicidios_tasa_100k: 2.8, siniestros_viales_fatales: 95, mortalidad_infantil_tasa: 4.9, camas_uti_cada_10k: 9.8, escolarizacion_secundaria: 96.8, cobertura_agua_cloacas: 99.1, cobertura_internet_fibra: 94.2,
+                nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: ["Exfuncionarios de área de contrataciones investigados por cartelización de obra pública menor.", "Exdirectores de servicios urbanos con causas en instrucción por adjudicaciones directas."], poblacion: 3120612, pobreza_porcentaje: 19.5, costo_alquiler: 780000, canasta_basica_total: 980000, salario_promedio_ripte: 1250000, empleo_informal_porcentaje: 24.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Superávit Financiero", deuda_total_usd: "USD 2.150 Millones", peso_masa_salarial: "44.1%", autonomia_financiera: "82.4%", inseguridad_tasa: 920, homicidios_tasa_100k: 2.8, siniestros_viales_fatales: 95, mortalidad_infantil_tasa: 4.9, camas_uti_cada_10k: 9.8, escolarizacion_secundaria: 96.8, cobertura_agua_cloacas: 99.1, cobertura_internet_fibra: 94.2,
                 legislativo: { diputados: 25, senadores: 3, fuerza: "PRO / LLA", ausentismo: "3.1%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 5.2 }, { anio: 2025, tasa: 5.4 }, { anio: 2024, tasa: 5.8 }] 
             },
             "Catamarca": { 
-                nombre: "Catamarca", gobernador: "Raúl Jalil (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "2.8%", corrupcion_tasa: "5.1 causas / 100k", opacidad_licitaciones: "Alta (72%)", pauta_corrupcion: "Alta (Control de pauta estatal)", poblacion: 429556, pobreza_porcentaje: 45.1, costo_alquiler: 340000, canasta_basica_total: 840000, salario_promedio_ripte: 690000, empleo_informal_porcentaje: 42.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 85 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "14.2%", inseguridad_tasa: 340, homicidios_tasa_100k: 2.1, siniestros_viales_fatales: 55, mortalidad_infantil_tasa: 8.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 87.2, cobertura_agua_cloacas: 78.0, cobertura_internet_fibra: 58.4,
+                nombre: "Catamarca", gobernador: "Raúl Jalil (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "2.8%", corrupcion_tasa: "5.1 causas / 100k", opacidad_licitaciones: "Alta (72%)", pauta_corrupcion: "Alta (Control de pauta estatal)", condenados: ["Exministros provinciales con procesos activos por adjudicación irregular de minería y obra pública.", "Exintendentes investigados por desvío de fondos destinados a cooperativas."], poblacion: 429556, pobreza_porcentaje: 45.1, costo_alquiler: 340000, canasta_basica_total: 840000, salario_promedio_ripte: 690000, empleo_informal_porcentaje: 42.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 85 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "14.2%", inseguridad_tasa: 340, homicidios_tasa_100k: 2.1, siniestros_viales_fatales: 55, mortalidad_infantil_tasa: 8.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 87.2, cobertura_agua_cloacas: 78.0, cobertura_internet_fibra: 58.4,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "UxP", ausentismo: "2.5%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Abstención", rigi: "Abstención" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.1 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.5 }] 
             },
             "Chaco": { 
-                nombre: "Chaco", gobernador: "Leandro Zdero (JxC / UCR)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "5.1%", corrupcion_tasa: "6.4 causas / 100k", opacidad_licitaciones: "Muy Alta (81%)", pauta_corrupcion: "Crítica (Herencia de desvíos)", poblacion: 1142963, pobreza_porcentaje: 57.2, costo_alquiler: 310000, canasta_basica_total: 820000, salario_promedio_ripte: 610000, empleo_informal_porcentaje: 51.0, ingresos_brutos_alicuota: 4.1, resultado_fiscal: "Déficit Financiero Ordenado", deuda_total_usd: "USD 310 Millones", peso_masa_salarial: "61.2%", autonomia_financiera: "12.5%", inseguridad_tasa: 610, homicidios_tasa_100k: 4.8, siniestros_viales_fatales: 180, mortalidad_infantil_tasa: 10.8, camas_uti_cada_10k: 3.5, escolarizacion_secundaria: 82.1, cobertura_agua_cloacas: 64.5, cobertura_internet_fibra: 52.1,
+                nombre: "Chaco", gobernador: "Leandro Zdero (JxC / UCR)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "5.1%", corrupcion_tasa: "6.4 causas / 100k", opacidad_licitaciones: "Muy Alta (81%)", pauta_corrupcion: "Crítica (Herencia de desvíos)", condenados: ["Líderes piqueteros y exfuncionarios con prisión preventiva por fraude a la administración pública y manejo discrecional de planes sociales.", "Exsecretarios de obras públicas procesados por enriquecimiento ilícito."], poblacion: 1142963, pobreza_porcentaje: 57.2, costo_alquiler: 310000, canasta_basica_total: 820000, salario_promedio_ripte: 610000, empleo_informal_porcentaje: 51.0, ingresos_brutos_alicuota: 4.1, resultado_fiscal: "Déficit Financiero Ordenado", deuda_total_usd: "USD 310 Millones", peso_masa_salarial: "61.2%", autonomia_financiera: "12.5%", inseguridad_tasa: 610, homicidios_tasa_100k: 4.8, siniestros_viales_fatales: 180, mortalidad_infantil_tasa: 10.8, camas_uti_cada_10k: 3.5, escolarizacion_secundaria: 82.1, cobertura_agua_cloacas: 64.5, cobertura_internet_fibra: 52.1,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "UCR / UxP", ausentismo: "5.8%" },
                 votaciones: { bases: "Abstención", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 9.5 }, { anio: 2025, tasa: 8.9 }, { anio: 2024, tasa: 9.8 }] 
             },
             "Chubut": { 
-                nombre: "Chubut", gobernador: "Ignacio Torres (Despierta Chubut)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.2%", corrupcion_tasa: "3.9 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", poblacion: 603120, pobreza_porcentaje: 39.5, costo_alquiler: 480000, canasta_basica_total: 940000, salario_promedio_ripte: 1050000, empleo_informal_porcentaje: 31.0, ingresos_brutos_alicuota: 3.8, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 620 Millones", peso_masa_salarial: "48.0%", autonomia_financiera: "45.1%", inseguridad_tasa: 520, homicidios_tasa_100k: 4.2, siniestros_viales_fatales: 72, mortalidad_infantil_tasa: 6.2, camas_uti_cada_10k: 5.1, escolarizacion_secundaria: 89.0, cobertura_agua_cloacas: 86.1, cobertura_internet_fibra: 65.0,
+                nombre: "Chubut", gobernador: "Ignacio Torres (Despierta Chubut)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.2%", corrupcion_tasa: "3.9 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: ["Exfuncionarios provinciales condenados por causa 'Embrujo' (corrupción en contrataciones públicas y retornos).", "Exdirectores de Vialidad investigados por sobrefacturación."], poblacion: 603120, pobreza_porcentaje: 39.5, costo_alquiler: 480000, canasta_basica_total: 940000, salario_promedio_ripte: 1050000, empleo_informal_porcentaje: 31.0, ingresos_brutos_alicuota: 3.8, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 620 Millones", peso_masa_salarial: "48.0%", autonomia_financiera: "45.1%", inseguridad_tasa: 520, homicidios_tasa_100k: 4.2, siniestros_viales_fatales: 72, mortalidad_infantil_tasa: 6.2, camas_uti_cada_10k: 5.1, escolarizacion_secundaria: 89.0, cobertura_agua_cloacas: 86.1, cobertura_internet_fibra: 65.0,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Despierta Chubut / UxP", ausentismo: "3.5%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.4 }, { anio: 2025, tasa: 6.1 }, { anio: 2024, tasa: 7.0 }] 
             },
             "Córdoba": { 
-                nombre: "Córdoba", gobernador: "Martín Llaryora (Hacemos Unidos)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "9.2%", corrupcion_tasa: "3.5 causas / 100k", opacidad_licitaciones: "Baja/Media (35%)", pauta_corrupcion: "Controlada", poblacion: 3978984, pobreza_porcentaje: 42.8, costo_alquiler: 510000, canasta_basica_total: 880000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 39.0, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Primario", deuda_total_usd: "USD 1.620 Millones", peso_masa_salarial: "46.5%", autonomia_financiera: "52.0%", inseguridad_tasa: 740, homicidios_tasa_100k: 3.1, siniestros_viales_fatales: 380, mortalidad_infantil_tasa: 7.2, camas_uti_cada_10k: 6.1, escolarizacion_secundaria: 92.5, cobertura_agua_cloacas: 81.5, cobertura_internet_fibra: 78.0,
+                nombre: "Córdoba", gobernador: "Martín Llaryora (Hacemos Unidos)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "9.2%", corrupcion_tasa: "3.5 causas / 100k", opacidad_licitaciones: "Baja/Media (35%)", pauta_corrupcion: "Controlada", condenados: ["Exfuncionarios de agencia vial con causas menores en instrucción.", "Exintendentes municipales con condenas menores por peculado."], poblacion: 3978984, pobreza_porcentaje: 42.8, costo_alquiler: 510000, canasta_basica_total: 880000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 39.0, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Primario", deuda_total_usd: "USD 1.620 Millones", peso_masa_salarial: "46.5%", autonomia_financiera: "52.0%", inseguridad_tasa: 740, homicidios_tasa_100k: 3.1, siniestros_viales_fatales: 380, mortalidad_infantil_tasa: 7.2, camas_uti_cada_10k: 6.1, escolarizacion_secundaria: 92.5, cobertura_agua_cloacas: 81.5, cobertura_internet_fibra: 78.0,
                 legislativo: { diputados: 18, senadores: 3, fuerza: "Hacemos Coalición Federal / LLA", ausentismo: "2.8%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.2 }, { anio: 2025, tasa: 6.9 }, { anio: 2024, tasa: 7.6 }] 
             },
             "Corrientes": { 
-                nombre: "Corrientes", gobernador: "Gustavo Valdés (ECO + UCR)", legislatura: "Bicameral (Mayoría ECO)", coparticipacion_real: "4.8%", corrupcion_tasa: "4.2 causas / 100k", opacidad_licitaciones: "Alta (64%)", pauta_corrupcion: "Alta", poblacion: 1197553, pobreza_porcentaje: 48.9, costo_alquiler: 360000, canasta_basica_total: 830000, salario_promedio_ripte: 640000, empleo_informal_porcentaje: 46.0, ingresos_brutos_alicuota: 3.9, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 140 Millones", peso_masa_salarial: "54.0%", autonomia_financiera: "19.8%", inseguridad_tasa: 480, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 195, mortalidad_infantil_tasa: 9.5, camas_uti_cada_10k: 4.0, escolarizacion_secundaria: 84.3, cobertura_agua_cloacas: 71.0, cobertura_internet_fibra: 56.8,
+                nombre: "Corrientes", gobernador: "Gustavo Valdés (ECO + UCR)", legislatura: "Bicameral (Mayoría ECO)", coparticipacion_real: "4.8%", corrupcion_tasa: "4.2 causas / 100k", opacidad_licitaciones: "Alta (64%)", pauta_corrupcion: "Alta", condenados: ["Exfuncionarios de áreas de compras investigados por sobreprecios en suministros médicos.", "Exintendentes con causas elevadas a juicio por malversación."], poblacion: 1197553, pobreza_porcentaje: 48.9, costo_alquiler: 360000, canasta_basica_total: 830000, salario_promedio_ripte: 640000, empleo_informal_porcentaje: 46.0, ingresos_brutos_alicuota: 3.9, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 140 Millones", peso_masa_salarial: "54.0%", autonomia_financiera: "19.8%", inseguridad_tasa: 480, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 195, mortalidad_infantil_tasa: 9.5, camas_uti_cada_10k: 4.0, escolarizacion_secundaria: 84.3, cobertura_agua_cloacas: 71.0, cobertura_internet_fibra: 56.8,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "ECO + Vamos Corrientes", ausentismo: "4.0%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.9 }, { anio: 2025, tasa: 7.5 }, { anio: 2024, tasa: 8.4 }] 
             },
             "Entre Ríos": { 
-                nombre: "Entre Ríos", gobernador: "Rogelio Frigerio (JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "5.1%", corrupcion_tasa: "3.8 causas / 100k", opacidad_licitaciones: "Media (45%)", pauta_corrupcion: "Moderada", poblacion: 1426426, pobreza_porcentaje: 44.2, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 710000, empleo_informal_porcentaje: 40.5, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Déficit Leve en Saneamiento", deuda_total_usd: "USD 380 Millones", peso_masa_salarial: "55.2%", autonomia_financiera: "26.4%", inseguridad_tasa: 450, homicidios_tasa_100k: 2.9, siniestros_viales_fatales: 140, mortalidad_infantil_tasa: 7.1, camas_uti_cada_10k: 4.5, escolarizacion_secundaria: 89.4, cobertura_agua_cloacas: 80.5, cobertura_internet_fibra: 67.2,
+                nombre: "Entre Ríos", gobernador: "Rogelio Frigerio (JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "5.1%", corrupcion_tasa: "3.8 causas / 100k", opacidad_licitaciones: "Media (45%)", pauta_corrupcion: "Moderada", condenados: ["Exfuncionarios legislativos con condena en causa de contratos truchos en la Legislatura provincial.", "Exdirectores de organismos descentralizados investigados."], poblacion: 1426426, pobreza_porcentaje: 44.2, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 710000, empleo_informal_porcentaje: 40.5, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Déficit Leve en Saneamiento", deuda_total_usd: "USD 380 Millones", peso_masa_salarial: "55.2%", autonomia_financiera: "26.4%", inseguridad_tasa: 450, homicidios_tasa_100k: 2.9, siniestros_viales_fatales: 140, mortalidad_infantil_tasa: 7.1, camas_uti_cada_10k: 4.5, escolarizacion_secundaria: 89.4, cobertura_agua_cloacas: 80.5, cobertura_internet_fibra: 67.2,
                 legislativo: { diputados: 9, senadores: 3, fuerza: "Juntos por Entre Ríos", ausentismo: "3.2%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.1 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.6 }] 
             },
             "Formosa": { 
-                nombre: "Formosa", gobernador: "Gildo Insfrán (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "3.8%", corrupcion_tasa: "7.5 causas / 100k", opacidad_licitaciones: "Extrema (92%)", pauta_corrupcion: "Monopolio absoluto estatal", poblacion: 606041, pobreza_porcentaje: 53.5, costo_alquiler: 290000, canasta_basica_total: 800000, salario_promedio_ripte: 590000, empleo_informal_porcentaje: 49.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 70 Millones", peso_masa_salarial: "68.5%", autonomia_financiera: "8.1%", inseguridad_tasa: 310, homicidios_tasa_100k: 3.8, siniestros_viales_fatales: 88, mortalidad_infantil_tasa: 10.1, camas_uti_cada_10k: 3.8, escolarizacion_secundaria: 85.0, cobertura_agua_cloacas: 68.2, cobertura_internet_fibra: 51.0,
+                nombre: "Formosa", gobernador: "Gildo Insfrán (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "3.8%", corrupcion_tasa: "7.5 causas / 100k", opacidad_licitaciones: "Extrema (92%)", pauta_corrupcion: "Monopolio absoluto estatal", condenados: ["Exfuncionarios del ejecutivo provincial con blindaje judicial histórico y escasa alternancia en investigaciones.", "Procesos por adjudicación directa perpetua en obra pública."], poblacion: 606041, pobreza_porcentaje: 53.5, costo_alquiler: 290000, canasta_basica_total: 800000, salario_promedio_ripte: 590000, empleo_informal_porcentaje: 49.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 70 Millones", peso_masa_salarial: "68.5%", autonomia_financiera: "8.1%", inseguridad_tasa: 310, homicidios_tasa_100k: 3.8, siniestros_viales_fatales: 88, mortalidad_infantil_tasa: 10.1, camas_uti_cada_10k: 3.8, escolarizacion_secundaria: 85.0, cobertura_agua_cloacas: 68.2, cobertura_internet_fibra: 51.0,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Partido Justicialista", ausentismo: "1.9%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.6 }, { anio: 2025, tasa: 7.3 }, { anio: 2024, tasa: 8.2 }] 
             },
             "Jujuy": { 
-                nombre: "Jujuy", gobernador: "Carlos Sadir (Frente Cambia Jujuy)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "3.1%", corrupcion_tasa: "4.5 causas / 100k", opacidad_licitaciones: "Alta (65%)", pauta_corrupcion: "Alta", poblacion: 797955, pobreza_porcentaje: 46.5, costo_alquiler: 330000, canasta_basica_total: 820000, salario_promedio_ripte: 680000, empleo_informal_porcentaje: 44.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 410 Millones", peso_masa_salarial: "55.0%", autonomia_financiera: "17.2%", inseguridad_tasa: 420, homicidios_tasa_100k: 3.2, siniestros_viales_fatales: 110, mortalidad_infantil_tasa: 8.5, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.0, cobertura_agua_cloacas: 77.4, cobertura_internet_fibra: 59.5,
+                nombre: "Jujuy", gobernador: "Carlos Sadir (Frente Cambia Jujuy)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "3.1%", corrupcion_tasa: "4.5 causas / 100k", opacidad_licitaciones: "Alta (65%)", pauta_corrupcion: "Alta", condenados: ["Exdirigentes sociales y exfuncionarios con condenas firmes por defraudación al Estado en construcción de viviendas.", "Causas activas por manejo de fondos cooperativos."], poblacion: 797955, pobreza_porcentaje: 46.5, costo_alquiler: 330000, canasta_basica_total: 820000, salario_promedio_ripte: 680000, empleo_informal_porcentaje: 44.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 410 Millones", peso_masa_salarial: "55.0%", autonomia_financiera: "17.2%", inseguridad_tasa: 420, homicidios_tasa_100k: 3.2, siniestros_viales_fatales: 110, mortalidad_infantil_tasa: 8.5, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.0, cobertura_agua_cloacas: 77.4, cobertura_internet_fibra: 59.5,
                 legislativo: { diputados: 6, senadores: 3, fuerza: "Frente Cambia Jujuy", ausentismo: "3.7%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.4 }, { anio: 2025, tasa: 7.0 }, { anio: 2024, tasa: 7.9 }] 
             },
             "La Pampa": { 
-                nombre: "La Pampa", gobernador: "Sergio Ziliotto (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "1.9%", corrupcion_tasa: "2.1 causas / 100k", opacidad_licitaciones: "Baja (30%)", pauta_corrupcion: "Baja", poblacion: 366022, pobreza_porcentaje: 37.8, costo_alquiler: 400000, canasta_basica_total: 870000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 32.0, ingresos_brutos_alicuota: 3.2, resultado_fiscal: "Déficit Operativo por Cajas", deuda_total_usd: "USD 35 Millones", peso_masa_salarial: "58.1%", autonomia_financiera: "31.0%", inseguridad_tasa: 380, homicidios_tasa_100k: 1.9, siniestros_viales_fatales: 48, mortalidad_infantil_tasa: 5.8, camas_uti_cada_10k: 5.8, escolarizacion_secundaria: 93.1, cobertura_agua_cloacas: 89.0, cobertura_internet_fibra: 72.4,
+                nombre: "La Pampa", gobernador: "Sergio Ziliotto (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "1.9%", corrupcion_tasa: "2.1 causas / 100k", opacidad_licitaciones: "Baja (30%)", pauta_corrupcion: "Baja", condenados: ["Bajo índice de litigiosidad por corrupción institucional.", "Exfuncionarios menores investigados por faltas administrativas leves."], poblacion: 366022, pobreza_porcentaje: 37.8, costo_alquiler: 400000, canasta_basica_total: 870000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 32.0, ingresos_brutos_alicuota: 3.2, resultado_fiscal: "Déficit Operativo por Cajas", deuda_total_usd: "USD 35 Millones", peso_masa_salarial: "58.1%", autonomia_financiera: "31.0%", inseguridad_tasa: 380, homicidios_tasa_100k: 1.9, siniestros_viales_fatales: 48, mortalidad_infantil_tasa: 5.8, camas_uti_cada_10k: 5.8, escolarizacion_secundaria: 93.1, cobertura_agua_cloacas: 89.0, cobertura_internet_fibra: 72.4,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Frente de Todos / PJ", ausentismo: "2.1%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.1 }, { anio: 2025, tasa: 5.8 }, { anio: 2024, tasa: 6.6 }] 
             },
             "La Rioja": { 
-                nombre: "La Rioja", gobernador: "Ricardo Quintela (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "2.5%", corrupcion_tasa: "5.8 causas / 100k", opacidad_licitaciones: "Muy Alta (78%)", pauta_corrupcion: "Muy Alta", poblacion: 384607, pobreza_porcentaje: 47.1, costo_alquiler: 340000, canasta_basica_total: 820000, salario_promedio_ripte: 650000, empleo_informal_porcentaje: 43.5, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero con Cuasimoneda", deuda_total_usd: "USD 280 Millones", peso_masa_salarial: "66.0%", autonomia_financiera: "11.2%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.4, siniestros_viales_fatales: 62, mortalidad_infantil_tasa: 8.0, camas_uti_cada_10k: 4.4, escolarizacion_secundaria: 87.5, cobertura_agua_cloacas: 81.2, cobertura_internet_fibra: 60.1,
+                nombre: "La Rioja", gobernador: "Ricardo Quintela (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "2.5%", corrupcion_tasa: "5.8 causas / 100k", opacidad_licitaciones: "Muy Alta (78%)", pauta_corrupcion: "Muy Alta", condenados: ["Exfuncionarios provinciales con causas abiertas por emisión y respaldo de cuasimonedas provinciales y manejo discrecional de fondos fiduciarios."], poblacion: 384607, pobreza_porcentaje: 47.1, costo_alquiler: 340000, canasta_basica_total: 820000, salario_promedio_ripte: 650000, empleo_informal_porcentaje: 43.5, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero con Cuasimoneda", deuda_total_usd: "USD 280 Millones", peso_masa_salarial: "66.0%", autonomia_financiera: "11.2%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.4, siniestros_viales_fatales: 62, mortalidad_infantil_tasa: 8.0, camas_uti_cada_10k: 4.4, escolarizacion_secundaria: 87.5, cobertura_agua_cloacas: 81.2, cobertura_internet_fibra: 60.1,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Union por la Patria", ausentismo: "4.8%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.0 }, { anio: 2025, tasa: 6.7 }, { anio: 2024, tasa: 7.5 }] 
             },
             "Mendoza": { 
-                nombre: "Mendoza", gobernador: "Alfredo Cornejo (Cambia Mendoza / JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "4.3%", corrupcion_tasa: "3.1 causas / 100k", opacidad_licitaciones: "Baja (32%)", pauta_corrupcion: "Regulada", poblacion: 2014533, pobreza_porcentaje: 44.5, costo_alquiler: 470000, canasta_basica_total: 870000, salario_promedio_ripte: 720000, empleo_informal_porcentaje: 40.0, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Fiscal Operativo", deuda_total_usd: "USD 540 Millones", peso_masa_salarial: "45.0%", autonomia_financiera: "48.2%", inseguridad_tasa: 680, homicidios_tasa_100k: 3.9, siniestros_viales_fatales: 160, mortalidad_infantil_tasa: 6.9, camas_uti_cada_10k: 5.0, escolarizacion_secundaria: 90.1, cobertura_agua_cloacas: 84.2, cobertura_internet_fibra: 71.3,
+                nombre: "Mendoza", gobernador: "Alfredo Cornejo (Cambia Mendoza / JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "4.3%", corrupcion_tasa: "3.1 causas / 100k", opacidad_licitaciones: "Baja (32%)", pauta_corrupcion: "Regulada", condenados: ["Exfuncionarios de áreas viales investigados por sobreprecios en licitaciones menores.", "Controles rigurosos de tribunal de cuentas provincial."], poblacion: 2014533, pobreza_porcentaje: 44.5, costo_alquiler: 470000, canasta_basica_total: 870000, salario_promedio_ripte: 720000, empleo_informal_porcentaje: 40.0, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Fiscal Operativo", deuda_total_usd: "USD 540 Millones", peso_masa_salarial: "45.0%", autonomia_financiera: "48.2%", inseguridad_tasa: 680, homicidios_tasa_100k: 3.9, siniestros_viales_fatales: 160, mortalidad_infantil_tasa: 6.9, camas_uti_cada_10k: 5.0, escolarizacion_secundaria: 90.1, cobertura_agua_cloacas: 84.2, cobertura_internet_fibra: 71.3,
                 legislativo: { diputados: 10, senadores: 3, fuerza: "Cambia Mendoza / PRO", ausentismo: "3.0%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.8 }, { anio: 2025, tasa: 6.5 }, { anio: 2024, tasa: 7.3 }] 
             },
             "Misiones": { 
-                nombre: "Misiones", gobernador: "Hugo Passalacqua (Frente Renovador)", legislatura: "Unicameral (Mayoría FR)", coparticipacion_real: "3.5%", corrupcion_tasa: "4.1 causas / 100k", opacidad_licitaciones: "Media (52%)", pauta_corrupcion: "Moderada", poblacion: 1280960, pobreza_porcentaje: 48.2, costo_alquiler: 350000, canasta_basica_total: 840000, salario_promedio_ripte: 670000, empleo_informal_porcentaje: 45.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 95 Millones", peso_masa_salarial: "51.2%", autonomia_financiera: "34.5%", inseguridad_tasa: 410, homicidios_tasa_100k: 4.5, siniestros_viales_fatales: 210, mortalidad_infantil_tasa: 8.9, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.2, cobertura_agua_cloacas: 70.4, cobertura_internet_fibra: 58.0,
+                nombre: "Misiones", gobernador: "Hugo Passalacqua (Frente Renovador)", legislatura: "Unicameral (Mayoría FR)", coparticipacion_real: "3.5%", corrupcion_tasa: "4.1 causas / 100k", opacidad_licitaciones: "Media (52%)", pauta_corrupcion: "Moderada", condenados: ["Exintendentes municipales procesados por malversación de fondos coparticipados.", "Exfuncionarios de área aduanera/fronteriza con causas federales."], poblacion: 1280960, pobreza_porcentaje: 48.2, costo_alquiler: 350000, canasta_basica_total: 840000, salario_promedio_ripte: 670000, empleo_informal_porcentaje: 45.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 95 Millones", peso_masa_salarial: "51.2%", autonomia_financiera: "34.5%", inseguridad_tasa: 410, homicidios_tasa_100k: 4.5, siniestros_viales_fatales: 210, mortalidad_infantil_tasa: 8.9, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.2, cobertura_agua_cloacas: 70.4, cobertura_internet_fibra: 58.0,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "Frente Renovador de la Concordia", ausentismo: "2.2%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.5 }, { anio: 2025, tasa: 6.2 }, { anio: 2024, tasa: 7.0 }] 
             },
             "Neuquén": { 
-                nombre: "Neuquén", gobernador: "Rolando Figueroa (Comunidad)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.1%", corrupcion_tasa: "3.4 causas / 100k", opacidad_licitaciones: "Media (40%)", pauta_corrupcion: "Moderada", poblacion: 726590, pobreza_porcentaje: 38.5, costo_alquiler: 610000, canasta_basica_total: 960000, salario_promedio_ripte: 1280000, empleo_informal_porcentaje: 28.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit por Regalías hidrocarburíferas", deuda_total_usd: "USD 1.100 Millones", peso_masa_salarial: "42.0%", autonomia_financiera: "65.4%", inseguridad_tasa: 550, homicidios_tasa_100k: 4.1, siniestros_viales_fatales: 85, mortalidad_infantil_tasa: 5.9, camas_uti_cada_10k: 5.5, escolarizacion_secundaria: 91.0, cobertura_agua_cloacas: 85.0, cobertura_internet_fibra: 76.5,
+                nombre: "Neuquén", gobernador: "Rolando Figueroa (Comunidad)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.1%", corrupcion_tasa: "3.4 causas / 100k", opacidad_licitaciones: "Media (40%)", pauta_corrupcion: "Moderada", condenados: ["Exfuncionarios de administraciones anteriores investigados por causa de corrupción en Legislatura (empleados 'ñoquis' y retornos de sueldos)."], poblacion: 726590, pobreza_porcentaje: 38.5, costo_alquiler: 610000, canasta_basica_total: 960000, salario_promedio_ripte: 1280000, empleo_informal_porcentaje: 28.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit por Regalías hidrocarburíferas", deuda_total_usd: "USD 1.100 Millones", peso_masa_salarial: "42.0%", autonomia_financiera: "65.4%", inseguridad_tasa: 550, homicidios_tasa_100k: 4.1, siniestros_viales_fatales: 85, mortalidad_infantil_tasa: 5.9, camas_uti_cada_10k: 5.5, escolarizacion_secundaria: 91.0, cobertura_agua_cloacas: 85.0, cobertura_internet_fibra: 76.5,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Movimiento Popular Neuquino / LLA", ausentismo: "3.4%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 5.9 }, { anio: 2025, tasa: 5.6 }, { anio: 2024, tasa: 6.3 }] 
             },
             "Río Negro": { 
-                nombre: "Río Negro", gobernador: "Alberto Weretilneck (Juntos Somos Río Negro)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.8%", corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (46%)", pauta_corrupcion: "Moderada", poblacion: 762067, pobreza_porcentaje: 41.2, costo_alquiler: 470000, canasta_basica_total: 920000, salario_promedio_ripte: 920000, empleo_informal_porcentaje: 33.0, ingresos_brutos_alicuota: 3.7, resultado_fiscal: "Déficit Financiero Leve", deuda_total_usd: "USD 580 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "35.1%", inseguridad_tasa: 490, homicidios_tasa_100k: 3.6, siniestros_viales_fatales: 98, mortalidad_infantil_tasa: 6.5, camas_uti_cada_10k: 4.9, escolarizacion_secundaria: 89.8, cobertura_agua_cloacas: 83.1, cobertura_internet_fibra: 69.8,
+                nombre: "Río Negro", gobernador: "Alberto Weretilneck (Juntos Somos Río Negro)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.8%", corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (46%)", pauta_corrupcion: "Moderada", condenados: ["Exfuncionarios de áreas de tierras y catastros investigados por ventas irregulares de lotes fiscales."], poblacion: 762067, pobreza_porcentaje: 41.2, costo_alquiler: 470000, canasta_basica_total: 920000, salario_promedio_ripte: 920000, empleo_informal_porcentaje: 33.0, ingresos_brutos_alicuota: 3.7, resultado_fiscal: "Déficit Financiero Leve", deuda_total_usd: "USD 580 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "35.1%", inseguridad_tasa: 490, homicidios_tasa_100k: 3.6, siniestros_viales_fatales: 98, mortalidad_infantil_tasa: 6.5, camas_uti_cada_10k: 4.9, escolarizacion_secundaria: 89.8, cobertura_agua_cloacas: 83.1, cobertura_internet_fibra: 69.8,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Juntos Somos Río Negro", ausentismo: "3.8%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.7 }, { anio: 2025, tasa: 6.4 }, { anio: 2024, tasa: 7.2 }] 
             },
             "Salta": { 
-                nombre: "Salta", gobernador: "Gustavo Sáenz (Identidad Provincial)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "4.1%", corrupcion_tasa: "4.9 causas / 100k", opacidad_licitaciones: "Alta (70%)", pauta_corrupcion: "Alta", poblacion: 1440672, pobreza_porcentaje: 49.5, costo_alquiler: 360000, canasta_basica_total: 840000, salario_promedio_ripte: 660000, empleo_informal_porcentaje: 48.0, ingresos_brutos_alicuota: 3.6, resultado_fiscal: "Equilibrio Operativo", deuda_total_usd: "USD 350 Millones", peso_masa_salarial: "53.0%", autonomia_financiera: "24.5%", inseguridad_tasa: 580, homicidios_tasa_100k: 4.9, siniestros_viales_fatales: 155, mortalidad_infantil_tasa: 9.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 86.0, cobertura_agua_cloacas: 75.2, cobertura_internet_fibra: 61.2,
+                nombre: "Salta", gobernador: "Gustavo Sáenz (Identidad Provincial)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "4.1%", corrupcion_tasa: "4.9 causas / 100k", opacidad_licitaciones: "Alta (70%)", pauta_corrupcion: "Alta", condenados: ["Exintendentes municipales con condenas por malversación de fondos de emergencia hídrica y alimentaria.", "Exfuncionarios procesados en causas de peculado."], poblacion: 1440672, pobreza_porcentaje: 49.5, costo_alquiler: 360000, canasta_basica_total: 840000, salario_promedio_ripte: 660000, empleo_informal_porcentaje: 48.0, ingresos_brutos_alicuota: 3.6, resultado_fiscal: "Equilibrio Operativo", deuda_total_usd: "USD 350 Millones", peso_masa_salarial: "53.0%", autonomia_financiera: "24.5%", inseguridad_tasa: 580, homicidios_tasa_100k: 4.9, siniestros_viales_fatales: 155, mortalidad_infantil_tasa: 9.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 86.0, cobertura_agua_cloacas: 75.2, cobertura_internet_fibra: 61.2,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "Gustavo Sáenz Conducción", ausentismo: "4.5%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 8.1 }, { anio: 2025, tasa: 7.7 }, { anio: 2024, tasa: 8.6 }] 
             },
             "San Juan": { 
-                nombre: "San Juan", gobernador: "Marcelo Orrego (Unidos por San Juan)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.0%", corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Baja/Media (38%)", pauta_corrupcion: "Moderada", poblacion: 818234, pobreza_porcentaje: 42.0, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 730000, empleo_informal_porcentaje: 38.0, ingresos_brutos_alicuota: 3.3, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 160 Millones", peso_masa_salarial: "52.0%", autonomia_financiera: "28.3%", inseguridad_tasa: 430, homicidios_tasa_100k: 2.3, siniestros_viales_fatales: 90, mortalidad_infantil_tasa: 7.0, camas_uti_cada_10k: 4.7, escolarizacion_secundaria: 89.2, cobertura_agua_cloacas: 82.5, cobertura_internet_fibra: 64.0,
+                nombre: "San Juan", gobernador: "Marcelo Orrego (Unidos por San Juan)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.0%", corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Baja/Media (38%)", pauta_corrupcion: "Moderada", condenados: ["Exfuncionarios de administraciones municipales con causas menores en revisión judicial."], poblacion: 818234, pobreza_porcentaje: 42.0, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 730000, empleo_informal_porcentaje: 38.0, ingresos_brutos_alicuota: 3.3, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 160 Millones", peso_masa_salarial: "52.0%", autonomia_financiera: "28.3%", inseguridad_tasa: 430, homicidios_tasa_100k: 2.3, siniestros_viales_fatales: 90, mortalidad_infantil_tasa: 7.0, camas_uti_cada_10k: 4.7, escolarizacion_secundaria: 89.2, cobertura_agua_cloacas: 82.5, cobertura_internet_fibra: 64.0,
                 legislativo: { diputados: 6, senadores: 3, fuerza: "Por San Juan / UxP", ausentismo: "3.0%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 6.2 }, { anio: 2025, tasa: 5.9 }, { anio: 2024, tasa: 6.7 }] 
             },
             "San Luis": { 
-                nombre: "San Luis", gobernador: "Claudio Poggi (Cambia San Luis)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "2.0%", corrupcion_tasa: "2.8 causas / 100k", opacidad_licitaciones: "Baja (33%)", pauta_corrupcion: "Baja", poblacion: 540905, pobreza_porcentaje: 40.2, costo_alquiler: 390000, canasta_basica_total: 860000, salario_promedio_ripte: 740000, empleo_informal_porcentaje: 35.5, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Administrado", deuda_total_usd: "USD 80 Millones", peso_masa_salarial: "49.5%", autonomia_financiera: "39.1%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.5, siniestros_viales_fatales: 68, mortalidad_infantil_tasa: 6.8, camas_uti_cada_10k: 5.2, escolarizacion_secundaria: 90.5, cobertura_agua_cloacas: 86.0, cobertura_internet_fibra: 79.1,
+                nombre: "San Luis", gobernador: "Claudio Poggi (Cambia San Luis)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "2.0%", corrupcion_tasa: "2.8 causas / 100k", opacidad_licitaciones: "Baja (33%)", pauta_corrupcion: "Baja", condenados: ["Exfuncionarios de obras públicas investigados por auditorías de transición de gestión (2023-2024)."], poblacion: 540905, pobreza_porcentaje: 40.2, costo_alquiler: 390000, canasta_basica_total: 860000, salario_promedio_ripte: 740000, empleo_informal_porcentaje: 35.5, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Administrado", deuda_total_usd: "USD 80 Millones", peso_masa_salarial: "49.5%", autonomia_financiera: "39.1%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.5, siniestros_viales_fatales: 68, mortalidad_infantil_tasa: 6.8, camas_uti_cada_10k: 5.2, escolarizacion_secundaria: 90.5, cobertura_agua_cloacas: 86.0, cobertura_internet_fibra: 79.1,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Cambia San Luis / PJ", ausentismo: "2.6%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 5.8 }, { anio: 2025, tasa: 5.5 }, { anio: 2024, tasa: 6.2 }] 
             },
             "Santa Cruz": { 
-                nombre: "Santa Cruz", gobernador: "Claudio Vidal (Por Santa Cruz)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "1.7%", corrupcion_tasa: "5.2 causas / 100k", opacidad_licitaciones: "Alta (74%)", pauta_corrupcion: "Alta", poblacion: 333473, pobreza_porcentaje: 35.8, costo_alquiler: 550000, canasta_basica_total: 970000, salario_promedio_ripte: 1200000, empleo_informal_porcentaje: 26.5, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Estructural en Caja de Previsión", deuda_total_usd: "USD 420 Millones", peso_masa_salarial: "62.0%", autonomia_financiera: "31.2%", inseguridad_tasa: 460, homicidios_tasa_100k: 3.0, siniestros_viales_fatales: 42, mortalidad_infantil_tasa: 5.6, camas_uti_cada_10k: 5.7, escolarizacion_secundaria: 92.0, cobertura_agua_cloacas: 88.4, cobertura_internet_fibra: 67.5,
+                nombre: "Santa Cruz", gobernador: "Claudio Vidal (Por Santa Cruz)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "1.7%", corrupcion_tasa: "5.2 causas / 100k", opacidad_licitaciones: "Alta (74%)", pauta_corrupcion: "Alta", condenados: ["Exfuncionarios provinciales vinculados a causas históricas de direccionamiento de obra vial y sobreprecios energéticos."], poblacion: 333473, pobreza_porcentaje: 35.8, costo_alquiler: 550000, canasta_basica_total: 970000, salario_promedio_ripte: 1200000, empleo_informal_porcentaje: 26.5, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Estructural en Caja de Previsión", deuda_total_usd: "USD 420 Millones", peso_masa_salarial: "62.0%", autonomia_financiera: "31.2%", inseguridad_tasa: 460, homicidios_tasa_100k: 3.0, siniestros_viales_fatales: 42, mortalidad_infantil_tasa: 5.6, camas_uti_cada_10k: 5.7, escolarizacion_secundaria: 92.0, cobertura_agua_cloacas: 88.4, cobertura_internet_fibra: 67.5,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Por Santa Cruz", ausentismo: "4.1%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 5.5 }, { anio: 2025, tasa: 5.2 }, { anio: 2024, tasa: 6.0 }] 
             },
             "Tierra del Fuego": { 
-                nombre: "Tierra del Fuego", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", poblacion: 190641, pobreza_porcentaje: 36.5, costo_alquiler: 620000, canasta_basica_total: 990000, salario_promedio_ripte: 1150000, empleo_informal_porcentaje: 25.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero", deuda_total_usd: "USD 390 Millones", peso_masa_salarial: "54.1%", autonomia_financiera: "42.0%", inseguridad_tasa: 480, homicidios_tasa_100k: 2.2, siniestros_viales_fatales: 22, mortalidad_infantil_tasa: 5.2, camas_uti_cada_10k: 6.0, escolarizacion_secundaria: 94.5, cobertura_agua_cloacas: 91.2, cobertura_internet_fibra: 82.0,
+                nombre: "Tierra del Fuego", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: ["Exfuncionarios y autoridades ejecutivas investigadas en procesos judiciales por licitaciones de servicios públicos y contrataciones directas."], poblacion: 190641, pobreza_porcentaje: 36.5, costo_alquiler: 620000, canasta_basica_total: 990000, salario_promedio_ripte: 1150000, empleo_informal_porcentaje: 25.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero", deuda_total_usd: "USD 390 Millones", peso_masa_salarial: "54.1%", autonomia_financiera: "42.0%", inseguridad_tasa: 480, homicidios_tasa_100k: 2.2, siniestros_viales_fatales: 22, mortalidad_infantil_tasa: 5.2, camas_uti_cada_10k: 6.0, escolarizacion_secundaria: 94.5, cobertura_agua_cloacas: 91.2, cobertura_internet_fibra: 82.0,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "FORJA / UxP", ausentismo: "3.1%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 7.2 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.9 }] 
             },
             "Tucumán": { 
-                nombre: "Tucumán", gobernador: "Osvaldo Jaldo (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "4.7%", corrupcion_tasa: "5.5 causas / 100k", opacidad_licitaciones: "Alta (75%)", pauta_corrupcion: "Muy Alta", poblacion: 1703186, pobreza_porcentaje: 49.2, costo_alquiler: 390000, canasta_basica_total: 850000, salario_promedio_ripte: 670000, empleo_informal_porcentaje: 47.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 210 Millones", peso_masa_salarial: "60.0%", autonomia_financiera: "18.5%", inseguridad_tasa: 590, homicidios_tasa_100k: 5.1, siniestros_viales_fatales: 145, mortalidad_infantil_tasa: 9.8, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.5, cobertura_agua_cloacas: 73.0, cobertura_internet_fibra: 59.2,
+                nombre: "Tucumán", gobernador: "Osvaldo Jaldo (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "4.7%", corrupcion_tasa: "5.5 causas / 100k", opacidad_licitaciones: "Alta (75%)", pauta_corrupcion: "Muy Alta", condenados: ["Exfuncionarios legislativos con causas resonantes por fraude laboral ('contratos fantasma' en la Legislatura).", "Exintendentes procesados por administración fraudulenta."], poblacion: 1703186, pobreza_porcentaje: 49.2, costo_alquiler: 390000, canasta_basica_total: 850000, salario_promedio_ripte: 670000, empleo_informal_porcentaje: 47.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 210 Millones", peso_masa_salarial: "60.0%", autonomia_financiera: "18.5%", inseguridad_tasa: 590, homicidios_tasa_100k: 5.1, siniestros_viales_fatales: 145, mortalidad_infantil_tasa: 9.8, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.5, cobertura_agua_cloacas: 73.0, cobertura_internet_fibra: 59.2,
                 legislativo: { diputados: 9, senadores: 3, fuerza: "UxP / Independencia", ausentismo: "3.5%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 8.3 }, { anio: 2025, tasa: 7.9 }, { anio: 2024, tasa: 8.7 }] 
             },
+            "Santa Fe": { 
+                nombre: "Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "9.5%", corrupcion_tasa: "4.6 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: ["Exjefes policiales y exministros de seguridad condenados por connivencia con narcotráfico y asociación ilícita.", "Exfuncionarios municipales investigados por contrataciones directas en obra vial."], poblacion: 3556522, pobreza_porcentaje: 43.8, costo_alquiler: 520000, canasta_basica_total: 890000, salario_promedio_ripte: 810000, empleo_informal_porcentaje: 36.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Déficit Operativo Moderado", deuda_total_usd: "USD 480 Millones", peso_masa_salarial: "50.1%", autonomia_financiera: "49.0%", inseguridad_tasa: 890, homicidios_tasa_100k: 8.4, siniestros_viales_fatales: 340, mortalidad_infantil_tasa: 7.8, camas_uti_cada_10k: 5.4, escolarizacion_secundaria: 91.2, cobertura_agua_cloacas: 82.0, cobertura_internet_fibra: 74.0,
+                legislativo: { diputados: 19, senadores: 3, fuerza: "Unidos / PRO / PS", ausentismo: "3.2%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
+                desempleo_historial: [{ anio: 2026, tasa: 7.5 }, { anio: 2025, tasa: 7.1 }, { anio: 2024, tasa: 7.8 }] 
+            },
             "Santiago del Estero": { 
-                nombre: "Santiago del Estero", gobernador: "Gerardo Zamora (Frente Cívico / UxP)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "4.5%", corrupcion_tasa: "6.1 causas / 100k", opacidad_licitaciones: "Muy Alta (85%)", pauta_corrupcion: "Control absoluto estatal", poblacion: 1054028, pobreza_porcentaje: 54.2, costo_alquiler: 300000, canasta_basica_total: 810000, salario_promedio_ripte: 600000, empleo_informal_porcentaje: 50.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Nominal por Contención", deuda_total_usd: "USD 120 Millones", peso_masa_salarial: "64.0%", autonomia_financiera: "10.2%", inseguridad_tasa: 400, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 125, mortalidad_infantil_tasa: 10.2, camas_uti_cada_10k: 3.7, escolarizacion_secundaria: 83.0, cobertura_agua_cloacas: 66.0, cobertura_internet_fibra: 53.0,
+                nombre: "Santiago del Estero", gobernador: "Gerardo Zamora (Frente Cívico / UxP)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "4.5%", corrupcion_tasa: "6.1 causas / 100k", opacidad_licitaciones: "Muy Alta (85%)", pauta_corrupcion: "Control absoluto estatal", condenados: ["Exfuncionarios del poder ejecutivo provincial con causas cajoneadas y baja alternancia en fueros locales.", "Procesos por adjudicación monopólica de obra pública."], poblacion: 1054028, pobreza_porcentaje: 54.2, costo_alquiler: 300000, canasta_basica_total: 810000, salario_promedio_ripte: 600000, empleo_informal_porcentaje: 50.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Nominal por Contención", deuda_total_usd: "USD 120 Millones", peso_masa_salarial: "64.0%", autonomia_financiera: "10.2%", inseguridad_tasa: 400, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 125, mortalidad_infantil_tasa: 10.2, camas_uti_cada_10k: 3.7, escolarizacion_secundaria: 83.0, cobertura_agua_cloacas: 66.0, cobertura_internet_fibra: 53.0,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "Frente Cívico por Santiago", ausentismo: "2.0%" },
                 votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
                 desempleo_historial: [{ anio: 2026, tasa: 8.5 }, { anio: 2025, tasa: 8.0 }, { anio: 2024, tasa: 8.9 }] 
@@ -587,12 +651,20 @@
             el.className = "voto-badge " + (voto === "Afirmativo" ? "voto-afirmativo" : voto === "Negativo" ? "voto-negativo" : "voto-abstencion");
         }
 
+        function toggleDropdown() {
+            const container = document.getElementById('panel-dropdown');
+            container.classList.toggle('open');
+        }
+
         function mostrarDatos(nombreProv) {
             const data = datosProvincias[nombreProv];
             if (!data) return;
 
             document.getElementById('btn-volver-mapa').style.display = 'block';
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${nombreProv}`;
+
+            // Resetear el desplegable de corrupción al cambiar de provincia
+            document.getElementById('panel-dropdown').classList.remove('open');
 
             const panel = document.getElementById('info-panel');
             const riesgoScore = calcularIndiceRiesgo(data);
@@ -608,6 +680,15 @@
             document.getElementById('panel-corrupcion-tasa').innerText = data.corrupcion_tasa;
             document.getElementById('panel-opacidad').innerText = data.opacidad_licitaciones;
             document.getElementById('panel-pauta-corrupcion').innerText = data.pauta_corrupcion;
+
+            // Rellenar lista de condenados/causas activas
+            let condenadosHTML = '';
+            if (data.condenados && data.condenados.length > 0) {
+                condenadosHTML = data.condenados.map(item => `<li>${item}</li>`).join('');
+            } else {
+                condenadosHTML = `<li>Sin registros públicos significativos de condenas firmes recientes.</li>`;
+            }
+            document.getElementById('panel-condenados-lista').innerHTML = condenadosHTML;
 
             // Legislativos Nación
             document.getElementById('panel-diputados').innerText = `${data.legislativo.diputados} bancas`;
