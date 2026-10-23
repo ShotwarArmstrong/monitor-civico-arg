@@ -29,42 +29,16 @@
       ]
     },
     {
-      "nombre": "Catamarca",
-      "poblacion": 429556,
-      "pobreza_porcentaje": 41.5,
+      "nombre": "Santa Fe",
+      "poblacion": 3556522,
+      "pobreza_porcentaje": 43.2,
       "desempleo_historial": [
-        { "anio": 2026, "tasa": 6.2 },
-        { "anio": 2025, "tasa": 6.5 },
-        { "anio": 2024, "tasa": 7.0 },
-        { "anio": 2023, "tasa": 5.9 },
-        { "anio": 2022, "tasa": 6.1 },
-        { "anio": 2021, "tasa": 7.8 }
-      ]
-    },
-    {
-      "nombre": "Chaco",
-      "poblacion": 1142963,
-      "pobreza_porcentaje": 54.0,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 8.1 },
-        { "anio": 2025, "tasa": 8.4 },
-        { "anio": 2024, "tasa": 9.2 },
-        { "anio": 2023, "tasa": 7.8 },
-        { "anio": 2022, "tasa": 8.0 },
-        { "anio": 2021, "tasa": 9.9 }
-      ]
-    },
-    {
-      "nombre": "Chubut",
-      "poblacion": 603120,
-      "pobreza_porcentaje": 37.8,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 5.9 },
-        { "anio": 2025, "tasa": 6.2 },
-        { "anio": 2024, "tasa": 6.8 },
-        { "anio": 2023, "tasa": 5.5 },
-        { "anio": 2022, "tasa": 5.8 },
-        { "anio": 2021, "tasa": 7.1 }
+        { "anio": 2026, "tasa": 6.8 },
+        { "anio": 2025, "tasa": 7.1 },
+        { "anio": 2024, "tasa": 7.6 },
+        { "anio": 2023, "tasa": 6.3 },
+        { "anio": 2022, "tasa": 6.5 },
+        { "anio": 2021, "tasa": 8.2 }
       ]
     },
     {
@@ -81,84 +55,6 @@
       ]
     },
     {
-      "nombre": "Corrientes",
-      "poblacion": 1197553,
-      "pobreza_porcentaje": 46.2,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 7.1 },
-        { "anio": 2025, "tasa": 7.5 },
-        { "anio": 2024, "tasa": 8.0 },
-        { "anio": 2023, "tasa": 6.9 },
-        { "anio": 2022, "tasa": 7.2 },
-        { "anio": 2021, "tasa": 8.8 }
-      ]
-    },
-    {
-      "nombre": "Entre Ríos",
-      "poblacion": 1426426,
-      "pobreza_porcentaje": 42.1,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 6.5 },
-        { "anio": 2025, "tasa": 6.9 },
-        { "anio": 2024, "tasa": 7.4 },
-        { "anio": 2023, "tasa": 6.2 },
-        { "anio": 2022, "tasa": 6.6 },
-        { "anio": 2021, "tasa": 8.3 }
-      ]
-    },
-    {
-      "nombre": "Formosa",
-      "poblacion": 606041,
-      "pobreza_porcentaje": 49.8,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 6.9 },
-        { "anio": 2025, "tasa": 7.2 },
-        { "anio": 2024, "tasa": 7.8 },
-        { "anio": 2023, "tasa": 6.6 },
-        { "anio": 2022, "tasa": 6.9 },
-        { "anio": 2021, "tasa": 8.5 }
-      ]
-    },
-    {
-      "nombre": "Jujuy",
-      "poblacion": 797955,
-      "pobreza_porcentaje": 43.8,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 6.7 },
-        { "anio": 2025, "tasa": 7.0 },
-        { "anio": 2024, "tasa": 7.6 },
-        { "anio": 2023, "tasa": 6.3 },
-        { "anio": 2022, "tasa": 6.5 },
-        { "anio": 2021, "tasa": 8.1 }
-      ]
-    },
-    {
-      "nombre": "La Pampa",
-      "poblacion": 366022,
-      "pobreza_porcentaje": 35.2,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 5.4 },
-        { "anio": 2025, "tasa": 5.7 },
-        { "anio": 2024, "tasa": 6.2 },
-        { "anio": 2023, "tasa": 5.0 },
-        { "anio": 2022, "tasa": 5.3 },
-        { "anio": 2021, "tasa": 6.9 }
-      ]
-    },
-    {
-      "nombre": "La Rioja",
-      "poblacion": 384607,
-      "pobreza_porcentaje": 44.1,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 6.3 },
-        { "anio": 2025, "tasa": 6.6 },
-        { "anio": 2024, "tasa": 7.1 },
-        { "anio": 2023, "tasa": 5.8 },
-        { "anio": 2022, "tasa": 6.0 },
-        { "anio": 2021, "tasa": 7.6 }
-      ]
-    },
-    {
       "nombre": "Mendoza",
       "poblacion": 2014533,
       "pobreza_porcentaje": 41.9,
@@ -172,32 +68,17 @@
       ]
     },
     {
-      "nombre": "Misiones",
-      "poblacion": 1280960,
-      "pobreza_porcentaje": 45.9,
+      "nombre": "Tucumán",
+      "poblacion": 1703186,
+      "pobreza_porcentaje": 46.5,
       "desempleo_historial": [
-        { "anio": 2026, "tasa": 5.8 },
-        { "anio": 2025, "tasa": 6.1 },
-        { "anio": 2024, "tasa": 6.7 },
-        { "anio": 2023, "tasa": 5.5 },
-        { "anio": 2022, "tasa": 5.7 },
-        { "anio": 2021, "tasa": 7.2 }
+        { "anio": 2026, "tasa": 7.8 },
+        { "anio": 2025, "tasa": 8.2 },
+        { "anio": 2024, "tasa": 8.9 },
+        { "anio": 2023, "tasa": 7.5 },
+        { "anio": 2022, "tasa": 7.9 },
+        { "anio": 2021, "tasa": 9.6 }
       ]
-    },
-    {
-      "nombre": "Neuquén",
-      "poblacion": 726590,
-      "pobreza_porcentaje": 36.4,
-      "desempleo_historial": [
-        { "anio": 2026, "tasa": 5.2 },
-        { "anio": 2025, "tasa": 5.5 },
-        { "anio": 2024, "tasa": 6.0 },
-        { "anio": 2023, "tasa": 4.9 },
-        { "anio": 2022, "tasa": 5.1 },
-        { "anio": 2021, "tasa": 6.8 }
-      ]
-    },
-    {
-      "nombre": "Río Negro",
-      "poblacion": 762067,
-      "p
+    }
+  ]
+}
