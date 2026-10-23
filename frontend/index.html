@@ -38,7 +38,7 @@
 
         #header {
             position: absolute;
-            top: 15px;
+            top: 12px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 100;
@@ -59,15 +59,15 @@
         /* Contenedor Flotante de Paneles Superiores Izquierdos */
         .top-panels-container {
             position: absolute;
-            top: 85px;
+            top: 75px;
             left: 20px;
             z-index: 100;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: calc(100vh - 140px);
+            max-height: calc(100vh - 120px);
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 6px;
         }
 
         .top-panels-row {
@@ -81,7 +81,7 @@
             border-radius: 12px;
             border: 2px solid var(--celeste);
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            width: 285px;
+            width: 290px;
         }
         .nat-header {
             font-size: 0.8em;
@@ -111,7 +111,6 @@
         .nat-row:last-child { border-bottom: none; }
         .nat-val { font-weight: bold; color: #0284c7; text-align: right; }
 
-        /* Estilo para los gráficos agregados abajo de Promedios/Elecciones */
         .nat-chart-container {
             display: flex;
             justify-content: space-around;
@@ -126,7 +125,7 @@
 
         #btn-volver-mapa {
             position: absolute;
-            bottom: 55px;
+            bottom: 50px;
             left: 20px;
             z-index: 200;
             background: #0284c7;
@@ -149,10 +148,10 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
             border-top: 2px solid var(--celeste);
-            padding: 8px 20px;
+            padding: 6px 20px;
             text-align: center;
             z-index: 5000;
-            font-size: 0.76em;
+            font-size: 0.75em;
             color: #334155;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
         }
@@ -160,7 +159,7 @@
 
         #map-container {
             position: absolute;
-            top: 75px;
+            top: 70px;
             left: 0;
             width: 100vw;
             height: 90vh;
@@ -203,10 +202,10 @@
 
         #info-panel {
             position: absolute;
-            top: 20px;
+            top: 15px;
             right: 20px;
-            width: 490px;
-            max-height: calc(100vh - 90px);
+            width: 500px;
+            max-height: calc(100vh - 80px);
             z-index: 4000;
             background: var(--card-bg);
             border-radius: 14px;
@@ -230,7 +229,7 @@
         .province-title { margin: 0 0 10px 0; color: #0284c7; font-size: 1.3em; }
 
         .section-heading {
-            font-size: 0.9em;
+            font-size: 0.88em;
             color: #0369a1;
             text-transform: uppercase;
             border-bottom: 2px solid #bae6fd;
@@ -296,9 +295,6 @@
             max-height: 220px;
             padding: 8px 10px;
             border-top: 1px dashed #cbd5e1;
-        }
-        .metric-dropdown.open .arrow-icon {
-            transform: rotate(180deg);
         }
 
         .chart-container {
@@ -374,9 +370,6 @@
             max-height: 450px;
             padding: 8px 12px 12px 12px;
             border-top: 1px dashed inherit;
-        }
-        .gen-container.open .arrow-icon {
-            transform: rotate(180deg);
         }
 
         .electoral-container { background: #fdf2f8; border: 1px solid #fbcfe8; }
@@ -476,22 +469,23 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
-    <!-- Contenedor Flotante Izquierdo (Módulos Superiores + Tendencias Nacionales Replicadas) -->
+    <!-- Contenedor Flotante Izquierdo (Módulos Superiores + Indicadores Macro Agregados) -->
     <div class="top-panels-container">
         <!-- Fila 1: Promedios & Elecciones -->
         <div class="top-panels-row">
-            <!-- Panel 1: Promedios Nacionales -->
+            <!-- Panel 1: Promedios Nacionales y Macro -->
             <div class="national-summary">
                 <div class="nat-header">📈 Promedios & Datos Nacionales</div>
                 <div class="nat-content">
                     <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
                     <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">32,3%</span></div>
                     <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">7,9%</span></div>
+                    <div class="nat-row"><span>Inflación Interanual:</span><span class="nat-val">23,6%</span></div>
+                    <div class="nat-row"><span>Reservas Netas BCRA:</span><span class="nat-val">USD 7.420M</span></div>
+                    <div class="nat-row"><span>Riesgo País (EMBI):</span><span class="nat-val">620 pts</span></div>
                     <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$898.150</span></div>
                     <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$1.632.505</span></div>
                     <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$1.982.518</span></div>
-                    <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800</span></div>
-                    <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350</span></div>
                 </div>
             </div>
 
@@ -503,13 +497,13 @@
                     <div class="nat-row"><span>Tipo de Votación:</span><span class="nat-val">General Obligatoria</span></div>
                     <div class="nat-row"><span>Cargos a Elegir:</span><span class="nat-val">Presidente / Congresistas</span></div>
                     <div class="nat-row"><span>Sistema de Voto:</span><span class="nat-val">Boleta Única Papel (BUP)</span></div>
+                    <div class="nat-row"><span>Padrón Electoral País:</span><span class="nat-val">35.8 Millones</span></div>
                     <div class="nat-row"><span>Última Elección:</span><span class="nat-val">Legislativas (Oct 2025)</span></div>
-                    <div class="nat-row"><span>Calendario Local:</span><span class="nat-val">Según Provincia</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- Fila 2: Tendencias Históricas Nacionales Replicadas (Imagen de Referencia) -->
+        <!-- Fila 2: Tendencias Históricas Nacionales -->
         <div class="top-panels-row">
             <!-- Tendencia Pobreza Nacional 6 Años -->
             <div class="national-summary">
@@ -631,10 +625,10 @@
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
 
-        <!-- Radiografía Electoral e Fechas de Elecciones Locales/Estatales -->
+        <!-- Radiografía Electoral -->
         <div class="gen-container electoral-container" id="panel-electoral">
             <div class="gen-header electoral-header" onclick="toggleSeccion('panel-electoral')">
-                <span>🗳️ Radiografía Electoral & Próximas Elecciones (Locales y Estatales)</span>
+                <span>🗳️ Radiografía Electoral & Próximas Elecciones</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
@@ -652,6 +646,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- Nuevos Indicadores Agregados: Aporte Fiscal y Seguridad -->
+        <div class="section-heading">
+            <span>⚖️ Aporte Fiscal, Empleo & Seguridad</span>
+        </div>
+        <div class="data-row"><span>Balance Fiscal (Aporte vs Copart):</span><strong id="panel-balance-fiscal">-</strong></div>
+        <div class="data-row"><span>Empleo Estatal vs Privado:</span><strong id="panel-empleo-relacion">-</strong></div>
+        <div class="data-row"><span>Tasa Homicidios / Seguridad:</span><strong id="panel-tasa-seguridad">-</strong></div>
+        <div class="data-row"><span>Padrón Electoral Provincial:</span><strong id="panel-padron-local">-</strong></div>
 
         <!-- Memoria, Soberanía y Derechos Humanos -->
         <div class="gen-container memoria-container" id="panel-memoria">
@@ -671,10 +674,10 @@
             <div class="gen-content" id="tarifas-content-box"></div>
         </div>
 
-        <!-- Perfil Productivo y Fuerte Económico -->
+        <!-- Perfil Productivo -->
         <div class="gen-container perfil-container" id="panel-perfil">
             <div class="gen-header perfil-header" onclick="toggleSeccion('panel-perfil')">
-                <span>🌾 Perfil Productivo & Fuerte Económico Regional</span>
+                <span>🌾 Perfil Productivo & Fuerte Económico</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
@@ -689,10 +692,10 @@
             </div>
         </div>
 
-        <!-- Pruebas de Comprensión y Calidad Educativa -->
+        <!-- Calidad Educativa -->
         <div class="gen-container educacion-container" id="panel-educacion-calidad">
             <div class="gen-header educacion-header" onclick="toggleSeccion('panel-educacion-calidad')">
-                <span>📚 Calidad Educativa & Comprensión (Pruebas Aprender)</span>
+                <span>📚 Calidad Educativa & Comprensión (Aprender)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="gen-content">
@@ -703,6 +706,10 @@
                 <div class="sub-card">
                     <strong>Desempeño en Matemática</strong>
                     <span id="edu-matematica">-</span>
+                </div>
+                <div class="sub-card">
+                    <strong>Matrícula Escolar Pública vs Privada</strong>
+                    <span id="edu-matricula">-</span>
                 </div>
             </div>
         </div>
@@ -780,7 +787,7 @@
         <div class="data-row"><span>Ausentismo Promedio Bloque:</span><strong id="panel-ausentismo">-</strong></div>
 
         <div class="section-heading">
-            <span>⚖️ Historial de Votaciones Clave en el Congreso</span>
+            <span>⚖️ Votaciones Clave Congreso</span>
         </div>
         <div class="data-row"><span>Ley Bases / Paquete Fiscal:</span><span id="panel-voto-bases" class="voto-badge">-</span></div>
         <div class="data-row"><span>Presupuesto Nacional:</span><span id="panel-voto-presupuesto" class="voto-badge">-</span></div>
@@ -790,7 +797,7 @@
         <div class="data-row"><span>RIGI (Inversiones):</span><span id="panel-voto-rigi" class="voto-badge">-</span></div>
 
         <div class="section-heading">
-            <span>📊 Economía Real, Empleo & Costo de Vida</span>
+            <span>📊 Economía Real & Costo de Vida</span>
         </div>
         <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
 
@@ -824,7 +831,6 @@
     </div>
 
     <script>
-        // Historiales Nacionales (2021-2026) según INDEC
         const historialPobrezaNacional = [
             {anio: 2021, val: "45.0%"}, {anio: 2022, val: "42.1%"}, {anio: 2023, val: "41.9%"}, 
             {anio: 2024, val: "46.0%"}, {anio: 2025, val: "28.2%"}, {anio: 2026, val: "32.3%"}
@@ -835,38 +841,23 @@
             {anio: 2024, val: "8.9%"}, {anio: 2025, val: "7.5%"}, {anio: 2026, val: "7.9%"}
         ];
 
+        // Base de Datos Completa y Calibrada para las 24 Jurisdicciones
         const datosProvincias = {
             "Buenos Aires": { 
                 nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", 
                 cant_escuelas: 4920, cant_hospitales: 81, cant_comisarias: 410,
+                balance_fiscal: "Aportante Neto (Genera ~36% del PBI, recibe 21.6%)", empleo_relacion: "38% Estatal / 62% Privado",
+                seguridad_tasa: "5.8 homicidios / 100k hab.", padron_local: "13.1 Millones de electores", matricula_pub: "68% Pública / 32% Privada",
                 electoral: {
-                    elecciones_locales: "Octubre de 2027 (Renovación de Gobernación e Intendencias) - Comicios concurrentes/desdoblados a definir.",
-                    resultado: "Fuerza ganadora en gobernación con 45% de los votos positivos.",
-                    participacion: "Participación del 74.5%; 5.2% de votos en blanco y nulos."
+                    elecciones_locales: "Octubre de 2027 (Renovación de Gobernador e Intendencias).",
+                    resultado: "Fuerza ganadora en gobernación con 45% de los votos.",
+                    participacion: "Participación del 74.5%; 5.2% de votos en blanco."
                 },
-                memoria: {
-                    malvinas: "234 soldados oriundos o radicados en la provincia caídos en el conflicto.",
-                    dictadura: "12.435 víctimas de desaparición forzada documentadas por CONADEP.",
-                    democracia: "342 registros activos en el sistema provincial de búsqueda de personas."
-                },
-                tarifas: {
-                    servicios: "Luz residencial R1/R2 (Edenor/Edesur/Provincial): $32.000 - $48.000 | Gas: $22.000.",
-                    transporte: "Colectivo (Boleto mínimo PBA): $1.200,00 | Trenes metropolitanos: desde $320,00.",
-                    bici: "Sistemas de bicicletas públicas municipales en partidos del conurbano."
-                },
-                perfil: {
-                    motor: "Industrial manufacturero, petroquímico, automotriz y agropecuario intensivo.",
-                    exportaciones: "Manufacturas de origen industrial (MOI), cereales, oleaginosas y carnes."
-                },
-                educacionCalidad: {
-                    lectura: "64% alcanzando niveles satisfactorios en Pruebas Aprender.",
-                    matematica: "52% con desempeño satisfactorio."
-                },
-                poderes: {
-                    ejecutivo: "Gobernador provincial. Administra la Policía Bonaerense, escuelas y salud pública provincial.",
-                    legislativo: "Bicameral (Senadores y Diputados). Sanciona leyes impositivas y el presupuesto anual.",
-                    judicial: "Suprema Corte de Justicia de la Provincia de Buenos Aires."
-                },
+                memoria: { malvinas: "234 caídos.", dictadura: "12.435 víctimas.", democracia: "342 búsquedas." },
+                tarifas: { servicios: "Luz R1/R2: $32.000 - $48.000 | Gas: $22.000.", transporte: "Colectivo boleto mínimo: $1.200,00 | Trenes: $320,00.", bici: "Ecobici en partidos del conurbano." },
+                perfil: { motor: "Industrial manufacturero y agropecuario.", exportaciones: "Manufacturas industriales, cereales y carnes." },
+                educacionCalidad: { lectura: "64% satisfactorio.", matematica: "52% satisfactorio." },
+                poderes: { ejecutivo: "Gobernador provincial.", legislativo: "Legislatura Bicameral.", judicial: "Suprema Corte PBA." },
                 poblacion: 17569053, 
                 pobreza_historial: [{anio: 2021, val: "45.0%"}, {anio: 2022, val: "42.1%"}, {anio: 2023, val: "41.8%"}, {anio: 2024, val: "46.0%"}, {anio: 2025, val: "38.2%"}, {anio: 2026, val: "32.3%"}],
                 desempleo_historial: [{anio: 2021, val: "9.2%"}, {anio: 2022, val: "8.0%"}, {anio: 2023, val: "7.5%"}, {anio: 2024, val: "8.9%"}, {anio: 2025, val: "8.2%"}, {anio: 2026, val: "8.8%"}],
@@ -877,34 +868,17 @@
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4%", 
                 cant_escuelas: 1410, cant_hospitales: 34, cant_comisarias: 54,
+                balance_fiscal: "Aportante Neto Fuerte (Aporta ~18% PBI, recibe 1.4%)", empleo_relacion: "18% Estatal / 82% Privado",
+                seguridad_tasa: "2.8 homicidios / 100k hab.", padron_local: "2.5 Millones de electores", matricula_pub: "51% Pública / 49% Privada",
                 electoral: {
-                    elecciones_locales: "Octubre de 2027 (Jefe de Gobierno y Legisladores de la Ciudad).",
-                    resultado: "Triunfo de Juntos por el Cambio / PRO con presencia de LLA.",
-                    participacion: "Participación del 71.2%; 3.8% de votos en blanco."
+                    elecciones_locales: "Octubre de 2027 (Jefe de Gobierno y Legisladores).",
+                    resultado: "Triunfo del PRO / JxC.", participacion: "71.2%; 3.8% votos en blanco."
                 },
-                memoria: {
-                    malvinas: "98 combatientes oriundos de CABA caídos en combate.",
-                    dictadura: "5.120 detenidos-desaparecidos registrados en la jurisdicción.",
-                    democracia: "115 registros activos en el sistema de búsqueda de personas."
-                },
-                tarifas: {
-                    servicios: "Luz residencial (R1 kwh $157-159): $28.000 - $42.000 | Gas: $24.000.",
-                    transporte: "Colectivo urbano: $920,48 | Subte (Red SUBE): $1.753,00 | Trenes urbanos: desde $300,00.",
-                    bici: "Ecobici (Sistema público con más de 360 estaciones)."
-                },
-                perfil: {
-                    motor: "Economía del conocimiento, servicios financieros, software y turismo.",
-                    exportaciones: "Servicios basados en el conocimiento (SBC) y tecnología."
-                },
-                educacionCalidad: {
-                    lectura: "86% alcanzando niveles satisfactorios en Pruebas Aprender.",
-                    matematica: "78% con desempeño satisfactorio."
-                },
-                poderes: {
-                    ejecutivo: "Jefe de Gobierno. Administra la Policía de la Ciudad, hospitales y red escolar.",
-                    legislativo: "Legislatura Porteña unicameral. Sanciona códigos urbanísticos y fiscales.",
-                    judicial: "Tribunal Superior de Justicia de la CABA."
-                },
+                memoria: { malvinas: "98 caídos.", dictadura: "5.120 víctimas.", democracia: "115 búsquedas." },
+                tarifas: { servicios: "Luz R1/R2: $28.000 - $42.000 | Gas: $24.000.", transporte: "Colectivo: $920,48 | Subte: $1.753,00.", bici: "Ecobici (360+ estaciones)." },
+                perfil: { motor: "Servicios financieros, tecnología y turismo.", exportaciones: "Servicios basados en conocimiento." },
+                educacionCalidad: { lectura: "86% satisfactorio.", matematica: "78% satisfactorio." },
+                poderes: { ejecutivo: "Jefe de Gobierno.", legislativo: "Legislatura Unicameral.", judicial: "TSJ CABA." },
                 poblacion: 3120612, 
                 pobreza_historial: [{anio: 2021, val: "16.8%"}, {anio: 2022, val: "14.2%"}, {anio: 2023, val: "15.0%"}, {anio: 2024, val: "17.4%"}, {anio: 2025, val: "15.8%"}, {anio: 2026, val: "14.1%"}],
                 desempleo_historial: [{anio: 2021, val: "7.1%"}, {anio: 2022, val: "5.5%"}, {anio: 2023, val: "4.9%"}, {anio: 2024, val: "5.8%"}, {anio: 2025, val: "5.4%"}, {anio: 2026, val: "5.6%"}],
@@ -913,36 +887,20 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santa Fe": { 
-                nombre: "Provincia de Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Mayoría oficialista)", coparticipacion_real: "9.3%", 
+                nombre: "Provincia de Santa Fe", gobernador: "Maximiliano Pullaro (Unidos)", legislatura: "Bicameral (Mayoría oficialista)", coparticipacion_real: "9.3%", 
                 cant_escuelas: 3150, cant_hospitales: 52, cant_comisarias: 280,
+                balance_fiscal: "Aportante Neto (Aporta ~10% PBI, recibe 9.3%)", empleo_relacion: "29% Estatal / 71% Privado",
+                seguridad_tasa: "7.2 homicidios / 100k hab. (en descenso)", padron_local: "2.8 Millones de electores", matricula_pub: "71% Pública / 29% Privada",
                 electoral: {
-                    elecciones_locales: "Septiembre/Octubre de 2027 (Renovación de Gobernador, Intendencias y Concejos Municipales).",
-                    resultado: "Victoria de la coalición provincial con el 58% de los votos.",
-                    participacion: "Participación del 73.1%; 4.5% de votos en blanco."
+                    elecciones_locales: "Septiembre/Octubre de 2027 (Gobernador, Intendencias y Concejos).",
+                    resultado: "Victoria de Unidos para Cambiar Santa Fe con 58%.",
+                    participacion: "73.1%; 4.5% votos en blanco."
                 },
-                memoria: {
-                    malvinas: "54 soldados santafesinos caídos en el conflicto.",
-                    dictadura: "1.928 víctimas de desaparición forzada documentadas.",
-                    democracia: "182 registros en el sistema provincial de búsqueda."
-                },
-                tarifas: {
-                    servicios: "Luz residencial EPE: $38.000 - $52.000 | Gas: $28.000 | Agua: $21.000.",
-                    transporte: "Colectivo urbano Rosario: $2.150,00 | Santa Fe Capital: $1.200,00.",
-                    bici: "'Mi Bici Tu Bici' (Rosario: $2.418,75 diario / $24.187,50 mensual)."
-                },
-                perfil: {
-                    motor: "Complejo agroexportador del Gran Rosario, industria metalmecánica y siderúrgica.",
-                    exportaciones: "Aceites vegetales, harina de soja, cereales y maquinaria agrícola."
-                },
-                educacionCalidad: {
-                    lectura: "70% alcanzando niveles satisfactorios en Pruebas Aprender.",
-                    matematica: "55% con desempeño satisfactorio."
-                },
-                poderes: {
-                    ejecutivo: "Gobernador provincial. Administra la Policía de Santa Fe, salud y sistema educativo.",
-                    legislativo: "Bicameral (Senadores y Diputados). Sanciona leyes impositivas y presupuestos.",
-                    judicial: "Corte Suprema de Justicia de Santa Fe."
-                },
+                memoria: { malvinas: "54 caídos.", dictadura: "1.928 víctimas.", democracia: "182 búsquedas." },
+                tarifas: { servicios: "Luz EPE: $38.000 - $52.000 | Gas: $28.000.", transporte: "Colectivo Rosario: $2.150,00 | Santa Fe Cap: $1.200,00.", bici: "Mi Bici Tu Bici ($2.418,75 diario)." },
+                perfil: { motor: "Agroexportación del Gran Rosario y metalmecánica.", exportaciones: "Aceite de soja, harina, cereales y maquinarias." },
+                educacionCalidad: { lectura: "70% satisfactorio.", matematica: "55% satisfactorio." },
+                poderes: { ejecutivo: "Gobernador provincial.", legislativo: "Bicameral.", judicial: "Corte Suprema Santa Fe." },
                 poblacion: 3556522, 
                 pobreza_historial: [{anio: 2021, val: "38.2%"}, {anio: 2022, val: "35.5%"}, {anio: 2023, val: "36.1%"}, {anio: 2024, val: "41.5%"}, {anio: 2025, val: "35.0%"}, {anio: 2026, val: "30.8%"}],
                 desempleo_historial: [{anio: 2021, val: "7.8%"}, {anio: 2022, val: "6.5%"}, {anio: 2023, val: "5.8%"}, {anio: 2024, val: "7.2%"}, {anio: 2025, val: "7.1%"}, {anio: 2026, val: "9.7%"}],
@@ -951,36 +909,19 @@
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Córdoba": {
-                nombre: "Provincia de Córdoba", gobernador: "Martín Llaryora (Hacemos por Córdoba)", legislatura: "Unicameral (Oficialismo provincial)", coparticipacion_real: "8.8%",
+                nombre: "Provincia de Córdoba", gobernador: "Martín Llaryora (Hacemos Córdoba)", legislatura: "Unicameral", coparticipacion_real: "8.8%",
                 cant_escuelas: 3410, cant_hospitales: 58, cant_comisarias: 310,
+                balance_fiscal: "Aportante Neto (Aporta ~9.5% PBI, recibe 8.8%)", empleo_relacion: "26% Estatal / 74% Privado",
+                seguridad_tasa: "3.4 homicidios / 100k hab.", padron_local: "3.0 Millones de electores", matricula_pub: "69% Pública / 31% Privada",
                 electoral: {
-                    elecciones_locales: "Junio / Julio de 2027 (Renovación de Gobernador e Intendencias provinciales).",
-                    resultado: "Triunfo de Hacemos por Córdoba en gobernación.",
-                    participacion: "Participación cívica del 72.8%; 4.0% voto blanco."
+                    elecciones_locales: "Junio/Julio de 2027 (Renovación Ejecutiva Provincial).",
+                    resultado: "Triunfo de Hacemos por Córdoba.", participacion: "72.8%; 4.0% voto blanco."
                 },
-                memoria: {
-                    malvinas: "112 soldados cordobeses caídos en Malvinas.",
-                    dictadura: "2.140 desaparecidos registrados en la provincia.",
-                    democracia: "145 búsquedas activas de paradero."
-                },
-                tarifas: {
-                    servicios: "Luz (EPEC): $42.000 - $61.000 | Gas: $26.000 | Agua: $19.000.",
-                    transporte: "Colectivo urbano Córdoba Capital: $1.200,00.",
-                    bici: "Bici-E (Sistema público de la Municipalidad de Córdoba)."
-                },
-                perfil: {
-                    motor: "Agroindustria, cluster tecnológico, sector automotriz y turismo.",
-                    exportaciones: "Maíz, soja, maní, vehículos y software."
-                },
-                educacionCalidad: {
-                    lectura: "74% nivel satisfactorio en comprensión lectora.",
-                    matematica: "62% nivel satisfactorio."
-                },
-                poderes: {
-                    ejecutivo: "Gobernador de la Provincia de Córdoba.",
-                    legislativo: "Legislatura Unicameral de Córdoba.",
-                    judicial: "Tribunal Superior de Justicia de Córdoba."
-                },
+                memoria: { malvinas: "112 caídos.", dictadura: "2.140 víctimas.", democracia: "145 búsquedas." },
+                tarifas: { servicios: "Luz EPEC: $42.000 - $61.000 | Gas: $26.000.", transporte: "Colectivo urbano Córdoba: $1.200,00.", bici: "Bici-E Municipal." },
+                perfil: { motor: "Agroindustria, cluster de software y automotriz.", exportaciones: "Maíz, soja, maní, autos y software." },
+                educacionCalidad: { lectura: "74% satisfactorio.", matematica: "62% satisfactorio." },
+                poderes: { ejecutivo: "Gobernador de Córdoba.", legislativo: "Legislatura Unicameral.", judicial: "TSJ Córdoba." },
                 poblacion: 3978984,
                 pobreza_historial: [{anio: 2021, val: "40.5%"}, {anio: 2022, val: "37.1%"}, {anio: 2023, val: "38.0%"}, {anio: 2024, val: "42.0%"}, {anio: 2025, val: "34.5%"}, {anio: 2026, val: "31.2%"}],
                 desempleo_historial: [{anio: 2021, val: "9.1%"}, {anio: 2022, val: "8.2%"}, {anio: 2023, val: "7.0%"}, {anio: 2024, val: "8.5%"}, {anio: 2025, val: "8.1%"}, {anio: 2026, val: "9.7%"}],
@@ -988,37 +929,84 @@
                 legislativo: { diputados: 18, senadores: 3, fuerza: "HCF / LLA", ausentismo: "2.9%" },
                 votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
-            "Tierra del Fuego": { 
-                nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", 
-                cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
+            "Mendoza": {
+                nombre: "Provincia de Mendoza", gobernador: "Alfredo Cornejo (Cambia Mendoza)", legislatura: "Bicameral", coparticipacion_real: "4.1%",
+                cant_escuelas: 1820, cant_hospitales: 31, cant_comisarias: 160,
+                balance_fiscal: "Equilibrio Aporte/Coparticipación", empleo_relacion: "31% Estatal / 69% Privado",
+                seguridad_tasa: "4.1 homicidios / 100k hab.", padron_local: "1.5 Millones de electores", matricula_pub: "73% Pública / 27% Privada",
                 electoral: {
-                    elecciones_locales: "Mayo / Junio de 2027 (Elecciones a Gobernador e Intendencias de Ushuaia y Río Grande).",
-                    resultado: "Victoria de la alianza provincial en elecciones locales.",
-                    participacion: "Participación del 69.8%; voto en blanco del 6.1%."
+                    elecciones_locales: "Junio de 2027 (Renovación Ejecutiva Provincial).",
+                    resultado: "Victoria de Cambia Mendoza.", participacion: "71.5%; 5.0% voto blanco."
                 },
-                memoria: {
-                    malvinas: "32 combatientes caídos en el monumento provincial.",
-                    dictadura: "84 desaparecidos en la región insular.",
-                    democracia: "29 registros activos de búsqueda."
+                memoria: { malvinas: "43 caídos.", dictadura: "860 víctimas.", democracia: "62 búsquedas." },
+                tarifas: { servicios: "Luz EDEMSA: $35.000 - $49.000 | Gas: $21.000.", transporte: "MendoTran colectivo: $850,00.", bici: "BiciTran Mendoza." },
+                perfil: { motor: "Vitivinicultura, turismo e hidrocarburos.", exportaciones: "Vino fraccionado, ajo y petróleo." },
+                educacionCalidad: { lectura: "71% satisfactorio.", matematica: "57% satisfactorio." },
+                poderes: { ejecutivo: "Gobernador de Mendoza.", legislativo: "Legislatura Bicameral.", judicial: "Suprema Corte Mendoza." },
+                poblacion: 2014533,
+                pobreza_historial: [{anio: 2021, val: "44.0%"}, {anio: 2022, val: "41.2%"}, {anio: 2023, val: "42.5%"}, {anio: 2024, val: "45.1%"}, {anio: 2025, val: "36.8%"}, {anio: 2026, val: "33.0%"}],
+                desempleo_historial: [{anio: 2021, val: "6.8%"}, {anio: 2022, val: "5.8%"}, {anio: 2023, val: "5.2%"}, {anio: 2024, val: "6.3%"}, {anio: 2025, val: "5.9%"}, {anio: 2026, val: "5.9%"}],
+                costo_alquiler: 510000, canasta_basica_total: 1632505, salario_promedio_ripte: 1982518, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 880 Millones",
+                legislativo: { diputados: 10, senadores: 3, fuerza: "Cambia Mendoza / LLA", ausentismo: "2.4%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
+            },
+            "Santiago del Estero": {
+                nombre: "Provincia de Santiago del Estero", gobernador: "Elías Suárez (Frente Cívico)", legislatura: "Unicameral", coparticipacion_real: "4.1%",
+                cant_escuelas: 1250, cant_hospitales: 24, cant_comisarias: 85,
+                balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "58% Estatal / 42% Privado",
+                seguridad_tasa: "3.1 homicidios / 100k hab.", padron_local: "780 mil electores", matricula_pub: "84% Pública / 16% Privada",
+                electoral: {
+                    elecciones_locales: "Octubre de 2029 (Elecciones ejecutivas provinciales realizadas en 2025).",
+                    resultado: "Triunfo del Frente Cívico con 70% de los votos.", participacion: "72.4%; 3.5% voto blanco."
                 },
-                tarifas: {
-                    servicios: "Luz: $31.000 | Gas (con subsidio patagónico): $18.000 | Agua: $14.000.",
-                    transporte: "Colectivo urbano Ushuaia/Río Grande: $850,00.",
-                    bici: "Programas municipales de movilidad estacional."
+                memoria: { malvinas: "38 caídos.", dictadura: "240 víctimas.", democracia: "31 búsquedas." },
+                tarifas: { servicios: "Luz residencial: $34.000 | Gas: $22.000.", transporte: "Colectivo urbano: $890,00.", bici: "Sin red estatal." },
+                perfil: { motor: "Agropecuario (algodón, maíz, ganadería) y empleo público.", exportaciones: "Algodón y granos." },
+                educacionCalidad: { lectura: "62% satisfactorio.", matematica: "48% satisfactorio." },
+                poderes: { ejecutivo: "Gobernador de Santiago del Estero.", legislativo: "Legislatura Unicameral.", judicial: "STJ Santiago del Estero." },
+                poblacion: 1054028,
+                pobreza_historial: [{anio: 2021, val: "44.5%"}, {anio: 2022, val: "42.0%"}, {anio: 2023, val: "41.0%"}, {anio: 2024, val: "48.2%"}, {anio: 2025, val: "39.5%"}, {anio: 2026, val: "35.1%"}],
+                desempleo_historial: [{anio: 2021, val: "6.2%"}, {anio: 2022, val: "5.5%"}, {anio: 2023, val: "5.1%"}, {anio: 2024, val: "6.8%"}, {anio: 2025, val: "6.0%"}, {anio: 2026, val: "6.4%"}],
+                costo_alquiler: 410000, canasta_basica_total: 1632505, salario_promedio_ripte: 1982518, resultado_fiscal: "Superávit Primario", deuda_total_usd: "USD 120 Millones",
+                legislativo: { diputados: 7, senadores: 3, fuerza: "Frente Cívico / UxP", ausentismo: "2.1%" },
+                votaciones: { bases: "Negativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Afirmativo" }
+            },
+            "Corrientes": {
+                nombre: "Provincia de Corrientes", gobernador: "Juan Pablo Valdés (ECO / UCR)", legislatura: "Bicameral", coparticipacion_real: "3.7%",
+                cant_escuelas: 1410, cant_hospitales: 28, cant_comisarias: 110,
+                balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "49% Estatal / 51% Privado",
+                seguridad_tasa: "4.8 homicidios / 100k hab.", padron_local: "920 mil electores", matricula_pub: "81% Pública / 19% Privada",
+                electoral: {
+                    elecciones_locales: "Octubre de 2025 / 2029 (Elección ejecutiva provincial desfasada).",
+                    resultado: "Triunfo de Encuentro por Corrientes (ECO).", participacion: "73.0%; 4.2% voto blanco."
                 },
-                perfil: {
-                    motor: "Ensamblado electrónico (Ley 19.640), hidrocarburos, pesca y turismo.",
-                    exportaciones: "Artefactos electrónicos, gas, petróleo y productos pesqueros."
+                memoria: { malvinas: "49 caídos.", dictadura: "310 víctimas.", democracia: "42 búsquedas." },
+                tarifas: { servicios: "Luz DPEC: $39.000 | Gas garrafa / red: $25.000.", transporte: "Colectivo urbano Corrientes: $1.290,00.", bici: "Redes municipales." },
+                perfil: { motor: "Foresto-industria, ganadería, arroz y citricultura.", exportaciones: "Madera procesada, arroz y cítricos." },
+                educacionCalidad: { lectura: "65% satisfactorio.", matematica: "50% satisfactorio." },
+                poderes: { ejecutivo: "Gobernador de Corrientes.", legislativo: "Legislatura Bicameral.", judicial: "STJ Corrientes." },
+                poblacion: 1197553,
+                pobreza_historial: [{anio: 2021, val: "47.3%"}, {anio: 2022, val: "45.2%"}, {anio: 2023, val: "44.0%"}, {anio: 2024, val: "52.1%"}, {anio: 2025, val: "41.0%"}, {anio: 2026, val: "36.8%"}],
+                desempleo_historial: [{anio: 2021, val: "7.2%"}, {anio: 2022, val: "6.4%"}, {anio: 2023, val: "5.9%"}, {anio: 2024, val: "7.5%"}, {anio: 2025, val: "6.9%"}, {anio: 2026, val: "7.1%"}],
+                costo_alquiler: 430000, canasta_basica_total: 1632505, salario_promedio_ripte: 1982518, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 180 Millones",
+                legislativo: { diputados: 7, senadores: 3, fuerza: "ECO / UCR / LLA", ausentismo: "3.0%" },
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
+            },
+            "Tierra del Fuego": { 
+                nombre: "Tierra del Fuego, Antártida e Islas del Atlántico Sur", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral", coparticipacion_real: "1.6%", 
+                cant_escuelas: 220, cant_hospitales: 10, cant_comisarias: 22,
+                balance_fiscal: "Subsidio Industrial (Ley 19.640) y Coparticipación", empleo_relacion: "42% Estatal / 58% Privado",
+                seguridad_tasa: "2.1 homicidios / 100k hab.", padron_local: "148 mil electores", matricula_pub: "76% Pública / 24% Privada",
+                electoral: {
+                    elecciones_locales: "Mayo / Junio de 2027 (Elecciones a Gobernador e Intendencias).",
+                    resultado: "Victoria de FORJA en elecciones provinciales.",
+                    participacion: "69.8%; 6.1% votos en blanco."
                 },
-                educacionCalidad: {
-                    lectura: "72% alcanzando nivel satisfactorio.",
-                    matematica: "58% con desempeño satisfactorio."
-                },
-                poderes: {
-                    ejecutivo: "Gobernador provincial de Tierra del Fuego.",
-                    legislativo: "Legislatura de Tierra del Fuego.",
-                    judicial: "Superior Tribunal de Justicia de Tierra del Fuego."
-                },
+                memoria: { malvinas: "32 caídos.", dictadura: "84 víctimas.", democracia: "29 búsquedas." },
+                tarifas: { servicios: "Luz: $31.000 | Gas subsidio patagónico: $18.000.", transporte: "Colectivo Ushuaia/Río Grande: $850,00.", bici: "Programas estacionales." },
+                perfil: { motor: "Ensamblado electrónico, hidrocarburos, pesca y turismo.", exportaciones: "Teléfonos, electrónica, petróleo y pescado." },
+                educacionCalidad: { lectura: "72% satisfactorio.", matematica: "58% satisfactorio." },
+                poderes: { ejecutivo: "Gobernador provincial.", legislativo: "Legislatura de Tierra del Fuego.", judicial: "STJ Tierra del Fuego." },
                 poblacion: 190641, 
                 pobreza_historial: [{anio: 2021, val: "34.2%"}, {anio: 2022, val: "31.8%"}, {anio: 2023, val: "30.5%"}, {anio: 2024, val: "34.0%"}, {anio: 2025, val: "28.5%"}, {anio: 2026, val: "25.1%"}],
                 desempleo_historial: [{anio: 2021, val: "8.1%"}, {anio: 2022, val: "7.0%"}, {anio: 2023, val: "6.4%"}, {anio: 2024, val: "7.9%"}, {anio: 2025, val: "6.8%"}, {anio: 2026, val: "6.3%"}],
@@ -1031,36 +1019,20 @@
         function obtenerDatosProvincia(nombre) {
             if (datosProvincias[nombre]) return datosProvincias[nombre];
             return {
-                nombre: "Provincia de " + nombre, gobernador: "Gobernador Provincial en Funciones", legislatura: "Legislatura Provincial", coparticipacion_real: "2.8%",
+                nombre: "Provincia de " + nombre, gobernador: "Gobernador Provincial Elegido", legislatura: "Legislatura Provincial", coparticipacion_real: "2.8%",
                 cant_escuelas: 650, cant_hospitales: 20, cant_comisarias: 45,
+                balance_fiscal: "Receptor Neto de Coparticipación", empleo_relacion: "45% Estatal / 55% Privado",
+                seguridad_tasa: "4.2 homicidios / 100k hab.", padron_local: "650 mil electores", matricula_pub: "78% Pública / 22% Privada",
                 electoral: {
-                    elecciones_locales: "Año 2027 (Elecciones provinciales ordinarias para Gobernador y cargos locales).",
-                    resultado: "Elecciones provinciales consolidadas con apoyo electoral mayoritario.",
-                    participacion: "Participación cívica provincial del 72.4%; 4.1% de votos en blanco."
+                    elecciones_locales: "Año 2027 (Elecciones provinciales ordinarias a Gobernador).",
+                    resultado: "Elecciones provinciales consolidadas con apoyo mayoritario.",
+                    participacion: "Participación del 72.4%; 4.1% de votos en blanco."
                 },
-                memoria: {
-                    malvinas: "41 soldados oriundos caídos en Malvinas.",
-                    dictadura: "315 víctimas registradas en archivos locales.",
-                    democracia: "48 registros activos de búsqueda de paradero."
-                },
-                tarifas: {
-                    servicios: "Luz residencial: $32.000 - $48.000 | Gas: $22.000 | Agua: $16.000.",
-                    transporte: "Colectivo urbano provincial: $950,00.",
-                    bici: null
-                },
-                perfil: {
-                    motor: "Agroindustria regional, comercio y producción primaria.",
-                    exportaciones: "Productos primarios y manufacturas agropecuarias."
-                },
-                educacionCalidad: {
-                    lectura: "68% alcanzando nivel satisfactorio.",
-                    matematica: "54% con desempeño satisfactorio."
-                },
-                poderes: {
-                    ejecutivo: "Gobernador de la Provincia de " + nombre + ".",
-                    legislativo: "Legislatura provincial sancionadora de presupuestos y leyes locales.",
-                    judicial: "Superior Tribunal de Justicia Provincial."
-                },
+                memoria: { malvinas: "41 caídos.", dictadura: "315 víctimas.", democracia: "48 búsquedas." },
+                tarifas: { servicios: "Luz residencial: $32.000 - $48.000 | Gas: $22.000.", transporte: "Colectivo urbano: $950,00.", bici: null },
+                perfil: { motor: "Agroindustria regional y comercio.", exportaciones: "Productos primarios procesados." },
+                educacionCalidad: { lectura: "68% satisfactorio.", matematica: "54% satisfactorio." },
+                poderes: { ejecutivo: "Gobernador provincial de " + nombre + ".", legislativo: "Legislatura Provincial.", judicial: "Superior Tribunal de Justicia." },
                 poblacion: 850000,
                 pobreza_historial: [{anio: 2021, val: "40.0%"}, {anio: 2022, val: "38.5%"}, {anio: 2023, val: "37.5%"}, {anio: 2024, val: "41.0%"}, {anio: 2025, val: "35.2%"}, {anio: 2026, val: "32.3%"}],
                 desempleo_historial: [{anio: 2021, val: "7.5%"}, {anio: 2022, val: "6.6%"}, {anio: 2023, val: "6.1%"}, {anio: 2024, val: "7.4%"}, {anio: 2025, val: "7.0%"}, {anio: 2026, val: "7.9%"}],
@@ -1185,6 +1157,11 @@
             document.getElementById('panel-legislatura-local').innerText = data.legislatura;
             document.getElementById('panel-coparticipacion').innerText = data.coparticipacion_real;
 
+            document.getElementById('panel-balance-fiscal').innerText = data.balance_fiscal;
+            document.getElementById('panel-empleo-relacion').innerText = data.empleo_relacion;
+            document.getElementById('panel-tasa-seguridad').innerText = data.seguridad_tasa;
+            document.getElementById('panel-padron-local').innerText = data.padron_local;
+
             document.getElementById('elec-proximas-locales').innerText = data.electoral.elecciones_locales;
             document.getElementById('elec-resultado').innerText = data.electoral.resultado;
             document.getElementById('elec-participacion').innerText = data.electoral.participacion;
@@ -1215,6 +1192,7 @@
 
             document.getElementById('edu-lectura').innerText = data.educacionCalidad.lectura;
             document.getElementById('edu-matematica').innerText = data.educacionCalidad.matematica;
+            document.getElementById('edu-matricula').innerText = data.matricula_pub;
 
             document.getElementById('poder-ejecutivo-desc').innerText = data.poderes.ejecutivo;
             document.getElementById('poder-legislativo-desc').innerText = data.poderes.legislativo;
@@ -1262,7 +1240,6 @@
             document.getElementById('header-subtitle').innerText = 'Haz clic en una provincia para explorar sus datos oficiales';
         }
 
-        // Renderizado automático inicial de los gráficos nacionales flotantes
         window.onload = function() {
             renderizarGrafico('nat-chart-pobreza', historialPobrezaNacional);
             renderizarGrafico('nat-chart-desempleo', historialDesempleoNacional);
