@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor Cívico Argentina</title>
+    <title>Monitor Cívico Argentina - Auditoría Integral</title>
     <style>
         :root {
             --celeste: #74acdf;
@@ -66,7 +66,7 @@
             border-radius: 12px;
             border: 2px solid var(--celeste);
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            width: 240px;
+            width: 250px;
         }
         #national-summary h3 {
             margin: 0 0 8px 0;
@@ -175,7 +175,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 440px;
+            width: 460px;
             max-height: calc(100vh - 90px);
             z-index: 3000;
             background: var(--card-bg);
@@ -224,14 +224,60 @@
             padding: 5px 0;
             border-bottom: 1px dashed #e2e8f0;
             font-size: 0.82em;
+            align-items: center;
         }
         .data-row span { color: var(--text-muted); }
         .data-row strong { color: var(--text); }
-        
-        .history-list { list-style: none; padding: 0; margin: 4px 0 0 0; font-size: 0.82em; }
-        .history-list li { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dashed #e2e8f0; }
 
-        /* Estilo para el acordeón desplegable de corrupción con datos nominales */
+        /* Estilo para Acordeones Desplegables de Métricas e Historiales */
+        .metric-dropdown {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            margin: 4px 0 8px 0;
+            overflow: hidden;
+        }
+        .metric-dropdown-header {
+            padding: 6px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #0369a1;
+            background: #e0f2fe;
+            user-select: none;
+        }
+        .metric-dropdown-header:hover { background: #bae6fd; }
+        .metric-dropdown-content {
+            max-height: 0;
+            overflow-y: auto;
+            transition: max-height 0.3s ease-out;
+            padding: 0 10px;
+            font-size: 0.76em;
+            color: #334155;
+            background: #f8fafc;
+        }
+        .metric-dropdown-content ul {
+            margin: 6px 0;
+            padding-left: 14px;
+        }
+        .metric-dropdown-content li {
+            margin-bottom: 3px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .metric-dropdown.open .metric-dropdown-content {
+            max-height: 180px;
+            padding: 6px 10px 8px 10px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        .metric-dropdown.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Estilo para el acordeón desplegable general de corrupción */
         .dropdown-container {
             background: #fff5f5;
             border: 1px solid #fecaca;
@@ -297,6 +343,16 @@
         .voto-afirmativo { background: #16a34a; }
         .voto-negativo { background: #dc2626; }
         .voto-abstencion { background: #ca8a04; }
+
+        .tax-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin: 8px 0;
+            font-size: 0.78em;
+        }
+        .tax-box strong { color: #b45309; display: block; margin-bottom: 3px; }
     </style>
 </head>
 <body>
@@ -328,7 +384,6 @@
             <a href="https://www.argentina.gob.ar/economia" target="_blank">Ministerio de Economía</a> · 
             <a href="https://www.hcdn.gob.ar" target="_blank">H. Congreso de la Nación</a> · 
             <a href="https://www.argentina.gob.ar/seguridad" target="_blank">Ministerio de Seguridad</a> · 
-            <a href="https://www.argentina.gob.ar/salud" target="_blank">Ministerio de Salud</a> · 
             <a href="https://www.bcra.gob.ar" target="_blank">BCRA</a>
         </span>
     </div>
@@ -405,7 +460,6 @@
                 <path class="provincia-real" data-nombre="Santa Fe" fill="#ef4444" onclick="mostrarDatos('Santa Fe')" d="M 215,175 Q 295,175 295,235 Q 280,325 225,320 Q 210,235 215,175 Z" />
                 <text x="255" y="250" class="provincia-label">Santa Fe</text>
 
-                <!-- Islas Malvinas -->
                 <g id="islas-malvinas">
                     <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 315,535 Q 335,530 330,560 Q 310,555 315,535 Z" />
                     <path class="provincia-real" data-nombre="Tierra del Fuego" fill="#38bdf8" onclick="mostrarDatos('Tierra del Fuego')" d="M 345,545 Q 370,540 365,575 Q 340,570 345,545 Z" />
@@ -415,7 +469,7 @@
         </svg>
     </div>
 
-    <!-- Panel Lateral de Datos Crudos e Integrales -->
+    <!-- Panel Lateral con Desplegables de Últimos 6 Años -->
     <div id="info-panel">
         <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
         <h2 id="panel-nombre" class="province-title">-</h2>
@@ -430,21 +484,18 @@
         <div class="data-row"><span>Legislatura Local:</span><strong id="panel-legislatura-local">-</strong></div>
         <div class="data-row"><span>Coeficiente Coparticipación:</span><strong id="panel-coparticipacion">-</strong></div>
 
-        <div class="section-heading">🔍 Transparencia & Causas de Corrupción</div>
-        <div class="data-row"><span>Causas Activas (Corrupción / 100k hab):</span><strong id="panel-corrupcion-tasa" style="color: #b91c1c;">-</strong></div>
+        <div class="section-heading">🔍 Transparencia & Corrupción Nominal</div>
+        <div class="data-row"><span>Causas Activas (Corrupción / 100k):</span><strong id="panel-corrupcion-tasa" style="color: #b91c1c;">-</strong></div>
         <div class="data-row"><span>Índice Opacidad Licitaciones:</span><strong id="panel-opacidad">-</strong></div>
         <div class="data-row"><span>Discrecionalidad Pauta Oficial:</span><strong id="panel-pauta-corrupcion">-</strong></div>
 
-        <!-- Menú desplegable nominal con nombres, expedientes y fechas -->
         <div class="dropdown-container" id="panel-dropdown">
             <div class="dropdown-header" onclick="toggleDropdown()">
                 <span>📂 Funcionarios y Causas Nominales (Detalle)</span>
                 <span class="arrow-icon">▼</span>
             </div>
             <div class="dropdown-content">
-                <ul id="panel-condenados-lista">
-                    <!-- Se llena dinámicamente -->
-                </ul>
+                <ul id="panel-condenados-lista"></ul>
             </div>
         </div>
 
@@ -462,16 +513,45 @@
         <div class="data-row"><span>Boleta Única de Papel (BUP):</span><span id="panel-voto-bup" class="voto-badge">-</span></div>
         <div class="data-row"><span>RIGI (Inversiones):</span><span id="panel-voto-rigi" class="voto-badge">-</span></div>
 
-        <div class="section-heading">📊 Economía Real & Costo de Vida</div>
+        <div class="section-heading">📊 Economía Real, Empleo & Costo de Vida (6 Años)</div>
         <div class="data-row"><span>Población Total:</span><strong id="panel-poblacion">-</strong></div>
-        <div class="data-row"><span>Tasa de Pobreza:</span><strong id="panel-pobreza">-</strong></div>
+
+        <!-- Pobreza con Desplegable 6 Años -->
+        <div class="metric-dropdown" id="drop-pobreza">
+            <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-pobreza')">
+                <span>Tasa de Pobreza (Ver últimos 6 años)</span><span class="arrow-icon">▼</span>
+            </div>
+            <div class="metric-dropdown-content"><ul id="list-pobreza"></ul></div>
+        </div>
+
+        <!-- Desempleo Real con Desplegable 6 Años -->
+        <div class="metric-dropdown" id="drop-desempleo">
+            <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-desempleo')">
+                <span>Desempleo Real (Ver últimos 6 años)</span><span class="arrow-icon">▼</span>
+            </div>
+            <div class="metric-dropdown-content"><ul id="list-desempleo"></ul></div>
+        </div>
+
+        <!-- Empleo Registrado vs Informal con Desplegable -->
+        <div class="metric-dropdown" id="drop-empleo-tipo">
+            <div class="metric-dropdown-header" onclick="toggleMetricDrop('drop-empleo-tipo')">
+                <span>Estructura de Empleo: Blanco vs Negro (6 Años)</span><span class="arrow-icon">▼</span>
+            </div>
+            <div class="metric-dropdown-content"><ul id="list-empleo-tipo"></ul></div>
+        </div>
+
         <div class="data-row"><span>Canasta Básica Total (CBT):</span><strong id="panel-cbt">-</strong></div>
         <div class="data-row"><span>Salario Promedio Real (RIPTE):</span><strong id="panel-salario">-</strong></div>
-        <div class="data-row"><span>Empleo Informal / Changas:</span><strong id="panel-informal">-</strong></div>
         <div class="data-row"><span>Alquiler Promedio (2 amb):</span><strong id="panel-alquiler">-</strong></div>
         <div class="data-row"><span>Ingresos Brutos (Alícuota máx):</span><strong id="panel-iibb">-</strong></div>
-        <div style="font-weight: bold; margin: 8px 0 2px 0; font-size: 0.8em; color: #0284c7;">Histórico de Desempleo Real:</div>
-        <ul id="panel-historial" class="history-list"></ul>
+
+        <!-- Impuestos Recientes, Pros y Contras -->
+        <div class="tax-box">
+            <strong>🏛️ Nuevos Impuestos / Tasas Creadas:</strong>
+            <span id="panel-impuestos-nuevos">-</span>
+            <div style="margin-top: 4px;"><strong>Pros:</strong> <span id="panel-impuestos-pros">-</span></div>
+            <div style="margin-top: 2px;"><strong>Contras:</strong> <span id="panel-impuestos-contras">-</span></div>
+        </div>
 
         <div class="section-heading">🏦 Finanzas Públicas & Deuda Real</div>
         <div class="data-row"><span>Resultado Fiscal Provincial:</span><strong id="panel-resultado-fiscal">-</strong></div>
@@ -485,6 +565,7 @@
         <div class="data-row"><span>Siniestros Viales Fatales (Anual):</span><strong id="panel-vial">-</strong></div>
 
         <div class="section-heading">🏥 Salud, Educación & Servicios</div>
+        <div class="data-row"><span>Presupuesto Educación / Salud:</span><strong id="panel-presupuesto-social">-</strong></div>
         <div class="data-row"><span>Mortalidad Infantil:</span><strong id="panel-mortalidad-infantil">-</strong></div>
         <div class="data-row"><span>Camas UTI (cada 10k hab):</span><strong id="panel-camas">-</strong></div>
         <div class="data-row"><span>Escolarización Secundaria:</span><strong id="panel-escuela">-</strong></div>
@@ -498,201 +579,345 @@
                 nombre: "Provincia de Buenos Aires", gobernador: "Axel Kicillof (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "21.6%", corrupcion_tasa: "4.8 causas / 100k", opacidad_licitaciones: "Alta (68%)", pauta_corrupcion: "Muy Alta (Discrecionalidad 85%)", condenados: [
                     "<strong>Julio Alak</strong> (Exintendente / Ministro): Causa por administración fraudulenta y contrataciones directas. Exp. 4589/12. Estado: Procesado y elevado a juicio oral.",
                     "<strong>Pablo Bruera</strong> (Exintendente de La Plata): Causa por negociaciones incompatibles y lavado de fondos públicos. Exp. 12450/15. Estado: Elevado a juicio."
-                ], poblacion: 17569053, pobreza_porcentaje: 48.2, costo_alquiler: 550000, canasta_basica_total: 910000, salario_promedio_ripte: 750000, empleo_informal_porcentaje: 44.5, ingresos_brutos_alicuota: 4.8, resultado_fiscal: "Déficit Primario Moderado", deuda_total_usd: "USD 5.420 Millones", peso_masa_salarial: "52.4%", autonomia_financiera: "38.5%", inseguridad_tasa: 980, homicidios_tasa_100k: 6.2, siniestros_viales_fatales: 1150, mortalidad_infantil_tasa: 8.4, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.5, cobertura_agua_cloacas: 76.2, cobertura_internet_fibra: 68.4,
+                ], poblacion: 17569053, 
+                pobreza_historial: [{anio: 2026, val: "48.2%"}, {anio: 2025, val: "47.5%"}, {anio: 2024, val: "46.0%"}, {anio: 2023, val: "41.8%"}, {anio: 2022, val: "42.1%"}, {anio: 2021, val: "45.0%"}],
+                desempleo_historial: [{anio: 2026, val: "8.7%"}, {anio: 2025, val: "8.2%"}, {anio: 2024, val: "8.9%"}, {anio: 2023, val: "7.5%"}, {anio: 2022, val: "8.0%"}, {anio: 2021, val: "9.2%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 38% | Público 18% | Informal 44%"}, {anio: 2023, val: "Priv. 37% | Público 19% | Informal 44%"}, {anio: 2021, val: "Priv. 35% | Público 20% | Informal 45%"}],
+                impuestos_nuevos: "Tasa adicional portuaria y sobretasa a grandes embarcaciones comerciales.",
+                impuestos_pros: "Genera fondos específicos para infraestructura vial municipal.",
+                impuestos_contras: "Aumenta los costos logísticos y resta competitividad exportadora regional.",
+                costo_alquiler: 550000, canasta_basica_total: 910000, salario_promedio_ripte: 750000, ingresos_brutos_alicuota: 4.8, resultado_fiscal: "Déficit Primario Moderado", deuda_total_usd: "USD 5.420 Millones", peso_masa_salarial: "52.4%", autonomia_financiera: "38.5%", inseguridad_tasa: 980, homicidios_tasa_100k: 6.2, siniestros_viales_fatales: 1150, presupuesto_social: "Educación 28% | Salud 19%", mortalidad_infantil_tasa: 8.4, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.5, cobertura_agua_cloacas: 76.2, cobertura_internet_fibra: 68.4,
                 legislativo: { diputados: 70, senadores: 3, fuerza: "UxP / PRO", ausentismo: "4.2%" },
-                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 8.7 }, { anio: 2025, tasa: 8.2 }, { anio: 2024, tasa: 8.9 }] 
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Ciudad Autónoma de Buenos Aires (CABA)": { 
                 nombre: "Ciudad Autónoma de Buenos Aires (CABA)", gobernador: "Jorge Macri (PRO / JxC)", legislatura: "Unicameral (Mayoría PRO/LLA)", coparticipacion_real: "1.4% (en disputa judicial)", corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Media (42%)", pauta_corrupcion: "Alta (Concentración en medios)", condenados: [
                     "<strong>Exfuncionarios de Área de Obras Menores</strong>: Investigados por presunta cartelización de licitaciones de veredas y mobiliario urbano. Exp. 3120/21. Estado: En instrucción."
-                ], poblacion: 3120612, pobreza_porcentaje: 19.5, costo_alquiler: 780000, canasta_basica_total: 980000, salario_promedio_ripte: 1250000, empleo_informal_porcentaje: 24.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Superávit Financiero", deuda_total_usd: "USD 2.150 Millones", peso_masa_salarial: "44.1%", autonomia_financiera: "82.4%", inseguridad_tasa: 920, homicidios_tasa_100k: 2.8, siniestros_viales_fatales: 95, mortalidad_infantil_tasa: 4.9, camas_uti_cada_10k: 9.8, escolarizacion_secundaria: 96.8, cobertura_agua_cloacas: 99.1, cobertura_internet_fibra: 94.2,
+                ], poblacion: 3120612, 
+                pobreza_historial: [{anio: 2026, val: "19.5%"}, {anio: 2025, val: "18.2%"}, {anio: 2024, val: "17.4%"}, {anio: 2023, val: "15.0%"}, {anio: 2022, val: "14.2%"}, {anio: 2021, val: "16.8%"}],
+                desempleo_historial: [{anio: 2026, val: "5.2%"}, {anio: 2025, val: "5.4%"}, {anio: 2024, val: "5.8%"}, {anio: 2023, val: "4.9%"}, {anio: 2022, val: "5.5%"}, {anio: 2021, val: "7.1%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 68% | Público 8% | Informal 24%"}, {anio: 2023, val: "Priv. 67% | Público 9% | Informal 24%"}, {anio: 2021, val: "Priv. 65% | Público 10% | Informal 25%"}],
+                impuestos_nuevos: "Eliminación progresiva de alícuota a tarjetas de crédito y simplificación de IIBB.",
+                impuestos_pros: "Alivia la carga impositiva sobre el consumo y estimula el comercio.",
+                impuestos_contras: "Exige un ajuste riguroso y reasignación de partidas en gasto corriente.",
+                costo_alquiler: 780000, canasta_basica_total: 980000, salario_promedio_ripte: 1250000, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Superávit Financiero", deuda_total_usd: "USD 2.150 Millones", peso_masa_salarial: "44.1%", autonomia_financiera: "82.4%", inseguridad_tasa: 920, homicidios_tasa_100k: 2.8, siniestros_viales_fatales: 95, presupuesto_social: "Educación 22% | Salud 21%", mortalidad_infantil_tasa: 4.9, camas_uti_cada_10k: 9.8, escolarizacion_secundaria: 96.8, cobertura_agua_cloacas: 99.1, cobertura_internet_fibra: 94.2,
                 legislativo: { diputados: 25, senadores: 3, fuerza: "PRO / LLA", ausentismo: "3.1%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 5.2 }, { anio: 2025, tasa: 5.4 }, { anio: 2024, tasa: 5.8 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Negativo", universidades: "Negativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Catamarca": { 
                 nombre: "Catamarca", gobernador: "Raúl Jalil (UxP)", legislatura: "Bicameral (Mayoría UxP)", coparticipacion_real: "2.8%", corrupcion_tasa: "5.1 causas / 100k", opacidad_licitaciones: "Alta (72%)", pauta_corrupcion: "Alta (Control de pauta estatal)", condenados: [
                     "<strong>Exministros de Obras Públicas Provinciales</strong>: Procesados por adjudicación directa en proyectos viales mineros sin licitación abierta. Exp. 892/19. Estado: Elevado a juicio."
-                ], poblacion: 429556, pobreza_porcentaje: 45.1, costo_alquiler: 340000, canasta_basica_total: 840000, salario_promedio_ripte: 690000, empleo_informal_porcentaje: 42.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 85 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "14.2%", inseguridad_tasa: 340, homicidios_tasa_100k: 2.1, siniestros_viales_fatales: 55, mortalidad_infantil_tasa: 8.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 87.2, cobertura_agua_cloacas: 78.0, cobertura_internet_fibra: 58.4,
+                ], poblacion: 429556, 
+                pobreza_historial: [{anio: 2026, val: "45.1%"}, {anio: 2025, val: "44.0%"}, {anio: 2024, val: "43.2%"}, {anio: 2023, val: "38.5%"}, {anio: 2022, val: "40.0%"}, {anio: 2021, val: "43.5%"}],
+                desempleo_historial: [{anio: 2026, val: "7.1%"}, {anio: 2025, val: "6.8%"}, {anio: 2024, val: "7.5%"}, {anio: 2023, val: "6.2%"}, {anio: 2022, val: "6.9%"}, {anio: 2021, val: "8.0%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 32% | Público 26% | Informal 42%"}, {anio: 2023, val: "Priv. 30% | Público 28% | Informal 42%"}, {anio: 2021, val: "Priv. 28% | Público 30% | Informal 42%"}],
+                impuestos_nuevos: "Canon extraordinario a exploración de litio y minerales críticos.",
+                impuestos_pros: "Captura renta extraordinaria internacional por auge minero.",
+                impuestos_contras: "Riesgo de desalentar nuevas inversiones de exploración a largo plazo.",
+                costo_alquiler: 340000, canasta_basica_total: 840000, salario_promedio_ripte: 690000, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 85 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "14.2%", inseguridad_tasa: 340, homicidios_tasa_100k: 2.1, siniestros_viales_fatales: 55, presupuesto_social: "Educación 29% | Salud 18%", mortalidad_infantil_tasa: 8.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 87.2, cobertura_agua_cloacas: 78.0, cobertura_internet_fibra: 58.4,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "UxP", ausentismo: "2.5%" },
-                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Abstención", rigi: "Abstención" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.1 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.5 }] 
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Abstención", rigi: "Abstención" }
             },
             "Chaco": { 
                 nombre: "Chaco", gobernador: "Leandro Zdero (JxC / UCR)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "5.1%", corrupcion_tasa: "6.4 causas / 100k", opacidad_licitaciones: "Muy Alta (81%)", pauta_corrupcion: "Crítica (Herencia de desvíos)", condenados: [
                     "<strong>Emerenciano Sena y Patricia Acuña</strong> (Dirigentes sociales): Causa por administración fraudulenta de fondos de vivienda social y desvío de subsidios estatales. Exp. 11200/23. Estado: Procesados con prisión preventiva."
-                ], poblacion: 1142963, pobreza_porcentaje: 57.2, costo_alquiler: 310000, canasta_basica_total: 820000, salario_promedio_ripte: 610000, empleo_informal_porcentaje: 51.0, ingresos_brutos_alicuota: 4.1, resultado_fiscal: "Déficit Financiero Ordenado", deuda_total_usd: "USD 310 Millones", peso_masa_salarial: "61.2%", autonomia_financiera: "12.5%", inseguridad_tasa: 610, homicidios_tasa_100k: 4.8, siniestros_viales_fatales: 180, mortalidad_infantil_tasa: 10.8, camas_uti_cada_10k: 3.5, escolarizacion_secundaria: 82.1, cobertura_agua_cloacas: 64.5, cobertura_internet_fibra: 52.1,
+                ], poblacion: 1142963, 
+                pobreza_historial: [{anio: 2026, val: "57.2%"}, {anio: 2025, val: "56.0%"}, {anio: 2024, val: "55.4%"}, {anio: 2023, val: "53.2%"}, {anio: 2022, val: "54.0%"}, {anio: 2021, val: "55.8%"}],
+                desempleo_historial: [{anio: 2026, val: "9.5%"}, {anio: 2025, val: "8.9%"}, {anio: 2024, val: "9.8%"}, {anio: 2023, val: "8.4%"}, {anio: 2022, val: "8.9%"}, {anio: 2021, val: "10.1%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 24% | Público 25% | Informal 51%"}, {anio: 2023, val: "Priv. 23% | Público 26% | Informal 51%"}, {anio: 2021, val: "Priv. 22% | Público 27% | Informal 51%"}],
+                impuestos_nuevos: "Tasa especial de control vial y revisión de exenciones fiscales a cooperativas.",
+                impuestos_pros: "Busca ordenar la trazabilidad fiscal de entidades mercantiles y sociales.",
+                impuestos_contras: "Impacta fuertemente en un mercado laboral con altísima informalidad.",
+                costo_alquiler: 310000, canasta_basica_total: 820000, salario_promedio_ripte: 610000, ingresos_brutos_alicuota: 4.1, resultado_fiscal: "Déficit Financiero Ordenado", deuda_total_usd: "USD 310 Millones", peso_masa_salarial: "61.2%", autonomia_financiera: "12.5%", inseguridad_tasa: 610, homicidios_tasa_100k: 4.8, siniestros_viales_fatales: 180, presupuesto_social: "Educación 26% | Salud 17%", mortalidad_infantil_tasa: 10.8, camas_uti_cada_10k: 3.5, escolarizacion_secundaria: 82.1, cobertura_agua_cloacas: 64.5, cobertura_internet_fibra: 52.1,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "UCR / UxP", ausentismo: "5.8%" },
-                votaciones: { bases: "Abstención", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 9.5 }, { anio: 2025, tasa: 8.9 }, { anio: 2024, tasa: 9.8 }] 
+                votaciones: { bases: "Abstención", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Chubut": { 
                 nombre: "Chubut", gobernador: "Ignacio Torres (Despierta Chubut)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.2%", corrupcion_tasa: "3.9 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Diego Correa</strong> (Exfuncionario provincial): Causa 'Embrujo' por asociación ilícita, enriquecimiento ilícito y retornos de obra pública. Fecha de condena: 2021. Exp. 7521/18. Estado: Condena firme a 10 años de prisión."
-                ], poblacion: 603120, pobreza_porcentaje: 39.5, costo_alquiler: 480000, canasta_basica_total: 940000, salario_promedio_ripte: 1050000, empleo_informal_porcentaje: 31.0, ingresos_brutos_alicuota: 3.8, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 620 Millones", peso_masa_salarial: "48.0%", autonomia_financiera: "45.1%", inseguridad_tasa: 520, homicidios_tasa_100k: 4.2, siniestros_viales_fatales: 72, mortalidad_infantil_tasa: 6.2, camas_uti_cada_10k: 5.1, escolarizacion_secundaria: 89.0, cobertura_agua_cloacas: 86.1, cobertura_internet_fibra: 65.0,
+                ], poblacion: 603120, 
+                pobreza_historial: [{anio: 2026, val: "39.5%"}, {anio: 2025, val: "38.2%"}, {anio: 2024, val: "37.5%"}, {anio: 2023, val: "34.0%"}, {anio: 2022, val: "35.2%"}, {anio: 2021, val: "38.1%"}],
+                desempleo_historial: [{anio: 2026, val: "6.4%"}, {anio: 2025, val: "6.1%"}, {anio: 2024, val: "7.0%"}, {anio: 2023, val: "5.8%"}, {anio: 2022, val: "6.3%"}, {anio: 2021, val: "7.4%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 48% | Público 21% | Informal 31%"}, {anio: 2023, val: "Priv. 47% | Público 22% | Informal 31%"}, {anio: 2021, val: "Priv. 45% | Público 24% | Informal 31%"}],
+                impuestos_nuevos: "Tasa ambiental pesquera y portuaria de control ecológico.",
+                impuestos_pros: "Protección de recursos naturales marítimos y fondos para contingencias.",
+                impuestos_contras: "Objeciones de cámaras empresarias pesqueras por doble imposición.",
+                costo_alquiler: 480000, canasta_basica_total: 940000, salario_promedio_ripte: 1050000, ingresos_brutos_alicuota: 3.8, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 620 Millones", peso_masa_salarial: "48.0%", autonomia_financiera: "45.1%", inseguridad_tasa: 520, homicidios_tasa_100k: 4.2, siniestros_viales_fatales: 72, presupuesto_social: "Educación 27% | Salud 20%", mortalidad_infantil_tasa: 6.2, camas_uti_cada_10k: 5.1, escolarizacion_secundaria: 89.0, cobertura_agua_cloacas: 86.1, cobertura_internet_fibra: 65.0,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Despierta Chubut / UxP", ausentismo: "3.5%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 6.4 }, { anio: 2025, tasa: 6.1 }, { anio: 2024, tasa: 7.0 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Córdoba": { 
                 nombre: "Córdoba", gobernador: "Martín Llaryora (Hacemos Unidos)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "9.2%", corrupcion_tasa: "3.5 causas / 100k", opacidad_licitaciones: "Baja/Media (35%)", pauta_corrupcion: "Controlada", condenados: [
                     "<strong>Exintendentes municipales del interior</strong>: Causas por peculado y administración fraudulenta en fondos de coparticipación menor. Exp. 1450/20. Estado: Condenas de ejecución condicional."
-                ], poblacion: 3978984, pobreza_porcentaje: 42.8, costo_alquiler: 510000, canasta_basica_total: 880000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 39.0, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Primario", deuda_total_usd: "USD 1.620 Millones", peso_masa_salarial: "46.5%", autonomia_financiera: "52.0%", inseguridad_tasa: 740, homicidios_tasa_100k: 3.1, siniestros_viales_fatales: 380, mortalidad_infantil_tasa: 7.2, camas_uti_cada_10k: 6.1, escolarizacion_secundaria: 92.5, cobertura_agua_cloacas: 81.5, cobertura_internet_fibra: 78.0,
+                ], poblacion: 3978984, 
+                pobreza_historial: [{anio: 2026, val: "42.8%"}, {anio: 2025, val: "41.5%"}, {anio: 2024, val: "40.2%"}, {anio: 2023, val: "36.8%"}, {anio: 2022, val: "37.5%"}, {anio: 2021, val: "40.1%"}],
+                desempleo_historial: [{anio: 2026, val: "7.2%"}, {anio: 2025, val: "6.9%"}, {anio: 2024, val: "7.6%"}, {anio: 2023, val: "6.4%"}, {anio: 2022, val: "7.0%"}, {anio: 2021, val: "8.3%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 45% | Público 16% | Informal 39%"}, {anio: 2023, val: "Priv. 44% | Público 17% | Informal 39%"}, {anio: 2021, val: "Priv. 42% | Público 18% | Informal 40%"}],
+                impuestos_nuevos: "Adecuación de alícuotas digitales en IIBB para plataformas de streaming.",
+                impuestos_pros: "Amplía base tributaria hacia economía digital global.",
+                impuestos_contras: "Traslado de costos al consumidor final local.",
+                costo_alquiler: 510000, canasta_basica_total: 880000, salario_promedio_ripte: 790000, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Primario", deuda_total_usd: "USD 1.620 Millones", peso_masa_salarial: "46.5%", autonomia_financiera: "52.0%", inseguridad_tasa: 740, homicidios_tasa_100k: 3.1, siniestros_viales_fatales: 380, presupuesto_social: "Educación 30% | Salud 18%", mortalidad_infantil_tasa: 7.2, camas_uti_cada_10k: 6.1, escolarizacion_secundaria: 92.5, cobertura_agua_cloacas: 81.5, cobertura_internet_fibra: 78.0,
                 legislativo: { diputados: 18, senadores: 3, fuerza: "Hacemos Coalición Federal / LLA", ausentismo: "2.8%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.2 }, { anio: 2025, tasa: 6.9 }, { anio: 2024, tasa: 7.6 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Corrientes": { 
                 nombre: "Corrientes", gobernador: "Gustavo Valdés (ECO + UCR)", legislatura: "Bicameral (Mayoría ECO)", coparticipacion_real: "4.8%", corrupcion_tasa: "4.2 causas / 100k", opacidad_licitaciones: "Alta (64%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exfuncionarios de área de salud provincial</strong>: Investigados por sobreprecios en compras directas de insumos médicos durante emergencias sanitarias. Exp. 984/21. Estado: Elevado a juicio."
-                ], poblacion: 1197553, pobreza_porcentaje: 48.9, costo_alquiler: 360000, canasta_basica_total: 830000, salario_promedio_ripte: 640000, empleo_informal_porcentaje: 46.0, ingresos_brutos_alicuota: 3.9, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 140 Millones", peso_masa_salarial: "54.0%", autonomia_financiera: "19.8%", inseguridad_tasa: 480, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 195, mortalidad_infantil_tasa: 9.5, camas_uti_cada_10k: 4.0, escolarizacion_secundaria: 84.3, cobertura_agua_cloacas: 71.0, cobertura_internet_fibra: 56.8,
+                ], poblacion: 1197553, 
+                pobreza_historial: [{anio: 2026, val: "48.9%"}, {anio: 2025, val: "47.8%"}, {anio: 2024, val: "46.5%"}, {anio: 2023, val: "42.0%"}, {anio: 2022, val: "43.5%"}, {anio: 2021, val: "46.2%"}],
+                desempleo_historial: [{anio: 2026, val: "7.9%"}, {anio: 2025, val: "7.5%"}, {anio: 2024, val: "8.4%"}, {anio: 2023, val: "7.1%"}, {anio: 2022, val: "7.6%"}, {anio: 2021, val: "8.8%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 28% | Público 26% | Informal 46%"}, {anio: 2023, val: "Priv. 27% | Público 27% | Informal 46%"}, {anio: 2021, val: "Priv. 25% | Público 28% | Informal 47%"}],
+                impuestos_nuevos: "Tasa registral automotor provincial adicional.",
+                impuestos_pros: "Incremento de recursos coparticipables propios.",
+                impuestos_contras: "Carga directa sobre patentamientos y trámites ciudadanos.",
+                costo_alquiler: 360000, canasta_basica_total: 830000, salario_promedio_ripte: 640000, ingresos_brutos_alicuota: 3.9, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 140 Millones", peso_masa_salarial: "54.0%", autonomia_financiera: "19.8%", inseguridad_tasa: 480, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 195, presupuesto_social: "Educación 25% | Salud 19%", mortalidad_infantil_tasa: 9.5, camas_uti_cada_10k: 4.0, escolarizacion_secundaria: 84.3, cobertura_agua_cloacas: 71.0, cobertura_internet_fibra: 56.8,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "ECO + Vamos Corrientes", ausentismo: "4.0%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.9 }, { anio: 2025, tasa: 7.5 }, { anio: 2024, tasa: 8.4 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Entre Ríos": { 
                 nombre: "Entre Ríos", gobernador: "Rogelio Frigerio (JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "5.1%", corrupcion_tasa: "3.8 causas / 100k", opacidad_licitaciones: "Media (45%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios y operadores legislativos</strong>: Causa por contratos truchos en la Legislatura provincial (defraudación al Estado por más de 2.000 millones de pesos). Fecha de condena: 2022. Exp. 5410/18. Estado: Condenas firmes confirmadas por Cámara de Casación."
-                ], poblacion: 1426426, pobreza_porcentaje: 44.2, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 710000, empleo_informal_porcentaje: 40.5, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Déficit Leve en Saneamiento", deuda_total_usd: "USD 380 Millones", peso_masa_salarial: "55.2%", autonomia_financiera: "26.4%", inseguridad_tasa: 450, homicidios_tasa_100k: 2.9, siniestros_viales_fatales: 140, mortalidad_infantil_tasa: 7.1, camas_uti_cada_10k: 4.5, escolarizacion_secundaria: 89.4, cobertura_agua_cloacas: 80.5, cobertura_internet_fibra: 67.2,
+                ], poblacion: 1426426, 
+                pobreza_historial: [{anio: 2026, val: "44.2%"}, {anio: 2025, val: "43.0%"}, {anio: 2024, val: "42.1%"}, {anio: 2023, val: "38.2%"}, {anio: 2022, val: "39.0%"}, {anio: 2021, val: "41.5%"}],
+                desempleo_historial: [{anio: 2026, val: "7.1%"}, {anio: 2025, val: "6.8%"}, {anio: 2024, val: "7.6%"}, {anio: 2023, val: "6.3%"}, {anio: 2022, val: "6.9%"}, {anio: 2021, val: "8.0%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 36% | Público 23% | Informal 40.5%"}, {anio: 2023, val: "Priv. 35% | Público 24% | Informal 41%"}, {anio: 2021, val: "Priv. 33% | Público 25% | Informal 42%"}],
+                impuestos_nuevos: "Armonización de alícuotas inmobiliarias rurales y urbanas por revaluó fiscal.",
+                impuestos_pros: "Equidad tributaria basada en tasación real de propiedades.",
+                impuestos_contras: "Fuerte presión inicial sobre sectores agropecuarios y pequeños propietarios.",
+                costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 710000, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Déficit Leve en Saneamiento", deuda_total_usd: "USD 380 Millones", peso_masa_salarial: "55.2%", autonomia_financiera: "26.4%", inseguridad_tasa: 450, homicidios_tasa_100k: 2.9, siniestros_viales_fatales: 140, presupuesto_social: "Educación 28% | Salud 18%", mortalidad_infantil_tasa: 7.1, camas_uti_cada_10k: 4.5, escolarizacion_secundaria: 89.4, cobertura_agua_cloacas: 80.5, cobertura_internet_fibra: 67.2,
                 legislativo: { diputados: 9, senadores: 3, fuerza: "Juntos por Entre Ríos", ausentismo: "3.2%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.1 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.6 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Formosa": { 
                 nombre: "Formosa", gobernador: "Gildo Insfrán (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "3.8%", corrupcion_tasa: "7.5 causas / 100k", opacidad_licitaciones: "Extrema (92%)", pauta_corrupcion: "Monopolio absoluto estatal", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por adjudicaciones directas recurrentes y opacidad en cuentas públicas. Exp. 310/15. Estado: Protegidos por blindaje de fueros locales e inacción judicial."
-                ], poblacion: 606041, pobreza_porcentaje: 53.5, costo_alquiler: 290000, canasta_basica_total: 800000, salario_promedio_ripte: 590000, empleo_informal_porcentaje: 49.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 70 Millones", peso_masa_salarial: "68.5%", autonomia_financiera: "8.1%", inseguridad_tasa: 310, homicidios_tasa_100k: 3.8, siniestros_viales_fatales: 88, mortalidad_infantil_tasa: 10.1, camas_uti_cada_10k: 3.8, escolarizacion_secundaria: 85.0, cobertura_agua_cloacas: 68.2, cobertura_internet_fibra: 51.0,
+                ], poblacion: 606041, 
+                pobreza_historial: [{anio: 2026, val: "53.5%"}, {anio: 2025, val: "52.2%"}, {anio: 2024, val: "51.0%"}, {anio: 2023, val: "49.8%"}, {anio: 2022, val: "50.5%"}, {anio: 2021, val: "52.0%"}],
+                desempleo_historial: [{anio: 2026, val: "7.6%"}, {anio: 2025, val: "7.3%"}, {anio: 2024, val: "8.2%"}, {anio: 2023, val: "6.9%"}, {anio: 2022, val: "7.4%"}, {anio: 2021, val: "8.5%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 18% | Público 33% | Informal 49%"}, {anio: 2023, val: "Priv. 17% | Público 34% | Informal 49%"}, {anio: 2021, val: "Priv. 16% | Público 35% | Informal 49%"}],
+                impuestos_nuevos: "Recargo administrativo sobre transacciones financieras provinciales menores.",
+                impuestos_pros: "Aporta liquidez a caja estatal centralizada.",
+                impuestos_contras: " desalienta la bancarización y formalización comercial.",
+                costo_alquiler: 290000, canasta_basica_total: 800000, salario_promedio_ripte: 590000, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 70 Millones", peso_masa_salarial: "68.5%", autonomia_financiera: "8.1%", inseguridad_tasa: 310, homicidios_tasa_100k: 3.8, siniestros_viales_fatales: 88, presupuesto_social: "Educación 24% | Salud 20%", mortalidad_infantil_tasa: 10.1, camas_uti_cada_10k: 3.8, escolarizacion_secundaria: 85.0, cobertura_agua_cloacas: 68.2, cobertura_internet_fibra: 51.0,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Partido Justicialista", ausentismo: "1.9%" },
-                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.6 }, { anio: 2025, tasa: 7.3 }, { anio: 2024, tasa: 8.2 }] 
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Jujuy": { 
                 nombre: "Jujuy", gobernador: "Carlos Sadir (Frente Cambia Jujuy)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "3.1%", corrupcion_tasa: "4.5 causas / 100k", opacidad_licitaciones: "Alta (65%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Milagro Sala</strong> (Exdirigente social): Causa 'Pibes Veleros' por defraudación al Estado, asociación ilícita y extorsión por desvío de fondos públicos de vivienda. Fecha de condena: 2019 (Ratificada por CSJN en 2023). Exp. 2450/16. Estado: Condena firme a 13 años de prisión."
-                ], poblacion: 797955, pobreza_porcentaje: 46.5, costo_alquiler: 330000, canasta_basica_total: 820000, salario_promedio_ripte: 680000, empleo_informal_porcentaje: 44.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 410 Millones", peso_masa_salarial: "55.0%", autonomia_financiera: "17.2%", inseguridad_tasa: 420, homicidios_tasa_100k: 3.2, siniestros_viales_fatales: 110, mortalidad_infantil_tasa: 8.5, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.0, cobertura_agua_cloacas: 77.4, cobertura_internet_fibra: 59.5,
+                ], poblacion: 797955, 
+                pobreza_historial: [{anio: 2026, val: "46.5%"}, {anio: 2025, val: "45.2%"}, {anio: 2024, val: "44.0%"}, {anio: 2023, val: "40.2%"}, {anio: 2022, val: "41.5%"}, {anio: 2021, val: "44.0%"}],
+                desempleo_historial: [{anio: 2026, val: "7.4%"}, {anio: 2025, val: "7.0%"}, {anio: 2024, val: "7.9%"}, {anio: 2023, val: "6.6%"}, {anio: 2022, val: "7.1%"}, {anio: 2021, val: "8.3%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 29% | Público 27% | Informal 44%"}, {anio: 2023, val: "Priv. 28% | Público 28% | Informal 44%"}, {anio: 2021, val: "Priv. 26% | Público 30% | Informal 44%"}],
+                impuestos_nuevos: "Tasa retributiva por uso de infraestructura turística quebradeña.",
+                impuestos_pros: "Financia mantenimiento de servicios en áreas de alto impacto turístico.",
+                impuestos_contras: "Presión sobre prestadores hoteleros y gastronómicos locales.",
+                costo_alquiler: 330000, canasta_basica_total: 820000, salario_promedio_ripte: 680000, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 410 Millones", peso_masa_salarial: "55.0%", autonomia_financiera: "17.2%", inseguridad_tasa: 420, homicidios_tasa_100k: 3.2, siniestros_viales_fatales: 110, presupuesto_social: "Educación 27% | Salud 19%", mortalidad_infantil_tasa: 8.5, camas_uti_cada_10k: 4.2, escolarizacion_secundaria: 88.0, cobertura_agua_cloacas: 77.4, cobertura_internet_fibra: 59.5,
                 legislativo: { diputados: 6, senadores: 3, fuerza: "Frente Cambia Jujuy", ausentismo: "3.7%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.4 }, { anio: 2025, tasa: 7.0 }, { anio: 2024, tasa: 7.9 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "La Pampa": { 
                 nombre: "La Pampa", gobernador: "Sergio Ziliotto (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "1.9%", corrupcion_tasa: "2.1 causas / 100k", opacidad_licitaciones: "Baja (30%)", pauta_corrupcion: "Baja", condenados: [
                     "Sin registros significativos de condenas firmes por corrupción institucional reciente en fueros provinciales."
-                ], poblacion: 366022, pobreza_porcentaje: 37.8, costo_alquiler: 400000, canasta_basica_total: 870000, salario_promedio_ripte: 790000, empleo_informal_porcentaje: 32.0, ingresos_brutos_alicuota: 3.2, resultado_fiscal: "Déficit Operativo por Cajas", deuda_total_usd: "USD 35 Millones", peso_masa_salarial: "58.1%", autonomia_financiera: "31.0%", inseguridad_tasa: 380, homicidios_tasa_100k: 1.9, siniestros_viales_fatales: 48, mortalidad_infantil_tasa: 5.8, camas_uti_cada_10k: 5.8, escolarizacion_secundaria: 93.1, cobertura_agua_cloacas: 89.0, cobertura_internet_fibra: 72.4,
+                ], poblacion: 366022, 
+                pobreza_historial: [{anio: 2026, val: "37.8%"}, {anio: 2025, val: "36.5%"}, {anio: 2024, val: "35.2%"}, {anio: 2023, val: "31.5%"}, {anio: 2022, val: "32.4%"}, {anio: 2021, val: "35.0%"}],
+                desempleo_historial: [{anio: 2026, val: "6.1%"}, {anio: 2025, val: "5.8%"}, {anio: 2024, val: "6.6%"}, {anio: 2023, val: "5.4%"}, {anio: 2022, val: "5.9%"}, {anio: 2021, val: "6.8%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 42% | Público 26% | Informal 32%"}, {anio: 2023, val: "Priv. 41% | Público 27% | Informal 32%"}, {anio: 2021, val: "Priv. 39% | Público 29% | Informal 32%"}],
+                impuestos_nuevos: "Aporte solidario temporal a entidades financieras y grandes patrimonios locales.",
+                impuestos_pros: "Sostiene fondos anticíclicos y cobertura alimentaria provincial.",
+                impuestos_contras: "Fuerte rechazo de entidades bancarias y productivas por superposición fiscal.",
+                costo_alquiler: 400000, canasta_basica_total: 870000, salario_promedio_ripte: 790000, ingresos_brutos_alicuota: 3.2, resultado_fiscal: "Déficit Operativo por Cajas", deuda_total_usd: "USD 35 Millones", peso_masa_salarial: "58.1%", autonomia_financiera: "31.0%", inseguridad_tasa: 380, homicidios_tasa_100k: 1.9, siniestros_viales_fatales: 48, presupuesto_social: "Educación 29% | Salud 18%", mortalidad_infantil_tasa: 5.8, camas_uti_cada_10k: 5.8, escolarizacion_secundaria: 93.1, cobertura_agua_cloacas: 89.0, cobertura_internet_fibra: 72.4,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Frente de Todos / PJ", ausentismo: "2.1%" },
-                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 6.1 }, { anio: 2025, tasa: 5.8 }, { anio: 2024, tasa: 6.6 }] 
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "La Rioja": { 
                 nombre: "La Rioja", gobernador: "Ricardo Quintela (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "2.5%", corrupcion_tasa: "5.8 causas / 100k", opacidad_licitaciones: "Muy Alta (78%)", pauta_corrupcion: "Muy Alta", condenados: [
                     "<strong>Exfuncionarios de administraciones provinciales</strong>: Investigados por emisión ilegal de cuasimonedas y opacidad en destino de fondos fiduciarios nacionales. Exp. 1200/22. Estado: En instrucción."
-                ], poblacion: 384607, pobreza_porcentaje: 47.1, costo_alquiler: 340000, canasta_basica_total: 820000, salario_promedio_ripte: 650000, empleo_informal_porcentaje: 43.5, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero con Cuasimoneda", deuda_total_usd: "USD 280 Millones", peso_masa_salarial: "66.0%", autonomia_financiera: "11.2%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.4, siniestros_viales_fatales: 62, mortalidad_infantil_tasa: 8.0, camas_uti_cada_10k: 4.4, escolarizacion_secundaria: 87.5, cobertura_agua_cloacas: 81.2, cobertura_internet_fibra: 60.1,
+                ], poblacion: 384607, 
+                pobreza_historial: [{anio: 2026, val: "47.1%"}, {anio: 2025, val: "46.0%"}, {anio: 2024, val: "45.2%"}, {anio: 2023, val: "41.5%"}, {anio: 2022, val: "42.8%"}, {anio: 2021, val: "45.0%"}],
+                desempleo_historial: [{anio: 2026, val: "7.0%"}, {anio: 2025, val: "6.7%"}, {anio: 2024, val: "7.5%"}, {anio: 2023, val: "6.1%"}, {anio: 2022, val: "6.8%"}, {anio: 2021, val: "7.9%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 26% | Público 30.5% | Informal 43.5%"}, {anio: 2023, val: "Priv. 25% | Público 31% | Informal 44%"}, {anio: 2021, val: "Priv. 24% | Público 32% | Informal 44%"}],
+                impuestos_nuevos: "Emisión y circulación de bono de curso legal provincial (Chacho).",
+                impuestos_pros: "Permite abonar salarios estatales ante caídas transitorias de coparticipación.",
+                impuestos_contras: "Pérdida de poder adquisitivo real, rechazo comercial y distorsión monetaria.",
+                costo_alquiler: 340000, canasta_basica_total: 820000, salario_promedio_ripte: 650000, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero con Cuasimoneda", deuda_total_usd: "USD 280 Millones", peso_masa_salarial: "66.0%", autonomia_financiera: "11.2%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.4, siniestros_viales_fatales: 62, presupuesto_social: "Educación 25% | Salud 20%", mortalidad_infantil_tasa: 8.0, camas_uti_cada_10k: 4.4, escolarizacion_secundaria: 87.5, cobertura_agua_cloacas: 81.2, cobertura_internet_fibra: 60.1,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Union por la Patria", ausentismo: "4.8%" },
-                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.0 }, { anio: 2025, tasa: 6.7 }, { anio: 2024, tasa: 7.5 }] 
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Mendoza": { 
                 nombre: "Mendoza", gobernador: "Alfredo Cornejo (Cambia Mendoza / JxC)", legislatura: "Bicameral (Mayoría JxC)", coparticipacion_real: "4.3%", corrupcion_tasa: "3.1 causas / 100k", opacidad_licitaciones: "Baja (32%)", pauta_corrupcion: "Regulada", condenados: [
                     "<strong>Exfuncionarios de Vialidad Provincial</strong>: Procesados por irregularidades en adjudicaciones menores de mantenimiento de rutas. Exp. 980/20. Estado: Elevado a juicio."
-                ], poblacion: 2014533, pobreza_porcentaje: 44.5, costo_alquiler: 470000, canasta_basica_total: 870000, salario_promedio_ripte: 720000, empleo_informal_porcentaje: 40.0, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Fiscal Operativo", deuda_total_usd: "USD 540 Millones", peso_masa_salarial: "45.0%", autonomia_financiera: "48.2%", inseguridad_tasa: 680, homicidios_tasa_100k: 3.9, siniestros_viales_fatales: 160, mortalidad_infantil_tasa: 6.9, camas_uti_cada_10k: 5.0, escolarizacion_secundaria: 90.1, cobertura_agua_cloacas: 84.2, cobertura_internet_fibra: 71.3,
+                ], poblacion: 2014533, 
+                pobreza_historial: [{anio: 2026, val: "44.5%"}, {anio: 2025, val: "43.2%"}, {anio: 2024, val: "42.0%"}, {anio: 2023, val: "38.1%"}, {anio: 2022, val: "39.2%"}, {anio: 2021, val: "42.0%"}],
+                desempleo_historial: [{anio: 2026, val: "6.8%"}, {anio: 2025, val: "6.5%"}, {anio: 2024, val: "7.3%"}, {anio: 2023, val: "5.9%"}, {anio: 2022, val: "6.6%"}, {anio: 2021, val: "7.5%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 43% | Público 17% | Informal 40%"}, {anio: 2023, val: "Priv. 42% | Público 18% | Informal 40%"}, {anio: 2021, val: "Priv. 40% | Público 19% | Informal 41%"}],
+                impuestos_nuevos: "Baja escalonada de alícuotas en Ingresos Brutos a sectores vitivinícolas e industriales.",
+                impuestos_pros: "Incentiva competitividad exportadora y radicación de empresas.",
+                impuestos_contras: "Exige estricto orden fiscal previo para compensar merma tributaria.",
+                costo_alquiler: 470000, canasta_basica_total: 870000, salario_promedio_ripte: 720000, ingresos_brutos_alicuota: 4.0, resultado_fiscal: "Superávit Fiscal Operativo", deuda_total_usd: "USD 540 Millones", peso_masa_salarial: "45.0%", autonomia_financiera: "48.2%", inseguridad_tasa: 680, homicidios_tasa_100k: 3.9, siniestros_viales_fatales: 160, presupuesto_social: "Educación 28% | Salud 19%", mortalidad_infantil_tasa: 6.9, camas_uti_cada_10k: 5.0, escolarizacion_secundaria: 90.1, cobertura_agua_cloacas: 84.2, cobertura_internet_fibra: 71.3,
                 legislativo: { diputados: 10, senadores: 3, fuerza: "Cambia Mendoza / PRO", ausentismo: "3.0%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 6.8 }, { anio: 2025, tasa: 6.5 }, { anio: 2024, tasa: 7.3 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Misiones": { 
                 nombre: "Misiones", gobernador: "Hugo Passalacqua (Frente Renovador)", legislatura: "Unicameral (Mayoría FR)", coparticipacion_real: "3.5%", corrupcion_tasa: "4.1 causas / 100k", opacidad_licitaciones: "Media (52%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exintendentes municipales</strong>: Procesados por desvío de fondos coparticipables y malversación de subsidios agrarios. Exp. 650/21. Estado: Procesados en primera instancia."
-                ], poblacion: 1280960, pobreza_porcentaje: 48.2, costo_alquiler: 350000, canasta_basica_total: 840000, salario_promedio_ripte: 670000, empleo_informal_porcentaje: 45.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 95 Millones", peso_masa_salarial: "51.2%", autonomia_financiera: "34.5%", inseguridad_tasa: 410, homicidios_tasa_100k: 4.5, siniestros_viales_fatales: 210, mortalidad_infantil_tasa: 8.9, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.2, cobertura_agua_cloacas: 70.4, cobertura_internet_fibra: 58.0,
+                ], poblacion: 1280960, 
+                pobreza_historial: [{anio: 2026, val: "48.2%"}, {anio: 2025, val: "47.0%"}, {anio: 2024, val: "45.8%"}, {anio: 2023, val: "41.5%"}, {anio: 2022, val: "42.8%"}, {anio: 2021, val: "45.5%"}],
+                desempleo_historial: [{anio: 2026, val: "6.5%"}, {anio: 2025, val: "6.2%"}, {anio: 2024, val: "7.0%"}, {anio: 2023, val: "5.7%"}, {anio: 2022, val: "6.3%"}, {anio: 2021, val: "7.2%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 35% | Público 20% | Informal 45%"}, {anio: 2023, val: "Priv. 34% | Público 21% | Informal 45%"}, {anio: 2021, val: "Priv. 32% | Público 23% | Informal 45%"}],
+                impuestos_nuevos: "Adicional sobre operaciones aduaneras y aduanas secas provinciales (zona aduanera especial).",
+                impuestos_pros: "Protege comercio minorista fronterizo ante asimetrías con países vecinos.",
+                impuestos_contras: "Trabas burocráticas en el tránsito de mercaderías.",
+                costo_alquiler: 350000, canasta_basica_total: 840000, salario_promedio_ripte: 670000, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Financiero", deuda_total_usd: "USD 95 Millones", peso_masa_salarial: "51.2%", autonomia_financiera: "34.5%", inseguridad_tasa: 410, homicidios_tasa_100k: 4.5, siniestros_viales_fatales: 210, presupuesto_social: "Educación 29% | Salud 18%", mortalidad_infantil_tasa: 8.9, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.2, cobertura_agua_cloacas: 70.4, cobertura_internet_fibra: 58.0,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "Frente Renovador de la Concordia", ausentismo: "2.2%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 6.5 }, { anio: 2025, tasa: 6.2 }, { anio: 2024, tasa: 7.0 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Neuquén": { 
                 nombre: "Neuquén", gobernador: "Rolando Figueroa (Comunidad)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.1%", corrupcion_tasa: "3.4 causas / 100k", opacidad_licitaciones: "Media (40%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de Legislatura Provincial</strong>: Causa por desvío millonario de fondos mediante contrataciones de empleados 'ñoquis' y retiros fraudulentos de cajeros. Fecha de instrucción: 2022. Exp. 4200/21. Estado: Elevado a juicio oral."
-                ], poblacion: 726590, pobreza_porcentaje: 38.5, costo_alquiler: 610000, canasta_basica_total: 960000, salario_promedio_ripte: 1280000, empleo_informal_porcentaje: 28.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit por Regalías hidrocarburíferas", deuda_total_usd: "USD 1.100 Millones", peso_masa_salarial: "42.0%", autonomia_financiera: "65.4%", inseguridad_tasa: 550, homicidios_tasa_100k: 4.1, siniestros_viales_fatales: 85, mortalidad_infantil_tasa: 5.9, camas_uti_cada_10k: 5.5, escolarizacion_secundaria: 91.0, cobertura_agua_cloacas: 85.0, cobertura_internet_fibra: 76.5,
+                ], poblacion: 726590, 
+                pobreza_historial: [{anio: 2026, val: "38.5%"}, {anio: 2025, val: "37.2%"}, {anio: 2024, val: "36.0%"}, {anio: 2023, val: "32.1%"}, {anio: 2022, val: "33.5%"}, {anio: 2021, val: "36.2%"}],
+                desempleo_historial: [{anio: 2026, val: "5.9%"}, {anio: 2025, val: "5.6%"}, {anio: 2024, val: "6.3%"}, {anio: 2023, val: "5.1%"}, {anio: 2022, val: "5.8%"}, {anio: 2021, val: "6.9%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 52% | Público 20% | Informal 28%"}, {anio: 2023, val: "Priv. 50% | Público 22% | Informal 28%"}, {anio: 2021, val: "Priv. 48% | Público 24% | Informal 28%"}],
+                impuestos_nuevos: "Regalías extraordinarias por desarrollo y transporte de hidrocarburos no convencionales (Vaca Muerta).",
+                impuestos_pros: "Excedente financiero récord para inversión en infraestructura pesada.",
+                impuestos_contras: "Presión demográfica y colapso de servicios públicos urbanos en ciudades petroleras.",
+                costo_alquiler: 610000, canasta_basica_total: 960000, salario_promedio_ripte: 1280000, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit por Regalías hidrocarburíferas", deuda_total_usd: "USD 1.100 Millones", peso_masa_salarial: "42.0%", autonomia_financiera: "65.4%", inseguridad_tasa: 550, homicidios_tasa_100k: 4.1, siniestros_viales_fatales: 85, presupuesto_social: "Educación 26% | Salud 21%", mortalidad_infantil_tasa: 5.9, camas_uti_cada_10k: 5.5, escolarizacion_secundaria: 91.0, cobertura_agua_cloacas: 85.0, cobertura_internet_fibra: 76.5,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Movimiento Popular Neuquino / LLA", ausentismo: "3.4%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 5.9 }, { anio: 2025, tasa: 5.6 }, { anio: 2024, tasa: 6.3 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Río Negro": { 
                 nombre: "Río Negro", gobernador: "Alberto Weretilneck (Juntos Somos Río Negro)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "2.8%", corrupcion_tasa: "4.0 causas / 100k", opacidad_licitaciones: "Media (46%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de Catastro Provincial</strong>: Investigados por ventas irregulares de tierras fiscales protegidas en zona cordillerana. Exp. 1102/19. Estado: Procesados."
-                ], poblacion: 762067, pobreza_porcentaje: 41.2, costo_alquiler: 470000, canasta_basica_total: 920000, salario_promedio_ripte: 920000, empleo_informal_porcentaje: 33.0, ingresos_brutos_alicuota: 3.7, resultado_fiscal: "Déficit Financiero Leve", deuda_total_usd: "USD 580 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "35.1%", inseguridad_tasa: 490, homicidios_tasa_100k: 3.6, siniestros_viales_fatales: 98, mortalidad_infantil_tasa: 6.5, camas_uti_cada_10k: 4.9, escolarizacion_secundaria: 89.8, cobertura_agua_cloacas: 83.1, cobertura_internet_fibra: 69.8,
+                ], poblacion: 762067, 
+                pobreza_historial: [{anio: 2026, val: "41.2%"}, {anio: 2025, val: "40.0%"}, {anio: 2024, val: "38.8%"}, {anio: 2023, val: "35.1%"}, {anio: 2022, val: "36.4%"}, {anio: 2021, val: "39.0%"}],
+                desempleo_historial: [{anio: 2026, val: "6.7%"}, {anio: 2025, val: "6.4%"}, {anio: 2024, val: "7.2%"}, {anio: 2023, val: "5.9%"}, {anio: 2022, val: "6.5%"}, {anio: 2021, val: "7.4%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 43% | Público 24% | Informal 33%"}, {anio: 2023, val: "Priv. 42% | Público 25% | Informal 33%"}, {anio: 2021, val: "Priv. 40% | Público 27% | Informal 33%"}],
+                impuestos_nuevos: "Tasa portuaria e industrial para proyectos de GNL en Costa Atlántica.",
+                impuestos_pros: "Impulsa la radicación de inversiones energéticas multimillonarias.",
+                impuestos_contras: "Controversias socioambientales locales por impacto costero.",
+                costo_alquiler: 470000, canasta_basica_total: 920000, salario_promedio_ripte: 920000, ingresos_brutos_alicuota: 3.7, resultado_fiscal: "Déficit Financiero Leve", deuda_total_usd: "USD 580 Millones", peso_masa_salarial: "56.0%", autonomia_financiera: "35.1%", inseguridad_tasa: 490, homicidios_tasa_100k: 3.6, siniestros_viales_fatales: 98, presupuesto_social: "Educación 28% | Salud 19%", mortalidad_infantil_tasa: 6.5, camas_uti_cada_10k: 4.9, escolarizacion_secundaria: 89.8, cobertura_agua_cloacas: 83.1, cobertura_internet_fibra: 69.8,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Juntos Somos Río Negro", ausentismo: "3.8%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 6.7 }, { anio: 2025, tasa: 6.4 }, { anio: 2024, tasa: 7.2 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Salta": { 
                 nombre: "Salta", gobernador: "Gustavo Sáenz (Identidad Provincial)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "4.1%", corrupcion_tasa: "4.9 causas / 100k", opacidad_licitaciones: "Alta (70%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exintendentes municipales del norte provincial</strong>: Condenados por malversación de fondos destinados a asistencia alimentaria e hídrica de comunidades originarias. Exp. 3340/20. Estado: Condena firme."
-                ], poblacion: 1440672, pobreza_porcentaje: 49.5, costo_alquiler: 360000, canasta_basica_total: 840000, salario_promedio_ripte: 660000, empleo_informal_porcentaje: 48.0, ingresos_brutos_alicuota: 3.6, resultado_fiscal: "Equilibrio Operativo", deuda_total_usd: "USD 350 Millones", peso_masa_salarial: "53.0%", autonomia_financiera: "24.5%", inseguridad_tasa: 580, homicidios_tasa_100k: 4.9, siniestros_viales_fatales: 155, mortalidad_infantil_tasa: 9.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 86.0, cobertura_agua_cloacas: 75.2, cobertura_internet_fibra: 61.2,
+                ], poblacion: 1440672, 
+                pobreza_historial: [{anio: 2026, val: "49.5%"}, {anio: 2025, val: "48.2%"}, {anio: 2024, val: "47.0%"}, {anio: 2023, val: "43.1%"}, {anio: 2022, val: "44.5%"}, {anio: 2021, val: "47.2%"}],
+                desempleo_historial: [{anio: 2026, val: "8.1%"}, {anio: 2025, val: "7.7%"}, {anio: 2024, val: "8.6%"}, {anio: 2023, val: "7.2%"}, {anio: 2022, val: "7.9%"}, {anio: 2021, val: "9.0%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 28% | Público 24% | Informal 48%"}, {anio: 2023, val: "Priv. 27% | Público 25% | Informal 48%"}, {anio: 2021, val: "Priv. 25% | Público 27% | Informal 48%"}],
+                impuestos_nuevos: "Tasa de sellos extraordinaria sobre contratos de concesión minera y energética.",
+                impuestos_pros: "Recaudación directa vinculada al sector extractivo.",
+                impuestos_contras: "Incremento de costos transaccionales para proveedores pymes.",
+                costo_alquiler: 360000, canasta_basica_total: 840000, salario_promedio_ripte: 660000, ingresos_brutos_alicuota: 3.6, resultado_fiscal: "Equilibrio Operativo", deuda_total_usd: "USD 350 Millones", peso_masa_salarial: "53.0%", autonomia_financiera: "24.5%", inseguridad_tasa: 580, homicidios_tasa_100k: 4.9, siniestros_viales_fatales: 155, presupuesto_social: "Educación 27% | Salud 20%", mortalidad_infantil_tasa: 9.1, camas_uti_cada_10k: 4.1, escolarizacion_secundaria: 86.0, cobertura_agua_cloacas: 75.2, cobertura_internet_fibra: 61.2,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "Gustavo Sáenz Conducción", ausentismo: "4.5%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 8.1 }, { anio: 2025, tasa: 7.7 }, { anio: 2024, tasa: 8.6 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "San Juan": { 
                 nombre: "San Juan", gobernador: "Marcelo Orrego (Unidos por San Juan)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "3.0%", corrupcion_tasa: "3.2 causas / 100k", opacidad_licitaciones: "Baja/Media (38%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios de administraciones municipales</strong>: Causas por faltas administrativas menores en revisión judicial. Exp. 512/21. Estado: En instrucción."
-                ], poblacion: 818234, pobreza_porcentaje: 42.0, costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 730000, empleo_informal_porcentaje: 38.0, ingresos_brutos_alicuota: 3.3, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 160 Millones", peso_masa_salarial: "52.0%", autonomia_financiera: "28.3%", inseguridad_tasa: 430, homicidios_tasa_100k: 2.3, siniestros_viales_fatales: 90, mortalidad_infantil_tasa: 7.0, camas_uti_cada_10k: 4.7, escolarizacion_secundaria: 89.2, cobertura_agua_cloacas: 82.5, cobertura_internet_fibra: 64.0,
+                ], poblacion: 818234, 
+                pobreza_historial: [{anio: 2026, val: "42.0%"}, {anio: 2025, val: "40.8%"}, {anio: 2024, val: "39.5%"}, {anio: 2023, val: "36.0%"}, {anio: 2022, val: "37.2%"}, {anio: 2021, val: "39.8%"}],
+                desempleo_historial: [{anio: 2026, val: "6.2%"}, {anio: 2025, val: "5.9%"}, {anio: 2024, val: "6.7%"}, {anio: 2023, val: "5.5%"}, {anio: 2022, val: "6.1%"}, {anio: 2021, val: "7.0%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 38% | Público 24% | Informal 38%"}, {anio: 2023, val: "Priv. 37% | Público 25% | Informal 38%"}, {anio: 2021, val: "Priv. 35% | Público 27% | Informal 38%"}],
+                impuestos_nuevos: "Revisión y unificación de tasas retributivas catastrales y mineras.",
+                impuestos_pros: "Mayor previsibilidad jurídica para inversores metalíferos.",
+                impuestos_contras: "Ajuste tarifario en servicios registrales.",
+                costo_alquiler: 380000, canasta_basica_total: 850000, salario_promedio_ripte: 730000, ingresos_brutos_alicuota: 3.3, resultado_fiscal: "Equilibrio Fiscal", deuda_total_usd: "USD 160 Millones", peso_masa_salarial: "52.0%", autonomia_financiera: "28.3%", inseguridad_tasa: 430, homicidios_tasa_100k: 2.3, siniestros_viales_fatales: 90, presupuesto_social: "Educación 28% | Salud 19%", mortalidad_infantil_tasa: 7.0, camas_uti_cada_10k: 4.7, escolarizacion_secundaria: 89.2, cobertura_agua_cloacas: 82.5, cobertura_internet_fibra: 64.0,
                 legislativo: { diputados: 6, senadores: 3, fuerza: "Por San Juan / UxP", ausentismo: "3.0%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 6.2 }, { anio: 2025, tasa: 5.9 }, { anio: 2024, tasa: 6.7 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "San Luis": { 
                 nombre: "San Luis", gobernador: "Claudio Poggi (Cambia San Luis)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "2.0%", corrupcion_tasa: "2.8 causas / 100k", opacidad_licitaciones: "Baja (33%)", pauta_corrupcion: "Baja", condenados: [
                     "<strong>Exfuncionarios del área de Obras Públicas</strong>: Investigados por auditorías de transición de gestión y faltantes de inventario en infraestructura (Período 2023-2024). Exp. 890/23. Estado: En instrucción."
-                ], poblacion: 540905, pobreza_porcentaje: 40.2, costo_alquiler: 390000, canasta_basica_total: 860000, salario_promedio_ripte: 740000, empleo_informal_porcentaje: 35.5, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Administrado", deuda_total_usd: "USD 80 Millones", peso_masa_salarial: "49.5%", autonomia_financiera: "39.1%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.5, siniestros_viales_fatales: 68, mortalidad_infantil_tasa: 6.8, camas_uti_cada_10k: 5.2, escolarizacion_secundaria: 90.5, cobertura_agua_cloacas: 86.0, cobertura_internet_fibra: 79.1,
+                ], poblacion: 540905, 
+                pobreza_historial: [{anio: 2026, val: "40.2%"}, {anio: 2025, val: "39.0%"}, {anio: 2024, val: "37.8%"}, {anio: 2023, val: "34.2%"}, {anio: 2022, val: "35.5%"}, {anio: 2021, val: "38.0%"}],
+                desempleo_historial: [{anio: 2026, val: "5.8%"}, {anio: 2025, val: "5.5%"}, {anio: 2024, val: "6.2%"}, {anio: 2023, val: "5.0%"}, {anio: 2022, val: "5.6%"}, {anio: 2021, val: "6.5%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 42% | Público 22.5% | Informal 35.5%"}, {anio: 2023, val: "Priv. 41% | Público 23% | Informal 36%"}, {anio: 2021, val: "Priv. 39% | Público 25% | Informal 36%"}],
+                impuestos_nuevos: "Reducción progresiva de alícuotas en IIBB para radicación industrial tecnológica.",
+                impuestos_pros: "Atrae empresas de software y economía del conocimiento.",
+                impuestos_contras: "Demanda contención estricta del gasto público corriente.",
+                costo_alquiler: 390000, canasta_basica_total: 860000, salario_promedio_ripte: 740000, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Administrado", deuda_total_usd: "USD 80 Millones", peso_masa_salarial: "49.5%", autonomia_financiera: "39.1%", inseguridad_tasa: 390, homicidios_tasa_100k: 2.5, siniestros_viales_fatales: 68, presupuesto_social: "Educación 30% | Salud 18%", mortalidad_infantil_tasa: 6.8, camas_uti_cada_10k: 5.2, escolarizacion_secundaria: 90.5, cobertura_agua_cloacas: 86.0, cobertura_internet_fibra: 79.1,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Cambia San Luis / PJ", ausentismo: "2.6%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 5.8 }, { anio: 2025, tasa: 5.5 }, { anio: 2024, tasa: 6.2 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santa Cruz": { 
                 nombre: "Santa Cruz", gobernador: "Claudio Vidal (Por Santa Cruz)", legislatura: "Unicameral (Pluralidad)", coparticipacion_real: "1.7%", corrupcion_tasa: "5.2 causas / 100k", opacidad_licitaciones: "Alta (74%)", pauta_corrupcion: "Alta", condenados: [
                     "<strong>Exfuncionarios de administraciones provinciales históricas</strong>: Vinculados a causas de direccionamiento de obra vial y sobreprecios energéticos. Exp. 5420/16. Estado: Elevados a juicio oral."
-                ], poblacion: 333473, pobreza_porcentaje: 35.8, costo_alquiler: 550000, canasta_basica_total: 970000, salario_promedio_ripte: 1200000, empleo_informal_porcentaje: 26.5, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Estructural en Caja de Previsión", deuda_total_usd: "USD 420 Millones", peso_masa_salarial: "62.0%", autonomia_financiera: "31.2%", inseguridad_tasa: 460, homicidios_tasa_100k: 3.0, siniestros_viales_fatales: 42, mortalidad_infantil_tasa: 5.6, camas_uti_cada_10k: 5.7, escolarizacion_secundaria: 92.0, cobertura_agua_cloacas: 88.4, cobertura_internet_fibra: 67.5,
+                ], poblacion: 333473, 
+                pobreza_historial: [{anio: 2026, val: "35.8%"}, {anio: 2025, val: "34.5%"}, {anio: 2024, val: "33.2%"}, {anio: 2023, val: "30.1%"}, {anio: 2022, val: "31.4%"}, {anio: 2021, val: "34.0%"}],
+                desempleo_historial: [{anio: 2026, val: "5.5%"}, {anio: 2025, val: "5.2%"}, {anio: 2024, val: "6.0%"}, {anio: 2023, val: "4.8%"}, {anio: 2022, val: "5.4%"}, {anio: 2021, val: "6.3%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 48% | Público 25.5% | Informal 26.5%"}, {anio: 2023, val: "Priv. 47% | Público 26% | Informal 27%"}, {anio: 2021, val: "Priv. 45% | Público 28% | Informal 27%"}],
+                impuestos_nuevos: "Tasa especial de control ambiental minero y petrolero.",
+                impuestos_pros: "Fondo específico para remediación ambiental de yacimientos.",
+                impuestos_contras: "Costo operativo adicional para operadoras energéticas.",
+                costo_alquiler: 550000, canasta_basica_total: 970000, salario_promedio_ripte: 1200000, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Estructural en Caja de Previsión", deuda_total_usd: "USD 420 Millones", peso_masa_salarial: "62.0%", autonomia_financiera: "31.2%", inseguridad_tasa: 460, homicidios_tasa_100k: 3.0, siniestros_viales_fatales: 42, presupuesto_social: "Educación 27% | Salud 20%", mortalidad_infantil_tasa: 5.6, camas_uti_cada_10k: 5.7, escolarizacion_secundaria: 92.0, cobertura_agua_cloacas: 88.4, cobertura_internet_fibra: 67.5,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "Por Santa Cruz", ausentismo: "4.1%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 5.5 }, { anio: 2025, tasa: 5.2 }, { anio: 2024, tasa: 6.0 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Tierra del Fuego": { 
                 nombre: "Tierra del Fuego", gobernador: "Gustavo Melella (FORJA / UxP)", legislatura: "Unicameral (Mayoría UxP)", coparticipacion_real: "1.6%", corrupcion_tasa: "4.4 causas / 100k", opacidad_licitaciones: "Media (50%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Exfuncionarios del Poder Ejecutivo Provincial</strong>: Investigados por procesos judiciales en adjudicaciones de servicios públicos y contrataciones directas de emergencia. Exp. 1820/21. Estado: En instrucción."
-                ], poblacion: 190641, pobreza_porcentaje: 36.5, costo_alquiler: 620000, canasta_basica_total: 990000, salario_promedio_ripte: 1150000, empleo_informal_porcentaje: 25.0, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero", deuda_total_usd: "USD 390 Millones", peso_masa_salarial: "54.1%", autonomia_financiera: "42.0%", inseguridad_tasa: 480, homicidios_tasa_100k: 2.2, siniestros_viales_fatales: 22, mortalidad_infantil_tasa: 5.2, camas_uti_cada_10k: 6.0, escolarizacion_secundaria: 94.5, cobertura_agua_cloacas: 91.2, cobertura_internet_fibra: 82.0,
+                ], poblacion: 190641, 
+                pobreza_historial: [{anio: 2026, val: "36.5%"}, {anio: 2025, val: "35.2%"}, {anio: 2024, val: "34.0%"}, {anio: 2023, val: "30.5%"}, {anio: 2022, val: "31.8%"}, {anio: 2021, val: "34.2%"}],
+                desempleo_historial: [{anio: 2026, val: "7.2%"}, {anio: 2025, val: "6.8%"}, {anio: 2024, val: "7.9%"}, {anio: 2023, val: "6.4%"}, {anio: 2022, val: "7.0%"}, {anio: 2021, val: "8.1%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 55% | Público 20% | Informal 25%"}, {anio: 2023, val: "Priv. 54% | Público 21% | Informal 25%"}, {anio: 2021, val: "Priv. 52% | Público 23% | Informal 25%"}],
+                impuestos_nuevos: "Tasa de verificación electrónica y electrónica industrial de subregión aduanera.",
+                impuestos_pros: "Mantiene incentivos al subrégimen industrial tecnológico fueguino.",
+                impuestos_contras: "Altos costos fiscales comparativos para el continente.",
+                costo_alquiler: 620000, canasta_basica_total: 990000, salario_promedio_ripte: 1150000, ingresos_brutos_alicuota: 3.0, resultado_fiscal: "Déficit Financiero", deuda_total_usd: "USD 390 Millones", peso_masa_salarial: "54.1%", autonomia_financiera: "42.0%", inseguridad_tasa: 480, homicidios_tasa_100k: 2.2, siniestros_viales_fatales: 22, presupuesto_social: "Educación 28% | Salud 21%", mortalidad_infantil_tasa: 5.2, camas_uti_cada_10k: 6.0, escolarizacion_secundaria: 94.5, cobertura_agua_cloacas: 91.2, cobertura_internet_fibra: 82.0,
                 legislativo: { diputados: 5, senadores: 3, fuerza: "FORJA / UxP", ausentismo: "3.1%" },
-                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.2 }, { anio: 2025, tasa: 6.8 }, { anio: 2024, tasa: 7.9 }] 
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             },
             "Tucumán": { 
                 nombre: "Tucumán", gobernador: "Osvaldo Jaldo (PJ / UxP)", legislatura: "Unicameral (Mayoría PJ)", coparticipacion_real: "4.7%", corrupcion_tasa: "5.5 causas / 100k", opacidad_licitaciones: "Alta (75%)", pauta_corrupcion: "Muy Alta", condenados: [
                     "<strong>Exfuncionarios y legisladores provinciales</strong>: Causa por fraude laboral masivo ('contratos fantasma' en la Legislatura provincial por más de 60 millones de dólares). Exp. 7410/19. Estado: Elevado a juicio oral."
-                ], poblacion: 1703186, pobreza_porcentaje: 49.2, costo_alquiler: 390000, canasta_basica_total: 850000, salario_promedio_ripte: 670000, empleo_informal_porcentaje: 47.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 210 Millones", peso_masa_salarial: "60.0%", autonomia_financiera: "18.5%", inseguridad_tasa: 590, homicidios_tasa_100k: 5.1, siniestros_viales_fatales: 145, mortalidad_infantil_tasa: 9.8, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.5, cobertura_agua_cloacas: 73.0, cobertura_internet_fibra: 59.2,
+                ], poblacion: 1703186, 
+                pobreza_historial: [{anio: 2026, val: "49.2%"}, {anio: 2025, val: "48.0%"}, {anio: 2024, val: "46.8%"}, {anio: 2023, val: "43.5%"}, {anio: 2022, val: "44.8%"}, {anio: 2021, val: "47.5%"}],
+                desempleo_historial: [{anio: 2026, val: "8.3%"}, {anio: 2025, val: "7.9%"}, {anio: 2024, val: "8.7%"}, {anio: 2023, val: "7.4%"}, {anio: 2022, val: "8.0%"}, {anio: 2021, val: "9.1%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 29% | Público 24% | Informal 47%"}, {anio: 2023, val: "Priv. 28% | Público 25% | Informal 47%"}, {anio: 2021, val: "Priv. 26% | Público 27% | Informal 47%"}],
+                impuestos_nuevos: "Tasa de protección sanitaria y bromatológica a producción azucarera y citrícola.",
+                impuestos_pros: "Controles de sanidad vegetal para exportación regional.",
+                impuestos_contras: "Carga impositiva adicional sobre economías regionales agroindustriales.",
+                costo_alquiler: 390000, canasta_basica_total: 850000, salario_promedio_ripte: 670000, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Equilibrio Administrado", deuda_total_usd: "USD 210 Millones", peso_masa_salarial: "60.0%", autonomia_financiera: "18.5%", inseguridad_tasa: 590, homicidios_tasa_100k: 5.1, siniestros_viales_fatales: 145, presupuesto_social: "Educación 26% | Salud 19%", mortalidad_infantil_tasa: 9.8, camas_uti_cada_10k: 4.3, escolarizacion_secundaria: 85.5, cobertura_agua_cloacas: 73.0, cobertura_internet_fibra: 59.2,
                 legislativo: { diputados: 9, senadores: 3, fuerza: "UxP / Independencia", ausentismo: "3.5%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 8.3 }, { anio: 2025, tasa: 7.9 }, { anio: 2024, tasa: 8.7 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santa Fe": { 
                 nombre: "Santa Fe", gobernador: "Maximiliano Pullaro (Unidos para Cambiar Santa Fe)", legislatura: "Bicameral (Pluralidad)", coparticipacion_real: "9.5%", corrupcion_tasa: "4.6 causas / 100k", opacidad_licitaciones: "Media (48%)", pauta_corrupcion: "Moderada", condenados: [
                     "<strong>Alejandro Granados / Exjefes policiales y exministros</strong>: Causas por connivencia con bandas narcocriminales, lavado de activos y asociación ilícita policial. Fecha de condena: 2021-2023. Exp. 1520/18. Estado: Condenas firmes a prisión efectiva."
-                ], poblacion: 3556522, pobreza_porcentaje: 43.8, costo_alquiler: 520000, canasta_basica_total: 890000, salario_promedio_ripte: 810000, empleo_informal_porcentaje: 36.0, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Déficit Operativo Moderado", deuda_total_usd: "USD 480 Millones", peso_masa_salarial: "50.1%", autonomia_financiera: "49.0%", inseguridad_tasa: 890, homicidios_tasa_100k: 8.4, siniestros_viales_fatales: 340, mortalidad_infantil_tasa: 7.8, camas_uti_cada_10k: 5.4, escolarizacion_secundaria: 91.2, cobertura_agua_cloacas: 82.0, cobertura_internet_fibra: 74.0,
+                ], poblacion: 3556522, 
+                pobreza_historial: [{anio: 2026, val: "43.8%"}, {anio: 2025, val: "42.5%"}, {anio: 2024, val: "41.2%"}, {anio: 2023, val: "37.5%"}, {anio: 2022, val: "38.8%"}, {anio: 2021, val: "41.0%"}],
+                desempleo_historial: [{anio: 2026, val: "7.5%"}, {anio: 2025, val: "7.1%"}, {anio: 2024, val: "7.8%"}, {anio: 2023, val: "6.5%"}, {anio: 2022, val: "7.1%"}, {anio: 2021, val: "8.2%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 46% | Público 18% | Informal 36%"}, {anio: 2023, val: "Priv. 45% | Público 19% | Informal 36%"}, {anio: 2021, val: "Priv. 43% | Público 21% | Informal 36%"}],
+                impuestos_nuevos: "Aporte solidario extraordinario a entidades financieras y grandes contribuyentes para emergencia de seguridad.",
+                impuestos_pros: "Dotación de equipamiento táctico y tecnológico policial urgente.",
+                impuestos_contras: "Fuerte resistencia empresaria y bancaria por carga tributaria transitoria.",
+                costo_alquiler: 520000, canasta_basica_total: 890000, salario_promedio_ripte: 810000, ingresos_brutos_alicuota: 4.5, resultado_fiscal: "Déficit Operativo Moderado", deuda_total_usd: "USD 480 Millones", peso_masa_salarial: "50.1%", autonomia_financiera: "49.0%", inseguridad_tasa: 890, homicidios_tasa_100k: 8.4, siniestros_viales_fatales: 340, presupuesto_social: "Educación 29% | Salud 20%", mortalidad_infantil_tasa: 7.8, camas_uti_cada_10k: 5.4, escolarizacion_secundaria: 91.2, cobertura_agua_cloacas: 82.0, cobertura_internet_fibra: 74.0,
                 legislativo: { diputados: 19, senadores: 3, fuerza: "Unidos / PRO / PS", ausentismo: "3.2%" },
-                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 7.5 }, { anio: 2025, tasa: 7.1 }, { anio: 2024, tasa: 7.8 }] 
+                votaciones: { bases: "Afirmativo", presupuesto: "Afirmativo", jubilados: "Afirmativo", universidades: "Abstención", bup: "Afirmativo", rigi: "Afirmativo" }
             },
             "Santiago del Estero": { 
                 nombre: "Santiago del Estero", gobernador: "Gerardo Zamora (Frente Cívico / UxP)", legislatura: "Unicameral (Mayoría Oficialista)", coparticipacion_real: "4.5%", corrupcion_tasa: "6.1 causas / 100k", opacidad_licitaciones: "Muy Alta (85%)", pauta_corrupcion: "Control absoluto estatal", condenados: [
                     "<strong>Exfuncionarios del poder ejecutivo provincial</strong>: Investigados por adjudicaciones monopólicas en obra pública y licitaciones sin compulsa de precios. Exp. 890/17. Estado: Protegidos por fueros y baja alternancia en fueros locales."
-                ], poblacion: 1054028, pobreza_porcentaje: 54.2, costo_alquiler: 300000, canasta_basica_total: 810000, salario_promedio_ripte: 600000, empleo_informal_porcentaje: 50.0, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Nominal por Contención", deuda_total_usd: "USD 120 Millones", peso_masa_salarial: "64.0%", autonomia_financiera: "10.2%", inseguridad_tasa: 400, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 125, mortalidad_infantil_tasa: 10.2, camas_uti_cada_10k: 3.7, escolarizacion_secundaria: 83.0, cobertura_agua_cloacas: 66.0, cobertura_internet_fibra: 53.0,
+                ], poblacion: 1054028, 
+                pobreza_historial: [{anio: 2026, val: "54.2%"}, {anio: 2025, val: "53.0%"}, {anio: 2024, val: "51.8%"}, {anio: 2023, val: "48.5%"}, {anio: 2022, val: "49.8%"}, {anio: 2021, val: "52.1%"}],
+                desempleo_historial: [{anio: 2026, val: "8.5%"}, {anio: 2025, val: "8.0%"}, {anio: 2024, val: "8.9%"}, {anio: 2023, val: "7.6%"}, {anio: 2022, val: "8.2%"}, {anio: 2021, val: "9.3%"}],
+                empleo_tipo_historial: [{anio: 2026, val: "Priv. 22% | Público 28% | Informal 50%"}, {anio: 2023, val: "Priv. 21% | Público 29% | Informal 50%"}, {anio: 2021, val: "Priv. 19% | Público 31% | Informal 50%"}],
+                impuestos_nuevos: "Tasas retributivas y de verificación en obras viales de interconexión provincial.",
+                impuestos_pros: "Mantenimiento de infraestructura vial productiva.",
+                impuestos_contras: "Impacto en costos de transporte agrícola regional.",
+                costo_alquiler: 300000, canasta_basica_total: 810000, salario_promedio_ripte: 600000, ingresos_brutos_alicuota: 3.5, resultado_fiscal: "Superávit Nominal por Contención", deuda_total_usd: "USD 120 Millones", peso_masa_salarial: "64.0%", autonomia_financiera: "10.2%", inseguridad_tasa: 400, homicidios_tasa_100k: 3.5, siniestros_viales_fatales: 125, presupuesto_social: "Educación 25% | Salud 18%", mortalidad_infantil_tasa: 10.2, camas_uti_cada_10k: 3.7, escolarizacion_secundaria: 83.0, cobertura_agua_cloacas: 66.0, cobertura_internet_fibra: 53.0,
                 legislativo: { diputados: 7, senadores: 3, fuerza: "Frente Cívico por Santiago", ausentismo: "2.0%" },
-                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" },
-                desempleo_historial: [{ anio: 2026, tasa: 8.5 }, { anio: 2025, tasa: 8.0 }, { anio: 2024, tasa: 8.9 }] 
+                votaciones: { bases: "Negativo", presupuesto: "Negativo", jubilados: "Afirmativo", universidades: "Afirmativo", bup: "Negativo", rigi: "Negativo" }
             }
         };
 
         function calcularIndiceRiesgo(p) {
             if (!p) return 50;
             const pobr = p.pobreza_porcentaje || 40;
-            const desempleo = (p.desempleo_historial && p.desempleo_historial[0]) ? p.desempleo_historial[0].tasa : 6;
+            const desempleo = (p.desempleo_historial && p.desempleo_historial[0]) ? parseFloat(p.desempleo_historial[0].val) : 6;
             const inseguridad = (p.inseguridad_tasa || 500) / 12;
             let score = (pobr * 0.55) + (desempleo * 2.2) + (inseguridad * 0.25);
             return Math.min(Math.max(Math.round(score), 15), 100);
@@ -709,6 +934,21 @@
             container.classList.toggle('open');
         }
 
+        function toggleMetricDrop(dropId) {
+            const container = document.getElementById(dropId);
+            container.classList.toggle('open');
+        }
+
+        function llenarListaHistorica(idUl, historial) {
+            const ul = document.getElementById(idUl);
+            if (!historial || historial.length === 0) {
+                ul.innerHTML = "<li><span>Sin datos históricos</span></li>";
+                return;
+            }
+            ul.innerHTML = historial.map(item => `<span>Año ${item.anio}:</span> <strong>${item.val}</strong>`).join('</li><li>');
+            ul.innerHTML = "<li>" + ul.innerHTML + "</li>";
+        }
+
         function mostrarDatos(nombreProv) {
             const data = datosProvincias[nombreProv];
             if (!data) return;
@@ -717,6 +957,7 @@
             document.getElementById('header-subtitle').innerText = `Jurisdicción de ${nombreProv}`;
 
             document.getElementById('panel-dropdown').classList.remove('open');
+            document.querySelectorAll('.metric-dropdown').forEach(el => el.classList.remove('open'));
 
             const panel = document.getElementById('info-panel');
             const riesgoScore = calcularIndiceRiesgo(data);
@@ -753,12 +994,20 @@
             asignarBadgeVoto('panel-voto-rigi', data.votaciones.rigi);
 
             document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
-            document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
+
+            // Llenar listas históricas de 6 años
+            llenarListaHistorica('list-pobreza', data.pobreza_historial);
+            llenarListaHistorica('list-desempleo', data.desempleo_historial);
+            llenarListaHistorica('list-empleo-tipo', data.empleo_tipo_historial);
+
             document.getElementById('panel-cbt').innerText = `$${data.canasta_basica_total.toLocaleString('es-AR')}`;
             document.getElementById('panel-salario').innerText = `$${data.salario_promedio_ripte.toLocaleString('es-AR')}`;
-            document.getElementById('panel-informal').innerText = `${data.empleo_informal_porcentaje}%`;
             document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
             document.getElementById('panel-iibb').innerText = `${data.ingresos_brutos_alicuota}%`;
+
+            document.getElementById('panel-impuestos-nuevos').innerText = data.impuestos_nuevos;
+            document.getElementById('panel-impuestos-pros').innerText = data.impuestos_pros;
+            document.getElementById('panel-impuestos-contras').innerText = data.impuestos_contras;
 
             document.getElementById('panel-resultado-fiscal').innerText = data.resultado_fiscal;
             document.getElementById('panel-deuda-total').innerText = data.deuda_total_usd;
@@ -769,19 +1018,13 @@
             document.getElementById('panel-homicidios').innerText = `${data.homicidios_tasa_100k}`;
             document.getElementById('panel-vial').innerText = `${data.siniestros_viales_fatales}`;
 
+            document.getElementById('panel-presupuesto-social').innerText = data.presupuesto_social;
             document.getElementById('panel-mortalidad-infantil').innerText = `${data.mortalidad_infantil_tasa} ‰`;
             document.getElementById('panel-camas').innerText = `${data.camas_uti_cada_10k}`;
             document.getElementById('panel-escuela').innerText = `${data.escolarizacion_secundaria}%`;
             document.getElementById('panel-agua').innerText = `${data.cobertura_agua_cloacas}%`;
             document.getElementById('panel-internet').innerText = `${data.cobertura_internet_fibra}%`;
 
-            let historialHTML = '';
-            if (data.desempleo_historial) {
-                historialHTML = data.desempleo_historial.map((item) => {
-                    return `<li><span>Año ${item.anio}:</span> <strong>${item.tasa}%</strong></li>`;
-                }).join('');
-            }
-            document.getElementById('panel-historial').innerHTML = historialHTML;
             panel.style.display = 'block';
         }
 
