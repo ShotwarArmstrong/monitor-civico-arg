@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
-            --primary: #0284c7;
-            --bg: #0b0f19;
-            --card-bg: #131c31;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #1e293b;
+            --celeste: #74acdf;
+            --blanco: #ffffff;
+            --amarillo-sol: #ffb81c;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text: #1e293b;
+            --border: #cbd5e1;
         }
         * { box-sizing: border-box; }
         body, html {
@@ -23,37 +23,75 @@
             width: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            background-color: var(--bg);
-            color: var(--text);
+            /* Fondo propio: Blanco con degradados celestes y un sutil toque dorado */
+            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #e0f2fe 50%, #bae6fd 100%);
         }
 
-        /* Encabezado */
+        /* Marcas de agua decorativas: Las 3 Estrellas */
+        .star-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.15;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 100 100"><text x="10" y="30" font-size="20" fill="%23ffb81c">⭐⭐⭐</text></svg>');
+        }
+
+        /* Encabezado Principal */
         #header {
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(19, 28, 49, 0.9);
-            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 30px;
             border-radius: 30px;
             backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 2px solid var(--celeste);
         }
-        #header h1 { margin: 0; font-size: 1.2em; letter-spacing: 0.5px; color: #fff; }
-        #header p { margin: 2px 0 0 0; font-size: 0.75em; color: var(--text-muted); }
+        #header h1 { margin: 0; font-size: 1.3em; letter-spacing: 0.5px; color: #0f172a; }
+        #header p { margin: 2px 0 0 0; font-size: 0.8em; color: #0284c7; font-weight: 600; }
 
-        /* Mapa autónomo (sin tiles externas mundiales) */
+        /* Selector de Capas / Indicadores */
+        #controls-panel {
+            position: absolute;
+            top: 85px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 12px 16px;
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--celeste);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        #controls-panel label { display: block; font-size: 0.75em; color: #0369a1; margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
+        #controls-panel select {
+            background: #f0f9ff;
+            color: #0f172a;
+            border: 1px solid var(--celeste);
+            padding: 8px 12px;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
         #map {
             height: 100vh;
             width: 100vw;
             z-index: 1;
-            background: #070a12;
+            background: transparent;
         }
 
-        /* Panel lateral de información */
+        /* Panel Lateral de Información */
         #info-panel {
             position: absolute;
             top: 20px;
@@ -64,11 +102,12 @@
             background: var(--card-bg);
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             overflow-y: auto;
             display: none;
-            border: 1px solid var(--border);
+            border: 2px solid var(--celeste);
             animation: fadeIn 0.25s ease-in-out;
+            color: var(--text);
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
@@ -79,62 +118,75 @@
             cursor: pointer;
             font-size: 1.2em;
             font-weight: bold;
-            color: var(--text-muted);
+            color: #64748b;
         }
-        .close-btn:hover { color: #fff; }
-        .province-title { margin: 0 0 15px 0; color: #38bdf8; font-size: 1.4em; }
+        .close-btn:hover { color: #000; }
+        .province-title { margin: 0 0 15px 0; color: #0284c7; font-size: 1.4em; }
 
         /* Pestañas */
         .tabs {
             display: flex;
             gap: 5px;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 2px solid #e2e8f0;
             margin-bottom: 15px;
         }
         .tab-btn {
             background: none;
             border: none;
-            color: var(--text-muted);
+            color: #64748b;
             padding: 8px 12px;
             cursor: pointer;
             font-size: 0.85em;
+            font-weight: 600;
             border-bottom: 2px solid transparent;
         }
         .tab-btn.active {
-            color: #38bdf8;
-            border-bottom-color: #38bdf8;
+            color: #0284c7;
+            border-bottom-color: #0284c7;
             font-weight: bold;
         }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         .metric-box {
-            background: #0b0f19;
+            background: #f0f9ff;
             border-radius: 10px;
             padding: 12px;
             margin: 10px 0;
             text-align: center;
-            border: 1px solid var(--border);
+            border: 1px solid #bae6fd;
         }
-        .metric-val { font-size: 1.8em; font-weight: bold; color: #f43f5e; }
-        .metric-sub { font-size: 0.75em; color: var(--text-muted); text-transform: uppercase; }
+        .metric-val { font-size: 1.8em; font-weight: bold; color: #e11d48; }
+        .metric-sub { font-size: 0.75em; color: #0369a1; text-transform: uppercase; font-weight: bold; }
         
         .data-row {
             display: flex;
             justify-content: space-between;
             padding: 7px 0;
-            border-bottom: 1px dashed var(--border);
+            border-bottom: 1px dashed #e2e8f0;
             font-size: 0.88em;
         }
         .history-list { list-style: none; padding: 0; margin: 10px 0 0 0; font-size: 0.85em; }
-        .history-list li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--border); }
+        .history-list li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #e2e8f0; }
     </style>
 </head>
 <body>
 
+    <div class="star-pattern"></div>
+
     <div id="header">
-        <h1>Monitor Cívico Argentina</h1>
-        <p>Mapa de Riesgo Integral y Transparencia Pública</p>
+        <h1>Monitor Cívico Argentina ⭐⭐⭐</h1>
+        <p>Selecciona una provincia en el mapa para ver sus indicadores</p>
+    </div>
+
+    <div id="controls-panel">
+        <label for="indicator-select">Ver en el mapa:</label>
+        <select id="indicator-select" onchange="cambiarIndicador()">
+            <option value="riesgo">Índice de Riesgo General</option>
+            <option value="pobreza">Tasa de Pobreza (%)</option>
+            <option value="desempleo">Desempleo Actual (%)</option>
+            <option value="poblacion">Población (Habitantes)</option>
+        </select>
     </div>
 
     <div id="map"></div>
@@ -144,8 +196,8 @@
         <h2 id="panel-nombre" class="province-title">-</h2>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('tab-general')">General & Riesgo</button>
-            <button class="tab-btn" onclick="switchTab('tab-empleo')">Empleo & Economía</button>
+            <button class="tab-btn active" onclick="switchTab('tab-general')">General</button>
+            <button class="tab-btn" onclick="switchTab('tab-empleo')">Economía</button>
             <button class="tab-btn" onclick="switchTab('tab-seguridad')">Seguridad & Salud</button>
         </div>
 
@@ -161,14 +213,14 @@
 
         <!-- Pestaña 2: Empleo -->
         <div id="tab-empleo" class="tab-content">
-            <div class="data-row"><span>Costo Promedio Alquiler (2 amb):</span><strong id="panel-alquiler">-</strong></div>
-            <div style="font-weight: bold; margin: 15px 0 8px 0; font-size: 0.9em; color: #38bdf8;">Evolución del Desempleo:</div>
+            <div class="data-row"><span>Costo Promedio Alquiler:</span><strong id="panel-alquiler">-</strong></div>
+            <div style="font-weight: bold; margin: 15px 0 8px 0; font-size: 0.9em; color: #0284c7;">Evolución del Desempleo:</div>
             <ul id="panel-historial" class="history-list"></ul>
         </div>
 
         <!-- Pestaña 3: Seguridad y Salud -->
         <div id="tab-seguridad" class="tab-content">
-            <div class="data-row"><span>Tasa de Inseguridad (c/ 100k hab):</span><strong id="panel-inseguridad">-</strong></div>
+            <div class="data-row"><span>Inseguridad (delitos / 100k hab):</span><strong id="panel-inseguridad">-</strong></div>
             <div class="data-row"><span>Tasa de Mortalidad:</span><strong id="panel-mortalidad">-</strong></div>
         </div>
     </div>
@@ -176,61 +228,76 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Inicializar mapa centrado exclusivamente en Argentina con límites estrictos
+        // Inicializar mapa centrado exclusivamente en la Argentina
         let map = L.map('map', {
             zoomControl: false,
             minZoom: 4,
-            maxZoom: 8,
-            maxBounds: [[-56.0, -75.0], [-21.0, -51.0]]
-        }).setView([-38.416097, -63.616672], 5);
+            maxZoom: 7,
+            attributionControl: false
+        }).setView([-38.416097, -63.616672], 4.5);
 
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
         let datosProvincias = {};
         let geojsonLayer = null;
+        let indicadorActual = 'riesgo';
 
-        // Cálculo del Índice de Riesgo General (0 a 100) combinando factores
         function calcularIndiceRiesgo(p) {
             if (!p) return 50;
             const pobr = p.pobreza_porcentaje || 40;
             const desempleo = (p.desempleo_historial && p.desempleo_historial[0]) ? p.desempleo_historial[0].tasa : 6;
-            const inseguridad = (p.inseguridad_tasa || 500) / 15; // normalizado
-            
-            // Ponderación integral
+            const inseguridad = (p.inseguridad_tasa || 500) / 15;
             let score = (pobr * 0.5) + (desempleo * 2.5) + (inseguridad * 0.2);
             return Math.min(Math.max(Math.round(score), 10), 100);
         }
 
-        // Escala de colores de Verde a Rojo basada en el Índice de Riesgo
-        function getColorPorRiesgo(score) {
-            return score > 75 ? '#991b1b' : // Rojo oscuro crítico
-                   score > 60 ? '#dc2626' : // Rojo
-                   score > 45 ? '#f97316' : // Naranja
-                   score > 30 ? '#eab308' : // Amarillo
-                   '#16a34a';               // Verde (menor riesgo)
+        function getColor(val, indicador) {
+            if (indicador === 'riesgo') {
+                return val > 75 ? '#b91c1c' :
+                       val > 60 ? '#ef4444' :
+                       val > 45 ? '#f97316' :
+                       val > 30 ? '#eab308' : '#16a34a';
+            } else if (indicador === 'pobreza') {
+                return val > 45 ? '#b91c1c' :
+                       val > 40 ? '#f97316' :
+                       val > 35 ? '#eab308' : '#16a34a';
+            } else if (indicador === 'desempleo') {
+                return val > 7.5 ? '#b91c1c' :
+                       val > 6.5 ? '#f97316' :
+                       val > 5.5 ? '#eab308' : '#16a34a';
+            } else {
+                return val > 10000000 ? '#0284c7' :
+                       val > 3000000  ? '#0369a1' :
+                       val > 1000000  ? '#075985' : '#38bdf8';
+            }
         }
 
         function style(feature) {
             const nombre = feature.properties.nam || feature.properties.name;
             const provData = datosProvincias[nombre];
-            const riesgo = calcularIndiceRiesgo(provData);
+            let val = 0;
+
+            if (provData) {
+                if (indicadorActual === 'riesgo') val = calcularIndiceRiesgo(provData);
+                else if (indicadorActual === 'pobreza') val = provData.pobreza_porcentaje || 0;
+                else if (indicadorActual === 'desempleo') val = (provData.desempleo_historial && provData.desempleo_historial[0]) ? provData.desempleo_historial[0].tasa : 0;
+                else if (indicadorActual === 'poblacion') val = provData.poblacion || 0;
+            }
 
             return {
-                fillColor: getColorPorRiesgo(riesgo),
-                weight: 1.5,
+                fillColor: getColor(val, indicadorActual),
+                weight: 2,
                 opacity: 1,
                 color: '#ffffff',
-                dashArray: '3',
-                fillOpacity: 0.8
+                fillOpacity: 0.85
             };
         }
 
         function highlightFeature(e) {
             var layer = e.target;
             layer.setStyle({
-                weight: 3,
-                color: '#38bdf8',
-                dashArray: '',
+                weight: 4,
+                color: '#ffb81c', // Borde Dorado al pasar el mouse
                 fillOpacity: 0.95
             });
             layer.bringToFront();
@@ -249,67 +316,6 @@
             if (data) {
                 const riesgoScore = calcularIndiceRiesgo(data);
                 document.getElementById('panel-nombre').innerText = data.nombre;
-                document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`;
-                document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
-                document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
-                document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
-                document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa} delitos`;
-                document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;
-
-                let historialHTML = '';
-                if (data.desempleo_historial) {
-                    historialHTML = data.desempleo_historial.map((item, index) => {
-                        const etiqueta = index === 0 ? `Año ${item.anio} (Actual)` : `Hace ${index} año${index > 1 ? 's' : ''} (${item.anio})`;
-                        return `<li><span>${etiqueta}:</span> <strong>${item.tasa}%</strong></li>`;
-                    }).join('');
-                }
-                document.getElementById('panel-historial').innerHTML = historialHTML;
-                panel.style.display = 'block';
-            }
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        }
-
-        function cerrarPanel() {
-            document.getElementById('info-panel').style.display = 'none';
-        }
-
-        async function init() {
-            try {
-                const respIndicadores = await fetch('../data/indicadores.json');
-                const dataIndicadores = await respIndicadores.json();
-
-                dataIndicadores.provincias.forEach(p => {
-                    datosProvincias[p.nombre] = p;
-                });
-
-                // Cargar límites vectoriales oficiales de las provincias argentinas
-                const respGeo = await fetch('https://raw.githubusercontent.com/apis-digitales/georef-ar-api/master/data/provincias.json');
-                const geoData = await respGeo.json();
-
-                geojsonLayer = L.geoJson(geoData, {
-                    style: style,
-                    onEachFeature: function(feature, layer) {
-                        layer.on({
-                            mouseover: highlightFeature,
-                            mouseout: resetHighlight,
-                            click: seleccionarProvincia
-                        });
-                    }
-                }).addTo(map);
-
-            } catch (err) {
-                console.error("Error cargando mapa autónomo:", err);
-            }
-        }
-
-        init();
-    </script>
-</body>
-</html>
+                document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`; document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
+                document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}\%`; document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`; document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa} delitos`;
+                document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;  let historialHTML = ''; if (data.desempleo_historial) { historialHTML = data.desempleo_historial.map((item, index) => { const etiqueta = index === 0 ? `Año ${item.anio} (Actual)
