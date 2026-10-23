@@ -23,11 +23,10 @@
             width: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            /* Fondo propio: Blanco con degradados celestes y un sutil toque dorado */
             background: radial-gradient(circle at 50% 50%, #ffffff 0%, #e0f2fe 50%, #bae6fd 100%);
         }
 
-        /* Marcas de agua decorativas: Las 3 Estrellas */
+        /* Marcas de agua decorativas: Estrellas reducidas 5 veces en densidad */
         .star-pattern {
             position: absolute;
             top: 0;
@@ -36,18 +35,19 @@
             height: 100%;
             pointer-events: none;
             z-index: 2;
-            opacity: 0.15;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 100 100"><text x="10" y="30" font-size="20" fill="%23ffb81c">⭐⭐⭐</text></svg>');
+            opacity: 0.12;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 200 200"><text x="20" y="50" font-size="28" fill="%23ffb81c">⭐⭐⭐</text></svg>');
+            background-repeat: repeat;
         }
 
-        /* Encabezado Principal */
+        /* Encabezado */
         #header {
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             padding: 12px 30px;
             border-radius: 30px;
             backdrop-filter: blur(8px);
@@ -58,31 +58,59 @@
         #header h1 { margin: 0; font-size: 1.3em; letter-spacing: 0.5px; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.8em; color: #0284c7; font-weight: 600; }
 
-        /* Selector de Capas / Indicadores */
-        #controls-panel {
+        /* Panel de Indicadores Nacionales Fijos (Reemplaza el menú desplegable) */
+        #national-summary {
             position: absolute;
             top: 85px;
             left: 20px;
             z-index: 1000;
             background: rgba(255, 255, 255, 0.92);
-            padding: 12px 16px;
-            border-radius: 12px;
+            padding: 15px 18px;
+            border-radius: 14px;
             backdrop-filter: blur(8px);
-            border: 1px solid var(--celeste);
+            border: 2px solid var(--celeste);
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            width: 250px;
         }
-        #controls-panel label { display: block; font-size: 0.75em; color: #0369a1; margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
-        #controls-panel select {
-            background: #f0f9ff;
-            color: #0f172a;
-            border: 1px solid var(--celeste);
-            padding: 8px 12px;
-            border-radius: 8px;
-            outline: none;
-            cursor: pointer;
+        #national-summary h3 {
+            margin: 0 0 10px 0;
+            font-size: 0.85em;
+            color: #0369a1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 5px;
+        }
+        .nat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 0.85em;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        .nat-row:last-child { border-bottom: none; }
+        .nat-val { font-weight: bold; color: #0284c7; }
+
+        /* Botón para regresar al mapa general */
+        #btn-volver-mapa {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            z-index: 1000;
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
             font-size: 0.9em;
-            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+            display: none;
+            transition: all 0.2s ease;
         }
+        #btn-volver-mapa:hover { background: #0369a1; transform: translateY(-2px); }
 
         #map {
             height: 100vh;
@@ -176,23 +204,24 @@
 
     <div id="header">
         <h1>Monitor Cívico Argentina ⭐⭐⭐</h1>
-        <p>Selecciona una provincia en el mapa para ver sus indicadores</p>
+        <p id="header-subtitle">Haz clic en una provincia para aislarla y explorar sus datos</p>
     </div>
 
-    <div id="controls-panel">
-        <label for="indicator-select">Ver en el mapa:</label>
-        <select id="indicator-select" onchange="cambiarIndicador()">
-            <option value="riesgo">Índice de Riesgo General</option>
-            <option value="pobreza">Tasa de Pobreza (%)</option>
-            <option value="desempleo">Desempleo Actual (%)</option>
-            <option value="poblacion">Población (Habitantes)</option>
-        </select>
+    <!-- Panel Promedio Nacional (Uno debajo del otro) -->
+    <div id="national-summary">
+        <h3>Promedios Nacionales</h3>
+        <div class="nat-row"><span>Riesgo Integral:</span><span class="nat-val" id="nat-riesgo">52 / 100</span></div>
+        <div class="nat-row"><span>Pobreza Media:</span><span class="nat-val" id="nat-pobreza">41.8%</span></div>
+        <div class="nat-row"><span>Desempleo Actual:</span><span class="nat-val" id="nat-desempleo">6.5%</span></div>
+        <div class="nat-row"><span>Alquiler Promedio:</span><span class="nat-val" id="nat-alquiler">$265.000</span></div>
     </div>
+
+    <button id="btn-volver-mapa" onclick="restablecerMapaNacional()">⬅ Ver Argentina Completa</button>
 
     <div id="map"></div>
 
     <div id="info-panel">
-        <span class="close-btn" onclick="cerrarPanel()">&times;</span>
+        <span class="close-btn" onclick="restablecerMapaNacional()">&times;</span>
         <h2 id="panel-nombre" class="province-title">-</h2>
         
         <div class="tabs">
@@ -228,11 +257,10 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Inicializar mapa centrado exclusivamente en la Argentina
         let map = L.map('map', {
             zoomControl: false,
             minZoom: 4,
-            maxZoom: 7,
+            maxZoom: 9,
             attributionControl: false
         }).setView([-38.416097, -63.616672], 4.5);
 
@@ -240,7 +268,7 @@
 
         let datosProvincias = {};
         let geojsonLayer = null;
-        let indicadorActual = 'riesgo';
+        let provinciaSeleccionadaLayer = null;
 
         function calcularIndiceRiesgo(p) {
             if (!p) return 50;
@@ -251,41 +279,20 @@
             return Math.min(Math.max(Math.round(score), 10), 100);
         }
 
-        function getColor(val, indicador) {
-            if (indicador === 'riesgo') {
-                return val > 75 ? '#b91c1c' :
-                       val > 60 ? '#ef4444' :
-                       val > 45 ? '#f97316' :
-                       val > 30 ? '#eab308' : '#16a34a';
-            } else if (indicador === 'pobreza') {
-                return val > 45 ? '#b91c1c' :
-                       val > 40 ? '#f97316' :
-                       val > 35 ? '#eab308' : '#16a34a';
-            } else if (indicador === 'desempleo') {
-                return val > 7.5 ? '#b91c1c' :
-                       val > 6.5 ? '#f97316' :
-                       val > 5.5 ? '#eab308' : '#16a34a';
-            } else {
-                return val > 10000000 ? '#0284c7' :
-                       val > 3000000  ? '#0369a1' :
-                       val > 1000000  ? '#075985' : '#38bdf8';
-            }
+        function getColorPorRiesgo(score) {
+            return score > 75 ? '#b91c1c' :
+                   score > 60 ? '#ef4444' :
+                   score > 45 ? '#f97316' :
+                   score > 30 ? '#eab308' : '#16a34a';
         }
 
         function style(feature) {
             const nombre = feature.properties.nam || feature.properties.name;
             const provData = datosProvincias[nombre];
-            let val = 0;
-
-            if (provData) {
-                if (indicadorActual === 'riesgo') val = calcularIndiceRiesgo(provData);
-                else if (indicadorActual === 'pobreza') val = provData.pobreza_porcentaje || 0;
-                else if (indicadorActual === 'desempleo') val = (provData.desempleo_historial && provData.desempleo_historial[0]) ? provData.desempleo_historial[0].tasa : 0;
-                else if (indicadorActual === 'poblacion') val = provData.poblacion || 0;
-            }
+            const riesgo = calcularIndiceRiesgo(provData);
 
             return {
-                fillColor: getColor(val, indicadorActual),
+                fillColor: getColorPorRiesgo(riesgo),
                 weight: 2,
                 opacity: 1,
                 color: '#ffffff',
@@ -294,28 +301,119 @@
         }
 
         function highlightFeature(e) {
+            if (provinciaSeleccionadaLayer) return; // Si hay una provincia fijada, ignorar hover
             var layer = e.target;
             layer.setStyle({
                 weight: 4,
-                color: '#ffb81c', // Borde Dorado al pasar el mouse
+                color: '#ffb81c',
                 fillOpacity: 0.95
             });
             layer.bringToFront();
         }
 
         function resetHighlight(e) {
+            if (provinciaSeleccionadaLayer) return;
             if (geojsonLayer) geojsonLayer.resetStyle(e.target);
         }
 
+        // Al hacer clic, ocultar todas las demás provincias y centrar la seleccionada
         function seleccionarProvincia(e) {
-            const feature = e.target.feature;
+            const targetLayer = e.target;
+            const feature = targetLayer.feature;
             const nombreProv = feature.properties.nam || feature.properties.name;
             const data = datosProvincias[nombreProv];
 
+            provinciaSeleccionadaLayer = targetLayer;
+
+            // Ocultar las demás provincias del mapa
+            geojsonLayer.eachLayer(layer => {
+                if (layer !== targetLayer) {
+                    layer.setStyle({ fillOpacity: 0, opacity: 0, weight: 0 });
+                } else {
+                    layer.setStyle({ fillOpacity: 0.9, opacity: 1, weight: 3, color: '#ffb81c' });
+                }
+            });
+
+            // Ajustar la cámara sobre el mapa de la provincia aislada
+            map.fitBounds(targetLayer.getBounds(), { padding: [50, 50], maxZoom: 7 });
+
+            // Mostrar botón de volver y actualizar subtítulo
+            document.getElementById('btn-volver-mapa').style.display = 'block';
+            document.getElementById('header-subtitle').innerText = `Visualizando provincia de ${nombreProv}`;
+
+            // Cargar datos en el panel lateral
             const panel = document.getElementById('info-panel');
             if (data) {
                 const riesgoScore = calcularIndiceRiesgo(data);
                 document.getElementById('panel-nombre').innerText = data.nombre;
-                document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`; document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
-                document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}\%`; document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`; document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa} delitos`;
-                document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;  let historialHTML = ''; if (data.desempleo_historial) { historialHTML = data.desempleo_historial.map((item, index) => { const etiqueta = index === 0 ? `Año ${item.anio} (Actual)
+                document.getElementById('panel-riesgo').innerText = `${riesgoScore} / 100`;
+                document.getElementById('panel-poblacion').innerText = `${data.poblacion.toLocaleString('es-AR')} hab.`;
+                document.getElementById('panel-pobreza').innerText = `${data.pobreza_porcentaje}%`;
+                document.getElementById('panel-alquiler').innerText = `$${data.costo_alquiler.toLocaleString('es-AR')}`;
+                document.getElementById('panel-inseguridad').innerText = `${data.inseguridad_tasa} delitos`;
+                document.getElementById('panel-mortalidad').innerText = `${data.mortalidad_tasa} ‰`;
+
+                let historialHTML = '';
+                if (data.desempleo_historial) {
+                    historialHTML = data.desempleo_historial.map((item, index) => {
+                        const etiqueta = index === 0 ? `Año ${item.anio} (Actual)` : `Hace ${index} año${index > 1 ? 's' : ''} (${item.anio})`;
+                        return `<li><span>${etiqueta}:</span> <strong>${item.tasa}%</strong></li>`;
+                    }).join('');
+                }
+                document.getElementById('panel-historial').innerHTML = historialHTML;
+                panel.style.display = 'block';
+            }
+        }
+
+        // Restablecer el mapa completo de Argentina
+        function restablecerMapaNacional() {
+            provinciaSeleccionadaLayer = null;
+            if (geojsonLayer) {
+                geojsonLayer.eachLayer(layer => geojsonLayer.resetStyle(layer));
+            }
+            map.setView([-38.416097, -63.616672], 4.5);
+            document.getElementById('info-panel').style.display = 'none';
+            document.getElementById('btn-volver-mapa').style.display = 'none';
+            document.getElementById('header-subtitle').innerText = 'Haz clic en una provincia para aislarla y explorar sus datos';
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        async function init() {
+            try {
+                const respIndicadores = await fetch('../data/indicadores.json');
+                const dataIndicadores = await respIndicadores.json();
+
+                dataIndicadores.provincias.forEach(p => {
+                    datosProvincias[p.nombre] = p;
+                });
+
+                const respGeo = await fetch('https://raw.githubusercontent.com/apis-digitales/georef-ar-api/master/data/provincias.json');
+                const geoData = await respGeo.json();
+
+                geojsonLayer = L.geoJson(geoData, {
+                    style: style,
+                    onEachFeature: function(feature, layer) {
+                        layer.on({
+                            mouseover: highlightFeature,
+                            mouseout: resetHighlight,
+                            click: seleccionarProvincia
+                        });
+                    }
+                }).addTo(map);
+
+            } catch (err) {
+                console.error("Error inicializando mapa:", err);
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
