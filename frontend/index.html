@@ -56,18 +56,24 @@
         #header h1 { margin: 0; font-size: 1.2em; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.75em; color: #0284c7; font-weight: 600; }
 
-        /* Panel Nacional Fijo */
-        #national-summary {
+        /* Contenedor de Paneles Superiores (Lado a Lado) */
+        .top-panels-container {
             position: absolute;
             top: 95px;
             left: 20px;
             z-index: 100;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Paneles Fijos Superiores */
+        .national-summary {
             background: rgba(255, 255, 255, 0.98);
             padding: 12px 15px;
             border-radius: 12px;
             border: 2px solid var(--celeste);
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            width: 310px;
+            width: 290px;
         }
         .nat-header {
             font-size: 0.82em;
@@ -80,7 +86,7 @@
             text-align: center;
         }
         .nat-content {
-            max-height: 400px;
+            max-height: 380px;
             overflow-y: auto;
         }
         .nat-row {
@@ -88,11 +94,11 @@
             justify-content: space-between;
             align-items: center;
             padding: 4px 0;
-            font-size: 0.78em;
+            font-size: 0.76em;
             border-bottom: 1px dashed #e2e8f0;
         }
         .nat-row:last-child { border-bottom: none; }
-        .nat-val { font-weight: bold; color: #0284c7; }
+        .nat-val { font-weight: bold; color: #0284c7; text-align: right; }
 
         #btn-volver-mapa {
             position: absolute;
@@ -451,18 +457,34 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
-    <!-- Panel Nacional Fijo -->
-    <div id="national-summary">
-        <div class="nat-header">📈 Promedios & Datos Nacionales</div>
-        <div class="nat-content">
-            <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
-            <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">45.2%</span></div>
-            <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">8.4%</span></div>
-            <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$620.000</span></div>
-            <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$925.000</span></div>
-            <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$810.000</span></div>
-            <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800</span></div>
-            <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350</span></div>
+    <!-- Contenedor Superior: Promedios Nacionales & Próximas Elecciones Lado a Lado -->
+    <div class="top-panels-container">
+        <!-- Panel 1: Promedios Nacionales -->
+        <div class="national-summary">
+            <div class="nat-header">📈 Promedios & Datos Nacionales</div>
+            <div class="nat-content">
+                <div class="nat-row"><span>Riesgo Integral Medio:</span><span class="nat-val">68 / 100</span></div>
+                <div class="nat-row"><span>Pobreza Media General:</span><span class="nat-val">45.2%</span></div>
+                <div class="nat-row"><span>Desempleo Real País:</span><span class="nat-val">8.4%</span></div>
+                <div class="nat-row"><span>Alquiler Promedio 2 Amb:</span><span class="nat-val">$620.000</span></div>
+                <div class="nat-row"><span>Canasta Básica Total (CBT):</span><span class="nat-val">$925.000</span></div>
+                <div class="nat-row"><span>Salario Promedio RIPTE:</span><span class="nat-val">$810.000</span></div>
+                <div class="nat-row"><span>Escuelas Totales País:</span><span class="nat-val">~ 24.800</span></div>
+                <div class="nat-row"><span>Hospitales Públicos País:</span><span class="nat-val">~ 1.350</span></div>
+            </div>
+        </div>
+
+        <!-- Panel 2: Próximas Elecciones (Nacionales Obligatorias) -->
+        <div class="national-summary" style="border-color: #be185d;">
+            <div class="nat-header" style="color: #be185d; border-bottom-color: #fce7f3;">🗳️ Próximas Elecciones (Nación)</div>
+            <div class="nat-content">
+                <div class="nat-row"><span>Próximos Comicios:</span><span class="nat-val">Presidenciales 2027</span></div>
+                <div class="nat-row"><span>Tipo de Votación:</span><span class="nat-val">General Obligatoria</span></div>
+                <div class="nat-row"><span>Cargos a Elegir:</span><span class="nat-val">Presidente y Diputados/Senadores</span></div>
+                <div class="nat-row"><span>Sistema de Voto:</span><span class="nat-val">Boleta Única de Papel (BUP)</span></div>
+                <div class="nat-row"><span>Última Elección:</span><span class="nat-val">Legislativas (Oct 2025)</span></div>
+                <div class="nat-row"><span>Calendario Local:</span><span class="nat-val">Variable según Distrito</span></div>
+            </div>
         </div>
     </div>
 
@@ -590,26 +612,22 @@
             </div>
         </div>
 
-        <!-- Memoria, Soberanía y Derechos Humanos (Dinámico según disponibilidad) -->
+        <!-- Memoria, Soberanía y Derechos Humanos -->
         <div class="gen-container memoria-container" id="panel-memoria">
             <div class="gen-header memoria-header" onclick="toggleSeccion('panel-memoria')">
                 <span>🕊️ Memoria, Soberanía & DD.HH. (Malvinas y Desaparecidos)</span>
                 <span class="arrow-icon">▼</span>
             </div>
-            <div class="gen-content" id="memoria-content-box">
-                <!-- Se inyecta dinámicamente para ocultar encuadres faltantes -->
-            </div>
+            <div class="gen-content" id="memoria-content-box"></div>
         </div>
 
-        <!-- Tarifas de Servicios y Transporte (Dinámico según disponibilidad) -->
+        <!-- Tarifas de Servicios y Transporte -->
         <div class="gen-container tarifas-container" id="panel-tarifas">
             <div class="gen-header tarifas-header" onclick="toggleSeccion('panel-tarifas')">
                 <span>⚡ Tarifas, Servicios & Transporte (Colectivo, Tren, Subte, Bici)</span>
                 <span class="arrow-icon">▼</span>
             </div>
-            <div class="gen-content" id="tarifas-content-box">
-                <!-- Se inyecta dinámicamente para mostrar solo lo que existe -->
-            </div>
+            <div class="gen-content" id="tarifas-content-box"></div>
         </div>
 
         <!-- Perfil Productivo y Fuerte Económico -->
