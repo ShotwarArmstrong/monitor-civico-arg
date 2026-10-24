@@ -530,7 +530,7 @@
         }
         .pdf-link:hover { background: #0369a1; }
 
-        /* Media Query para Escritorio: Mapa bajado un 30% y agrandado un 25%, perfectamente centrado */
+        /* Media Query para Escritorio: Mapa bajado un 55% adicional (total) y agrandado un 55% adicional (total), perfectamente centrado */
         @media (min-width: 768px) {
             #mobile-toggle-bar { display: none; }
             .top-panels-container {
@@ -544,9 +544,9 @@
             }
             .top-panels-row { flex-direction: column; }
             #map-svg {
-                height: 90vh; /* Agrandado un 25% */
-                max-width: 85vw;
-                margin-top: 85px; /* Bajado un 30% para centrarlo perfectamente entre las líneas superior e inferior */
+                height: 95vh; /* Agrandado un 30% más respecto al anterior */
+                max-width: 92vw;
+                margin-top: 130px; /* Bajado un 25% más respecto al anterior para mantenerlo perfectamente centrado */
             }
             #info-panel { width: 510px; right: 20px; top: 15px; max-height: calc(100vh - 75px); padding-bottom: 20px; }
             #header { width: auto; max-width: none; }
