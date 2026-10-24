@@ -90,13 +90,13 @@
         /* Contenedor Flotante Izquierdo */
         .top-panels-container {
             position: absolute;
-            top: 112px;
-            left: 10px;
+            top: 75px;
+            left: 15px;
             z-index: 300;
             display: none;
             flex-direction: column;
             gap: 6px;
-            max-height: calc(100vh - 140px);
+            max-height: calc(100vh - 90px);
             overflow-y: auto;
             padding-right: 4px;
             pointer-events: auto;
@@ -268,7 +268,7 @@
             text-shadow: 0px 1px 3px rgba(255,255,255,0.9);
         }
 
-        /* Panel Lateral de Auditoría Provincial (Optimizado para scroll completo) */
+        /* Panel Lateral de Auditoría Provincial */
         #info-panel {
             position: absolute;
             top: 10px;
@@ -279,7 +279,7 @@
             z-index: 4000;
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 14px 14px 45px 14px; /* Margen inferior extra para ver hasta el fondo */
+            padding: 14px 14px 45px 14px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             overflow-y: auto;
             display: none;
@@ -530,7 +530,7 @@
         }
         .pdf-link:hover { background: #0369a1; }
 
-        /* Media Query para Escritorio (Mapa grande optimizado entre líneas) */
+        /* Media Query para Escritorio: Mapa bajado un 30% y agrandado un 25%, perfectamente centrado */
         @media (min-width: 768px) {
             #mobile-toggle-bar { display: none; }
             .top-panels-container {
@@ -544,9 +544,9 @@
             }
             .top-panels-row { flex-direction: column; }
             #map-svg {
-                height: 94vh; /* Mapa bastante más grande y legible */
-                max-width: 82vw;
-                margin-top: 10px;
+                height: 90vh; /* Agrandado un 25% */
+                max-width: 85vw;
+                margin-top: 85px; /* Bajado un 30% para centrarlo perfectamente entre las líneas superior e inferior */
             }
             #info-panel { width: 510px; right: 20px; top: 15px; max-height: calc(100vh - 75px); padding-bottom: 20px; }
             #header { width: auto; max-width: none; }
@@ -1306,7 +1306,7 @@
                 "San Luis": { gov: "Claudio Poggi (Cambia San Luis)", mandatos: ["2023 - Pres.: Claudio Poggi", "2019 - 2023: Alberto Rodríguez Saá", "2015 - 2019: Alberto Rodríguez Saá", "2011 - 2015: Claudio Poggi", "2007 - 2011: Alberto Rodríguez Saá"], rep: { dip: "Alejandro Cacace (UCR), Ernesto Ali (UxP)", sen: "Bartolomé Abdala (LLA), Ivana Arrascaeta (LLA)" }, corr: { tasa: "3.1 causas / 100k", opacidad: "Media (44%)", pauta: "Moderada", funcs: ["• Ex-integrantes de Tribunal de Cuentas: Expediente SL-77/2023 - Transición y auditoría de decretos."] } },
                 "Entre Ríos": { gov: "Rogelio Frigerio (Juntos por Entre Ríos)", mandatos: ["2023 - Pres.: Rogelio Frigerio", "2019 - 2023: Gustavo Bordet", "2015 - 2019: Gustavo Bordet", "2011 - 2015: Sergio Urribarri", "2007 - 2011: Sergio Urribarri"], rep: { dip: "Atilio Benedit (UCR), Blanca Osuna (UxP)", sen: "Alfredo De Angeli (PRO), Stefanía Cora (UxP)" }, corr: { tasa: "3.8 causas / 100k", opacidad: "Media (47%)", pauta: "Moderada", funcs: ["• Sergio Urribarri (Ex-Gobernador): Expediente STJ-ER 1234/2021 - Condena en primera instancia por peculado."] } },
                 "Chaco": { gov: "Leandro Zdero (Juntos por el Cambio)", mandatos: ["2023 - Pres.: Leandro Zdero", "2019 - 2023: Jorge Capitanich", "2015 - 2019: Domingo Peppo", "2011 - 2015: Jorge Capitanich", "2007 - 2011: Jorge Capitanich"], rep: { dip: "Juan Manuel Pedrini (UxP), Marilú Quiroz (PRO)", sen: "Víctor Zimmerman (UCR), Alicia Terada (CC)" }, corr: { tasa: "5.4 causas / 100k", opacidad: "Alta (65%)", pauta: "Alta", funcs: ["• Emerenciano Sena / Ex-funcionarios: Expediente N° 8.132/2023 - Investigaciones por administración fraudulenta de fondos."] } },
-                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"], rep: { dip: "Ramiro Fernández Patri (UxP), Fernando Carbajal (UCR)", sen: "José Mayans (UxP), María Teresa González (UxP)" }, corr: { tasa: "4.9 causas / 100k", opacidad: "Alta (72%)", pauta: "Alta", funcs: ["• Ex-funcionarios de Tesorería: Expediente FOR-901/2020 - Observaciones sobre opacidad presupuestaria."] } },
+                "Formosa": { gov: "Gildo Insfrán (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Gildo Insfrán", "2019 - 2023: Gildo Insfrán", "2015 - 2019: Gildo Insfrán", "2011 - 2015: Gildo Insfrán", "2007 - 2011: Gildo Insfrán"], rep: { dip: "Ramiro Fernández Patri (UxP), Fernando Carbajal (UCR)", sen: "José Mayans (UxP), María Teresa González (UxP)" }, corr: { tasa: "4.9 causas / 100k", opacidad: "Alta (72%)", pauta: "Alta", funcs: ["• Ex-funcionarios de Tesorería: Expediente FOR-901/2020 - Observations sobre opacidad presupuestaria."] } },
                 "Misiones": { gov: "Hugo Passalacqua (Frente Renovador de la Concordia)", mandatos: ["2023 - Pres.: Hugo Passalacqua", "2019 - 2023: Oscar Herrera Ahuad", "2015 - 2019: Hugo Passalacqua", "2011 - 2015: Maurice Closs", "2007 - 2011: Maurice Closs"], rep: { dip: "Carlos Fernández (FRconcordia), Florencia Klipauka (LLA)", sen: "Carlos Arce (FRconcordia), Sonia Rojas Decut (FRconcordia)" }, corr: { tasa: "2.9 causas / 100k", opacidad: "Baja (37%)", pauta: "Moderada", funcs: ["• Ex-intendentes y operadores: Expediente MIS-104/2023 - Control de partidas de desarrollo social."] } },
                 "La Pampa": { gov: "Sergio Ziliotto (Unión por la Patria / PJ)", mandatos: ["2023 - Pres.: Sergio Ziliotto", "2019 - 2023: Sergio Ziliotto", "2015 - 2019: Carlos Verna", "2011 - 2015: Oscar Jorge", "2007 - 2011: Oscar Jorge"], rep: { dip: "Hernán Pérez Araujo (UxP), Martin Maquieyra (PRO)", sen: "Daniel Bensusán (UxP), Victoria Huala (PRO)" }, corr: { tasa: "2.4 causas / 100k", opacidad: "Baja (33%)", pauta: "Baja", funcs: ["• Tribunal de Cuentas Provincial: Expediente LP-45/2023 - Informes de legalidad sin observaciones penales graves."] } },
                 "Neuquén": { gov: "Rolando Figueroa (Comunidad)", mandatos: ["2023 - Pres.: Rolando Figueroa", "2019 - 2023: Omar Gutiérrez (MPN)", "2015 - 2019: Omar Gutiérrez (MPN)", "2011 - 2015: Jorge Sapag (MPN)", "2007 - 2011: Jorge Sapag (MPN)"], rep: { dip: "Osvaldo Llancafilo (MPN), Tanya Bertoldi (UxP)", sen: "Lucila Crexell (MPN), Parrilli (UxP)" }, corr: { tasa: "3.0 causas / 100k", opacidad: "Media (40%)", pauta: "Moderada", funcs: ["• Ex-funcionarios de Legislatura: Expediente NQ-882/2022 - Causa por manejos de contratos y tarjetas."] } },
