@@ -59,7 +59,7 @@
         #header h1 { margin: 0; font-size: 0.95em; color: #0f172a; }
         #header p { margin: 2px 0 0 0; font-size: 0.65em; color: #0284c7; font-weight: 600; }
 
-        /* Botones superiores desplegables para mobile */
+        /* Botón superior mobile */
         #mobile-toggle-bar {
             position: absolute;
             top: 72px;
@@ -93,10 +93,10 @@
             top: 112px;
             left: 10px;
             z-index: 300;
-            display: none; /* Oculto por defecto en mobile hasta que se despliegue */
+            display: none;
             flex-direction: column;
             gap: 6px;
-            max-height: calc(100vh - 130px);
+            max-height: calc(100vh - 140px);
             overflow-y: auto;
             padding-right: 4px;
             pointer-events: auto;
@@ -268,18 +268,18 @@
             text-shadow: 0px 1px 3px rgba(255,255,255,0.9);
         }
 
-        /* Panel Lateral */
+        /* Panel Lateral de Auditoría Provincial (Optimizado para scroll completo) */
         #info-panel {
             position: absolute;
             top: 10px;
             right: 10px;
             width: calc(100vw - 20px);
             max-width: 480px;
-            max-height: calc(100vh - 65px);
+            max-height: calc(100vh - 55px);
             z-index: 4000;
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 14px;
+            padding: 14px 14px 45px 14px; /* Margen inferior extra para ver hasta el fondo */
             box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             overflow-y: auto;
             display: none;
@@ -530,7 +530,7 @@
         }
         .pdf-link:hover { background: #0369a1; }
 
-        /* Media Query para Escritorio (PC grande y ajustado) */
+        /* Media Query para Escritorio (Mapa grande optimizado entre líneas) */
         @media (min-width: 768px) {
             #mobile-toggle-bar { display: none; }
             .top-panels-container {
@@ -544,11 +544,11 @@
             }
             .top-panels-row { flex-direction: column; }
             #map-svg {
-                height: 85vh;
-                max-width: 75vw;
-                margin-top: 20px;
+                height: 94vh; /* Mapa bastante más grande y legible */
+                max-width: 82vw;
+                margin-top: 10px;
             }
-            #info-panel { width: 510px; right: 20px; top: 15px; max-height: calc(100vh - 75px); }
+            #info-panel { width: 510px; right: 20px; top: 15px; max-height: calc(100vh - 75px); padding-bottom: 20px; }
             #header { width: auto; max-width: none; }
         }
     </style>
@@ -566,7 +566,7 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon" alt="Arg">
     </div>
 
-    <!-- Botones superiores para mobile -->
+    <!-- Botón superior mobile -->
     <div id="mobile-toggle-bar">
         <button class="mob-btn" onclick="toggleMobilePanel()">📊 Estadísticas & Elecciones</button>
     </div>
@@ -761,7 +761,6 @@
         <div class="data-row"><span>Tasa Homicidios:</span><strong id="panel-tasa-seguridad">-</strong></div>
         <div class="data-row"><span>Padrón Local:</span><strong id="panel-padron-local">-</strong></div>
 
-        <!-- SECCIÓN CORRUPCIÓN NOMINAL Y CAUSAS ACTIVAS -->
         <div class="section-heading">
             <span>🔍 Transparencia & Corrupción Nominal</span>
         </div>
@@ -776,7 +775,6 @@
             </div>
             <div class="gen-content" id="corrupcion-content-box"></div>
         </div>
-        <!-- FIN CORRUPCIÓN -->
 
         <div class="gen-container memoria-container" id="panel-memoria">
             <div class="gen-header memoria-header" onclick="toggleSeccion('panel-memoria')">
